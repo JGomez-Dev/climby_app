@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.climby.ui.discover.DiscoverFragment"
+        android:label="@string/title_discover"
+        tools:layout="@layout/fragment_discover" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.climby.ui.publish.PublishFragment"
+        android:label="@string/title_publish"
+        tools:layout="@layout/fragment_publish">
+        <action
+            android:id="@+id/action_navigation_dashboard_to_navigation_home2"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_navigation_notifications2"
+            app:destination="@id/navigation_notifications" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.climby.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_notifications_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_AuthActivity"
+        android:name="com.example.climby.view.activity.AuthActivity"
+        android:label="AuthActivity"
+        tools:layout="@layout/activity_auth" />
+
+    <fragment
+        android:id="@+id/navigation_onBoardingFirstActivity"
+        android:name="com.example.climby.view.activity.OnBoardingFirstActivity"
+        android:label="AuthActivity"
+        tools:layout="@layout/activity_onboarding_first" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.climby.view.activity.MainActivity"
+        android:label="MainActivity"
+        tools:layout="@layout/activity_main" />
+
+    <fragment
+        android:id="@+id/whatPlaceFragment"
+        android:name="com.example.climby.ui.publish.WhatPlaceActivity"
+        android:label="WhatPlaceFragment"
+        tools:layout="@layout/activity_what_place">
+
+        <action
+            android:id="@+id/action_whatPlaceFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+
+</navigation>

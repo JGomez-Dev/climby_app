@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.example.climby.view.activity.MainActivity">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/CVImageProfile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="35dp"
+        android:background="@mipmap/user"
+        app:civ_border_color="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CLProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        app:layout_constraintBottom_toBottomOf="@+id/CVImageProfile"
+        app:layout_constraintStart_toEndOf="@+id/CVImageProfile"
+        app:layout_constraintTop_toTopOf="@+id/CVImageProfile">
+
+        <ImageView
+            android:id="@+id/IVStartProfile1"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/TVUserName"
+            app:layout_constraintStart_toEndOf="@+id/TVUserName"
+            app:layout_constraintTop_toTopOf="@+id/TVUserName"
+            app:srcCompat="@mipmap/star"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/IVStartProfile2"
+            android:layout_width="20dp"
+            android:layout_height="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/IVStartProfile1"
+            app:layout_constraintStart_toEndOf="@+id/IVStartProfile1"
+            app:layout_constraintTop_toTopOf="@+id/IVStartProfile1"
+            app:srcCompat="@mipmap/star"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/IVStartProfile3"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/TVUserName"
+            app:layout_constraintStart_toEndOf="@+id/IVStartProfile2"
+            app:layout_constraintTop_toTopOf="@+id/TVUserName"
+            app:srcCompat="@mipmap/star"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/TVUserExperience"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_experienced"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TVUserName" />
+
+        <TextView
+            android:id="@+id/TVUserOutputs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@string/text_my_outings"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/TVUserExperience"
+            app:layout_constraintStart_toEndOf="@+id/TVUserExperience"
+            app:layout_constraintTop_toTopOf="@+id/TVUserExperience" />
+
+        <TextView
+            android:id="@+id/TVUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/text_user_name"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ETEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:stateListAnimator="@null"
+        android:text="@string/text_edit"
+        android:textAllCaps="false"
+        android:textColor="@color/primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/TLProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:background="@color/white"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".75"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CVImageProfile"
+        app:tabTextAppearance="@style/TabWidget" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TLProfile">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "397180762969",
+    "project_id": "climby-ea413",
+    "storage_bucket": "climby-ea413.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397180762969:android:64c5d62e343ecb05ae6a48",
+        "android_client_info": {
+          "package_name": "com.example.climby"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397180762969-mddspbj87qgsbfbbfn3a681uf531td5v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.climby",
+            "certificate_hash": "b2ce03bc2c01f558d2627999b9b9239f53a38f4d"
+          }
+        },
+        {
+          "client_id": "397180762969-g8tffs2qtcgaern8m9470lu60sidieph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbdggDLLHXFzerIr4XikHF-Q_DMnHZyXI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397180762969-g8tffs2qtcgaern8m9470lu60sidieph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

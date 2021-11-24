@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">climby</string>
+    <string name="title_discover">Descubre</string>
+    <string name="title_publish">Publicar</string>
+    <string name="title_profile">Mi perfil</string>
+    <string name="prefs_file">com.example.climby.PREFERENCE_FILE_KEY</string>
+    <string name="text_rocodromo">Rocódromo</string>
+    <string name="text_clasica">Clásica</string>
+    <string name="text_deportiva">Deportiva</string>
+    <string name="text_boulder">Boulder</string>
+    <string name="text_next_weekend">Próximo fín de semana</string>
+    <string name="text_todas">Todas</string>
+    <string name="text_google">Entrar con Google</string>
+    <string name="text_facebook">Entrar con Facebook</string>
+    <string name="text_join">Únete a otros escaladores como tú y sal a escalar de forma segura</string>
+    <string name="text_info">¿Tu información es correcta?</string>
+    <string name="text_change_photo">Cambiar mi foto</string>
+    <string name="text_name">Nombre</string>
+    <string name="text_empty">...</string>
+    <string name="text_join_a_group">Lo usaremos como medio de contacto solo cuando quieras unirte a un grupo.</string>
+    <string name="text_continue">Continuar</string>
+    <string name="text_telefono">Teléfono</string>
+    <string name="facebook_app_id">386355422974436</string>
+    <string name="fb_login_protocol_scheme">fb386355422974436</string>
+    <string name="text_prefix_phone">+ 34</string>
+    <string name="text_exit_from">Próximas salidas desde </string>
+    <string name="text_beginner">Principiante</string>
+    <string name="text_intermediate">Intermedio</string>
+    <string name="text_experienced">Experimentado</string>
+    <string name="text_what_experience_you_have">¿Qué experiencia tienes?</string>
+    <string name="text_i_am_starting_out">Estoy iniciándome en este mundo, tengo todo por aprender.</string>
+    <string name="text_often">Escalo con frecuencia y me encuentro cómodo escalando en la naturaleza.</string>
+    <string name="text_a_long_time">Llevo años escalando de manera continuada y me encuentro cómodo con cualquier modalidad.</string>
+    <string name="text_bt_next">Continuar</string>
+    <string name="text_where_do_you_come_from">¿Desde donde sales?</string>
+    <string name="text_date">DD/MM</string>
+    <string name="date">Fecha</string>
+    <string name="text_places_available">Plazas disponibles</string>
+    <string name="text_create_output">Crear salida</string>
+    <string name="text_type">¿Qué tipo de escalada haréis?</string>
+    <string name="text_select_school">Elige una escuela o rocódromo...</string>
+    <string name="create_output">Crear una salida</string>
+    <string name="text_site">¿Dónde será la salida?</string>
+    <string-array name="places">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string name="text_my_outings">Mis salidas</string>
+    <string name="text_coming_outings">Proximas salidas</string>
+    <string name="text_edit">Editar</string>
+    <string name="text_user_name">Usuario</string>
+    <string name="text_save">Guardar</string>
+    <string name="text_logout">Cerrar sesión</string>
+    <string name="text_where_will_you_climb">¿Dondé vas a escalar?</string>
+    <string name="text_experience">Experiencia</string>
+    <string name="text_back">Atras</string>
+    <string name="text_edit_information">Editar tu información</string>
+    <string name="text_predriza">La Pedriza,</string>
+    <string name="text_lead">Deportiva en</string>
+    <string name="text_places">Numero de plazas</string>
+
+</resources>

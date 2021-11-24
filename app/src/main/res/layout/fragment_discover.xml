@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.discover.DiscoverFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/TVNextExits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_exit_from"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/TVMadrid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="@string/text_empty"
+            android:textColor="@color/primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/IVEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_arrow_drop_down_24"
+            app:tint="@color/primary"
+            tools:ignore="ContentDescription" />
+
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingEnd="30dp"
+            app:checkedButton="@+id/BTAll"
+
+            tools:ignore="RtlSymmetry">
+
+            <Button
+                android:id="@+id/BTAll"
+                style="@style/toggle_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetTop="0dp"
+                android:insetRight="5dp"
+                android:insetBottom="0dp"
+                android:maxLines="1"
+                android:stateListAnimator="@null"
+                android:text="@string/text_todas"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:shapeAppearance="@style/Cut" />
+
+            <Button
+                android:id="@+id/BTNextWeekend"
+                style="@style/toggle_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="5dp"
+                android:insetTop="0dp"
+                android:insetRight="5dp"
+                android:insetBottom="0dp"
+                android:maxLines="1"
+                android:stateListAnimator="@null"
+                android:text="@string/text_next_weekend"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/BTBoulder"
+                style="@style/toggle_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="5dp"
+                android:insetTop="0dp"
+                android:insetRight="5dp"
+                android:insetBottom="0dp"
+                android:maxLines="1"
+                android:stateListAnimator="@null"
+                android:text="@string/text_boulder"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/BTLead"
+                style="@style/toggle_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="5dp"
+                android:insetTop="0dp"
+                android:insetRight="5dp"
+                android:insetBottom="0dp"
+                android:maxLines="1"
+                android:stateListAnimator="@null"
+                android:text="@string/text_deportiva"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/BTRocodromo"
+                style="@style/toggle_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="5dp"
+                android:insetTop="0dp"
+                android:insetRight="5dp"
+                android:insetBottom="0dp"
+                android:maxLines="1"
+                android:stateListAnimator="@null"
+                android:text="@string/text_rocodromo"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/BTClassic"
+                style="@style/toggle_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="5dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:maxLines="1"
+                android:stateListAnimator="@null"
+                android:text="@string/text_clasica"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:shapeAppearance="@style/Cut" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RVTrips"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+    <ProgressBar
+        android:id="@+id/PBDiscover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/primary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
