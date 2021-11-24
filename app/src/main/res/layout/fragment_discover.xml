@@ -67,7 +67,8 @@
             android:layout_marginStart="16dp"
             android:paddingEnd="30dp"
             app:checkedButton="@+id/BTAll"
-
+            app:selectionRequired="true"
+            app:singleSelection="true"
             tools:ignore="RtlSymmetry">
 
             <Button
