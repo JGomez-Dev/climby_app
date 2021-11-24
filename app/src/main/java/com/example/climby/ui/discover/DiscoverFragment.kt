@@ -24,7 +24,6 @@ class DiscoverFragment : Fragment() {
 
     private lateinit var binding: FragmentDiscoverBinding
     private lateinit var homeViewModel: DiscoverViewModel
-    /*private var userSession: UserModel = Commons.userSession!!*/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         homeViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java)
@@ -39,7 +38,7 @@ class DiscoverFragment : Fragment() {
         homeViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding.PBDiscover.isVisible = it
         })
-        homeViewModel.getTrips(/*userSession.id*/1)
+        homeViewModel.getTrips()
         binding.toggleButton.addOnButtonCheckedListener { _, checkedId, isChecked ->
             getFilterAndSendQuery(isChecked, checkedId)
         }
@@ -49,14 +48,14 @@ class DiscoverFragment : Fragment() {
     private fun getFilterAndSendQuery(isChecked: Boolean, checkedId: Int) {
         if (isChecked) {
             when (checkedId) {
-                R.id.BTAll -> Toast.makeText(context, "Todas Check", Toast.LENGTH_LONG).show()
-                R.id.BTNextWeekend -> Toast.makeText(context, "Próxima semana Check", Toast.LENGTH_LONG).show()
-                R.id.BTBoulder -> Toast.makeText(context, "Boulder Check", Toast.LENGTH_LONG).show()
-                R.id.BTLead -> Toast.makeText(context, "Cuerda Check", Toast.LENGTH_LONG).show()
-                R.id.BTRocodromo -> Toast.makeText(context, "Rocódromo Check", Toast.LENGTH_LONG).show()
-                R.id.BTClassic -> Toast.makeText(context, "Clásica Check", Toast.LENGTH_LONG).show()
+                R.id.BTAll -> homeViewModel.getTrips()
+                R.id.BTNextWeekend -> homeViewModel.getTripsType("NextWeekend")
+                R.id.BTBoulder -> homeViewModel.getTripsType("Boulder")
+                R.id.BTLead -> homeViewModel.getTripsType("Deportiva")
+                R.id.BTRocodromo -> homeViewModel.getTripsType("Rocódromo")
+                R.id.BTClassic -> homeViewModel.getTripsType("Clásica")
             }
-        } else {
+        } /*else {
             when (checkedId) {
                 R.id.BTAll -> Toast.makeText(context, "Todas no Check", Toast.LENGTH_LONG).show()
                 R.id.BTNextWeekend -> Toast.makeText(context, "Próxima semana no Check", Toast.LENGTH_LONG).show()
@@ -65,6 +64,6 @@ class DiscoverFragment : Fragment() {
                 R.id.BTRocodromo -> Toast.makeText(context, "Rocódromo no Check", Toast.LENGTH_LONG).show()
                 R.id.BTClassic -> Toast.makeText(context, "Clásica no Check", Toast.LENGTH_LONG).show()
             }
-        }
+        }*/
     }
 }

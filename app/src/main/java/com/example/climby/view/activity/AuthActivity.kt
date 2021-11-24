@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
+import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityAuthBinding
 import com.example.climby.utils.ProviderType
 import com.example.climby.view.viewmodel.AuthViewModel
@@ -88,7 +89,8 @@ class AuthActivity : AppCompatActivity() {
         if (!email.isNullOrEmpty() && !provider.isNullOrEmpty() && !photoUrl.isNullOrEmpty() && !displayName.isNullOrEmpty()) {
             if (!experience.isNullOrEmpty()) {
                 binding.CLAuthentication.visibility = View.INVISIBLE
-                getData(id)
+                val userLogger = UserModel(id, displayName,experience, phone.toString(), email, 0.0, 0, photoUrl)
+                getData(userLogger)
                 showMainActivity()
             } else if (!phone.isNullOrEmpty()) {
                 binding.CLAuthentication.visibility = View.INVISIBLE
@@ -100,8 +102,8 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    private fun getData(id: Int) {
-        authViewModel.getUser(id)
+    private fun getData(userModel: UserModel) {
+        authViewModel.getUser(userModel)
     }
 
     private fun showOnBoardingFirst(email: String, photoUrl: String?, displayName: String?, provider: ProviderType) {

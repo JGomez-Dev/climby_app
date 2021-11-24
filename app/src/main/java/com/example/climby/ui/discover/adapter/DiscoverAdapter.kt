@@ -49,9 +49,9 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
         fun bind(trip: TripModel) {
             var userAccepted = false
             var accepted = 0
-            tvType.text = trip.type + " en"
+            tvType.text = trip.type.name + " en"
             tvPlaceDate.text = trip.site.name + ", " + trip.departure.toString().split("-")[2].split(" ")[0] + " " + Commons.getDate(trip.departure.toString()) + "."
-            setPhotoTrip(trip.type, ivPlace, context)
+            setPhotoTrip(trip.type.name, ivPlace, context)
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(trip.driver.photo).into(cvDriver)
             Commons.setTextButton(btRequest, trip)
             /*result.bookings.forEach {
