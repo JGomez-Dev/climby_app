@@ -17,13 +17,8 @@ import com.example.climby.R
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.utils.Commons
+import com.example.climby.utils.ReservationStatus
 import de.hdodenhof.circleimageview.CircleImageView
-
-enum class ReservationStatus(val status: Boolean?) {
-    UNANSWERED(null),
-    ACCEPTED(true),
-    REFUSE(false),
-}
 
 class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
 
@@ -101,6 +96,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
             rvUserv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
             userDiscoverAdapter = UserDiscoverAdapter(trip.bookings, context)
             rvUserv.adapter = userDiscoverAdapter
+
         }
     }
 
