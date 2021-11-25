@@ -23,44 +23,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    /*private lateinit var mainViewModel: MainViewModel*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        /*mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)*/
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         val navController = navHostFragment.navController
         navView.setupWithNavController(navController)
 
-       /* getData()*/
-
-
-        /* navController.addOnDestinationChangedListener { _, destination, _ ->
-             when (destination.label) {
-                 "Mi perfil" -> navView.visibility = View.GONE
-                 else -> navView.visibility = View.VISIBLE
-             }
-
-         }*/
-       /* navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.label) {
-                "Publicar" -> navView.visibility = View.GONE
-                else -> navView.visibility = View.VISIBLE
-            }
-        }*/
-    }
-
-    /*private fun getData() {
-        mainViewModel.getUser()
-    }*/
-
-    /*override fun onBackPressed() {
-        val fragment = this.supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-        (fragment as? IOnBackPressed)?.onBackPressed()?.let {
-            super.onBackPressed()
-        }
-    }*/
 }

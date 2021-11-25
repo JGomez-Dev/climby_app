@@ -133,7 +133,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/TVSite"
-        app:layout_constraintStart_toStartOf="@+id/TVAdmin"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/TVSite"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         app:tint="@color/black"

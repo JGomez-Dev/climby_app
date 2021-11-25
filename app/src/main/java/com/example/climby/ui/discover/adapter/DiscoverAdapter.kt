@@ -5,6 +5,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,20 +22,35 @@ import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
 import de.hdodenhof.circleimageview.CircleImageView
 
+
 class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
+
 
     private var tripsList: List<TripModel> = ArrayList()
     private var context: Context
     private var userSession: UserModel = Commons.userSession!!
     private lateinit var userDiscoverAdapter: UserDiscoverAdapter
+    private lateinit var mlistener: OnItemClickListener
 
     init {
         this.tripsList = tripData
         this.context = context
     }
 
-    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
 
+    fun SetOnItemClickListener(listener: OnItemClickListener){
+        mlistener = listener
+    }
+
+    inner class DataViewHolder(itemView: View, listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
+        }
         private val tvType: TextView = itemView.findViewById(R.id.TVType)
         private val tvPlaceDate: TextView = itemView.findViewById(R.id.TVPlaceDate)
         private val ivPlace: ImageView = itemView.findViewById(R.id.IVPlace)
@@ -100,18 +117,8 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
         }
     }
 
-    fun setPhotoTrip(type: String, ivPlace: ImageView, context: Context) {
-        when (type) {
-            "Boulder" -> { Glide.with(context).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(ivPlace) }
-            "Deportiva" -> { Glide.with(context).load(R.mipmap.lead).error(R.mipmap.default_picture).into(ivPlace) }
-            "Rocódromo" -> { Glide.with(context).load(R.mipmap.gym).error(R.mipmap.default_picture).into(ivPlace) }
-            "Clásica" -> { Glide.with(context).load(R.mipmap.trad).error(R.mipmap.default_picture).into(ivPlace) }
-            else -> { Glide.with(context).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(ivPlace) }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DataViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_discover, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.item_discover, parent, false), mlistener
     )
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
@@ -120,4 +127,21 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
 
     override fun getItemCount(): Int = tripsList.size
 
+    fun setPhotoTrip(type: String, ivPlace: ImageView, context: Context) {
+        when (type) {
+            "Boulder" -> {
+                Glide.with(context).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(ivPlace)
+            }
+            "Deportiva" -> {
+                Glide.with(context).load(R.mipmap.lead).error(R.mipmap.default_picture).into(ivPlace)
+            }
+            "Rocódromo" -> {
+                Glide.with(context).load(R.mipmap.gym).error(R.mipmap.default_picture).into(ivPlace)
+            }
+            "Clásica" -> {
+                Glide.with(context).load(R.mipmap.trad).error(R.mipmap.default_picture).into(ivPlace)
+            }
+            else -> { Glide.with(context).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(ivPlace) }
+        }
+    }
 }
