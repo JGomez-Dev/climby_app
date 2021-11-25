@@ -46,10 +46,6 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
                     "NextWeekend" ->
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             result.forEach {
-                                Log.i("fecha1", "fecha1" + it.departure.split(" ")[0])
-                                Log.i("fecha1","calcNextFriday"+ calcNextFriday(LocalDate.now()).toString())
-                                Log.i("fecha1","calcNextSaturday"+ calcNextSaturday(LocalDate.now()).toString())
-                                Log.i("fecha1","calcNextSunday"+ calcNextSunday(LocalDate.now()).toString())
                                 if ((it.departure.split(" ")[0] == calcNextFriday(LocalDate.now()).toString()) || (it.departure.split(" ")[0] == calcNextSaturday(LocalDate.now()).toString()) || (it.departure.split(" ")[0] == calcNextSunday(LocalDate.now()).toString())) {
                                     resultType.add(it)
                                 }

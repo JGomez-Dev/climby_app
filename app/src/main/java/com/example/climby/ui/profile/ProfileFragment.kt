@@ -51,7 +51,7 @@ class ProfileFragment: Fragment() {
         }.attach()
 
         binding.ETEditProfile.setOnClickListener {
-            loadFragment()
+            loadActivity()
         }
 
         return view
@@ -67,8 +67,8 @@ class ProfileFragment: Fragment() {
 
     }
 
-    private fun loadFragment(){
-        val intent = Intent(activity, EditProfileFActivity::class.java)
+    private fun loadActivity(){
+        val intent = Intent(activity, EditProfileActivity::class.java)
         startActivity(intent)
     }
 

@@ -23,7 +23,7 @@ import com.example.climby.utils.UserExperience
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditProfileFActivity : AppCompatActivity() {
+class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var editProfileViewModel: EditProfileViewModel

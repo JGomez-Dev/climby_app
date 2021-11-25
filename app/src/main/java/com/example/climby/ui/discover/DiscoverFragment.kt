@@ -1,5 +1,6 @@
 package com.example.climby.ui.discover
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.example.climby.R
 import com.example.climby.databinding.FragmentDiscoverBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
+import com.example.climby.ui.profile.EditProfileActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -38,7 +40,7 @@ class DiscoverFragment : Fragment() {
             binding.RVTrips.adapter = discoverAdapter
             discoverAdapter.SetOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
-                    loadFragment()
+                    loadActivity()
                 }
             })
         })
@@ -54,13 +56,9 @@ class DiscoverFragment : Fragment() {
         return view
     }
 
-    fun loadFragment() {
-        val tripUsersFragment = TripUsersFragment()
-        val fragmentManager: FragmentManager = activity?.supportFragmentManager!!
-        val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment, tripUsersFragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+    fun loadActivity() {
+        val intent = Intent(activity, TripUsersActivity::class.java)
+        startActivity(intent)
     }
 
     private fun getFilterAndSendQuery(isChecked: Boolean, checkedId: Int) {

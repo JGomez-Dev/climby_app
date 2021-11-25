@@ -38,11 +38,15 @@
             android:name="com.example.climby.view.activity.OnBoardingSecondActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.example.climby.ui.profile.EditProfileFActivity"
+            android:name="com.example.climby.ui.profile.EditProfileActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.example.climby.ui.publish.WhatPlaceActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.example.climby.ui.discover.TripUsersActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
 
