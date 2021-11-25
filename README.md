@@ -95,6 +95,8 @@ _Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios
 Este proyecto está bajo la Licencia (Tu Licencia) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
 -->
 
+![Alt text](https://user-images.githubusercontent.com/49919880/143423985-bae11183-d538-4f5f-bead-e5f5c0e66dbc.png "Title")
+
 
 ## Expresiones de Gratitud 🎁
 
