@@ -11,15 +11,16 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlin.collections.ArrayList
 import com.bumptech.glide.request.RequestOptions
 import com.example.climby.R
+import com.example.climby.data.model.booking.BookingModel
 
 
-class UserDiscoverAdapter(userData: List<UserModel>, context: Context) : RecyclerView.Adapter<UserDiscoverAdapter.DataViewHolder>() {
+class UserDiscoverAdapter(bookingsList: List<BookingModel>, context: Context) : RecyclerView.Adapter<UserDiscoverAdapter.DataViewHolder>() {
 
-    private var usersList: List<UserModel> = ArrayList()
+    private var bookingsList: List<BookingModel> = ArrayList()
     private var context: Context
 
     init {
-        this.usersList = userData
+        this.bookingsList = bookingsList
         this.context = context
     }
 
@@ -27,8 +28,8 @@ class UserDiscoverAdapter(userData: List<UserModel>, context: Context) : Recycle
 
         private val cvPassenger: CircleImageView = itemView.findViewById(R.id.CVPassenger)
 
-        fun bind(result: UserModel){
-            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(result.photo).into(cvPassenger)
+        fun bind(result: BookingModel){
+            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(result.passenger.photo).into(cvPassenger)
         }
     }
 
@@ -37,9 +38,9 @@ class UserDiscoverAdapter(userData: List<UserModel>, context: Context) : Recycle
     )
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.bind(usersList[position])
+        holder.bind(bookingsList[position])
     }
 
-    override fun getItemCount(): Int= usersList.size
+    override fun getItemCount(): Int= bookingsList.size
 
 }

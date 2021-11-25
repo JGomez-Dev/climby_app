@@ -2,7 +2,6 @@ package com.example.climby.ui.discover.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -30,6 +30,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
     private var tripsList: List<TripModel> = ArrayList()
     private var context: Context
     private var userSession: UserModel = Commons.userSession!!
+    private lateinit var userDiscoverAdapter: UserDiscoverAdapter
 
     init {
         this.tripsList = tripData
@@ -44,6 +45,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
         private val cvDriver: CircleImageView = itemView.findViewById(R.id.CVDriver)
         private val btRequest: Button = itemView.findViewById(R.id.BTRequest)
         private val tVUsers: TextView = itemView.findViewById(R.id.TVUsers)
+        private val rvUserv: RecyclerView = itemView.findViewById(R.id.RVUsers)
 
         @SuppressLint("SetTextI18n")
         fun bind(trip: TripModel) {
@@ -74,12 +76,12 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
             } else {
                 /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
                 trip.bookings.forEach {
-                    if (it.status == ReservationStatus.ACCEPTED.status && it.passenger.id == userSession.id) {
-                        if(it.passenger.id == userSession.id){
+                    if (it.status == ReservationStatus.ACCEPTED.status) {
+                        if (it.passenger.id == userSession.id) {
                             btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                             btRequest.text = "Te has unido\r\nLiberar plaza"
                             userAccepted = true
-                        }else{
+                        } else {
                             accepted++
                         }
                     }
@@ -91,45 +93,24 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                     btRequest.isEnabled = false
                 }
             }
-            /*if(accepted > 0)
-                tVUsers.text = result.driver.name.split(" ")[0] + " y " + accepted + " más "
+            if (accepted > 0)
+                tVUsers.text = trip.driver.name.split(" ")[0] + " y " + accepted + " más "
             else
-                tVUsers.text = result.driver.name.split(" ")[0]*/
+                tVUsers.text = trip.driver.name.split(" ")[0]
+
+            rvUserv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+            userDiscoverAdapter = UserDiscoverAdapter(trip.bookings, context)
+            rvUserv.adapter = userDiscoverAdapter
         }
     }
 
     fun setPhotoTrip(type: String, ivPlace: ImageView, context: Context) {
         when (type) {
-            "Boulder" -> {
-                Glide.with(context)
-                    .load(R.mipmap.boulder)
-                    .error(R.mipmap.default_picture)
-                    .into(ivPlace)
-            }
-            "Deportiva" -> {
-                Glide.with(context)
-                    .load(R.mipmap.lead)
-                    .error(R.mipmap.default_picture)
-                    .into(ivPlace)
-            }
-            "Rocódromo" -> {
-                Glide.with(context)
-                    .load(R.mipmap.gym)
-                    .error(R.mipmap.default_picture)
-                    .into(ivPlace)
-            }
-            "Clásica" -> {
-                Glide.with(context)
-                    .load(R.mipmap.trad)
-                    .error(R.mipmap.default_picture)
-                    .into(ivPlace)
-            }
-            else -> {
-                Glide.with(context)
-                    .load(R.mipmap.default_picture)
-                    .error(R.mipmap.default_picture)
-                    .into(ivPlace)
-            }
+            "Boulder" -> { Glide.with(context).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(ivPlace) }
+            "Deportiva" -> { Glide.with(context).load(R.mipmap.lead).error(R.mipmap.default_picture).into(ivPlace) }
+            "Rocódromo" -> { Glide.with(context).load(R.mipmap.gym).error(R.mipmap.default_picture).into(ivPlace) }
+            "Clásica" -> { Glide.with(context).load(R.mipmap.trad).error(R.mipmap.default_picture).into(ivPlace) }
+            else -> { Glide.with(context).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(ivPlace) }
         }
     }
 
