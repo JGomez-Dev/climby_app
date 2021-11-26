@@ -37,11 +37,11 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
         this.context = context
     }
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
 
-    fun SetOnItemClickListener(listener: OnItemClickListener){
+    fun SetOnItemClickListener(listener: OnItemClickListener) {
         mlistener = listener
     }
 
@@ -51,6 +51,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                 listener.onItemClick(adapterPosition)
             }
         }
+
         private val tvType: TextView = itemView.findViewById(R.id.TVType)
         private val tvPlaceDate: TextView = itemView.findViewById(R.id.TVPlaceDate)
         private val ivPlace: ImageView = itemView.findViewById(R.id.IVPlace)
@@ -63,10 +64,10 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
         fun bind(trip: TripModel) {
             var userAccepted = false
             var accepted = 0
-            tvType.text = trip.type.name + " en"
-            tvPlaceDate.text = trip.site.name + ", " + trip.departure.toString().split("-")[2].split(" ")[0] + " " + Commons.getDate(trip.departure.toString()) + "."
-            setPhotoTrip(trip.type.name, ivPlace, context)
-            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(trip.driver.photo).into(cvDriver)
+            tvType.text = trip.type?.name + " en"
+            tvPlaceDate.text = trip.site?.name + ", " + (trip.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip.departure?.let { Commons.getDate(it) }
+            trip.type?.name?.let { setPhotoTrip(it, ivPlace, context) }
+            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(trip.driver?.photo).into(cvDriver)
             Commons.setTextButton(btRequest, trip)
             /*result.bookings.forEach {
                 if (it.status == ReservationStatus.ACCEPTED.status && it.passenger.id == userSession.id) { // Se debe añadir la condición de que sea el usuario log
@@ -83,13 +84,13 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                     btRequest.text = "Rechazado"
                 }
             }*/
-            if (trip.bookings.isEmpty()) {
+            if (trip.bookings?.isEmpty() == true) {
                 btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
             } else {
                 /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
-                trip.bookings.forEach {
+                trip.bookings?.forEach {
                     if (it.status == ReservationStatus.ACCEPTED.status) {
-                        if (it.passenger.id == userSession.id) {
+                        if (it.passenger?.id ?: 0 == userSession.id) {
                             btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                             btRequest.text = "Te has unido\r\nLiberar plaza"
                             userAccepted = true
@@ -106,12 +107,12 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                 }
             }
             if (accepted > 0)
-                tVUsers.text = trip.driver.name.split(" ")[0] + " y " + accepted + " más "
+                tVUsers.text = (trip.driver?.name?.split(" ")?.get(0) ?: "") + " y " + accepted + " más "
             else
-                tVUsers.text = trip.driver.name.split(" ")[0]
+                tVUsers.text = trip.driver?.name?.split(" ")?.get(0) ?: ""
 
             rvUserv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
-            userDiscoverAdapter = UserDiscoverAdapter(trip.bookings, context)
+            userDiscoverAdapter = trip.bookings?.let { UserDiscoverAdapter(it, context) }!!
             rvUserv.adapter = userDiscoverAdapter
 
         }
@@ -129,18 +130,10 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
 
     fun setPhotoTrip(type: String, ivPlace: ImageView, context: Context) {
         when (type) {
-            "Boulder" -> {
-                Glide.with(context).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(ivPlace)
-            }
-            "Deportiva" -> {
-                Glide.with(context).load(R.mipmap.lead).error(R.mipmap.default_picture).into(ivPlace)
-            }
-            "Rocódromo" -> {
-                Glide.with(context).load(R.mipmap.gym).error(R.mipmap.default_picture).into(ivPlace)
-            }
-            "Clásica" -> {
-                Glide.with(context).load(R.mipmap.trad).error(R.mipmap.default_picture).into(ivPlace)
-            }
+            "Boulder" -> { Glide.with(context).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(ivPlace) }
+            "Deportiva" -> { Glide.with(context).load(R.mipmap.lead).error(R.mipmap.default_picture).into(ivPlace) }
+            "Rocódromo" -> { Glide.with(context).load(R.mipmap.gym).error(R.mipmap.default_picture).into(ivPlace) }
+            "Clásica" -> { Glide.with(context).load(R.mipmap.trad).error(R.mipmap.default_picture).into(ivPlace) }
             else -> { Glide.with(context).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(ivPlace) }
         }
     }

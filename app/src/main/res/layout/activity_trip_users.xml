@@ -14,6 +14,7 @@
         android:text="@string/text_travel"
         android:textSize="22sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -89,14 +90,28 @@
                 tools:ignore="ContentDescription" />
 
             <TextView
-                android:id="@+id/TVExitsAdmin"
+                android:id="@+id/TVExperience"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_exits"
-                android:textColor="#C3C3C3"
+                android:includeFontPadding="false"
+                android:text="@string/text_experienced"
+                android:textColor="@color/grey"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/TVVAdmin"
+                app:layout_constraintTop_toBottomOf="@+id/TVVAdmin" />
+
+            <TextView
+                android:id="@+id/TVExitsAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:includeFontPadding="false"
+                android:text="@string/text_exits"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/TVExperience"
                 app:layout_constraintTop_toBottomOf="@+id/TVVAdmin" />
 
             <TextView
@@ -104,12 +119,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:includeFontPadding="false"
                 android:text="@string/text_name"
                 android:textColor="@color/design_default_color_on_secondary"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/CIVAdmin"
                 app:layout_constraintStart_toEndOf="@+id/CIVAdmin"
-                app:layout_constraintTop_toTopOf="@+id/CIVAdmin" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/CIVAdmin"

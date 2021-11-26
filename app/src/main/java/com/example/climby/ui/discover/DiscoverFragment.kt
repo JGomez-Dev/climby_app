@@ -7,17 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.R
+import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentDiscoverBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
-import com.example.climby.ui.profile.EditProfileActivity
+import com.example.climby.utils.Commons
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -40,7 +38,7 @@ class DiscoverFragment : Fragment() {
             binding.RVTrips.adapter = discoverAdapter
             discoverAdapter.SetOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
-                    loadActivity()
+                    loadActivity(it[position])
                 }
             })
         })
@@ -56,8 +54,10 @@ class DiscoverFragment : Fragment() {
         return view
     }
 
-    fun loadActivity() {
-        val intent = Intent(activity, TripUsersActivity::class.java)
+    fun loadActivity(trip: TripModel) {
+        val intent = Intent(activity, TripUsersActivity::class.java).apply {
+            putExtra("trip", trip)
+        }
         startActivity(intent)
     }
 
