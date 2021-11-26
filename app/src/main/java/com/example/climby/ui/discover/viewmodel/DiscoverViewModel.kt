@@ -2,7 +2,6 @@ package com.example.climby.ui.discover.viewmodel
 
 import android.content.SharedPreferences
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

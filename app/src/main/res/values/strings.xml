@@ -66,5 +66,7 @@
     <string name="text_passenger">Asistentes</string>
     <string name="text_exits">13 Salidas</string>
     <string name="text_trip_empty">Parece que no hay salidas con estas opciones de búsqueda. ¡Anímate y créala tú!</string>
+    <string name="text_you_trip_empty">Esto parece un poco vacio.</string>
+
 
 </resources>
