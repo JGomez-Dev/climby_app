@@ -34,13 +34,21 @@ class DiscoverFragment : Fragment() {
 
         binding.RVTrips.layoutManager = LinearLayoutManager(activity)
         discoverViewModel.tripsModel.observe(viewLifecycleOwner, Observer {
-            discoverAdapter = DiscoverAdapter(it, requireContext())
-            binding.RVTrips.adapter = discoverAdapter
-            discoverAdapter.SetOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
-                override fun onItemClick(position: Int) {
-                    loadActivity(it[position])
-                }
-            })
+            if(it.isNullOrEmpty()){
+                binding.CLTripsEmpty.isVisible = true
+                binding.RVTrips.isVisible = false
+            }else{
+                binding.CLTripsEmpty.isVisible = false
+                binding.RVTrips.isVisible = true
+                discoverAdapter = DiscoverAdapter(it, requireContext())
+                binding.RVTrips.adapter = discoverAdapter
+                discoverAdapter.SetOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        loadActivity(it[position])
+                    }
+                })
+            }
+
         })
 
 
