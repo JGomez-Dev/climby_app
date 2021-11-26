@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.climby.R
+import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.utils.Commons
@@ -27,6 +28,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
 
 
     private var tripsList: List<TripModel> = ArrayList()
+
     private var context: Context
     private var userSession: UserModel = Commons.userSession!!
     private lateinit var userDiscoverAdapter: UserDiscoverAdapter
@@ -62,46 +64,51 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
 
         @SuppressLint("SetTextI18n")
         fun bind(trip: TripModel) {
-            var userAccepted = false
             var accepted = 0
+            val acceptedBookingList: MutableList<BookingModel> = arrayListOf()
+
             tvType.text = trip.type?.name + " en"
             tvPlaceDate.text = trip.site?.name + ", " + (trip.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip.departure?.let { Commons.getDate(it) }
             trip.type?.name?.let { setPhotoTrip(it, ivPlace, context) }
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(trip.driver?.photo).into(cvDriver)
             Commons.setTextButton(btRequest, trip)
-            /*result.bookings.forEach {
-                if (it.status == ReservationStatus.ACCEPTED.status && it.passenger.id == userSession.id) { // Se debe añadir la condición de que sea el usuario log
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
-                    btRequest.text = "Solicitado"
-                    accepted++
-                }
-                else if(it.status == ReservationStatus.REFUSE.status) { // Se debe añadir la condición de que sea el usuario log
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
-                    btRequest.text = "Te has unido"
-                    accepted++
-                }else if (it.status == ReservationStatus.UNANSWERED.status){
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.browser_actions_bg_grey);
-                    btRequest.text = "Rechazado"
-                }
-            }*/
+
             if (trip.bookings?.isEmpty() == true) {
                 btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
             } else {
+                btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
                 /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
                 trip.bookings?.forEach {
-                    if (it.status == ReservationStatus.ACCEPTED.status) {
-                        if (it.passenger?.id ?: 0 == userSession.id) {
-                            btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
-                            btRequest.text = "Te has unido\r\nLiberar plaza"
-                            userAccepted = true
-                        } else {
-                            accepted++
+                    if (it.passenger?.id ?: 0 == userSession.id) {
+                        when (it.status) {
+                            ReservationStatus.ACCEPTED.status -> {
+                                btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
+                                btRequest.text = "Te has unido\r\nLiberar plaza"
+                                acceptedBookingList.add(it)
+                            }
+                            ReservationStatus.UNANSWERED.status -> {
+                                btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
+                                btRequest.text = "Solicitado"
+                            }
+                            ReservationStatus.REFUSE.status -> {
+                                btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red_light);
+                                btRequest.text = "Rechazado"
+                                btRequest.isEnabled = false
+                            }
                         }
+                    } else {
+                        when (it.status) {
+                            ReservationStatus.ACCEPTED.status -> {
+                                accepted++
+                            }
+                        }
+                        acceptedBookingList.add(it)
                     }
                 }
-                if (accepted == trip.availablePlaces && userAccepted) {
+
+                if (accepted == trip.availablePlaces/* && userAccepted*/) {
                     btRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey);
+                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey_light);
                     btRequest.text = "Completo"
                     btRequest.isEnabled = false
                 }
@@ -112,8 +119,11 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                 tVUsers.text = trip.driver?.name?.split(" ")?.get(0) ?: ""
 
             rvUserv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
-            userDiscoverAdapter = trip.bookings?.let { UserDiscoverAdapter(it, context) }!!
-            rvUserv.adapter = userDiscoverAdapter
+
+            if (!acceptedBookingList.isNullOrEmpty()) {
+                userDiscoverAdapter = trip.bookings?.let { UserDiscoverAdapter(acceptedBookingList, context) }!!
+                rvUserv.adapter = userDiscoverAdapter
+            }
 
         }
     }
@@ -130,11 +140,21 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
 
     fun setPhotoTrip(type: String, ivPlace: ImageView, context: Context) {
         when (type) {
-            "Boulder" -> { Glide.with(context).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(ivPlace) }
-            "Deportiva" -> { Glide.with(context).load(R.mipmap.lead).error(R.mipmap.default_picture).into(ivPlace) }
-            "Rocódromo" -> { Glide.with(context).load(R.mipmap.gym).error(R.mipmap.default_picture).into(ivPlace) }
-            "Clásica" -> { Glide.with(context).load(R.mipmap.trad).error(R.mipmap.default_picture).into(ivPlace) }
-            else -> { Glide.with(context).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(ivPlace) }
+            "Boulder" -> {
+                Glide.with(context).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(ivPlace)
+            }
+            "Deportiva" -> {
+                Glide.with(context).load(R.mipmap.lead).error(R.mipmap.default_picture).into(ivPlace)
+            }
+            "Rocódromo" -> {
+                Glide.with(context).load(R.mipmap.gym).error(R.mipmap.default_picture).into(ivPlace)
+            }
+            "Clásica" -> {
+                Glide.with(context).load(R.mipmap.trad).error(R.mipmap.default_picture).into(ivPlace)
+            }
+            else -> {
+                Glide.with(context).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(ivPlace)
+            }
         }
     }
 }
