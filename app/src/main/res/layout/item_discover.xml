@@ -10,28 +10,17 @@
     android:background="@color/white"
     android:paddingBottom="16dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RVUsers"
+    <TextView
+        android:id="@+id/TVType"
         android:layout_width="wrap_content"
-        android:layout_height="34dp"
-        android:layout_marginStart="-15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/BTRequest"
-        app:layout_constraintStart_toEndOf="@+id/CVDriver"
-        app:layout_constraintTop_toTopOf="@+id/BTRequest">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/CVDriver"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:src="@mipmap/user"
-        app:civ_border_color="@color/white"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/RVUsers"
-        app:layout_constraintStart_toStartOf="@+id/TVPlaceDate"
-        app:layout_constraintTop_toTopOf="@+id/RVUsers" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/text_lead"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/TVPlaceDate"
@@ -46,22 +35,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/TVType"
         app:layout_constraintTop_toBottomOf="@+id/TVType" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/BTRequest"
-        android:layout_width="0dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/primary"
-        android:stateListAnimator="@null"
-        android:text="@string/text_places"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:cornerRadius="0dp"
-        app:layout_constraintEnd_toEndOf="@+id/IVPlace"
-        app:layout_constraintStart_toStartOf="@+id/IVPlace"
-        app:layout_constraintTop_toBottomOf="@+id/IVPlace" />
 
     <TextView
         android:id="@+id/TVDeparture"
@@ -79,6 +52,62 @@
         app:layout_constraintTop_toTopOf="@+id/TVPlaceDate"
         app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/TVTripID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/TVPlaceDate"
+        app:layout_constraintTop_toBottomOf="@+id/TVPlaceDate" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/BTRequest"
+        app:layout_constraintEnd_toStartOf="@+id/BTRequest"
+        app:layout_constraintStart_toStartOf="@+id/TVTripID"
+        app:layout_constraintTop_toTopOf="@+id/BTRequest">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_marginStart="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/CVDriver"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/CVDriver"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/user"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/RVUsers"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/RVUsers" />
+
+
+
+        <TextView
+            android:id="@+id/TVUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/RVUsers"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <ImageView
         android:id="@+id/IVPlace"
         android:layout_width="111dp"
@@ -89,36 +118,20 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@mipmap/boulder" />
 
-    <TextView
-        android:id="@+id/TVType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/text_lead"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/TVUsers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/BTRequest"
-        app:layout_constraintStart_toEndOf="@+id/RVUsers"
-        app:layout_constraintTop_toTopOf="@+id/BTRequest" />
-
-    <TextView
-        android:id="@+id/TVTripID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/TVPlaceDate"
-        app:layout_constraintTop_toBottomOf="@+id/TVPlaceDate" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/BTRequest"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/primary"
+        android:stateListAnimator="@null"
+        android:text="@string/text_places"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:cornerRadius="0dp"
+        app:layout_constraintEnd_toEndOf="@+id/IVPlace"
+        app:layout_constraintStart_toStartOf="@+id/IVPlace"
+        app:layout_constraintTop_toBottomOf="@+id/IVPlace" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

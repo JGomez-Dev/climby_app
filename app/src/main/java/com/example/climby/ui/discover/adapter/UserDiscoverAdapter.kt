@@ -24,17 +24,8 @@ class UserDiscoverAdapter(bookingsList: List<BookingModel>, context: Context) : 
         this.context = context
     }
 
-    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val cvPassenger: CircleImageView = itemView.findViewById(R.id.CVPassenger)
-
-        fun bind(result: BookingModel){
-            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(result.passenger?.photo).into(cvPassenger)
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DataViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_discover_user, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.item_discover_user, parent, false)
     )
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
@@ -43,4 +34,13 @@ class UserDiscoverAdapter(bookingsList: List<BookingModel>, context: Context) : 
 
     override fun getItemCount(): Int= bookingsList.size
 
+
+    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private val cvPassenger: CircleImageView = itemView.findViewById(R.id.CVPassenger)
+
+        fun bind(result: BookingModel){
+            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(result.passenger?.photo).into(cvPassenger)
+        }
+    }
 }
