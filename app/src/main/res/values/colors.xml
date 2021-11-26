@@ -14,5 +14,7 @@
     <color name="end_background">#EF6F46</color>
     <color name="grey">#929292</color>
     <color name="grey_dark">#575757</color>
+    <color name="grey_light">#ddd5d2</color>
+    <color name="red_light">#F5B7B1</color>
 
 </resources>
