@@ -29,7 +29,7 @@ class UserDiscoverAdapter(bookingsList: List<BookingModel>, context: Context) : 
         private val cvPassenger: CircleImageView = itemView.findViewById(R.id.CVPassenger)
 
         fun bind(result: BookingModel){
-            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(result.passenger.photo).into(cvPassenger)
+            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(result.passenger?.photo).into(cvPassenger)
         }
     }
 

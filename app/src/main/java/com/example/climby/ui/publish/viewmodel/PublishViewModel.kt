@@ -21,7 +21,7 @@ class PublishViewModel @Inject constructor(private val getAllProvinces: GetAllPr
             val result = getAllProvinces()
             val resultName: MutableList<String> = arrayListOf()
             result.forEach{
-                resultName.add(it.name)
+                it.name?.let { it1 -> resultName.add(it1) }
             }
             if (!result.isNullOrEmpty())
                 provincesModel.postValue(resultName)
@@ -34,7 +34,7 @@ class PublishViewModel @Inject constructor(private val getAllProvinces: GetAllPr
             val result = getAllTypes()
             val resultName: MutableList<String> = arrayListOf()
             result.forEach{
-                resultName.add(it.name)
+                it.name?.let { it1 -> resultName.add(it1) }
             }
             if (!result.isNullOrEmpty())
                 typesModel.postValue(resultName)

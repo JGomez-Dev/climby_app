@@ -39,18 +39,14 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
             val resultType: MutableList<TripModel> = arrayListOf()
             if (!result.isNullOrEmpty()) {
                 when (type) {
-                    "Boulder" -> result.forEach { if (it.type.name == "Boulder") { resultType.add(it) } }
-                    "Deportiva" -> result.forEach { if (it.type.name == "Deportiva") { resultType.add(it) } }
-                    "Rocódromo" -> result.forEach { if (it.type.name == "Rocódromo") { resultType.add(it) } }
-                    "Clásica" -> result.forEach { if (it.type.name == "Clásica") { resultType.add(it) } }
+                    "Boulder" -> result.forEach { if (it.type?.name == "Boulder") { resultType.add(it) } }
+                    "Deportiva" -> result.forEach { if (it.type?.name == "Deportiva") { resultType.add(it) } }
+                    "Rocódromo" -> result.forEach { if (it.type?.name == "Rocódromo") { resultType.add(it) } }
+                    "Clásica" -> result.forEach { if (it.type?.name == "Clásica") { resultType.add(it) } }
                     "NextWeekend" ->
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             result.forEach {
-                                Log.i("fecha1", "fecha1" + it.departure.split(" ")[0])
-                                Log.i("fecha1","calcNextFriday"+ calcNextFriday(LocalDate.now()).toString())
-                                Log.i("fecha1","calcNextSaturday"+ calcNextSaturday(LocalDate.now()).toString())
-                                Log.i("fecha1","calcNextSunday"+ calcNextSunday(LocalDate.now()).toString())
-                                if ((it.departure.split(" ")[0] == calcNextFriday(LocalDate.now()).toString()) || (it.departure.split(" ")[0] == calcNextSaturday(LocalDate.now()).toString()) || (it.departure.split(" ")[0] == calcNextSunday(LocalDate.now()).toString())) {
+                                if ((it.departure?.split(" ")?.get(0) ?: "" == calcNextFriday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSaturday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSunday(LocalDate.now()).toString())) {
                                     resultType.add(it)
                                 }
                             }

@@ -1,7 +1,6 @@
 package com.example.climby.ui.profile
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
@@ -23,7 +22,7 @@ import com.example.climby.utils.UserExperience
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditProfileFActivity : AppCompatActivity() {
+class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var editProfileViewModel: EditProfileViewModel
