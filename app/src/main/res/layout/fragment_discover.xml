@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:text="@string/text_empty"
+            android:text="@string/text_madrid"
             android:textColor="@color/primary"
             android:textSize="18sp"
             android:textStyle="bold"
