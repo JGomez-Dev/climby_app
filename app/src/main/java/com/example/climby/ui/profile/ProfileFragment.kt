@@ -64,7 +64,7 @@ class ProfileFragment: Fragment() {
         Glide.with(this).load(prefs.getString("photoUrl", "...")).error(R.mipmap.user).into(binding.CVImageProfile)
         binding.TVUserExperience.text = prefs.getString("experience", "")
         binding.TVUserOutputs.text = userSession.outings.toString() + if (userSession.outings.toString() == "1") " salida" else " salidas"
-
+        setStart()
     }
 
     private fun loadActivity(){
@@ -72,12 +72,38 @@ class ProfileFragment: Fragment() {
         startActivity(intent)
     }
 
-  /*  private fun getExperience() : String{
-        when (prefs.getString("experience", "")) {
-            "1" -> return "Principiante"
-            "2" -> return "Intermedio"
-            "3" -> return "Avanzado"
+    private fun setStart() {
+        when {
+            userSession.score > 2.75 -> {
+                binding.IVStartProfile1.setImageResource(R.mipmap.star)
+                binding.IVStartProfile2.setImageResource(R.mipmap.star)
+                binding.IVStartProfile3.setImageResource(R.mipmap.star)
+            }
+            userSession.score in 2.25..2.75 -> {
+                binding.IVStartProfile1.setImageResource(R.mipmap.star)
+                binding.IVStartProfile2.setImageResource(R.mipmap.star)
+                binding.IVStartProfile3.setImageResource(R.mipmap.medstart)
+            }
+            userSession.score in 1.75..2.25 -> {
+                binding.IVStartProfile1.setImageResource(R.mipmap.star)
+                binding.IVStartProfile2.setImageResource(R.mipmap.star)
+                binding.IVStartProfile3.setImageResource(R.mipmap.withoutstart)
+            }
+            userSession.score in 1.25..1.75 -> {
+                binding.IVStartProfile1.setImageResource(R.mipmap.star)
+                binding.IVStartProfile2.setImageResource(R.mipmap.medstart)
+                binding.IVStartProfile3.setImageResource(R.mipmap.withoutstart)
+            }
+            userSession.score in 0.75..1.25 -> {
+                binding.IVStartProfile1.setImageResource(R.mipmap.star)
+                binding.IVStartProfile2.setImageResource(R.mipmap.withoutstart)
+                binding.IVStartProfile3.setImageResource(R.mipmap.withoutstart)
+            }
+            userSession.score <= 0.75 -> {
+                binding.IVStartProfile1.setImageResource(R.mipmap.medstart)
+                binding.IVStartProfile2.setImageResource(R.mipmap.withoutstart)
+                binding.IVStartProfile3.setImageResource(R.mipmap.withoutstart)
+            }
         }
-        return "Principiante"
-    }*/
+    }
 }

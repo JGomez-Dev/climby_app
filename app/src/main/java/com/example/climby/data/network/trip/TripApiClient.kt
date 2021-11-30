@@ -8,7 +8,10 @@ import retrofit2.http.Path
 
 interface TripApiClient {
 
-    @GET("travel/{id}")
-    suspend fun getTrips(@Path("id") id: Int) : Response<List<TripModel>>
+    @GET("travel/travels")
+    suspend fun getTrips() : Response<List<TripModel>>
+
+    @GET("travel/users/{id}")
+    suspend fun getTripsUser(@Path("id") id: Int) : Response<List<TripModel>>
 
 }

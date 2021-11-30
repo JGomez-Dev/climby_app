@@ -7,9 +7,16 @@ import javax.inject.Inject
 
 class TripService @Inject constructor(private val api: TripApiClient) {
 
-    suspend fun getTrips(id: Int): List<TripModel> {
+
+    suspend fun getTrips(): List<TripModel> {
         return withContext(Dispatchers.IO) {
-            val response = api.getTrips(id)
+            val response = api.getTrips()
+            response.body() ?: emptyList()
+        }
+    }
+    suspend fun getTripsUser(id: Int): List<TripModel> {
+        return withContext(Dispatchers.IO) {
+            val response = api.getTripsUser(id)
             response.body() ?: emptyList()
         }
     }

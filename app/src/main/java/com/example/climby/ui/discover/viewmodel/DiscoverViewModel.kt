@@ -2,7 +2,6 @@ package com.example.climby.ui.discover.viewmodel
 
 import android.content.SharedPreferences
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,7 +26,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
     fun getTrips() {
         viewModelScope.launch {
             isLoading.postValue(true)
-            result = getAllTrips(sharedPref.getInt("id", 0))
+            result = getAllTrips()
             if (!result.isNullOrEmpty())
                 tripsModel.postValue(result.toList())
             isLoading.postValue(false)
