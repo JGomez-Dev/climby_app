@@ -21,7 +21,7 @@ class ComingOutingsViewModel @Inject constructor(private val getAllTrips: GetAll
     fun getMyTrips() {
         viewModelScope.launch {
             isLoading.postValue(true)
-            result = getAllTrips(sharedPref.getInt("id", 0))
+            result = getAllTrips()
             if (!result.isNullOrEmpty())
                 tripsModel.postValue(result.toList())
             isLoading.postValue(false)
