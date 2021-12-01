@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.databinding.FragmentMyOutingsBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
+import com.example.climby.ui.profile.adapter.DiscoverAdapterProfile
 import com.example.climby.ui.profile.viewmodel.MyOutingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +19,7 @@ class MyOutingsFragment : Fragment() {
 
     private lateinit var binding: FragmentMyOutingsBinding
     private lateinit var myOutingsViewModel: MyOutingsViewModel
-    private lateinit var discoverAdapter: DiscoverAdapter
+    private lateinit var discoverAdapterProfile: DiscoverAdapterProfile
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         myOutingsViewModel = ViewModelProvider(this).get(MyOutingsViewModel::class.java)
@@ -33,9 +34,9 @@ class MyOutingsFragment : Fragment() {
             }else{
                 binding.CLTripsEmpty.isVisible = false
                 binding.RVTrips.isVisible = true
-                discoverAdapter = DiscoverAdapter(it, requireContext())
-                binding.RVTrips.adapter = discoverAdapter
-                discoverAdapter.SetOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
+                discoverAdapterProfile = DiscoverAdapterProfile(it, requireContext())
+                binding.RVTrips.adapter = discoverAdapterProfile
+                discoverAdapterProfile.SetOnItemClickListener(object : DiscoverAdapterProfile.OnItemClickListener {
                     override fun onItemClick(position: Int) {
                         //loadActivity(it[position])
                     }

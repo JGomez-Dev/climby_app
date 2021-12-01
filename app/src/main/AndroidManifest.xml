@@ -49,6 +49,9 @@
             android:name="com.example.climby.ui.discover.TripUsersActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.example.climby.ui.profile.EditTripActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
 
 
         <!--<meta-data

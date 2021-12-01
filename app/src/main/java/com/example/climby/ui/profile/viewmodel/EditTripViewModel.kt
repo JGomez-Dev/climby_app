@@ -1,4 +1,4 @@
-package com.example.climby.ui.publish.viewmodel
+package com.example.climby.ui.profile.viewmodel
 
 
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PublishViewModel @Inject constructor(private val getAllProvinces: GetAllProvinces, private val getAllTypes: Get) : ViewModel() {
+class EditTripViewModel  @Inject constructor(private val getAllProvinces: GetAllProvinces, private val getAllTypes: Get) : ViewModel() {
 
     var provincesModel = MutableLiveData<List<String>>()
     var typesModel = MutableLiveData<List<String>>()
@@ -39,4 +39,5 @@ class PublishViewModel @Inject constructor(private val getAllProvinces: GetAllPr
                 typesModel.postValue(resultName)
         }
     }
+
 }

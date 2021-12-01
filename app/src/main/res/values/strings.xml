@@ -40,6 +40,7 @@
     <string name="text_type">¿Qué tipo de escalada haréis?</string>
     <string name="text_select_school">Elige una escuela o rocódromo...</string>
     <string name="create_output">Crear una salida</string>
+    <string name="edit_output">Editar salida</string>
     <string name="text_site">¿Dónde será la salida?</string>
     <string-array name="places">
         <item>1</item>
@@ -53,6 +54,7 @@
     <string name="text_edit">Editar</string>
     <string name="text_user_name">Usuario</string>
     <string name="text_save">Guardar</string>
+    <string name="text_save_changes">Guardar cambios</string>
     <string name="text_logout">Cerrar sesión</string>
     <string name="text_where_will_you_climb">¿Dondé vas a escalar?</string>
     <string name="text_experience">Experiencia</string>
@@ -68,6 +70,9 @@
     <string name="text_trip_empty">Parece que no hay salidas con estas opciones de búsqueda. ¡Anímate y créala tú!</string>
     <string name="text_you_trip_empty">Esto parece un poco vacio.</string>
     <string name="text_madrid">Madrid</string>
-
-
+    <string name="text_delete_exit">Eliminar salida</string>
+    <string name="text_sure">¿Estás seguro?</string>
+    <string name="text_asistance">En caso de tener asistentes confirmados, perderás el conacto a través de climby."</string>
+    <string name="cancel">cancelar</string>
+    <string name="text_delete">Eliminar</string>
 </resources>
