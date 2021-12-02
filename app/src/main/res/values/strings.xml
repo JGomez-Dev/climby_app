@@ -15,7 +15,7 @@
     <string name="text_join">Únete a otros escaladores como tú y sal a escalar de forma segura</string>
     <string name="text_info">¿Tu información es correcta?</string>
     <string name="text_change_photo">Cambiar mi foto</string>
-    <string name="text_name">Nombre</string>
+    <string name="text_name">Pepito</string>
     <string name="text_empty">...</string>
     <string name="text_join_a_group">Lo usaremos como medio de contacto solo cuando quieras unirte a un grupo.</string>
     <string name="text_continue">Continuar</string>
@@ -75,4 +75,8 @@
     <string name="text_asistance">En caso de tener asistentes confirmados, perderás el conacto a través de climby."</string>
     <string name="cancel">cancelar</string>
     <string name="text_delete">Eliminar</string>
+    <string name="text_request">Solicitudes pendientes</string>
+    <string name="text_refuse">Rechazar</string>
+    <string name="text_accept">Aceptar</string>
+    <string name="text_contact_by_whatsapp">Contactar por Whatsapp</string>
 </resources>

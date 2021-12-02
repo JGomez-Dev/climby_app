@@ -40,9 +40,7 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
         getData()
         init()
 
-        binding.RVAssistants.layoutManager = LinearLayoutManager(this)
-        tripUsersAdapter = TripUsersAdapter(trip?.bookings ?: emptyList(), this)
-        binding.RVAssistants.adapter = tripUsersAdapter
+
 
         binding.IVBack.setOnClickListener {
             onBackPressed()
@@ -61,6 +59,9 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
         binding.TVSite.text = trip?.site?.name + ", " + (trip?.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip?.departure?.let { Commons.getDate(it) }
         Glide.with(this).load(trip?.driver?.photo).error(R.mipmap.user).into(binding.CIVAdmin)
         trip?.driver?.let { setStart(it) }
+        binding.RVAssistants.layoutManager = LinearLayoutManager(this)
+        tripUsersAdapter = TripUsersAdapter(trip?.bookings ?: emptyList(), this)
+        binding.RVAssistants.adapter = tripUsersAdapter
     }
 
     private fun getData() {
