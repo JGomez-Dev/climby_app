@@ -21,6 +21,7 @@ import com.example.climby.data.model.user.UserModel
 import com.example.climby.ui.discover.adapter.UserDiscoverAdapter
 import com.example.climby.ui.profile.EditProfileActivity
 import com.example.climby.ui.profile.EditTripActivity
+import com.example.climby.ui.profile.RequestsActivity
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
 import de.hdodenhof.circleimageview.CircleImageView
@@ -129,7 +130,10 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
                 context.startActivities(arrayOf(intent))
             }
             btRequest.setOnClickListener {
-                Toast.makeText(context, "Unirme", Toast.LENGTH_SHORT).show()
+                val intent =Intent(context, RequestsActivity::class.java).apply {
+                    putExtra("trip", trip)
+                }
+                context.startActivities(arrayOf(intent))
             }
             if (!acceptedBookingList.isNullOrEmpty()) {
                 userDiscoverAdapter = trip.bookings?.let { UserDiscoverAdapter(acceptedBookingList, context) }!!
