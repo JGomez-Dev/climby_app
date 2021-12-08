@@ -65,8 +65,9 @@
             android:id="@+id/TVUserExperience"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:includeFontPadding="false"
             android:text="@string/text_experienced"
-            android:textColor="#C3C3C3"
+            android:textColor="@color/grey"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,8 +78,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:includeFontPadding="false"
             android:text="@string/text_exits"
-            android:textColor="#C3C3C3"
+            android:textColor="@color/grey"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/TVUserExperience"
@@ -89,6 +91,7 @@
             android:id="@+id/TVUserNameRequest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:includeFontPadding="false"
             android:text="@string/text_name"
             android:textColor="@color/design_default_color_on_secondary"
             android:textSize="28sp"
@@ -114,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
@@ -132,65 +135,43 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
-            android:background="@color/primary"
+            android:backgroundTint="@color/primary"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="@string/text_accept"
             android:textAllCaps="false"
             android:textColor="@color/white"
+            app:cornerRadius="0dp"
             tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/FLContact"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/BtContact"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/gree_Whatsapp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:padding="14dp"
+        android:stateListAnimator="@null"
+        android:text="@string/text_contact_by_whatsapp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:visibility="gone"
+        app:backgroundTint="@color/gree_whatsapp"
+        app:cornerRadius="0dp"
+        app:icon="@drawable/ic_walogo"
+        app:iconSize="?attr/dialogPreferredPadding"
         app:layout_constraintBottom_toBottomOf="@+id/LLButton"
         app:layout_constraintEnd_toEndOf="@+id/LLButton"
         app:layout_constraintStart_toStartOf="@+id/LLButton"
-        app:layout_constraintTop_toTopOf="@+id/LLButton">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
-
-            <Button
-                android:id="@+id/BTContact"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/gree_Whatsapp"
-                android:text="@string/text_contact_by_whatsapp"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/IVWhatapp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/BTContact"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_walogo"
-                tools:ignore="ContentDescription" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="@+id/LLButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

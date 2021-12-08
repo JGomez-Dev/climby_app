@@ -78,9 +78,12 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
             Commons.setTextButton(btRequest, trip)
 
             if (trip.bookings?.isEmpty() == true) {
-                btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
+                btRequest.text = "Aún no tienes peticiones"
+                btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey_light);
+                btRequest.isEnabled = false
+
             } else {
-                btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
+                btRequest.text = "Ver peticiones"
                 /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
                 trip.bookings?.forEach {
                     if (it.passenger?.id ?: 0 == userSession.id) {
@@ -104,9 +107,13 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
                         when (it.status) {
                             ReservationStatus.ACCEPTED.status -> {
                                 accepted++
+                                acceptedBookingList.add(it)
+                            }
+                            ReservationStatus.UNANSWERED.status -> {
+                                accepted++
+                                acceptedBookingList.add(it)
                             }
                         }
-                        acceptedBookingList.add(it)
                     }
                 }
 
@@ -118,9 +125,9 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
                 }
             }
             if (accepted > 0)
-                tVUsers.text = (trip.driver?.name?.split(" ")?.get(0) ?: "") + " y " + accepted + " más "
+                tVUsers.text = "Tú y $accepted más "
             else
-                tVUsers.text = trip.driver?.name?.split(" ")?.get(0) ?: ""
+                tVUsers.text = "Tú"
 
             rvUserv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
             tVEdit.setOnClickListener {

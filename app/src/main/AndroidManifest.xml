@@ -55,6 +55,11 @@
         <activity
             android:name="com.example.climby.ui.profile.RequestsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name="com.example.climby.ui.profile.RefuseTripActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustResize" />
+
 
         <!--<meta-data
             android:name="com.facebook.sdk.ApplicationId"
