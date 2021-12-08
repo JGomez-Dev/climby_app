@@ -38,7 +38,7 @@
     <string name="text_places_available">Plazas disponibles</string>
     <string name="text_create_output">Crear salida</string>
     <string name="text_type">¿Qué tipo de escalada haréis?</string>
-    <string name="text_select_school">Elige una escuela o rocódromo...</string>
+    <string name="text_select_school">Elige una escuela o rocódromo…</string>
     <string name="create_output">Crear una salida</string>
     <string name="edit_output">Editar salida</string>
     <string name="text_site">¿Dónde será la salida?</string>
@@ -64,7 +64,7 @@
     <string name="text_lead">Deportiva en</string>
     <string name="text_places">Pedir unirme 4 plazas</string>
     <string name="text_travel">Viaje</string>
-    <string name="text_admin">Admin</string>
+    <string name="text_admin">Organizador</string>
     <string name="text_passenger">Asistentes</string>
     <string name="text_exits">13 Salidas</string>
     <string name="text_trip_empty">Parece que no hay salidas con estas opciones de búsqueda. ¡Anímate y créala tú!</string>
@@ -76,7 +76,9 @@
     <string name="cancel">cancelar</string>
     <string name="text_delete">Eliminar</string>
     <string name="text_request">Solicitudes pendientes</string>
-    <string name="text_refuse">Rechazar</string>
     <string name="text_accept">Aceptar</string>
     <string name="text_contact_by_whatsapp">Contactar por Whatsapp</string>
+    <string name="text_refuse">Rechazar</string>
+    <string name="text_explication">¿Quieres darle una explicación?</string>
+    <string name="text_honest">Sé honesto y cordial. Quizás haya otras oportunidades.</string>
 </resources>
