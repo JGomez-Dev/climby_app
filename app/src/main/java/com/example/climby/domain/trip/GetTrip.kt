@@ -6,5 +6,5 @@ import javax.inject.Inject
 
 
 class GetTrip @Inject constructor(private val repository : TripRepository) {
-    suspend operator fun invoke():List<TripModel> = repository.getTrips()
+    suspend operator fun invoke():List<TripModel>? = repository.getTrips()
 }

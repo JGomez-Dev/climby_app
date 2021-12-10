@@ -8,10 +8,14 @@ import javax.inject.Inject
 class TripService @Inject constructor(private val api: TripApiClient) {
 
 
-    suspend fun getTrips(): List<TripModel> {
+    suspend fun getTrips(): List<TripModel>? {
         return withContext(Dispatchers.IO) {
-            val response = api.getTrips()
-            response.body() ?: emptyList()
+            try{
+                val response = api.getTrips()
+                response.body() ?: emptyList()
+            }catch (e : Exception){
+                null
+            }
         }
     }
 
