@@ -8,10 +8,11 @@
     tools:context=".ui.discover.DiscoverFragment">
 
     <LinearLayout
-        android:id="@+id/linearLayout7"
+        android:id="@+id/LYDiscover_outputs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,35 +22,40 @@
             android:id="@+id/TVNextExits"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/text_exit_from"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/TVMadrid"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/SPCommunity"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:text="@string/text_madrid"
-            android:textColor="@color/primary"
+            android:background="@color/background"
+            android:entries="@array/empty_list"
+            android:layout_gravity="center"
+            android:padding="0dp"
+            android:spinnerMode="dialog"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/IVEdit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/ic_baseline_arrow_drop_down_24"
-            app:tint="@color/primary"
-            tools:ignore="ContentDescription" />
-
-
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/IVEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="-5dp"
+        android:src="@drawable/ic_baseline_arrow_drop_down_24"
+        app:layout_constraintBottom_toBottomOf="@+id/LYDiscover_outputs"
+        app:layout_constraintStart_toEndOf="@+id/LYDiscover_outputs"
+        app:layout_constraintTop_toTopOf="@+id/LYDiscover_outputs"
+        app:tint="@color/primary" />
+
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
@@ -58,7 +64,7 @@
         android:layout_marginTop="8dp"
         android:scrollbars="none"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+        app:layout_constraintTop_toBottomOf="@+id/LYDiscover_outputs">
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/toggleButton"
@@ -205,6 +211,49 @@
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@mipmap/hand"
             tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CLBadConnection"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+
+        <TextView
+            android:id="@+id/TVBadConnection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:gravity="center"
+            android:text="@string/text_bad_connection"
+            android:textColor="@color/grey"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/TVRetry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/TVRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/background"
+            android:gravity="center"
+            android:stateListAnimator="@null"
+            android:text="@string/text_retry"
+            android:textAllCaps="false"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

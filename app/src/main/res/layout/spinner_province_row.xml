@@ -9,24 +9,18 @@
         android:id="@+id/TVMadrid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/text_madrid"
         android:textColor="@color/primary"
-        android:textSize="18sp"
+        android:ellipsize="end"
+        android:padding="0dp"
+        android:maxLines="1"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/IVEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_arrow_drop_down_24"
-        app:layout_constraintBottom_toBottomOf="@+id/TVMadrid"
-        app:layout_constraintStart_toEndOf="@+id/TVMadrid"
-        app:layout_constraintTop_toTopOf="@+id/TVMadrid"
-        app:tint="@color/primary"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,7 +16,7 @@
     <string name="text_info">¿Tu información es correcta?</string>
     <string name="text_change_photo">Cambiar mi foto</string>
     <string name="text_name">Pepito</string>
-    <string name="text_empty">...</string>
+    <string name="text_empty">…</string>
     <string name="text_join_a_group">Lo usaremos como medio de contacto solo cuando quieras unirte a un grupo.</string>
     <string name="text_continue">Continuar</string>
     <string name="text_telefono">Teléfono</string>
@@ -49,6 +49,9 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    <string-array name="empty_list">
+        <item>…</item>
+    </string-array>
     <string name="text_my_outings">Mis salidas</string>
     <string name="text_coming_outings">Proximas salidas</string>
     <string name="text_edit">Editar</string>
@@ -68,6 +71,8 @@
     <string name="text_passenger">Asistentes</string>
     <string name="text_exits">13 Salidas</string>
     <string name="text_trip_empty">Parece que no hay salidas con estas opciones de búsqueda. ¡Anímate y créala tú!</string>
+    <string name="text_bad_connection">Ha habido un problema al cargar las salidas</string>
+    <string name="text_retry">Volver a intentar</string>
     <string name="text_you_trip_empty">Esto parece un poco vacio.</string>
     <string name="text_madrid">Madrid</string>
     <string name="text_delete_exit">Eliminar salida</string>
@@ -81,4 +86,8 @@
     <string name="text_refuse">Rechazar</string>
     <string name="text_explication">¿Quieres darle una explicación?</string>
     <string name="text_honest">Sé honesto y cordial. Quizás haya otras oportunidades.</string>
+    <string name="basic_channel_id">basic_channel_id</string>
+    <string name="basic_channel_name">basic_channel_name</string>
+    <string name="basic_channel_description">basic_channel_description</string>
+    <string name="text_0">0</string>
 </resources>

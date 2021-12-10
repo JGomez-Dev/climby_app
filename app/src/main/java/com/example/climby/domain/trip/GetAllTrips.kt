@@ -5,5 +5,5 @@ import com.example.climby.data.repository.TripRepository
 import javax.inject.Inject
 
 class GetAllTrips @Inject constructor(private val repository : TripRepository) {
-    suspend operator fun invoke(): List<TripModel> = repository.getTrips()
+    suspend operator fun invoke(): List<TripModel>? = repository.getTrips()
 }
