@@ -21,12 +21,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class WhatPlaceActivity : AppCompatActivity(){
 
     private lateinit var whatPlaceViewModel: WhatPlaceViewModel
+    private lateinit var publishViewModel: PublishViewModel
+
     private lateinit var binding: ActivityWhatPlaceBinding
     private lateinit var school: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         whatPlaceViewModel = ViewModelProvider(this).get(WhatPlaceViewModel::class.java)
+        publishViewModel = ViewModelProvider(this).get(PublishViewModel::class.java)
 
         binding = ActivityWhatPlaceBinding.inflate(layoutInflater)
 
@@ -64,8 +67,9 @@ class WhatPlaceActivity : AppCompatActivity(){
         }
 
         binding.BTSave.setOnClickListener {
-
+            publishViewModel.saveSite(school)
             onBackPressed()
+            closeKeyboard()
         }
 
         whatPlaceViewModel.getAllSchools()

@@ -64,8 +64,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TVCommunity" />
@@ -96,7 +94,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/SPCommunity" />
 
-        <EditText
+        <TextView
             android:id="@+id/ETSite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,7 +104,6 @@
             android:background="@color/white"
             android:ems="10"
             android:focusable="false"
-            android:inputType="textCapWords"
             android:paddingStart="8dp"
             android:paddingTop="16dp"
             android:paddingEnd="16dp"
@@ -114,6 +111,7 @@
             android:stateListAnimator="@null"
             android:text="@string/text_select_school"
             android:textAlignment="textStart"
+            android:textColor="@color/grey"
             android:textColorHint="@color/grey_dark"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -209,6 +207,7 @@
                         android:maxLines="1"
                         android:padding="16dp"
                         android:text="@string/text_date"
+                        android:textColor="@color/grey"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
