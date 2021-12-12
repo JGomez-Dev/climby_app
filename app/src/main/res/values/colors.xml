@@ -19,6 +19,6 @@
     <color name="red_delete">#B01A1A</color>
     <color name="gree_whatsapp">#00bb2d</color>
     <color name="transparent_background">#80000000</color>
-
+    <color name="shimmer_color">#f2f3f8</color>
 
 </resources>

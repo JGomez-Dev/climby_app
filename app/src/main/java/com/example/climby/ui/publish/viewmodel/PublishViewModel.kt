@@ -15,7 +15,6 @@ class PublishViewModel @Inject constructor(private val getAllProvinces: GetAllPr
 
     var provincesModel = MutableLiveData<List<String>>()
     var typesModel = MutableLiveData<List<String>>()
-    var siteModel = MutableLiveData<String>()
 
     fun getProvince(){
         viewModelScope.launch {
@@ -29,11 +28,7 @@ class PublishViewModel @Inject constructor(private val getAllProvinces: GetAllPr
         }
     }
 
-    fun saveSite(site: String){
-        viewModelScope.launch {
-            siteModel.postValue("Hola")
-        }
-    }
+
 
     fun getTypes(){
         viewModelScope.launch {

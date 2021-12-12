@@ -39,7 +39,6 @@ class OnBoardingFirstActivity : AppCompatActivity() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 photoUrl = data?.data.toString()
-                /*prefs.putString("photoUrl", photoUrl)*/
                 Glide.with(this).load(photoUrl).error(R.mipmap.user).into(binding.CIPhotoUser)
             }
         }
