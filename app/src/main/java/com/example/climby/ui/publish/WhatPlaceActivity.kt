@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
 import com.example.climby.databinding.ActivityWhatPlaceBinding
-import com.example.climby.databinding.FragmentPublishBinding
 import com.example.climby.ui.publish.viewmodel.PublishViewModel
 import com.example.climby.ui.publish.viewmodel.WhatPlaceViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,16 +20,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class WhatPlaceActivity : AppCompatActivity(){
 
     private lateinit var whatPlaceViewModel: WhatPlaceViewModel
-    private lateinit var publishViewModel: PublishViewModel
 
     private lateinit var binding: ActivityWhatPlaceBinding
     private lateinit var school: String
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         whatPlaceViewModel = ViewModelProvider(this).get(WhatPlaceViewModel::class.java)
-        publishViewModel = ViewModelProvider(this).get(PublishViewModel::class.java)
-
         binding = ActivityWhatPlaceBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
@@ -67,17 +64,11 @@ class WhatPlaceActivity : AppCompatActivity(){
         }
 
         binding.BTSave.setOnClickListener {
-            publishViewModel.saveSite(school)
             onBackPressed()
             closeKeyboard()
         }
 
         whatPlaceViewModel.getAllSchools()
-    }
-
-
-    private fun saveSchool(school: String) {
-        whatPlaceViewModel.saveSchool(school)
     }
 
     private fun showKeyboard() {
