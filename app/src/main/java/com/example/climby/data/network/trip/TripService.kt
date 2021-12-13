@@ -1,6 +1,7 @@
 package com.example.climby.data.network.trip
 
 import com.example.climby.data.model.trip.TripModel
+import com.example.climby.data.model.user.UserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -30,6 +31,13 @@ class TripService @Inject constructor(private val api: TripApiClient) {
         return withContext(Dispatchers.IO) {
             val response = api.getTravelsWithUserReservation(id)
             response.body() ?: emptyList()
+        }
+    }
+
+    suspend fun postTrip(tripModel: TripModel): TripModel {
+        return withContext(Dispatchers.IO) {
+            val response = api.postUser(tripModel)
+            response.body()!!
         }
     }
 }

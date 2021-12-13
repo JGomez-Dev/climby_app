@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class OnBoardingSecondViewModel @Inject constructor(private val insert: Insert, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
 
-    fun postUser(userModel: UserModel) {
+    fun saveUser(userModel: UserModel) {
         viewModelScope.launch {
             val result = insert(userModel)
             val editor = sharedPref.edit()

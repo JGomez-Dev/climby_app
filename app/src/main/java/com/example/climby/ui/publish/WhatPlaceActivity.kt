@@ -8,10 +8,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
 import com.example.climby.databinding.ActivityWhatPlaceBinding
-import com.example.climby.ui.publish.viewmodel.PublishViewModel
 import com.example.climby.ui.publish.viewmodel.WhatPlaceViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class WhatPlaceActivity : AppCompatActivity(){
 
     private lateinit var whatPlaceViewModel: WhatPlaceViewModel
-
     private lateinit var binding: ActivityWhatPlaceBinding
     private lateinit var school: String
 
@@ -65,11 +64,23 @@ class WhatPlaceActivity : AppCompatActivity(){
 
         binding.BTSave.setOnClickListener {
             onBackPressed()
+            /*replaceFragment()*/
             closeKeyboard()
         }
 
         whatPlaceViewModel.getAllSchools()
     }
+
+    /*private fun replaceFragment() {
+        // Create new fragment and transaction
+        val newFragment: Fragment = PublishFragment()
+        val transaction = supportFragmentManager.beginTransaction()
+
+        transaction.replace(R.id.fragment_container, newFragment)
+        transaction.addToBackStack(null)
+
+        transaction.commit()
+    }*/
 
     private fun showKeyboard() {
         binding.ACSchool.requestFocus()
