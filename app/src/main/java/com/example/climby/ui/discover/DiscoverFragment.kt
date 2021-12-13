@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,10 +17,8 @@ import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentDiscoverBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
-import com.example.climby.ui.publish.viewmodel.PublishViewModel
-import com.example.climby.utils.Commons
+import com.example.climby.view.activity.OnBoardingThreeActivity
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 
 
 @AndroidEntryPoint
@@ -38,7 +35,6 @@ class DiscoverFragment : Fragment() {
         binding = FragmentDiscoverBinding.inflate(layoutInflater)
         val view: View = binding.root
 
-
         binding.RVTrips.layoutManager = LinearLayoutManager(activity)
         discoverViewModel.tripsModel.observe(viewLifecycleOwner, Observer {
             if(it.isNullOrEmpty()){
@@ -51,7 +47,7 @@ class DiscoverFragment : Fragment() {
                 binding.RVTrips.adapter = discoverAdapter
                 discoverAdapter.SetOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
-                        loadActivity(it[position])
+                        loadTripUsers(it[position])
                     }
                 })
             }
@@ -80,20 +76,34 @@ class DiscoverFragment : Fragment() {
             binding.CLTripsEmpty.isVisible = !it
 
         })
+
         binding.TVRetry.setOnClickListener {
             discoverViewModel.getTrips()
         }
+
         discoverViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding.PBDiscover.isVisible = it
         })
+
         binding.toggleButton.addOnButtonCheckedListener { _, checkedId, isChecked ->
             getFilterAndSendQuery(isChecked, checkedId, selectedProvince)
         }
+
+        discoverViewModel.tripModel.observe(viewLifecycleOwner, Observer {
+            loadTripWithoutQualify(it)
+        })
         return view
     }
 
-    fun loadActivity(trip: TripModel) {
+    fun loadTripUsers(trip: TripModel) {
         val intent = Intent(activity, TripUsersActivity::class.java).apply {
+            putExtra("trip", trip)
+        }
+        startActivity(intent)
+    }
+
+    private fun loadTripWithoutQualify(trip: TripModel) {
+        val intent = Intent(activity, OnBoardingThreeActivity::class.java).apply {
             putExtra("trip", trip)
         }
         startActivity(intent)

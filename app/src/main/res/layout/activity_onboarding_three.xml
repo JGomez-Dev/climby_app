@@ -145,7 +145,6 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:background="@color/primary"
-        android:enabled="false"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:stateListAnimator="@null"

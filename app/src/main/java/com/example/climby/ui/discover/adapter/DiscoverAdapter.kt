@@ -28,7 +28,6 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
 
 
     private var tripsList: List<TripModel> = ArrayList()
-
     private var context: Context
     private var userSession: UserModel = Commons.userSession!!
     private lateinit var userDiscoverAdapter: UserDiscoverAdapter
@@ -138,7 +137,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
 
     override fun getItemCount(): Int = tripsList.size
 
-    fun setPhotoTrip(type: String, ivPlace: ImageView, context: Context) {
+    private fun setPhotoTrip(type: String, ivPlace: ImageView, context: Context) {
         when (type) {
             "Boulder" -> {
                 Glide.with(context).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(ivPlace)

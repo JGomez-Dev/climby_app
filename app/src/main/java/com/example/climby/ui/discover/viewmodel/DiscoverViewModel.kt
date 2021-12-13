@@ -21,10 +21,10 @@ import javax.inject.Inject
 class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips, private val getAllProvinces: GetAllProvinces, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
 
     var tripsModel = MutableLiveData<List<TripModel>>()
+    var tripModel = MutableLiveData<TripModel>()
     var isLoading = MutableLiveData<Boolean>()
     var isBadResponse = MutableLiveData<Boolean>()
     var provincesModel = MutableLiveData<List<String>>()
-
     var result: List<TripModel>? = null
 
     fun getTrips() {
@@ -36,6 +36,14 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
                 isBadResponse.postValue(true)
             }else{
                 if (result!!.isNotEmpty())
+                    result?.forEach { it ->
+                        it.bookings?.forEach { _it ->
+                            val id = sharedPref.getInt("id", 0)
+                            if(_it.valuationStatus == false && id == _it.passenger?.id){
+                                tripModel.postValue(it)
+                            }
+                        }
+                    }
                     tripsModel.postValue(result!!.toList())
                 isLoading.postValue(false)
             }
