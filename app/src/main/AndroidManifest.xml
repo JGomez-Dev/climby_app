@@ -59,7 +59,10 @@
             android:name="com.example.climby.ui.profile.RefuseTripActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
-
+        <activity
+            android:name="com.example.climby.view.activity.OnBoardingThreeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustResize" />
 
         <!--<meta-data
             android:name="com.facebook.sdk.ApplicationId"
