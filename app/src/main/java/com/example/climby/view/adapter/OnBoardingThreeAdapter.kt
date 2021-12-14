@@ -15,6 +15,7 @@ import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
 import de.hdodenhof.circleimageview.CircleImageView
 
+
 class OnBoardingThreeAdapter(listBokings: List<BookingModel>, context: Context) : RecyclerView.Adapter<OnBoardingThreeAdapter.DataViewHolder>() {
 
     private var listBokings: List<BookingModel> = ArrayList()
@@ -44,53 +45,67 @@ class OnBoardingThreeAdapter(listBokings: List<BookingModel>, context: Context) 
         private val ivStart1: ImageView = itemView.findViewById(R.id.IVStart1)
         private val ivStart2: ImageView = itemView.findViewById(R.id.IVStart2)
         private val ivStart3: ImageView = itemView.findViewById(R.id.IVStart3)
+        private var contStart = 3.0
 
         @SuppressLint("SetTextI18n")
         fun bind(booking: BookingModel) {
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(booking.passenger?.photo).into(cvAttendees)
             tvNameQualifyAttendees.text = booking.passenger?.name?.split(" ")?.get(0)!!
             ivAddStart.setOnClickListener {
-                if (ivStart1.tag == R.mipmap.withoutstart) {
-                    ivStart1.setImageResource(R.mipmap.medstart)
-                }
-                if (ivStart1.tag == R.mipmap.medstart) {
-                    ivStart2.setImageResource(R.mipmap.star)
-                }
-                if (ivStart2.tag == R.mipmap.withoutstart) {
-                    ivStart2.setImageResource(R.mipmap.medstart)
-                }
-                if (ivStart2.tag == R.mipmap.medstart) {
-                    ivStart3.setImageResource(R.mipmap.star)
-                }
-                if (ivStart3.tag == R.mipmap.withoutstart) {
-                    ivStart3.setImageResource(R.mipmap.medstart)
-                }
-                if (ivStart3.tag == R.mipmap.medstart) {
-                    ivStart3.setImageResource(R.mipmap.star)
-                }
+                if(contStart != 3.0){
+                    contStart += 0.5
+                    putStart(contStart)
 
+                }
 
             }
             ivRemoveStart.setOnClickListener {
-                if (ivStart1.tag == R.mipmap.medstart) {
-                    ivStart1.setImageResource(R.mipmap.withoutstart)
-                }
-                if (ivStart1.tag == R.mipmap.star) {
-                    ivStart1.setImageResource(R.mipmap.medstart)
-                }
-                if (ivStart2.tag == R.mipmap.medstart) {
-                    ivStart2.setImageResource(R.mipmap.withoutstart)
-                }
-                if (ivStart2.tag == R.mipmap.star) {
-                    ivStart2.setImageResource(R.mipmap.medstart)
-                }
-                if (ivStart3.tag == R.mipmap.medstart) {
-                    ivStart3.setImageResource(R.mipmap.withoutstart)
-                }
-                if (ivStart3.tag == R.mipmap.star) {
-                    ivStart3.setImageResource(R.mipmap.medstart)
+                if(contStart != 0.0){
+                    contStart -= 0.5
+                    putStart(contStart)
                 }
             }
         }
+        private fun putStart(contStart: Double){
+            when {
+                contStart.equals(0.0) -> {
+                    ivStart1.setImageResource(R.mipmap.withoutstart)
+                    ivStart2.setImageResource(R.mipmap.withoutstart)
+                    ivStart3.setImageResource(R.mipmap.withoutstart)
+                }
+                contStart.equals(0.5) -> {
+                    ivStart1.setImageResource(R.mipmap.medstart)
+                    ivStart2.setImageResource(R.mipmap.withoutstart)
+                    ivStart3.setImageResource(R.mipmap.withoutstart)
+                }
+                contStart.equals(1.0) -> {
+                    ivStart1.setImageResource(R.mipmap.star)
+                    ivStart2.setImageResource(R.mipmap.withoutstart)
+                    ivStart3.setImageResource(R.mipmap.withoutstart)
+                }
+                contStart.equals(1.5) -> {
+                    ivStart1.setImageResource(R.mipmap.star)
+                    ivStart2.setImageResource(R.mipmap.medstart)
+                    ivStart3.setImageResource(R.mipmap.withoutstart)
+                }
+                contStart.equals(2.0) -> {
+                    ivStart1.setImageResource(R.mipmap.star)
+                    ivStart2.setImageResource(R.mipmap.star)
+                    ivStart3.setImageResource(R.mipmap.withoutstart)
+                }
+                contStart.equals(2.5) -> {
+                    ivStart1.setImageResource(R.mipmap.star)
+                    ivStart2.setImageResource(R.mipmap.star)
+                    ivStart3.setImageResource(R.mipmap.medstart)
+                }
+                contStart.equals(3.0) -> {
+                    ivStart1.setImageResource(R.mipmap.star)
+                    ivStart2.setImageResource(R.mipmap.star)
+                    ivStart3.setImageResource(R.mipmap.star)
+                }
+            }
+
+        }
+
     }
 }
