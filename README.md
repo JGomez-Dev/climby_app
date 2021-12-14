@@ -86,7 +86,7 @@ Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones
 _Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
 
 * **Josué Barroso** - *Trabajo inicial* [Product Design](https://www.linkedin.com/in/josuebarroso/) *Diseño* [FIGMA](https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2Fy3N0qgI9mwGtRF9SUYRgHp%2FClimby%3Fnode-id%3D121%253A479)
-* **Eduardo Gómez** - *Trabajo Inicial* - [Backend developer](https://www.linkedin.com/search/results/all/?keywords=eduardo%20g%C3%B3mez%20fern%C3%A1ndez&origin=RICH_QUERY_SUGGESTION&position=7&searchId=fc66a446-a93d-4d25-a3bd-46a9e8b7e6cd&sid=w%40J)
+* **Eduardo Gómez** - *Trabajo Inicial* - [Backend developer](https://www.linkedin.com/in/edugfe/)
 * **Javier Gómez** - *Trabajo Inicial* - [App development](https://www.linkedin.com/in/javierg%C3%B3mezfern%C3%A1ndez/)
 
 <!---
