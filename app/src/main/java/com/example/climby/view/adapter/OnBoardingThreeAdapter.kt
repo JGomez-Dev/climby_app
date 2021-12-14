@@ -1,6 +1,5 @@
 package com.example.climby.view.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -47,26 +46,32 @@ class OnBoardingThreeAdapter(listBokings: List<BookingModel>, context: Context) 
         private val ivStart3: ImageView = itemView.findViewById(R.id.IVStart3)
         private var contStart = 3.0
 
-        @SuppressLint("SetTextI18n")
         fun bind(booking: BookingModel) {
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(booking.passenger?.photo).into(cvAttendees)
             tvNameQualifyAttendees.text = booking.passenger?.name?.split(" ")?.get(0)!!
+            calculateScore(contStart, booking)
             ivAddStart.setOnClickListener {
-                if(contStart != 3.0){
+                if (contStart != 3.0) {
                     contStart += 0.5
-                    putStart(contStart)
+                    setStart(contStart)
+                    calculateScore(contStart, booking)
 
                 }
-
             }
             ivRemoveStart.setOnClickListener {
-                if(contStart != 0.0){
+                if (contStart != 0.0) {
                     contStart -= 0.5
-                    putStart(contStart)
+                    setStart(contStart)
+                    calculateScore(contStart, booking)
                 }
             }
         }
-        private fun putStart(contStart: Double){
+
+        private fun calculateScore(contStart: Double, booking: BookingModel) {
+            booking.passenger?.score = booking.passenger?.score?.times(booking.passenger.ratings)?.plus(contStart)?.div(booking.passenger.ratings + 1)!!
+        }
+
+        private fun setStart(contStart: Double) {
             when {
                 contStart.equals(0.0) -> {
                     ivStart1.setImageResource(R.mipmap.withoutstart)

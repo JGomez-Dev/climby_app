@@ -10,7 +10,7 @@ data class BookingModel(
         @SerializedName("userId") val passenger: UserModel?,
         @SerializedName("idTravel") val tripId: Int,
         @SerializedName("reservationStatus") val status: Boolean?,
-        @SerializedName("valuationStatus") val valuationStatus: Boolean?,
+        @SerializedName("valuationStatus") var valuationStatus: Boolean?,
         @SerializedName("date") val date: String?,
         ): Parcelable {
         constructor(parcel: Parcel) : this(

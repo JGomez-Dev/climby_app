@@ -85,7 +85,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun updateUser() {
-        editProfileViewModel.putUser(UserModel(userSession.id, userSession.name, getExperince(userExperience), binding.ETPhone.text.toString().replace(" ", ""), userSession.email , userSession.score, userSession.outings, userSession.photo))
+        editProfileViewModel.putUser(UserModel(userSession.id, userSession.name, getExperince(userExperience), binding.ETPhone.text.toString().replace(" ", ""), userSession.email , userSession.score, userSession.ratings, userSession.outings, userSession.photo))
     }
 
     private fun init() {

@@ -105,7 +105,7 @@ class OnBoardingSecondActivity : AppCompatActivity() {
     }
 
     private fun insertUser() {
-        onBoardingSecondViewModel.saveUser(UserModel(0, displayName.toString(), getExperience(userExperience), phone.toString(), email.toString(), 0.0, 0, photoUrl.toString()))
+        onBoardingSecondViewModel.saveUser(UserModel(0, displayName.toString(), getExperience(userExperience), phone.toString(), email.toString(), 0.0,0, 0, photoUrl.toString()))
     }
 
     private fun getExperience(userExperience: String): String {

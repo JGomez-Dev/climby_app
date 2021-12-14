@@ -70,7 +70,7 @@ class DiscoverFragment : Fragment() {
         })
 
         discoverViewModel.getProvince()
-        discoverViewModel.getTrips()
+        discoverViewModel.getTrips(requireContext().applicationContext)
         discoverViewModel.isBadResponse.observe(viewLifecycleOwner, Observer {
             binding.CLBadConnection.isVisible = it
             binding.CLTripsEmpty.isVisible = !it
@@ -78,7 +78,7 @@ class DiscoverFragment : Fragment() {
         })
 
         binding.TVRetry.setOnClickListener {
-            discoverViewModel.getTrips()
+            discoverViewModel.getTrips(requireContext().applicationContext)
         }
 
         discoverViewModel.isLoading.observe(viewLifecycleOwner, Observer {
@@ -113,7 +113,7 @@ class DiscoverFragment : Fragment() {
     private fun getFilterAndSendQuery(isChecked: Boolean, checkedId: Int, selectedProvince: String) {
         if (isChecked) {
             when (checkedId) {
-                R.id.BTAll -> discoverViewModel.getTrips()
+                R.id.BTAll -> discoverViewModel.getTrips(requireContext().applicationContext)
                 R.id.BTNextWeekend -> discoverViewModel.getTripsType("NextWeekend",selectedProvince.split(" ")[0])
                 R.id.BTBoulder -> discoverViewModel.getTripsType("Boulder", selectedProvince.split(" ")[0])
                 R.id.BTLead -> discoverViewModel.getTripsType("Deportiva", selectedProvince.split(" ")[0])

@@ -10,7 +10,8 @@ data class UserModel(
         @SerializedName("experience") val experience: String?,
         @SerializedName("phone") val phone: String?,
         @SerializedName("email") val email: String?,
-        @SerializedName("score") val score: Double,
+        @SerializedName("score") var score: Double,
+        @SerializedName("ratings") var ratings: Int,
         @SerializedName("outputs") val outings: Int,
         @SerializedName("userPhoto") val photo: String?
         ): Parcelable {
@@ -21,6 +22,7 @@ data class UserModel(
                 parcel.readString(),
                 parcel.readString(),
                 parcel.readDouble(),
+                parcel.readInt(),
                 parcel.readInt(),
                 parcel.readString()
         ) {
@@ -33,6 +35,7 @@ data class UserModel(
                 parcel.writeString(phone)
                 parcel.writeString(email)
                 parcel.writeDouble(score)
+                parcel.writeInt(ratings)
                 parcel.writeInt(outings)
                 parcel.writeString(photo)
         }

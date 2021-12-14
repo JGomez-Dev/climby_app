@@ -1,16 +1,22 @@
 package com.example.climby.ui.discover.viewmodel
 
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.domain.province.GetAllProvinces
 import com.example.climby.domain.trip.GetAllTrips
+import com.example.climby.view.activity.OnBoardingThreeActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
@@ -27,7 +33,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
     var provincesModel = MutableLiveData<List<String>>()
     var result: List<TripModel>? = null
 
-    fun getTrips() {
+    fun getTrips(context: Context) {
         viewModelScope.launch {
             isLoading.postValue(true)
             result = getAllTrips()
@@ -40,7 +46,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
                         it.bookings?.forEach { _it ->
                             val id = sharedPref.getInt("id", 0)
                             if(_it.valuationStatus == false && id == _it.passenger?.id){
-                                tripModel.postValue(it)
+                                loadTripWithoutQualify(it, _it, context)
                             }
                         }
                     }
@@ -48,6 +54,15 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
                 isLoading.postValue(false)
             }
         }
+    }
+
+    private fun loadTripWithoutQualify(trip: TripModel, booking: BookingModel, context: Context) {
+        val intent = Intent(context, OnBoardingThreeActivity::class.java).apply {
+            putExtra("trip", trip)
+            putExtra("booking", booking)
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent)
     }
 
     fun getTripsType(type: String, province: String) {

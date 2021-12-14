@@ -88,7 +88,7 @@ class AuthActivity : AppCompatActivity() {
         if (!email.isNullOrEmpty() && !provider.isNullOrEmpty() && !photoUrl.isNullOrEmpty() && !displayName.isNullOrEmpty()) {
             if (!experience.isNullOrEmpty()) {
                 binding.CLAuthentication.visibility = View.INVISIBLE
-                val userLogger = UserModel(id, displayName,experience, phone.toString(), email, 0.0, 0, photoUrl)
+                val userLogger = UserModel(id, displayName,experience, phone.toString(), email, 0.0, 0,0, photoUrl)
                 getData(userLogger)
                 showMainActivity()
             } else if (!phone.isNullOrEmpty()) {
