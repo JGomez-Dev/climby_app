@@ -107,6 +107,9 @@ dependencies {
     //ShimmerRecyclerView
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
+    //lottiefiles
+    implementation "com.airbnb.android:lottie:4.2.2"
+
 
 
 }

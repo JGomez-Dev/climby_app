@@ -31,7 +31,7 @@ class EditTripActivity : AppCompatActivity() {
         binding = ActivityEditTripBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var alertDialogBuilder = AlertDialog.Builder(this)
+        /*var alertDialogBuilder = AlertDialog.Builder(this)
             .setTitle("¿Estás seguro?")
             .setMessage("En caso de tener asistentes confirmados, perderás el conacto a través de climby.")
             .setNegativeButton("Cancelar") { view, _ ->
@@ -42,7 +42,7 @@ class EditTripActivity : AppCompatActivity() {
             }
             .setCancelable(false)
             .create()
-
+*/
 
         getData()
         init()
@@ -104,12 +104,12 @@ class EditTripActivity : AppCompatActivity() {
     }
 
     private fun showDatePickerDialog() {
-        val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month + 1, year) }
+        val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month + 1) }
         datePicker.show(supportFragmentManager, "datePicker")
     }
 
     @SuppressLint("SetTextI18n")
-    private fun onDateSelected(day: Int, month: Int, year: Int) {
+    private fun onDateSelected(day: Int, month: Int) {
         binding.ETDate.setText("$day/$month")
     }
 }
