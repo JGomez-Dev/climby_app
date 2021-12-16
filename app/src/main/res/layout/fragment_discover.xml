@@ -201,16 +201,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/IVHandEmpty"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="20dp"
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:rotation="90"
+            android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@mipmap/hand"
-            tools:ignore="ContentDescription" />
+            app:lottie_autoPlay="true"
+            app:lottie_colorFilter="@color/primary"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/mhandpointing" />
+
+        <!-- <ImageView
+             android:id="@+id/IVHandEmpty"
+             android:layout_width="30dp"
+             android:layout_height="30dp"
+             android:layout_marginBottom="20dp"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:srcCompat="@mipmap/hand"
+             tools:ignore="ContentDescription" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

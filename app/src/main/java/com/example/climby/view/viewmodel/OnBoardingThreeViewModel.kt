@@ -16,13 +16,13 @@ class OnBoardingThreeViewModel @Inject constructor(private val putTrip: PutTrip,
 
     fun updateTrip(tripModel: TripModel) {
         viewModelScope.launch {
-            val result = putTrip(tripModel)
+            /*val result = */putTrip(tripModel)
         }
     }
 
     fun updateBooking(bookingModel: BookingModel) {
         viewModelScope.launch {
-            val result = putBooking(bookingModel)
+            /*val result = */putBooking(bookingModel)
         }
     }
 }
