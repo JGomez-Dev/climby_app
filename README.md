@@ -57,7 +57,7 @@ _Faltan por implementar_
 -->
 ## Construido con 🛠️
 
-_Menciona las herramientas que utilizaste para crear tu proyecto_
+```_Menciona las herramientas que utilizaste para crear tu proyecto_```
 
 APP
 * [Dagger](https://dagger.dev/) - Para inyección de dependencias
