@@ -1,12 +1,20 @@
 package com.example.climby.ui.discover
 
+import android.Manifest
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,7 +36,6 @@ class DiscoverFragment : Fragment() {
     private lateinit var discoverViewModel: DiscoverViewModel
     private lateinit var discoverAdapter: DiscoverAdapter
     private var selectedProvince: String = ""
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         discoverViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java)
@@ -53,6 +60,8 @@ class DiscoverFragment : Fragment() {
             }
 
         })
+
+        checkPermissionLocation()
 
         discoverViewModel.provincesModel.observe(viewLifecycleOwner, Observer {
             val arrayAdapter = ArrayAdapter(requireContext().applicationContext, R.layout.spinner_province_row, R.id.TVMadrid, it)
@@ -93,6 +102,12 @@ class DiscoverFragment : Fragment() {
            *//* loadTripWithoutQualify(it)*//*
         })*/
         return view
+    }
+
+    fun checkPermissionLocation(){
+        if (ActivityCompat.checkSelfPermission(requireContext().applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext().applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 1000)
+        }
     }
 
     fun loadTripUsers(trip: TripModel) {
