@@ -42,7 +42,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
         fun onItemClick(position: Int)
     }
 
-    fun SetOnItemClickListener(listener: OnItemClickListener) {
+    fun setOnItemClickListener(listener: OnItemClickListener) {
         mlistener = listener
     }
 
@@ -120,10 +120,9 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
             rvUserv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
 
             if (!acceptedBookingList.isNullOrEmpty()) {
-                userDiscoverAdapter = trip.bookings?.let { UserDiscoverAdapter(acceptedBookingList, context) }!!
+                userDiscoverAdapter = UserDiscoverAdapter(acceptedBookingList, context)
                 rvUserv.adapter = userDiscoverAdapter
             }
-
         }
     }
 

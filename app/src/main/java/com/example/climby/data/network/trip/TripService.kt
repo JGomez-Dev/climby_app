@@ -40,4 +40,11 @@ class TripService @Inject constructor(private val api: TripApiClient) {
             response.body()!!
         }
     }
+
+    suspend fun putTrip(tripModel: TripModel): TripModel {
+        return withContext(Dispatchers.IO) {
+            val response = api.putTrip(tripModel)
+            response.body()!!
+        }
+    }
 }

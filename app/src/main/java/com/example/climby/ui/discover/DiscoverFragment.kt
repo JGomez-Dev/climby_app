@@ -45,7 +45,7 @@ class DiscoverFragment : Fragment() {
                 binding.RVTrips.isVisible = true
                 discoverAdapter = DiscoverAdapter(it, requireContext())
                 binding.RVTrips.adapter = discoverAdapter
-                discoverAdapter.SetOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
+                discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
                         loadTripUsers(it[position])
                     }
@@ -89,9 +89,9 @@ class DiscoverFragment : Fragment() {
             getFilterAndSendQuery(isChecked, checkedId, selectedProvince)
         }
 
-        discoverViewModel.tripModel.observe(viewLifecycleOwner, Observer {
-            loadTripWithoutQualify(it)
-        })
+        /*discoverViewModel.tripModel.observe(viewLifecycleOwner, Observer {
+           *//* loadTripWithoutQualify(it)*//*
+        })*/
         return view
     }
 
@@ -102,12 +102,12 @@ class DiscoverFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun loadTripWithoutQualify(trip: TripModel) {
+    /*private fun loadTripWithoutQualify(trip: TripModel) {
         val intent = Intent(activity, OnBoardingThreeActivity::class.java).apply {
             putExtra("trip", trip)
         }
         startActivity(intent)
-    }
+    }*/
 
 
     private fun getFilterAndSendQuery(isChecked: Boolean, checkedId: Int, selectedProvince: String) {

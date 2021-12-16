@@ -1,7 +1,7 @@
 package com.example.climby.utils
 
 enum class ReservationStatus(val status: Boolean?) {
-    UNANSWERED(null),
+    REFUSE(null),
     ACCEPTED(true),
-    REFUSE(false),
+    UNANSWERED(false),
 }

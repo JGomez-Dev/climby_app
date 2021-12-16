@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.databinding.FragmentComingOutingsBinding
-import com.example.climby.databinding.FragmentMyOutingsBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.profile.viewmodel.ComingOutingsViewModel
-import com.example.climby.ui.profile.viewmodel.MyOutingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,7 +35,7 @@ class ComingOutingsFragment : Fragment() {
                 binding.RVTrips.isVisible = true
                 discoverAdapter = DiscoverAdapter(it, requireContext())
                 binding.RVTrips.adapter = discoverAdapter
-                discoverAdapter.SetOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
+                discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
                         //loadActivity(it[position])
                     }

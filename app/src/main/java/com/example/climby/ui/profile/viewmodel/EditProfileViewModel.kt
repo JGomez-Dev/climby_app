@@ -13,7 +13,7 @@ import javax.annotation.Nullable
 import javax.inject.Inject
 
 @HiltViewModel
-class EditProfileViewModel  @Inject constructor(private val update: Update, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
+class EditProfileViewModel @Inject constructor(private val update: Update, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
 
     private val _textMLD = MutableLiveData<Boolean>()
     val textLD: LiveData<Boolean> = _textMLD
@@ -22,7 +22,7 @@ class EditProfileViewModel  @Inject constructor(private val update: Update, @Nul
         _textMLD.value = text.toString().length == 12
     }
 
-    fun putUser(userModel: UserModel) {
+    fun updateUser(userModel: UserModel) {
         viewModelScope.launch {
             val result = update(userModel)
             val editor = sharedPref.edit()

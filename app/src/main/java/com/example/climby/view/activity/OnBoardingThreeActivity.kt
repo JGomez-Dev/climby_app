@@ -2,6 +2,7 @@ package com.example.climby.view.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -13,22 +14,25 @@ import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityOnboardingThreeBinding
-import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.utils.Commons
 import com.example.climby.view.adapter.OnBoardingThreeAdapter
 import com.example.climby.view.viewmodel.OnBoardingThreeViewModel
-import com.google.gson.annotations.SerializedName
-import kotlin.math.absoluteValue
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnBoardingThreeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnboardingThreeBinding
     private lateinit var onBoardingThreeViewModel: OnBoardingThreeViewModel
     private lateinit var onBoardingThreeAdapter: OnBoardingThreeAdapter
 
+    private var userSession: UserModel = Commons.userSession!!
+
     private var trip: TripModel? = null
     private var booking: BookingModel? = null
+    private var userScores = false
 
+    private var bookingWithOutUser: ArrayList<BookingModel>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,56 +44,41 @@ class OnBoardingThreeActivity : AppCompatActivity() {
         init()
 
         binding.IVBack.setOnClickListener {
-            updateBooking(true)
+            updateBooking()
             onBackPressed()
         }
 
         binding.BTSendQualify.setOnClickListener {
-            if(binding.ETSendMenssage.text.isNullOrEmpty()){
-                showDialog(trip!!)
+            if (binding.ETSendMenssage.text.isNullOrEmpty()) {
+                userScores = true
+                showDialog()
             }
         }
     }
 
-    private fun showDialog(tripModel: TripModel) {
+    private fun showDialog() {
         AlertDialog.Builder(this)
-            .setTitle("El mensaje privado a "  + tripModel.driver?.name.toString().split(" ")[0] + " está vacío." )
+            .setTitle("El mensaje privado a " + trip?.driver?.name.toString().split(" ")[0] + " está vacío.")
             .setMessage(R.string.text_qualify_attendes)
             .setNegativeButton(R.string.cancel) { view, _ ->
-                Toast.makeText(this,"Cancelar",Toast.LENGTH_SHORT ).show()
+                Toast.makeText(this, "Cancelar", Toast.LENGTH_SHORT).show()
                 view.dismiss()
             }
             .setPositiveButton(R.string.text_send_button) { view, _ ->
-                Toast.makeText(this,"Enviar",Toast.LENGTH_SHORT ).show()
-                updateBooking(false)
+                Toast.makeText(this, "Enviar", Toast.LENGTH_SHORT).show()
+                updateBooking()
                 view.dismiss()
-                sendQualify()
             }
             .setCancelable(false)
             .create().show()
     }
 
-    private fun updateBooking(exit: Boolean) {
-        //Mirar la manera de que si solo cierra la ventana no se actulicen las puntuaciones de los usuarios
-        if(exit) {
-            trip?.bookings?.forEach { it->
-                if(it.id == booking?.id) {
-                    it.valuationStatus = null
-                }
-            }
-        }else{
-            trip?.bookings?.forEach { it->
-                if(it.id == booking?.id) {
-                    it.valuationStatus = null
-                    it.passenger?.ratings = it.passenger?.ratings!! + 1
-                }
-            }
-            onBoardingThreeViewModel.putBooking(TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
+    private fun updateBooking() {
+        if (userScores) {
+            onBoardingThreeViewModel.updateTrip(TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
+        } else {
+            onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date))
         }
-        Toast.makeText(this,"Actualizando reserva unicamente cambiar el estado de la valoracion a null", Toast.LENGTH_SHORT ).show()
-    }
-    private fun sendQualify() {
-        Toast.makeText(this,"Enviando valoración", Toast.LENGTH_SHORT ).show()
     }
 
     @SuppressLint("SetTextI18n")
@@ -99,14 +88,34 @@ class OnBoardingThreeActivity : AppCompatActivity() {
         binding.TVSiteQualifyAttendees.text = trip?.site?.name + ", " + (trip?.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip?.departure?.let { Commons.getDate(it) }
         binding.TVSendMenssage.text = "Envía un mensaje a " + trip?.driver?.name.toString().split(" ")[0]
         binding.RVQualify.layoutManager = LinearLayoutManager(this)
-        onBoardingThreeAdapter = OnBoardingThreeAdapter(trip?.bookings ?: emptyList(), this)
+        onBoardingThreeAdapter = OnBoardingThreeAdapter(bookingWithOutUser ?: emptyList(), this)
         binding.RVQualify.adapter = onBoardingThreeAdapter
+        onBoardingThreeAdapter.setOnClickListener(object : OnBoardingThreeAdapter.OnClickListener {
+            override fun onClickAddStart(position: Int) {
+                userScores = true
+            }
+
+            override fun onClickRemoveStart(position: Int) {
+                userScores = true
+            }
+        })
     }
 
     private fun getData() {
         val bundle = intent.extras
         trip = bundle?.getParcelable("trip")
         booking = bundle?.getParcelable("booking")
+        cleanBookings()
+    }
+
+    private fun cleanBookings() {
+        trip?.bookings?.forEach { it ->
+            if (!it.passenger?.email?.equals(userSession.email)!!) {
+                bookingWithOutUser?.add(it)
+            } else {
+                it.valuationStatus = true
+            }
+        }
     }
 
     private fun setPhotoTrip(type: String) {

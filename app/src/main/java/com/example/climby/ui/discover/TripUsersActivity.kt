@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.climby.R
+import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityTripUsersBinding
@@ -19,6 +21,7 @@ import com.example.climby.ui.discover.adapter.TripUsersAdapter
 import com.example.climby.ui.discover.viewmodel.TripUsersViewModel
 import com.example.climby.utils.Commons
 import com.example.climby.utils.IOnBackPressed
+import com.example.climby.utils.ReservationStatus
 import com.example.climby.utils.UserExperience
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,6 +32,8 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
     private lateinit var tripUsersViewModel: TripUsersViewModel
     private lateinit var tripUsersAdapter: TripUsersAdapter
     private var trip: TripModel? = null
+    private var userSession: UserModel = Commons.userSession!!
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,8 +65,24 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
         Glide.with(this).load(trip?.driver?.photo).error(R.mipmap.user).into(binding.CIVAdmin)
         trip?.driver?.let { setStart(it) }
         binding.RVAssistants.layoutManager = LinearLayoutManager(this)
-        tripUsersAdapter = TripUsersAdapter(trip?.bookings ?: emptyList(), this)
+        tripUsersAdapter = TripUsersAdapter(acceptedBooking(), this)
         binding.RVAssistants.adapter = tripUsersAdapter
+    }
+
+    private fun acceptedBooking(): MutableList<BookingModel> {
+        val acceptedBookingList: MutableList<BookingModel> = arrayListOf()
+        trip?.bookings?.forEach { it ->
+            if (it.passenger?.id ?: 0 == userSession.id) {
+                when (it.status) {
+                    ReservationStatus.ACCEPTED.status -> {
+                        acceptedBookingList.add(it)
+                    }
+                }
+            } else {
+                acceptedBookingList.add(it)
+            }
+        }
+        return acceptedBookingList
     }
 
     private fun getData() {

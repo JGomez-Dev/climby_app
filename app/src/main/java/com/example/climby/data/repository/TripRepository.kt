@@ -10,4 +10,6 @@ class TripRepository @Inject constructor(private val api : TripService){
     suspend fun getTripsUser(id: Int) = api.getTripsUser(id)
     suspend fun getTravelsWithUserReservation(id: Int) = api.getTravelsWithUserReservation(id)
     suspend fun postTrip(tripModel: TripModel) = api.postTrip(tripModel)
+    suspend fun putTrip(tripModel: TripModel) = api.putTrip(tripModel)
+
 }

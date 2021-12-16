@@ -61,7 +61,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
             putExtra("trip", trip)
             putExtra("booking", booking)
         }
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 

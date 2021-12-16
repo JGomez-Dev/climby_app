@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import com.example.climby.R
+import com.example.climby.data.network.booking.BookingApiClient
 import com.example.climby.data.network.province.ProvincesApiClient
 import com.example.climby.data.network.school.SchoolApiClient
 import com.example.climby.data.network.trip.TripApiClient
@@ -66,4 +67,12 @@ object NetworkModule {
     fun provideTypesApiClient(retrofit: Retrofit): TypeApiClient {
         return retrofit.create(TypeApiClient::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideBookingApiClient(retrofit: Retrofit): BookingApiClient {
+        return retrofit.create(BookingApiClient::class.java)
+    }
 }
+
+

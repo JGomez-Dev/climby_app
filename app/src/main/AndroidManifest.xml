@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name="com.example.climby.view.activity.AuthActivity"
+            android:name=".view.activity.AuthActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,40 +27,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.climby.view.activity.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.example.climby.view.activity.OnBoardingFirstActivity"
+            android:name=".view.activity.OnBoardingFirstActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.example.climby.view.activity.OnBoardingSecondActivity"
+            android:name=".view.activity.OnBoardingSecondActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.example.climby.ui.profile.EditProfileActivity"
+            android:name=".ui.profile.EditProfileActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.example.climby.ui.publish.WhatPlaceActivity"
+            android:name=".ui.publish.WhatPlaceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.example.climby.ui.discover.TripUsersActivity"
+            android:name=".ui.discover.TripUsersActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.example.climby.ui.profile.EditTripActivity"
+            android:name=".ui.profile.EditTripActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.example.climby.ui.profile.RequestsActivity"
+            android:name=".ui.profile.RequestsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.example.climby.ui.profile.RefuseTripActivity"
+            android:name=".ui.profile.RefuseTripActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.example.climby.view.activity.OnBoardingThreeActivity"
+            android:name=".view.activity.OnBoardingThreeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
 

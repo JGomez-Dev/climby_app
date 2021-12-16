@@ -18,4 +18,7 @@ interface TripApiClient {
 
     @POST("travel")
     suspend fun postUser(@Body tripModel: TripModel?): Response<TripModel>
+
+    @PUT("travel")
+    suspend fun putTrip(@Body tripModel: TripModel?): Response<TripModel>
 }

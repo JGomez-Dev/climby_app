@@ -18,7 +18,7 @@ data class TripModel(
     @SerializedName("Date") val departure: String?,
     @SerializedName("idProvince") val province: ProvinceModel?,
     @SerializedName("driver") val driver: UserModel?,
-    @SerializedName("reservation") val bookings: ArrayList<BookingModel>?
+    @SerializedName("reservation") var bookings: ArrayList<BookingModel>?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
