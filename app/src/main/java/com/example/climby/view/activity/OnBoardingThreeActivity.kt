@@ -1,11 +1,16 @@
 package com.example.climby.view.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.PendingIntent
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.text.format.DateFormat
+import android.telephony.SmsManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -43,15 +48,19 @@ class OnBoardingThreeActivity : AppCompatActivity() {
         getData()
         init()
 
+
         binding.IVBack.setOnClickListener {
             updateBooking()
             onBackPressed()
         }
 
         binding.BTSendQualify.setOnClickListener {
+            userScores = true
             if (binding.ETSendMenssage.text.isNullOrEmpty()) {
-                userScores = true
                 showDialog()
+            }else{
+                sendSMS(trip?.driver?.phone!!, binding.ETSendMenssage.text.toString())
+                updateBooking()
             }
         }
     }
@@ -71,6 +80,11 @@ class OnBoardingThreeActivity : AppCompatActivity() {
             }
             .setCancelable(false)
             .create().show()
+    }
+
+    private fun sendSMS(phoneNumber: String, mensaje: String) {
+        val sms = SmsManager.getDefault()
+        sms.sendTextMessage(phoneNumber, null, mensaje, null, null)
     }
 
     private fun updateBooking() {

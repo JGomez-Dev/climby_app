@@ -1,8 +1,11 @@
 package com.example.climby.view.activity
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
@@ -32,6 +35,8 @@ class OnBoardingSecondActivity : AppCompatActivity() {
 
         getData()
 
+        checkPermissionSms()
+
         binding.CVBeginner.setOnClickListener {
             selectedBeginner()
         }
@@ -44,6 +49,12 @@ class OnBoardingSecondActivity : AppCompatActivity() {
         binding.BTNext.setOnClickListener {
             insertUser()
             showMainActivity()
+        }
+    }
+
+    private fun checkPermissionSms() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), 1000)
         }
     }
 
