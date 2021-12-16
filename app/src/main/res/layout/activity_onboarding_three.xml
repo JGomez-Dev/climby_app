@@ -118,21 +118,22 @@
                 app:layout_constraintBottom_toTopOf="@+id/ETSendMenssage"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <EditText
-                android:id="@+id/ETSendMenssage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:autoSizeTextType="uniform"
-                android:background="@color/white"
-                android:hint="@string/text_qualify_attendees"
-                android:maxLength="250"
-                android:padding="16dp"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/RVQualify"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/RVQualify" />
+
+             <EditText
+                 android:id="@+id/ETSendMenssage"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="16dp"
+                 android:autoSizeTextType="uniform"
+                 android:background="@color/white"
+                 android:hint="@string/text_qualify_attendees"
+                 android:maxLength="250"
+                 android:padding="16dp"
+                 android:textSize="18sp"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="@+id/RVQualify"
+                 app:layout_constraintHorizontal_bias="0.0"
+                 app:layout_constraintStart_toStartOf="@+id/RVQualify" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

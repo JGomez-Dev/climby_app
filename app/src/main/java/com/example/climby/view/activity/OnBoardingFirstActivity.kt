@@ -1,8 +1,10 @@
 package com.example.climby.view.activity
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
@@ -14,6 +16,7 @@ import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -76,6 +79,12 @@ class OnBoardingFirstActivity : AppCompatActivity() {
             prefs.putString("phone", binding.ETPhone.text.toString().replace(" ", ""))
             prefs.apply()
             showOnBoardingSecond()
+        }
+    }
+
+    private fun checkPermissionSms() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), 1000)
         }
     }
 
