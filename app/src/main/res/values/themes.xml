@@ -33,4 +33,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/tab_indicator_text</item>
     </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
 </resources>

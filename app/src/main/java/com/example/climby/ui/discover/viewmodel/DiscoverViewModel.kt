@@ -73,6 +73,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
                 isLoading.postValue(false)
             }else {
                 if (result!!.isNotEmpty()) {
+
                     when (type) {
                         "Boulder" -> result!!.forEach {
                             if (it.type?.name == "Boulder" && it.province?.name == province) {

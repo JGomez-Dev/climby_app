@@ -50,31 +50,44 @@ class OnBoardingThreeActivity : AppCompatActivity() {
 
 
         binding.IVBack.setOnClickListener {
-            updateBooking()
-            onBackPressed()
+            showDialogSure()
         }
 
         binding.BTSendQualify.setOnClickListener {
             userScores = true
             if (binding.ETSendMenssage.text.isNullOrEmpty()) {
                 showDialog()
-            }else{
+            } else {
                 sendSMS(trip?.driver?.phone!!, binding.ETSendMenssage.text.toString())
                 updateBooking()
             }
         }
     }
 
-    private fun showDialog() {
+    private fun showDialogSure() {
         AlertDialog.Builder(this)
-            .setTitle("El mensaje privado a " + trip?.driver?.name.toString().split(" ")[0] + " está vacío.")
-            .setMessage(R.string.text_qualify_attendes)
+            .setTitle(getString(R.string.text_sure))
+            .setMessage(getString(R.string.text_if_cancel))
             .setNegativeButton(R.string.cancel) { view, _ ->
-                Toast.makeText(this, "Cancelar", Toast.LENGTH_SHORT).show()
                 view.dismiss()
             }
             .setPositiveButton(R.string.text_send_button) { view, _ ->
-                Toast.makeText(this, "Enviar", Toast.LENGTH_SHORT).show()
+                updateBooking()
+                onBackPressed()
+                view.dismiss()
+            }
+            .setCancelable(false)
+            .create().show()
+    }
+
+    private fun showDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.text_private_message_1) + " " + trip?.driver?.name.toString().split(" ")[0] + " " + getString(R.string.text_private_message_2))
+            .setMessage(R.string.text_qualify_attendes)
+            .setNegativeButton(R.string.cancel) { view, _ ->
+                view.dismiss()
+            }
+            .setPositiveButton(R.string.text_send_button) { view, _ ->
                 updateBooking()
                 view.dismiss()
             }
@@ -97,7 +110,8 @@ class OnBoardingThreeActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun init() {
-        setPhotoTrip(trip?.type.toString())
+        setPhotoTrip(trip?.type?.name.toString())
+        binding.ETSendMenssage.hint = "Cuenta cómo te sentiste escalando con el grupo o ayuda a " + (trip?.driver?.name?.split(" ")?.get(0) ?: "conductor") + " a mejorar para la próxima vez…"
         binding.TVTypeQualifyAttendees.text = trip?.type?.name + " en"
         binding.TVSiteQualifyAttendees.text = trip?.site?.name + ", " + (trip?.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip?.departure?.let { Commons.getDate(it) }
         binding.TVSendMenssage.text = "Envía un mensaje a " + trip?.driver?.name.toString().split(" ")[0]
