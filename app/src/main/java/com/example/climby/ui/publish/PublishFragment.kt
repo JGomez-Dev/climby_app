@@ -41,6 +41,9 @@ class PublishFragment : Fragment(), IOnBackPressed {
 
     private var userSession: UserModel? = Commons.userSession!!
 
+    private var selectedType = -1
+    private var selectedProvince = -1
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         publishViewModel = ViewModelProvider(this).get(PublishViewModel::class.java)
         binding = FragmentPublishBinding.inflate(layoutInflater)
@@ -73,22 +76,21 @@ class PublishFragment : Fragment(), IOnBackPressed {
         }
 
         publishViewModel.tripCreated.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(requireActivity().applicationContext,"Creado", Toast.LENGTH_SHORT ).show()
+            Toast.makeText(requireActivity().applicationContext, "Creado", Toast.LENGTH_SHORT).show()
         })
 
         publishViewModel.getProvince()
         publishViewModel.getTypes()
 
-
         return view
     }
 
-    private fun saveTrip(tripModel: TripModel){
+    private fun saveTrip(tripModel: TripModel) {
         publishViewModel.saveTrip(tripModel)
     }
 
     private fun checkControls() {
-        if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem!= "Boulder, Deportiva, Rocódromo..." /*&& binding.ETSite.text != "Elige una escuela o rocódromo…"*/) {
+        if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem != "Boulder, Deportiva, Rocódromo..." /*&& binding.ETSite.text != "Elige una escuela o rocódromo…"*/) {
             binding.BTNewExit.isEnabled = true
             binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(requireContext().applicationContext, R.color.primary))
         } else {
@@ -100,10 +102,19 @@ class PublishFragment : Fragment(), IOnBackPressed {
     private fun setupAdapterType(it: List<String>) {
         val arrayAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.support_simple_spinner_dropdown_item, it) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = super.getDropDownView(position, convertView, parent) as TextView
-                if (position == 0)
-                    view.setTextColor(ContextCompat.getColor(context, R.color.grey))
-                return view
+                val row: View
+
+                if (position == 0) {
+                    row = super.getDropDownView(position, convertView, parent) as TextView
+                    row.setBackgroundColor(ContextCompat.getColor(context, R.color.primary))
+                    row.setTextColor(ContextCompat.getColor(context, R.color.white))
+                } else {
+                    row = super.getDropDownView(position, null, parent)
+                    if (position == selectedType) {
+                        row.setBackgroundColor(ContextCompat.getColor(context, R.color.primary_light))
+                    }
+                }
+                return row
             }
 
             override fun isEnabled(position: Int): Boolean {
@@ -119,10 +130,10 @@ class PublishFragment : Fragment(), IOnBackPressed {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (contT == 0) {
                     (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.grey))
-
                 } else {
                     (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
                 }
+                selectedType = position
                 checkControls()
                 contT++
                 type = parent.getItemIdAtPosition(position).toInt()
@@ -133,10 +144,18 @@ class PublishFragment : Fragment(), IOnBackPressed {
     private fun setupAdapterProvinces(it: List<String>) {
         val arrayAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.support_simple_spinner_dropdown_item, it) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = super.getDropDownView(position, convertView, parent) as TextView
-                if (position == 0)
-                    view.setTextColor(ContextCompat.getColor(context, R.color.grey))
-                return view
+                val row: View
+                if (position == 0) {
+                    row = super.getDropDownView(position, convertView, parent) as TextView
+                    row.setBackgroundColor(ContextCompat.getColor(context, R.color.primary))
+                    row.setTextColor(ContextCompat.getColor(context, R.color.white))
+                } else {
+                    row = super.getDropDownView(position, null, parent)
+                    if (position == selectedProvince) {
+                        row.setBackgroundColor(ContextCompat.getColor(context, R.color.primary_light))
+                    }
+                }
+                return row
             }
 
             override fun isEnabled(position: Int): Boolean {
@@ -156,6 +175,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
                 } else {
                     (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
                 }
+                selectedProvince = position
                 checkControls()
                 contC++
                 province = parent.getItemIdAtPosition(position).toInt()
@@ -172,11 +192,11 @@ class PublishFragment : Fragment(), IOnBackPressed {
     @SuppressLint("SetTextI18n")
     private fun onDateSelected(day: Int, month: Int, year: Int) {
         binding.ETDate.setText("$day/$month")
-        val monthFormat = if(month.toString().length < 2)
+        val monthFormat = if (month.toString().length < 2)
             "0$month"
         else
             month.toString()
-        val dayFormat = if(day.toString().length < 2)
+        val dayFormat = if (day.toString().length < 2)
             "0$day"
         else
             day.toString()

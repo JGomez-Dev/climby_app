@@ -41,7 +41,7 @@
             android:spinnerMode="dialog"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </LinearLayout>
 
@@ -58,7 +58,7 @@
 
 
     <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
+        android:id="@+id/HSVTButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -67,7 +67,7 @@
         app:layout_constraintTop_toBottomOf="@+id/LYDiscover_outputs">
 
         <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/toggleButton"
+            android:id="@+id/TBSeach"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -184,7 +184,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+        app:layout_constraintTop_toBottomOf="@+id/HSVTButton">
 
         <TextView
             android:id="@+id/TVTripEmpty"
@@ -238,7 +238,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+        app:layout_constraintTop_toBottomOf="@+id/HSVTButton">
 
         <TextView
             android:id="@+id/TVBadConnection"
@@ -305,7 +305,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/HSVTButton" />
 
     <ProgressBar
         android:id="@+id/PBDiscover"
