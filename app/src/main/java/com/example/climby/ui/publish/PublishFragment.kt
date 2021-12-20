@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -25,7 +22,9 @@ import com.example.climby.ui.publish.viewmodel.PublishViewModel
 import com.example.climby.utils.Commons
 import com.example.climby.utils.DatePickerFragment
 import com.example.climby.utils.IOnBackPressed
+import com.example.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class PublishFragment : Fragment(), IOnBackPressed {
@@ -44,19 +43,22 @@ class PublishFragment : Fragment(), IOnBackPressed {
     private var selectedType = -1
     private var selectedProvince = -1
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         publishViewModel = ViewModelProvider(this).get(PublishViewModel::class.java)
         binding = FragmentPublishBinding.inflate(layoutInflater)
         val view: View = binding.root
 
-
+        /*  val navBar: BottomNavigationView = activity?.findViewById(R.id.nav_view)!!
+          navBar.isVisible = false
+  */
         binding.ETSite.setOnClickListener {
             loadFragment()
         }
 
-        /*binding.IVBack.setOnClickListener {
+        binding.IVBack.setOnClickListener {
             onBackPressed()
-        }*/
+        }
 
         publishViewModel.provincesModel.observe(viewLifecycleOwner, Observer {
             setupAdapterProvinces(it)
@@ -211,11 +213,15 @@ class PublishFragment : Fragment(), IOnBackPressed {
     }
 
     override fun onBackPressed() {
-        /*activity?.let {
-            val intent = Intent (it, MainActivity::class.java)
+        activity?.let {
+            val intent = Intent(requireContext().applicationContext, MainActivity::class.java)
             it.startActivity(intent)
+            it.overridePendingTransition(0, 0);
             it.finish()
-        }*/
+        }
+        /*activity?.supportFragmentManager?.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);*/
+        /*activity?.supportFragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);*/
+
         /*activity?.supportFragmentManager?.popBackStack();*/
     }
 }

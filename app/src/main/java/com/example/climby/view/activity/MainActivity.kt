@@ -24,20 +24,13 @@ class MainActivity : AppCompatActivity() {
 
         val navController = navHostFragment.navController
         navView.setupWithNavController(navController)
-        /*navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.navigation_dashboard -> hideBottomNav()
-                else -> showBottomNav()
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.navigation_dashboard) {
+                navView.visibility = View.GONE
+            } else {
+                navView.visibility = View.VISIBLE
             }
-        }*/
+        }
     }
-
-    /*private fun showBottomNav() {
-        navView.visibility = View.VISIBLE
-
-    }
-
-    private fun hideBottomNav() {
-        navView.visibility = View.GONE
-    }*/
 }
