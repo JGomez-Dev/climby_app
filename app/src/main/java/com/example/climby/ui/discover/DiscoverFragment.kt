@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.R
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentDiscoverBinding
+import com.example.climby.ui.discover.adapter.CustomDropDownAdapter
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -71,33 +72,34 @@ class DiscoverFragment : Fragment() {
             }
         })
 
-        discoverViewModel.provincesModel.observe(viewLifecycleOwner, Observer {
-            /*val arrayAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.support_simple_spinner_dropdown_item, it) {
-                override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-                    val view = super.getDropDownView(position, convertView, parent) as TextView
-                    if (position == 0)
-                        view.setTextColor(ContextCompat.getColor(context, R.color.grey))
-                    return view
-                }
 
-                override fun isEnabled(position: Int): Boolean {
-                    return position != 0
-                }
-            }*/
-            val arrayAdapter = ArrayAdapter(requireContext().applicationContext, R.layout.spinner_province_row, R.id.TVMadrid, it)
-            arrayAdapter.setDropDownViewResource(R.layout.color_spinner)
-            binding.SPCommunity.adapter = arrayAdapter
-            binding.SPCommunity.setSelection(getPositionItem(binding.SPCommunity, province))
-            binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    province = parent!!.getItemAtPosition(position).toString().split(" ")[0]
-                    discoverViewModel.getTrips(requireContext().applicationContext, province!!)
-                    binding.TBSeach.check(R.id.BTAll)
-                    binding.HSVTButton.scrollTo(0,0)
-                }
-            }
+       discoverViewModel.provincesModel.observe(viewLifecycleOwner, Observer {
+          /* val customDropDownAdapter = CustomDropDownAdapter(requireContext().applicationContext, it)
+           binding.SPCommunity.adapter = customDropDownAdapter
+           binding.SPCommunity.setSelection(getPositionItem(binding.SPCommunity, province))
+           binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+               override fun onNothingSelected(parent: AdapterView<*>?) {
+               }
+               override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                   province = parent!!.getItemAtPosition(position).toString().split(" ")[0].split("=")[1].split(",")[0]
+                   discoverViewModel.getTrips(requireContext().applicationContext, province!!)
+                   binding.TBSeach.check(R.id.BTAll)
+               }
+           }*/
+           val arrayAdapter = ArrayAdapter(requireContext().applicationContext, R.layout.spinner_province_row, R.id.TVMadrid, it)
+           arrayAdapter.setDropDownViewResource(R.layout.color_spinner)
+           binding.SPCommunity.adapter = arrayAdapter
+           binding.SPCommunity.setSelection(getPositionItem(binding.SPCommunity, province))
+           binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+               override fun onNothingSelected(parent: AdapterView<*>?) {
+               }
+               override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                   province = parent!!.getItemAtPosition(position).toString().split(" ")[0]
+                   discoverViewModel.getTrips(requireContext().applicationContext, province!!)
+                   binding.TBSeach.check(R.id.BTAll)
+                   binding.HSVTButton.scrollTo(0,0)
+               }
+           }
         })
 
         discoverViewModel.getProvince()
@@ -122,7 +124,7 @@ class DiscoverFragment : Fragment() {
         return view
     }
 
-    fun getPositionItem(spinner: Spinner, province: String?): Int {
+    private fun getPositionItem(spinner: Spinner, province: String?): Int {
         var position = 0
         for (i in 0 until spinner.count) {
             if (spinner.getItemAtPosition(i).toString().split(" ")[0].equals(province, ignoreCase = true)) {
