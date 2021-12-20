@@ -41,7 +41,7 @@
             android:spinnerMode="dropdown"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     </LinearLayout>
 
@@ -85,6 +85,7 @@
                 android:insetTop="0dp"
                 android:insetRight="5dp"
                 android:insetBottom="0dp"
+                android:letterSpacing="0"
                 android:maxLines="1"
                 android:stateListAnimator="@null"
                 android:text="@string/text_todas"
@@ -102,6 +103,7 @@
                 android:insetTop="0dp"
                 android:insetRight="5dp"
                 android:insetBottom="0dp"
+                android:letterSpacing="0"
                 android:maxLines="1"
                 android:stateListAnimator="@null"
                 android:text="@string/text_next_weekend"
@@ -118,6 +120,7 @@
                 android:insetTop="0dp"
                 android:insetRight="5dp"
                 android:insetBottom="0dp"
+                android:letterSpacing="0"
                 android:maxLines="1"
                 android:stateListAnimator="@null"
                 android:text="@string/text_boulder"
@@ -134,6 +137,7 @@
                 android:insetTop="0dp"
                 android:insetRight="5dp"
                 android:insetBottom="0dp"
+                android:letterSpacing="0"
                 android:maxLines="1"
                 android:stateListAnimator="@null"
                 android:text="@string/text_deportiva"
@@ -150,6 +154,7 @@
                 android:insetTop="0dp"
                 android:insetRight="5dp"
                 android:insetBottom="0dp"
+                android:letterSpacing="0"
                 android:maxLines="1"
                 android:stateListAnimator="@null"
                 android:text="@string/text_rocodromo"
@@ -165,6 +170,7 @@
                 android:insetLeft="5dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
+                android:letterSpacing="0"
                 android:maxLines="1"
                 android:stateListAnimator="@null"
                 android:text="@string/text_clasica"
@@ -206,9 +212,9 @@
             android:id="@+id/animation_view"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="16dp"
             android:rotation="90"
-            android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
