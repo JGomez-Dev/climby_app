@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.climby.data.model.province.ProvinceTripsModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.domain.province.GetAllProvinces
 import com.example.climby.domain.trip.GetAllTrips
@@ -27,6 +28,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
     var isLoading = MutableLiveData<Boolean>()
     var isBadResponse = MutableLiveData<Boolean>()
     var provincesModel = MutableLiveData<List<String>>()
+   /* var provincesModel = MutableLiveData<List<ProvinceTripsModel>>()*/
     var result: List<TripModel>? = null
 
     fun getTrips(context: Context, province: String) {
@@ -130,6 +132,21 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
             }
         }
     }
+
+    /*fun getProvince() {
+        val resultType: MutableList<ProvinceTripsModel> = arrayListOf()
+        viewModelScope.launch {
+            val result = getAllProvinces()
+            var conttest = 0
+            val resultName: MutableList<String> = arrayListOf()
+            result.forEach {
+                resultType.add(ProvinceTripsModel(it.name, conttest))
+                conttest = (0..30).random()
+            }
+            if (!result.isNullOrEmpty())
+                provincesModel.postValue(resultType)
+        }
+    }*/
 
     fun getProvince() {
         viewModelScope.launch {
