@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -17,6 +18,7 @@ import com.example.climby.databinding.FragmentProfileBinding
 import com.example.climby.ui.profile.adapter.ViewPagerAdapter
 import com.example.climby.ui.profile.viewmodel.ProfileViewModel
 import com.example.climby.utils.Commons
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,6 +35,9 @@ class ProfileFragment: Fragment() {
         profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         binding = FragmentProfileBinding.inflate(layoutInflater)
         val view: View = binding.root
+
+        val navBar: BottomNavigationView = activity?.findViewById(R.id.nav_view)!!
+        navBar.isVisible = true
 
         init()
 
