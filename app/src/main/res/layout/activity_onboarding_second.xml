@@ -71,7 +71,9 @@
                     android:id="@+id/TVTextBeginner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:alpha="0.7"
                     android:text="@string/text_i_am_starting_out"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -85,7 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -131,7 +133,9 @@
                     android:id="@+id/TVTextIntermediate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:alpha="0.7"
                     android:text="@string/text_often"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -145,7 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -190,7 +194,9 @@
                     android:id="@+id/TVTextExperienced"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:alpha="0.7"
                     android:text="@string/text_a_long_time"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
             </LinearLayout>

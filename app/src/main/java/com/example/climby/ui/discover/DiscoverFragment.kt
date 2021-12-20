@@ -52,6 +52,7 @@ class DiscoverFragment : Fragment() {
 
         getLocation()
 
+
         binding.RVTrips.layoutManager = LinearLayoutManager(activity)
         discoverViewModel.tripsModel.observe(viewLifecycleOwner, Observer {
             if (it.isNullOrEmpty()) {
@@ -90,7 +91,6 @@ class DiscoverFragment : Fragment() {
             binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
-                @RequiresApi(Build.VERSION_CODES.P)
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     province = parent!!.getItemAtPosition(position).toString().split(" ")[0]
                     discoverViewModel.getTrips(requireContext().applicationContext, province!!)

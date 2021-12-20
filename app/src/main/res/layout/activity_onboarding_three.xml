@@ -6,57 +6,61 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/IVBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_close_24"
+        app:tint="@color/black"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/TVQualifyattendees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:includeFontPadding="false"
+        android:text="@string/text_aualify_attendees"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/SVQualify"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/BTSendQualify"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/TVQualifyattendees">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CLQualifyattendees"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/IVBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_close_24"
-                app:tint="@color/black"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/TVQualifyattendees"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/text_aualify_attendees"
-                android:textColor="@color/black"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/CLQualifyAttendees"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="23dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/white"
+                android:elevation="1dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TVQualifyattendees">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/IVSiteQualifyAttendees"
@@ -94,15 +98,114 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/white"
+                android:elevation="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/CLQualifyAttendees">
+
+                <ImageView
+                    android:id="@+id/IVStart1Organizer"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/IVStart2Organizer"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/star"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/IVStart2Organizer"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/IVStart3Organizer"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/star"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/IVStart3Organizer"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/IVAddStartOrganizer"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/star"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/TVNameQualifyAttendeesOrganizer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/text_name"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/CVAttendeesOrganizer"
+                    app:layout_constraintStart_toEndOf="@+id/CVAttendeesOrganizer"
+                    app:layout_constraintTop_toTopOf="@+id/CVAttendeesOrganizer" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/CVAttendeesOrganizer"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    android:src="@mipmap/user"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/IVAddStartOrganizer"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/IVStart1Organizer"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/IVStart1Organizer"
+                    app:srcCompat="@drawable/ic_baseline_add_24"
+                    app:tint="@color/white" />
+
+                <ImageView
+                    android:id="@+id/IVRemoveStartOrganizer"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/IVStart1Organizer"
+                    app:layout_constraintEnd_toStartOf="@+id/IVStart1Organizer"
+                    app:layout_constraintTop_toTopOf="@+id/IVStart1Organizer"
+                    app:srcCompat="@drawable/ic_baseline_remove_24"
+                    app:tint="@color/white" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RVQualify"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:nestedScrollingEnabled="false"
                 app:layout_constraintBottom_toTopOf="@+id/TVSendMenssage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/CLQualifyAttendees" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
             <TextView
                 android:id="@+id/TVSendMenssage"
@@ -110,6 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="8dp"
+                android:includeFontPadding="false"
                 android:text="@string/text_send_menssage"
                 android:textAlignment="center"
                 android:textColor="#575757"
@@ -118,26 +222,27 @@
                 app:layout_constraintBottom_toTopOf="@+id/ETSendMenssage"
                 app:layout_constraintStart_toStartOf="parent" />
 
-
-             <EditText
-                 android:id="@+id/ETSendMenssage"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_margin="16dp"
-                 android:autoSizeTextType="uniform"
-                 android:background="@color/white"
-                 android:hint="@string/text_qualify_attendees"
-                 android:maxLength="250"
-                 android:padding="16dp"
-                 android:textSize="18sp"
-                 app:layout_constraintBottom_toBottomOf="parent"
-                 app:layout_constraintEnd_toEndOf="@+id/RVQualify"
-                 app:layout_constraintHorizontal_bias="0.0"
-                 app:layout_constraintStart_toStartOf="@+id/RVQualify" />
+            <EditText
+                android:id="@+id/ETSendMenssage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/white"
+                android:hint="@string/text_qualify_attendees"
+                android:maxLength="250"
+                android:padding="16dp"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/RVQualify"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/RVQualify" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/BTSendQualify"
