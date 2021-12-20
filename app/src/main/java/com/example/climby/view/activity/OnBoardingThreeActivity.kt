@@ -48,7 +48,6 @@ class OnBoardingThreeActivity : AppCompatActivity() {
         getData()
         init()
 
-
         binding.IVBack.setOnClickListener {
             showDialogSure()
         }
@@ -103,6 +102,7 @@ class OnBoardingThreeActivity : AppCompatActivity() {
     private fun updateBooking() {
         if (userScores) {
             onBoardingThreeViewModel.updateTrip(TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
+            onBackPressed()
         } else {
             onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date))
         }
@@ -127,6 +127,34 @@ class OnBoardingThreeActivity : AppCompatActivity() {
                 userScores = true
             }
         })
+        Glide.with(this).load(trip?.driver?.photo).error(R.mipmap.user).into(binding.CVAttendeesOrganizer)
+        binding.TVNameQualifyAttendeesOrganizer.text = trip?.driver?.name?.split(" ")?.get(0) ?: "Organizador"
+        var contStart = 3.0
+        val oldScore = trip?.driver?.score!!
+        var firtTime = true
+        binding.IVAddStartOrganizer.setOnClickListener {
+            if(firtTime){
+                trip?.driver?.ratings = trip?.driver?.ratings!! + 1
+            }
+            if (contStart != 3.0) {
+                contStart += 0.5
+                setStart(contStart)
+                trip?.driver?.score = (oldScore + contStart) / trip?.driver?.ratings!!
+                firtTime = false
+            }
+        }
+        binding.IVRemoveStartOrganizer.setOnClickListener {
+            if(firtTime){
+                trip?.driver?.ratings = trip?.driver?.ratings!! + 1
+            }
+            if (contStart != 0.0) {
+                contStart -= 0.5
+                setStart(contStart)
+                trip?.driver?.score = (oldScore + contStart) / trip?.driver?.ratings!!
+                firtTime = false
+
+            }
+        }
     }
 
     private fun getData() {
@@ -162,6 +190,45 @@ class OnBoardingThreeActivity : AppCompatActivity() {
             }
             else -> {
                 Glide.with(this).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(binding.IVSiteQualifyAttendees)
+            }
+        }
+    }
+    private fun setStart(contStart: Double) {
+        when {
+            contStart.equals(0.0)!! -> {
+                binding.IVStart1Organizer.setImageResource(R.mipmap.withoutstart)
+                binding.IVStart2Organizer.setImageResource(R.mipmap.withoutstart)
+                binding.IVStart3Organizer.setImageResource(R.mipmap.withoutstart)
+            }
+            contStart.equals(0.5) -> {
+                binding.IVStart1Organizer.setImageResource(R.mipmap.medstart)
+                binding.IVStart2Organizer.setImageResource(R.mipmap.withoutstart)
+                binding.IVStart3Organizer.setImageResource(R.mipmap.withoutstart)
+            }
+            contStart.equals(1.0) -> {
+                binding.IVStart1Organizer.setImageResource(R.mipmap.star)
+                binding.IVStart2Organizer.setImageResource(R.mipmap.withoutstart)
+                binding.IVStart3Organizer.setImageResource(R.mipmap.withoutstart)
+            }
+            contStart.equals(1.5) -> {
+                binding.IVStart1Organizer.setImageResource(R.mipmap.star)
+                binding.IVStart2Organizer.setImageResource(R.mipmap.medstart)
+                binding.IVStart3Organizer.setImageResource(R.mipmap.withoutstart)
+            }
+            contStart.equals(2.0) -> {
+                binding.IVStart1Organizer.setImageResource(R.mipmap.star)
+                binding.IVStart2Organizer.setImageResource(R.mipmap.star)
+                binding.IVStart3Organizer.setImageResource(R.mipmap.withoutstart)
+            }
+            contStart.equals(2.5) -> {
+                binding.IVStart1Organizer.setImageResource(R.mipmap.star)
+                binding.IVStart2Organizer.setImageResource(R.mipmap.star)
+                binding.IVStart3Organizer.setImageResource(R.mipmap.medstart)
+            }
+            contStart.equals(3.0) -> {
+                binding.IVStart1Organizer.setImageResource(R.mipmap.star)
+                binding.IVStart2Organizer.setImageResource(R.mipmap.star)
+                binding.IVStart3Organizer.setImageResource(R.mipmap.star)
             }
         }
     }
