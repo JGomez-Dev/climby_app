@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -74,6 +75,11 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         })
         onBoardingFirstViewModel.textLD.observe(this, {
             binding.BTContinue.isEnabled = it
+            if(it){
+                binding.BTContinue.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
+            }else{
+                binding.BTContinue.setBackgroundColor(ContextCompat.getColor(this, R.color.disable))
+            }
         })
         binding.BTContinue.setOnClickListener {
             prefs.putString("phone", binding.ETPhone.text.toString().replace(" ", ""))
