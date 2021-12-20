@@ -95,7 +95,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
             binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(requireContext().applicationContext, R.color.primary))
         } else {
             binding.BTNewExit.isEnabled = false
-            binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(requireContext().applicationContext, R.color.grey_light))
+            binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(requireContext().applicationContext, R.color.disable))
         }
     }
 

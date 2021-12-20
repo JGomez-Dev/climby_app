@@ -69,6 +69,7 @@ class OnBoardingSecondActivity : AppCompatActivity() {
         binding.CVIntermediate.setCardBackgroundColor(ContextCompat.getColor(this, R.color.white))
         binding.TVIntermediate.setTextColor(ContextCompat.getColor(this, R.color.black))
         binding.BTNext.isEnabled = true
+        binding.BTNext.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
         userExperience = UserExperience.ADVANCED.status
     }
 
@@ -83,6 +84,7 @@ class OnBoardingSecondActivity : AppCompatActivity() {
         binding.CVExperienced.setCardBackgroundColor(ContextCompat.getColor(this, R.color.white))
         binding.TVExperienced.setTextColor(ContextCompat.getColor(this, R.color.black))
         binding.BTNext.isEnabled = true
+        binding.BTNext.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
         userExperience = UserExperience.MEDIUM.status
     }
 
@@ -97,6 +99,7 @@ class OnBoardingSecondActivity : AppCompatActivity() {
         binding.CVExperienced.setCardBackgroundColor(ContextCompat.getColor(this, R.color.white))
         binding.TVExperienced.setTextColor(ContextCompat.getColor(this, R.color.black))
         binding.BTNext.isEnabled = true
+        binding.BTNext.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
         userExperience = UserExperience.BEGINNER.status
     }
 
