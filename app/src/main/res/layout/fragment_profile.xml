@@ -107,6 +107,7 @@
         android:focusable="true"
         android:insetTop="0dp"
         android:insetBottom="0dp"
+        android:letterSpacing="0"
         android:stateListAnimator="@null"
         android:text="@string/text_edit"
         android:textAllCaps="false"

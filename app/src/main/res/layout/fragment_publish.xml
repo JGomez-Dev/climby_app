@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_publish"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:id="@+id/container_publish"
     tools:context="com.example.climby.view.activity.Hilt_MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,17 +17,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-     <!--   <ImageView
-            android:id="@+id/IVBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/TVNewExit"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_close_24"
-            app:tint="@color/black"
-            tools:ignore="ContentDescription" />-->
+        <!--   <ImageView
+               android:id="@+id/IVBack"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:padding="16dp"
+               app:layout_constraintBottom_toBottomOf="@+id/TVNewExit"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:srcCompat="@drawable/ic_baseline_close_24"
+               app:tint="@color/black"
+               tools:ignore="ContentDescription" />-->
 
         <TextView
             android:id="@+id/TVNewExit"
@@ -64,8 +64,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:spinnerMode="dropdown"
             android:background="@color/white"
+            android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TVCommunity" />
@@ -297,6 +297,7 @@
         android:layout_marginBottom="16dp"
         android:background="@color/grey"
         android:enabled="false"
+        android:letterSpacing="0"
         android:text="@string/text_create_output"
         android:textAllCaps="false"
         android:textColor="@color/white"
