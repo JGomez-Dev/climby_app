@@ -7,15 +7,12 @@ import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -24,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.R
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentDiscoverBinding
-import com.example.climby.ui.discover.adapter.CustomDropDownAdapter
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -51,8 +47,7 @@ class DiscoverFragment : Fragment() {
         binding = FragmentDiscoverBinding.inflate(layoutInflater)
         val view: View = binding.root
 
-        getLocation()
-
+        getData()
 
         binding.RVTrips.layoutManager = LinearLayoutManager(activity)
         discoverViewModel.tripsModel.observe(viewLifecycleOwner, Observer {
@@ -72,9 +67,11 @@ class DiscoverFragment : Fragment() {
             }
         })
 
-
-       discoverViewModel.provincesModel.observe(viewLifecycleOwner, Observer {
-          /* val customDropDownAdapter = CustomDropDownAdapter(requireContext().applicationContext, it)
+        binding.LYIDiscoverOutputs.setOnClickListener {
+            loadProvinces()
+        }
+       /*discoverViewModel.provincesModel.observe(viewLifecycleOwner, Observer {
+           val customDropDownAdapter = CustomDropDownAdapter(requireContext().applicationContext, it)
            binding.SPCommunity.adapter = customDropDownAdapter
            binding.SPCommunity.setSelection(getPositionItem(binding.SPCommunity, province))
            binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -85,8 +82,8 @@ class DiscoverFragment : Fragment() {
                    discoverViewModel.getTrips(requireContext().applicationContext, province!!)
                    binding.TBSeach.check(R.id.BTAll)
                }
-           }*/
-           val arrayAdapter = ArrayAdapter(requireContext().applicationContext, R.layout.spinner_province_row, R.id.TVMadrid, it)
+           }
+           *//*val arrayAdapter = ArrayAdapter(requireContext().applicationContext, R.layout.spinner_province_row, R.id.TVMadrid, it)
            arrayAdapter.setDropDownViewResource(R.layout.color_spinner)
            binding.SPCommunity.adapter = arrayAdapter
            binding.SPCommunity.setSelection(getPositionItem(binding.SPCommunity, province))
@@ -99,10 +96,10 @@ class DiscoverFragment : Fragment() {
                    binding.TBSeach.check(R.id.BTAll)
                    binding.HSVTButton.scrollTo(0,0)
                }
-           }
-        })
+           }*//*
+        })*/
 
-        discoverViewModel.getProvince()
+
         discoverViewModel.getTrips(requireContext().applicationContext, province!!)
         discoverViewModel.isBadResponse.observe(viewLifecycleOwner, Observer {
             binding.CLBadConnection.isVisible = it
@@ -134,6 +131,16 @@ class DiscoverFragment : Fragment() {
         return position
     }
 
+    private fun getData() {
+        val bundle = activity?.intent?.extras
+        if (bundle!=null) {
+            province = bundle?.getString("province")
+            binding.TVCommunity.text = province
+        }else{
+            getLocation()
+        }
+    }
+
     private fun getLocation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         if (ActivityCompat.checkSelfPermission(requireContext().applicationContext, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext().applicationContext, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -162,6 +169,16 @@ class DiscoverFragment : Fragment() {
         val postalCode = addresses[0].postalCode
         val knownName = addresses[0].featureName
         return province
+    }
+
+    private fun loadProvinces() {
+        val intent = Intent(activity, ProvinceActivity::class.java).apply {
+            putExtra("province", binding.TVCommunity.text)
+        }
+
+        startActivity(intent)
+        activity?.overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+
     }
 
     private fun loadTripUsers(trip: TripModel) {

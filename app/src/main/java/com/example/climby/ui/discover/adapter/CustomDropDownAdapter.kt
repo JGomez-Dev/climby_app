@@ -32,7 +32,7 @@ class CustomDropDownAdapter(val context: Context, var dataSource: List<ProvinceT
         return view
     }
 
-    override fun getItem(position: Int): Any? {
+    override fun getItem(position: Int): Any {
         return dataSource[position];
     }
 
@@ -45,13 +45,9 @@ class CustomDropDownAdapter(val context: Context, var dataSource: List<ProvinceT
     }
 
     private class ItemHolder(row: View?) {
-        val tvCommunitySP: TextView
-        val tvNumberSP: TextView
+        val tvCommunitySP: TextView = row?.findViewById(R.id.TVCommunitySP) as TextView
+        val tvNumberSP: TextView = row?.findViewById(R.id.TVNumberSP) as TextView
 
-        init {
-            tvCommunitySP = row?.findViewById(R.id.TVCommunitySP) as TextView
-            tvNumberSP = row?.findViewById(R.id.TVNumberSP) as TextView
-        }
     }
 
 }

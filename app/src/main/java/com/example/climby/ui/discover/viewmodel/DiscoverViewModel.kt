@@ -28,7 +28,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
     var isLoading = MutableLiveData<Boolean>()
     var isBadResponse = MutableLiveData<Boolean>()
     var provincesModel = MutableLiveData<List<String>>()
-   /* var provincesModel = MutableLiveData<List<ProvinceTripsModel>>()*/
+    /*var provincesModel = MutableLiveData<List<ProvinceTripsModel>>()*/
     var result: List<TripModel>? = null
 
     fun getTrips(context: Context, province: String) {
@@ -133,7 +133,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
         }
     }
 
-    /*fun getProvince() {
+   /* fun getProvince() {
         val resultType: MutableList<ProvinceTripsModel> = arrayListOf()
         viewModelScope.launch {
             val result = getAllProvinces()

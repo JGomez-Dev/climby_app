@@ -72,6 +72,10 @@
             android:name=".view.activity.OnBoardingThreeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.discover.ProvinceActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustResize" />
 
 
         <!--<meta-data
