@@ -45,8 +45,6 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
         getData()
         init()
 
-
-
         binding.IVBack.setOnClickListener {
             onBackPressed()
         }

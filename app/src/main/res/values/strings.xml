@@ -93,11 +93,11 @@
     <string name="basic_channel_id">basic_channel_id</string>
     <string name="basic_channel_name">basic_channel_name</string>
     <string name="basic_channel_description">basic_channel_description</string>
-    <string name="text_0">0</string>
     <string name="text_aualify_attendees">Valorar a los asistentes</string>
     <string name="text_send_menssage">Envía un mensaje a Javier</string>
     <string name="text_qualify_attendees">Cuenta cómo te sentiste escalando con el grupo o ayuda a Javier a mejorar para la próxima vez…</string>
     <string name="text_private_message_1">El mensaje privado a</string>
     <string name="text_private_message_2">está vacío.</string>
     <string name="text_if_cancel">Si cancelas la valoración ya no podrás volver a valorar esta salida</string>
+    <string name="text_0">0</string>
 </resources>
