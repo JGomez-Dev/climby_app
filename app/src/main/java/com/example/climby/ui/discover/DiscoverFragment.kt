@@ -2,6 +2,8 @@ package com.example.climby.ui.discover
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -11,6 +13,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
@@ -118,6 +121,16 @@ class DiscoverFragment : Fragment() {
             getFilterAndSendQuery(isChecked, checkedId)
         }
 
+
+
+        val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)
+        anim.duration = 1000
+        anim.repeatCount = Animation.INFINITE;
+        anim.repeatMode = ValueAnimator.REVERSE;
+
+        anim.start()
+
+
         return view
     }
 
@@ -177,7 +190,7 @@ class DiscoverFragment : Fragment() {
         }
 
         startActivity(intent)
-        activity?.overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
     }
 
