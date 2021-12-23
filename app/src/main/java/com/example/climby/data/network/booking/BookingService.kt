@@ -2,6 +2,7 @@ package com.example.climby.data.network.booking
 
 import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
+import com.example.climby.data.model.user.UserModel
 import com.example.climby.data.network.trip.TripApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,6 +13,13 @@ class BookingService @Inject constructor(private val api: BookingApiClient) {
     suspend fun putBooking(bookingModel: BookingModel): BookingModel {
         return withContext(Dispatchers.IO) {
             val response = api.putBooking(bookingModel)
+            response.body()!!
+        }
+    }
+
+    suspend fun postBooking(bookingModel: BookingModel): BookingModel {
+        return withContext(Dispatchers.IO) {
+            val response = api.postBooking(bookingModel)
             response.body()!!
         }
     }

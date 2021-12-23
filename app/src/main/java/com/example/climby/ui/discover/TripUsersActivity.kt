@@ -1,13 +1,10 @@
 package com.example.climby.ui.discover
 
 import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -16,13 +13,11 @@ import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityTripUsersBinding
-import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.discover.adapter.TripUsersAdapter
 import com.example.climby.ui.discover.viewmodel.TripUsersViewModel
 import com.example.climby.utils.Commons
 import com.example.climby.utils.IOnBackPressed
 import com.example.climby.utils.ReservationStatus
-import com.example.climby.utils.UserExperience
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,8 +28,6 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
     private lateinit var tripUsersAdapter: TripUsersAdapter
     private var trip: TripModel? = null
     private var userSession: UserModel = Commons.userSession!!
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +58,13 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
         binding.RVAssistants.layoutManager = LinearLayoutManager(this)
         tripUsersAdapter = TripUsersAdapter(acceptedBooking(), this)
         binding.RVAssistants.adapter = tripUsersAdapter
+        tripUsersAdapter.setOnClickListener(object : TripUsersAdapter.OnClickListener {
+            override fun onItemClick(position: Int) {
+               /* Glide.with(applicationContext).load(trip?.bookings?.get(position)?.passenger?.photo).error(R.mipmap.user).into(binding.CVBackgroundRequest)
+                binding.FLBackgroundRequest.isVisible = !binding.FLBackgroundRequest.isVisible*/
+            }
+
+        })
     }
 
     private fun acceptedBooking(): MutableList<BookingModel> {

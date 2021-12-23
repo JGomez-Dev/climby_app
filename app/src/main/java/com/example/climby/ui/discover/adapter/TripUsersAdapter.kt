@@ -12,20 +12,31 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.user.UserModel
+import com.example.climby.ui.profile.adapter.RequestAdapter
 import de.hdodenhof.circleimageview.CircleImageView
 
 class TripUsersAdapter(bookingsList: List<BookingModel>, context: Context) : RecyclerView.Adapter<TripUsersAdapter.DataViewHolder>() {
 
     private var bookingsList: List<BookingModel> = ArrayList()
     private var context: Context
+    private lateinit var mListener: OnClickListener
+
 
     init {
         this.bookingsList = bookingsList
         this.context = context
     }
 
+    interface OnClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnClickListener(listener: OnClickListener) {
+        mListener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DataViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_trip_users, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.item_trip_users, parent, false), mListener
     )
 
     override fun onBindViewHolder(holder: TripUsersAdapter.DataViewHolder, position: Int) {
@@ -34,7 +45,13 @@ class TripUsersAdapter(bookingsList: List<BookingModel>, context: Context) : Rec
 
     override fun getItemCount(): Int = bookingsList.size
 
-    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class DataViewHolder(itemView: View, listener: OnClickListener) : RecyclerView.ViewHolder(itemView) {
+
+        init {
+            itemView.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
+        }
 
         private val ciVPassengers: CircleImageView = itemView.findViewById(R.id.CIVPassengers)
         private val tVNamePassengers: TextView = itemView.findViewById(R.id.TVNamePassengers)
