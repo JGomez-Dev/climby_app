@@ -90,7 +90,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun init() {
         binding.ETName.setText(userSession.name)
-        binding.ETPhone.setText(userSession.phone)
+        binding.ETPhone.setText(getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)?.getString("phone", "..."))
         Glide.with(this).load(userSession.photo).error(R.mipmap.user).into(binding.CIPhotoUser)
         checkExperience()
     }

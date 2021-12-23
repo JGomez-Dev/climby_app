@@ -26,9 +26,9 @@ class EditProfileViewModel @Inject constructor(private val update: Update, @Null
         viewModelScope.launch {
             val result = update(userModel)
             val editor = sharedPref.edit()
-            editor.putString("experience", result.experience.toString())
-            editor.putString("phone", result.phone)
-            editor.putString("photoUrl", result.photo)
+            editor.putString("experience", userModel.experience)
+            editor.putString("phone", userModel.phone)
+            editor.putString("photoUrl", userModel.photo)
             editor.apply()
         }
     }
