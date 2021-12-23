@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -25,14 +26,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
-import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.FragmentDiscoverBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.example.climby.utils.Commons
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -75,6 +74,9 @@ class DiscoverFragment : Fragment() {
                     }
                     override fun onClickAddMe(position: Int) {
                         saveBooking(it, position)
+                    }
+                    override fun onClickRemoveMe(_it: BookingModel, position: Int) {
+                        showDialog(view, _it, it, position)
                     }
                 })
             }
@@ -144,8 +146,36 @@ class DiscoverFragment : Fragment() {
         return view
     }
 
+
+    private fun showDialog(view: View, booking: BookingModel, it: List<TripModel>, position: Int ) {
+        AlertDialog.Builder(view.context)
+            .setTitle("Eliminar solicitud")
+            .setMessage("Dejarás libre tu plaza para que otra persona pueda ocuparla")
+            .setNegativeButton(R.string.cancel) { view, _ ->
+                view.dismiss()
+            }
+            .setPositiveButton("Aceptar") { view, _ ->
+                deleteBooking(booking, it, position)
+                view.dismiss()
+            }
+            .setCancelable(false)
+            .create().show()
+    }
+
+
+
+    private fun deleteBooking(bookingModel: BookingModel, it: List<TripModel>, position: Int) {
+        /*discoverViewModel.deleteBooking(bookingModel)*/
+        it[position].bookings?.remove(bookingModel)
+        discoverAdapter.notifyDataSetChanged()
+    }
+
+
     private fun saveBooking(it: List<TripModel>, position: Int) {
-        discoverViewModel.saveBooking(BookingModel(0, Commons.userSession, it[position].id, status = false, valuationStatus = false, date = now()))
+        val bookingModel = BookingModel(0, Commons.userSession, it[position].id, status = false, valuationStatus = false, date = now())
+        discoverViewModel.saveBooking(bookingModel)
+        it[position].bookings?.add(bookingModel)
+        discoverAdapter.notifyDataSetChanged()
     }
 
     @SuppressLint("SimpleDateFormat")
