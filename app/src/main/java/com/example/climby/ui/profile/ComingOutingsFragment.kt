@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.databinding.FragmentComingOutingsBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.profile.viewmodel.ComingOutingsViewModel
@@ -38,6 +39,14 @@ class ComingOutingsFragment : Fragment() {
                 discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
                         //loadActivity(it[position])
+                    }
+
+                    override fun onClickAddMe(position: Int) {
+
+                    }
+
+                    override fun onClickRemoveMe(_it: BookingModel, position: Int) {
+
                     }
                 })
             }

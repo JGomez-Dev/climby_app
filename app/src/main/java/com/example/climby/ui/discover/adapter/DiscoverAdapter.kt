@@ -5,11 +5,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,7 +40,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
     interface OnItemClickListener {
         fun onItemClick(position: Int)
         fun onClickAddMe(position: Int)
-
+        fun onClickRemoveMe(_it: BookingModel, position: Int)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -84,17 +83,20 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
             } else {
                 btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
                 /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
-                trip.bookings?.forEach {
-                    if (it.passenger?.id ?: 0 == userSession.id) {
-                        when (it.status) {
+                trip.bookings?.forEach { _it->
+                    if (_it.passenger?.id ?: 0 == userSession.id) {
+                        when (_it.status) {
                             ReservationStatus.ACCEPTED.status -> {
                                 btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                                 btRequest.text = "Te has unido\r\nLiberar plaza"
-                                acceptedBookingList.add(it)
+                                acceptedBookingList.add(_it)
                             }
                             ReservationStatus.UNANSWERED.status -> {
                                 btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                                 btRequest.text = "Solicitado"
+                                btRequest.setOnClickListener {
+                                    mlistener.onClickRemoveMe(_it, adapterPosition)
+                                }
                             }
                             ReservationStatus.REFUSE.status -> {
                                 btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red_light);
@@ -103,12 +105,12 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                             }
                         }
                     } else {
-                        when (it.status) {
+                        when (_it.status) {
                             ReservationStatus.ACCEPTED.status -> {
                                 accepted++
                             }
                         }
-                        acceptedBookingList.add(it)
+                        acceptedBookingList.add(_it)
                     }
                 }
 

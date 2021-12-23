@@ -1,5 +1,6 @@
 package com.example.climby.ui.discover.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,26 +10,28 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.climby.data.model.booking.BookingModel
-import com.example.climby.data.model.province.ProvinceTripsModel
 import com.example.climby.data.model.trip.TripModel
+import com.example.climby.domain.booking.Delete
 import com.example.climby.domain.booking.Insert
-import com.example.climby.domain.province.GetAllProvinces
 import com.example.climby.domain.trip.GetAllTrips
 import com.example.climby.view.activity.OnBoardingThreeActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
+import java.util.*
 import javax.annotation.Nullable
 import javax.inject.Inject
 
 @HiltViewModel
-class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips, private val insert: Insert, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
+class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips, private val insert: Insert, private val delete: Delete, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
 
     var tripsModel = MutableLiveData<List<TripModel>>()
     var isLoading = MutableLiveData<Boolean>()
     var isBadResponse = MutableLiveData<Boolean>()
+
     /*var provincesModel = MutableLiveData<List<String>>()*/
     /*var provincesModel = MutableLiveData<List<ProvinceTripsModel>>()*/
     var result: List<TripModel>? = null
@@ -55,6 +58,12 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
         }
     }
 
+    fun deleteBooking(idBooking: BookingModel) {
+        viewModelScope.launch {
+            val result: BookingModel = delete(idBooking.id)
+        }
+    }
+
     private fun setTripByProvince(province: String) {
         val resultWithProvince: MutableList<TripModel> = arrayListOf()
         result?.forEach { it ->
@@ -70,16 +79,27 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
         result?.forEach { it ->
             it.bookings?.forEach { _it ->
                 val id = sharedPref.getInt("id", 0)
-                if (_it.valuationStatus == false && id == _it.passenger?.id) {
+                if (_it.valuationStatus == false && id == _it.passenger?.id && _it.status == true && checkDate(it.departure!!)) {
                     val intent = Intent(context, OnBoardingThreeActivity::class.java).apply {
                         putExtra("trip", it)
                         putExtra("booking", _it)
                     }
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(intent)
+
                 }
             }
         }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun checkDate(date: String): Boolean {
+        val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        val strDate: Date = sdf.parse(date)!!
+        if (Date().before(strDate)) {
+            return false
+        }
+        return true
     }
 
     fun getTripsType(type: String, province: String) {
@@ -141,20 +161,20 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
         }
     }
 
-   /* fun getProvince() {
-        val resultType: MutableList<ProvinceTripsModel> = arrayListOf()
-        viewModelScope.launch {
-            val result = getAllProvinces()
-            var conttest = 0
-            val resultName: MutableList<String> = arrayListOf()
-            result.forEach {
-                resultType.add(ProvinceTripsModel(it.name, conttest))
-                conttest = (0..30).random()
-            }
-            if (!result.isNullOrEmpty())
-                provincesModel.postValue(resultType)
-        }
-    }*/
+    /* fun getProvince() {
+         val resultType: MutableList<ProvinceTripsModel> = arrayListOf()
+         viewModelScope.launch {
+             val result = getAllProvinces()
+             var conttest = 0
+             val resultName: MutableList<String> = arrayListOf()
+             result.forEach {
+                 resultType.add(ProvinceTripsModel(it.name, conttest))
+                 conttest = (0..30).random()
+             }
+             if (!result.isNullOrEmpty())
+                 provincesModel.postValue(resultType)
+         }
+     }*/
 
     /*fun getProvince() {
         viewModelScope.launch {

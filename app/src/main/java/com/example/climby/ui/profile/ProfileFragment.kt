@@ -67,7 +67,7 @@ class ProfileFragment: Fragment() {
         prefs = activity?.getSharedPreferences(getString(R.string.prefs_file), AppCompatActivity.MODE_PRIVATE)!!
         binding.TVUserName.text = prefs.getString("displayName", "").toString().split(" ")[0]
         Glide.with(this).load(prefs.getString("photoUrl", "...")).error(R.mipmap.user).into(binding.CVImageProfile)
-        binding.TVUserExperience.text = prefs.getString("experience", "")
+        binding.TVUserExperience.text = userSession.experience
         binding.TVUserOutputs.text = userSession.outings.toString() + if (userSession.outings.toString() == "1") " salida" else " salidas"
         setStart()
     }
