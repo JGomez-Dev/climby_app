@@ -8,8 +8,10 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.province.ProvinceTripsModel
 import com.example.climby.data.model.trip.TripModel
+import com.example.climby.domain.booking.Insert
 import com.example.climby.domain.province.GetAllProvinces
 import com.example.climby.domain.trip.GetAllTrips
 import com.example.climby.view.activity.OnBoardingThreeActivity
@@ -22,12 +24,12 @@ import javax.annotation.Nullable
 import javax.inject.Inject
 
 @HiltViewModel
-class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips, private val getAllProvinces: GetAllProvinces, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
+class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips, private val insert: Insert, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
 
     var tripsModel = MutableLiveData<List<TripModel>>()
     var isLoading = MutableLiveData<Boolean>()
     var isBadResponse = MutableLiveData<Boolean>()
-    var provincesModel = MutableLiveData<List<String>>()
+    /*var provincesModel = MutableLiveData<List<String>>()*/
     /*var provincesModel = MutableLiveData<List<ProvinceTripsModel>>()*/
     var result: List<TripModel>? = null
 
@@ -44,6 +46,12 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
                 }
                 setTripByProvince(province)
             }
+        }
+    }
+
+    fun saveBooking(bookingModel: BookingModel) {
+        viewModelScope.launch {
+            val result: BookingModel = insert(bookingModel)
         }
     }
 
@@ -148,7 +156,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
         }
     }*/
 
-    fun getProvince() {
+    /*fun getProvince() {
         viewModelScope.launch {
             val result = getAllProvinces()
             val resultName: MutableList<String> = arrayListOf()
@@ -159,7 +167,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
             if (!result.isNullOrEmpty())
                 provincesModel.postValue(resultName)
         }
-    }
+    }*/
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun calcNextFriday(d: LocalDate): LocalDate? {

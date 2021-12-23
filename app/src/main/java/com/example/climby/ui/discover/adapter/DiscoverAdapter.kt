@@ -40,6 +40,8 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
+        fun onClickAddMe(position: Int)
+
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -74,6 +76,11 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
 
             if (trip.bookings?.isEmpty() == true) {
                 btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
+                btRequest.setOnClickListener {
+                    mlistener.onClickAddMe(adapterPosition)
+                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
+                    btRequest.text = "Solicitado"
+                }
             } else {
                 btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
                 /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/

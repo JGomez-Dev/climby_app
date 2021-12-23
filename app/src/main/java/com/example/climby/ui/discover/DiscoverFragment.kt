@@ -4,6 +4,7 @@ import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -22,13 +23,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.R
+import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
+import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.FragmentDiscoverBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
+import com.example.climby.utils.Commons
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -44,6 +50,7 @@ class DiscoverFragment : Fragment() {
     private var longitude: Double = 0.0
     private var province: String? = "Madrid"
 
+    private var dateFormat = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         discoverViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java)
@@ -65,6 +72,9 @@ class DiscoverFragment : Fragment() {
                 discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
                         loadTripUsers(it[position])
+                    }
+                    override fun onClickAddMe(position: Int) {
+                        saveBooking(it, position)
                     }
                 })
             }
@@ -132,6 +142,15 @@ class DiscoverFragment : Fragment() {
 
 
         return view
+    }
+
+    private fun saveBooking(it: List<TripModel>, position: Int) {
+        discoverViewModel.saveBooking(BookingModel(0, Commons.userSession, it[position].id, status = false, valuationStatus = false, date = now()))
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun now(): String {
+        return SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Date()).toString()
     }
 
     private fun getPositionItem(spinner: Spinner, province: String?): Int {
