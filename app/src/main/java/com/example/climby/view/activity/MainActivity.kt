@@ -3,10 +3,10 @@ package com.example.climby.view.activity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.climby.R
+import com.example.climby.ui.publish.PublishFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,10 +26,27 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.navigation_dashboard) {
+            if (destination.id == R.id.navigation_publish) {
                 navView.visibility = View.GONE
             } else {
                 navView.visibility = View.VISIBLE
+            }
+        }
+
+        val bundle = intent.extras
+        if (bundle != null) {
+
+            val school =  bundle.getString("schoolPublish", "")
+            val province = bundle.getInt("provincePublish", 0)
+            val type = bundle.getInt("typePublish", 0)
+            val date = bundle.getString("datePublish", "")
+            val places = bundle.getInt("placePublish", 0)
+
+            if(school != null){
+                val f = PublishFragment()
+                f.arguments = bundle
+                val fm = supportFragmentManager
+                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
             }
         }
     }

@@ -48,9 +48,7 @@ class DiscoverFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
-    private var province: String? = "Madrid"
-
-    private var dateFormat = ""
+    private var province: String? = "Barcelona"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         discoverViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java)
@@ -88,20 +86,20 @@ class DiscoverFragment : Fragment() {
         binding.LYIDiscoverOutputs.setOnClickListener {
             loadProvinces()
         }
-       /*discoverViewModel.provincesModel.observe(viewLifecycleOwner, Observer {
-           val customDropDownAdapter = CustomDropDownAdapter(requireContext().applicationContext, it)
-           binding.SPCommunity.adapter = customDropDownAdapter
-           binding.SPCommunity.setSelection(getPositionItem(binding.SPCommunity, province))
-           binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-               override fun onNothingSelected(parent: AdapterView<*>?) {
-               }
-               override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                   province = parent!!.getItemAtPosition(position).toString().split(" ")[0].split("=")[1].split(",")[0]
-                   discoverViewModel.getTrips(requireContext().applicationContext, province!!)
-                   binding.TBSeach.check(R.id.BTAll)
-               }
-           }
-           *//*val arrayAdapter = ArrayAdapter(requireContext().applicationContext, R.layout.spinner_province_row, R.id.TVMadrid, it)
+        /*discoverViewModel.provincesModel.observe(viewLifecycleOwner, Observer {
+            val customDropDownAdapter = CustomDropDownAdapter(requireContext().applicationContext, it)
+            binding.SPCommunity.adapter = customDropDownAdapter
+            binding.SPCommunity.setSelection(getPositionItem(binding.SPCommunity, province))
+            binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    province = parent!!.getItemAtPosition(position).toString().split(" ")[0].split("=")[1].split(",")[0]
+                    discoverViewModel.getTrips(requireContext().applicationContext, province!!)
+                    binding.TBSeach.check(R.id.BTAll)
+                }
+            }
+            *//*val arrayAdapter = ArrayAdapter(requireContext().applicationContext, R.layout.spinner_province_row, R.id.TVMadrid, it)
            arrayAdapter.setDropDownViewResource(R.layout.color_spinner)
            binding.SPCommunity.adapter = arrayAdapter
            binding.SPCommunity.setSelection(getPositionItem(binding.SPCommunity, province))
@@ -118,7 +116,6 @@ class DiscoverFragment : Fragment() {
         })*/
 
 
-        discoverViewModel.getTrips(requireContext().applicationContext, province!!)
         discoverViewModel.isBadResponse.observe(viewLifecycleOwner, Observer {
             binding.CLBadConnection.isVisible = it
             binding.CLTripsEmpty.isVisible = !it
@@ -135,7 +132,6 @@ class DiscoverFragment : Fragment() {
         binding.TBSeach.addOnButtonCheckedListener { _, checkedId, isChecked ->
             getFilterAndSendQuery(isChecked, checkedId)
         }
-
 
 
         val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)
@@ -164,7 +160,6 @@ class DiscoverFragment : Fragment() {
             .setCancelable(false)
             .create().show()
     }
-
 
 
     private fun deleteBooking(bookingModel: BookingModel, it: List<TripModel>, position: Int) {
@@ -198,10 +193,15 @@ class DiscoverFragment : Fragment() {
 
     private fun getData() {
         val bundle = activity?.intent?.extras
-        if (bundle!=null) {
-            province = bundle?.getString("province")
-            binding.TVCommunity.text = province
-        }else{
+        if (bundle != null) {
+            province = bundle.getString("province")
+            if (province != null) {
+                binding.TVCommunity.text = province
+                discoverViewModel.getTrips(requireContext().applicationContext, province!!)
+            } else {
+                getLocation()
+            }
+        } else {
             getLocation()
         }
     }
@@ -216,6 +216,8 @@ class DiscoverFragment : Fragment() {
                 latitude = location?.latitude!!
                 longitude = location.longitude
                 province = getProvinceByLatLong(location)
+                discoverViewModel.getTrips(requireContext().applicationContext, province!!)
+
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Sin localización / Lo tenemos que ver", Toast.LENGTH_SHORT).show()

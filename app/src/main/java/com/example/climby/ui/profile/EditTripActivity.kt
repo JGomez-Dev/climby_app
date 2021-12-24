@@ -104,7 +104,9 @@ class EditTripActivity : AppCompatActivity() {
     }
 
     private fun showDatePickerDialog() {
-        val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month + 1) }
+        val datePicker = DatePickerFragment ( {
+                day, month, _ -> onDateSelected(day, month + 1)
+        }, "dateFormat")
         datePicker.show(supportFragmentManager, "datePicker")
     }
 

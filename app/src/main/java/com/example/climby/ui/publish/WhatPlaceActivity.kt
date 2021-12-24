@@ -1,28 +1,31 @@
 package com.example.climby.ui.publish
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
 import com.example.climby.databinding.ActivityWhatPlaceBinding
 import com.example.climby.ui.publish.viewmodel.WhatPlaceViewModel
+import com.example.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class WhatPlaceActivity : AppCompatActivity(){
+class WhatPlaceActivity : AppCompatActivity() {
 
     private lateinit var whatPlaceViewModel: WhatPlaceViewModel
     private lateinit var binding: ActivityWhatPlaceBinding
-    private lateinit var school: String
 
+    private lateinit var school: String
+    private lateinit var date: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,7 @@ class WhatPlaceActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         showKeyboard()
+        getData()
 
         binding.IVBack.setOnClickListener {
             onBackPressed()
@@ -63,24 +67,29 @@ class WhatPlaceActivity : AppCompatActivity(){
         }
 
         binding.BTSave.setOnClickListener {
-            onBackPressed()
+            /*onBackPressed()*/
             /*replaceFragment()*/
+            replaceFragment()
             closeKeyboard()
         }
 
         whatPlaceViewModel.getAllSchools()
     }
 
-    /*private fun replaceFragment() {
-        // Create new fragment and transaction
-        val newFragment: Fragment = PublishFragment()
-        val transaction = supportFragmentManager.beginTransaction()
+    private fun replaceFragment() {
+        val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
 
-        transaction.replace(R.id.fragment_container, newFragment)
-        transaction.addToBackStack(null)
+            putExtra("schoolPublish", binding.ACSchool.text.toString())
+            putExtra("provincePublish", intent.extras?.getInt("provincePublish", 0))
+            putExtra("typePublish", intent.extras?.getInt("typePublish", 0))
+            putExtra("datePublish", intent.extras?.getString("datePublish", ""))
+            putExtra("placePublish", intent.extras?.getInt("placePublish", 0))
+        }
+        startActivity(intent)
+        finish()
+        overridePendingTransition(0, R.anim.slide_in_down)
 
-        transaction.commit()
-    }*/
+    }
 
     private fun showKeyboard() {
         binding.ACSchool.requestFocus()
@@ -100,6 +109,14 @@ class WhatPlaceActivity : AppCompatActivity(){
         } else {
             binding.BTSave.isEnabled = false
             binding.BTSave.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.grey))
+        }
+    }
+
+    private fun getData() {
+        val bundle = intent.extras
+        if (bundle != null) {
+            school = bundle.getString("schoolPublish", "")
+
         }
     }
 }

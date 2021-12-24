@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +24,7 @@ import com.example.climby.utils.Commons
 import com.example.climby.utils.DatePickerFragment
 import com.example.climby.utils.IOnBackPressed
 import com.example.climby.view.activity.MainActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -43,15 +45,20 @@ class PublishFragment : Fragment(), IOnBackPressed {
     private var selectedType = -1
     private var selectedProvince = -1
 
+    private var school: String? = ""
+    private var date : String = ""
+    private var places : Int = 0
+
+    private val arrayAdapter = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         publishViewModel = ViewModelProvider(this).get(PublishViewModel::class.java)
         binding = FragmentPublishBinding.inflate(layoutInflater)
         val view: View = binding.root
 
-        /*  val navBar: BottomNavigationView = activity?.findViewById(R.id.nav_view)!!
+          val navBar: BottomNavigationView = activity?.findViewById(R.id.nav_view)!!
           navBar.isVisible = false
-  */
+
         binding.ETSite.setOnClickListener {
             loadFragment()
         }
@@ -62,10 +69,18 @@ class PublishFragment : Fragment(), IOnBackPressed {
 
         publishViewModel.provincesModel.observe(viewLifecycleOwner, Observer {
             setupAdapterProvinces(it)
+            if (province != 0)
+                binding.SPCommunity.setSelection(province)
+
         })
 
         publishViewModel.typesModel.observe(viewLifecycleOwner, Observer {
             setupAdapterType(it)
+            if (type != 0) {
+                binding.SPType.setSelection(type)
+
+            }
+
         })
 
         binding.ETDate.setOnClickListener {
@@ -83,6 +98,26 @@ class PublishFragment : Fragment(), IOnBackPressed {
 
         publishViewModel.getProvince()
         publishViewModel.getTypes()
+
+
+        if (arguments != null) {
+            school = arguments?.getString("schoolPublish", "")
+            province = arguments?.getInt("provincePublish", 0)!!
+            type = arguments?.getInt("typePublish", 0)!!
+            date = arguments?.getString("datePublish", "")!!
+            places = arguments?.getInt("placePublish", 0)!!
+
+            binding.ETSite.text = school
+            binding.ETSite.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
+
+            binding.ETDate.setText(date)
+            binding.ETDate.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
+
+
+            binding.SPPlacesAvailable.setSelection(places)
+        } else {
+            binding.ETSite.text = getString(R.string.text_select_school)
+        }
 
         return view
     }
@@ -102,6 +137,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
     }
 
     private fun setupAdapterType(it: List<String>) {
+
         val arrayAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.support_simple_spinner_dropdown_item, it) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val row: View
@@ -123,6 +159,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
                 return position != 0
             }
         }
+        arrayAdapter.notifyDataSetChanged()
         binding.SPType.adapter = arrayAdapter
         binding.SPType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -165,6 +202,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
             }
         }
         binding.SPCommunity.adapter = arrayAdapter
+
         binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -183,11 +221,14 @@ class PublishFragment : Fragment(), IOnBackPressed {
                 province = parent.getItemIdAtPosition(position).toInt()
             }
         }
+
     }
 
 
     private fun showDatePickerDialog() {
-        val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month + 1, year) }
+        val datePicker = DatePickerFragment ( {
+                day, month, year -> onDateSelected(day, month + 1, year)
+        }, dateFormat)
         datePicker.show(childFragmentManager, "datePicker")
     }
 
@@ -208,8 +249,15 @@ class PublishFragment : Fragment(), IOnBackPressed {
     }
 
     private fun loadFragment() {
-        val intent = Intent(activity, WhatPlaceActivity::class.java)
+        val intent = Intent(activity, WhatPlaceActivity::class.java).apply {
+            putExtra("schoolPublish", binding.ETSite.text)
+            putExtra("provincePublish", binding.SPCommunity.selectedItemId.toInt())
+            putExtra("typePublish", binding.SPType.selectedItemId.toInt())
+            putExtra("datePublish", binding.ETDate.text.toString())
+            putExtra("placePublish", binding.SPPlacesAvailable.selectedItemId.toInt())
+        }
         startActivity(intent)
+        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
     }
 
     override fun onBackPressed() {
