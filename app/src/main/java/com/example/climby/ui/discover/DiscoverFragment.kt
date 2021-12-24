@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -72,9 +73,11 @@ class DiscoverFragment : Fragment() {
                     override fun onItemClick(position: Int) {
                         loadTripUsers(it[position])
                     }
+
                     override fun onClickAddMe(position: Int) {
                         saveBooking(it, position)
                     }
+
                     override fun onClickRemoveMe(_it: BookingModel, position: Int) {
                         showDialog(view, _it, it, position)
                     }
@@ -147,7 +150,7 @@ class DiscoverFragment : Fragment() {
     }
 
 
-    private fun showDialog(view: View, booking: BookingModel, it: List<TripModel>, position: Int ) {
+    private fun showDialog(view: View, booking: BookingModel, it: List<TripModel>, position: Int) {
         AlertDialog.Builder(view.context)
             .setTitle("Eliminar solicitud")
             .setMessage("Dejarás libre tu plaza para que otra persona pueda ocuparla")
@@ -239,6 +242,7 @@ class DiscoverFragment : Fragment() {
         }
 
         startActivity(intent)
+
         activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
     }

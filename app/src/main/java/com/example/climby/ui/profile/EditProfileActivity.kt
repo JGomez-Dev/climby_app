@@ -127,6 +127,7 @@ class EditProfileActivity : AppCompatActivity() {
         binding.TVBeginner.setTextColor(ContextCompat.getColor(this, R.color.black))
         binding.CVIntermediate.setCardBackgroundColor(ContextCompat.getColor(this, R.color.white))
         binding.TVIntermediate.setTextColor(ContextCompat.getColor(this, R.color.black))
+        binding.BTSave.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
         userExperience = UserExperience.ADVANCED.status
     }
 
@@ -140,6 +141,7 @@ class EditProfileActivity : AppCompatActivity() {
         binding.TVBeginner.setTextColor(ContextCompat.getColor(this, R.color.black))
         binding.CVExperienced.setCardBackgroundColor(ContextCompat.getColor(this, R.color.white))
         binding.TVExperienced.setTextColor(ContextCompat.getColor(this, R.color.black))
+        binding.BTSave.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
         userExperience = UserExperience.MEDIUM.status
     }
 
@@ -153,6 +155,7 @@ class EditProfileActivity : AppCompatActivity() {
         binding.TVIntermediate.setTextColor(ContextCompat.getColor(this, R.color.black))
         binding.CVExperienced.setCardBackgroundColor(ContextCompat.getColor(this, R.color.white))
         binding.TVExperienced.setTextColor(ContextCompat.getColor(this, R.color.black))
+        binding.BTSave.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
         userExperience = UserExperience.BEGINNER.status
     }
 }
