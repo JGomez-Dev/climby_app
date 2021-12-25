@@ -3,6 +3,7 @@ package com.example.climby.ui.discover
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -54,7 +55,10 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
         }
         binding.TVSite.text = trip?.site?.name + ", " + (trip?.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip?.departure?.let { Commons.getDate(it) }
         Glide.with(this).load(trip?.driver?.photo).error(R.mipmap.user).into(binding.CIVAdmin)
-        trip?.driver?.let { setStart(it) }
+        trip?.driver?.let { setStart(it)}
+        if(trip?.bookings?.size == 0){
+            binding.TVAssistants.visibility = View.GONE
+        }
         binding.RVAssistants.layoutManager = LinearLayoutManager(this)
         tripUsersAdapter = TripUsersAdapter(acceptedBooking(), this)
         binding.RVAssistants.adapter = tripUsersAdapter

@@ -88,7 +88,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
         }
 
         binding.BTNewExit.setOnClickListener {
-            val tripModel = TripModel(0, SchoolModel(binding.ETSite.text.toString()), TypesModel(binding.SPType.selectedItem.toString()), binding.SPPlacesAvailable.selectedItem.toString().toInt(), dateFormat, ProvinceModel(binding.SPCommunity.selectedItem.toString()), userSession, arrayListOf())
+            val tripModel = TripModel(0, SchoolModel(binding.ETSite.text.toString()), TypesModel(binding.SPType.selectedItem.toString()), binding.SPPlacesAvailable.selectedItem.toString().toInt(), dateFormat, ProvinceModel(binding.SPCommunity.selectedItem.toString(), 0), userSession, arrayListOf())
             saveTrip(tripModel)
         }
 

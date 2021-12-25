@@ -128,6 +128,8 @@
         app:layout_constraintHeight_percent=".75"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:tabSelectedTextColor="@color/primary"
+        app:tabTextColor="@color/black"
         app:layout_constraintTop_toBottomOf="@+id/CVImageProfile"
         app:tabTextAppearance="@style/TabWidget" />
 

@@ -5,13 +5,18 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class ProvinceModel(
-        @SerializedName("name") val name: String?
-        ): Parcelable {
-        constructor(parcel: Parcel) : this(parcel.readString()) {
-        }
+        @SerializedName("name") val name: String?,
+        @SerializedName("numberTravels") var number_travels: Int
+) : Parcelable {
+        constructor(parcel: Parcel) : this(
+                parcel.readString(),
+                parcel.readInt()
+
+        )
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
                 parcel.writeString(name)
+                parcel.writeInt(number_travels)
         }
 
         override fun describeContents(): Int {

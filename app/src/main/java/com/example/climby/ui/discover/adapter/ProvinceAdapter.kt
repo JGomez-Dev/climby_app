@@ -10,12 +10,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.climby.R
+import com.example.climby.data.model.province.ProvinceModel
 import com.example.climby.data.model.province.ProvinceTripsModel
 
 
-class ProvinceAdapter(tripData: List<ProvinceTripsModel>, province: String?, context: Context) : RecyclerView.Adapter<ProvinceAdapter.DataViewHolder>() {
+class ProvinceAdapter(tripData: List<ProvinceModel>, province: String?, context: Context) : RecyclerView.Adapter<ProvinceAdapter.DataViewHolder>() {
 
-    private var tripsList: List<ProvinceTripsModel> = ArrayList()
+    private var tripsList: List<ProvinceModel> = ArrayList()
     private var context: Context
     private var provinceSelected: String?
     private lateinit var mlistener: OnItemClickListener
@@ -46,7 +47,7 @@ class ProvinceAdapter(tripData: List<ProvinceTripsModel>, province: String?, con
         private val tvCommunitySP: TextView = itemView.findViewById(R.id.TVCommunitySP)
         private val tvNumberSP: TextView = itemView.findViewById(R.id.TVNumberSP)
 
-        fun bind(province: ProvinceTripsModel) {
+        fun bind(province: ProvinceModel) {
             if (provinceSelected?.equals(province.name)!!) {
                 tvCommunitySP.setTextColor(ContextCompat.getColorStateList(context, R.color.primary))
                 tvNumberSP.setTextColor(ContextCompat.getColorStateList(context, R.color.primary))
@@ -58,7 +59,7 @@ class ProvinceAdapter(tripData: List<ProvinceTripsModel>, province: String?, con
                 tvNumberSP.setTextColor(ContextCompat.getColorStateList(context, R.color.grey))
             }
             tvCommunitySP.text = province.name
-            tvNumberSP.text = province.tripsNumber.toString()
+            tvNumberSP.text = province.number_travels.toString()
         }
     }
     
