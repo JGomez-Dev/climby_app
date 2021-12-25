@@ -1,6 +1,7 @@
 package com.example.climby.view.viewmodel
 
 import android.content.SharedPreferences
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.climby.data.model.user.UserModel
@@ -16,11 +17,14 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject  constructor(private val get: Get, private val insert: Insert, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
 
+    var isCharget = MutableLiveData<Boolean>()
+
     fun getUser(userModel: UserModel) {
         viewModelScope.launch {
             try {
                 val result = get(userModel.id)
                 Commons.userSession = result
+                isCharget.postValue(true)
             }catch (e: Exception){
                 postUser(userModel)
             }

@@ -35,14 +35,13 @@ class MainActivity : AppCompatActivity() {
 
         val bundle = intent.extras
         if (bundle != null) {
-
             val school =  bundle.getString("schoolPublish", "")
             val province = bundle.getInt("provincePublish", 0)
             val type = bundle.getInt("typePublish", 0)
             val date = bundle.getString("datePublish", "")
+            val dateFormat = bundle.getString("datePublishWithOutFormat", "")
             val places = bundle.getInt("placePublish", 0)
-
-            if(school != null){
+            if(school != ""){
                 val f = PublishFragment()
                 f.arguments = bundle
                 val fm = supportFragmentManager

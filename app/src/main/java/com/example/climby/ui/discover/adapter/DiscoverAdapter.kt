@@ -73,7 +73,22 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(trip.driver?.photo).into(cvDriver)
             Commons.setTextButton(btRequest, trip)
 
-            if (trip.bookings?.isEmpty() == true) {
+            if (trip.driver?.id == userSession.id) {
+                if (trip.bookings?.isEmpty() == true) {
+                    btRequest.text = "Aún no tienes peticiones"
+                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey_light);
+                    btRequest.isEnabled = false
+
+                } else {
+                    btRequest.text = "Ver peticiones"
+                    if (accepted == trip.availablePlaces) {
+                        btRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
+                        btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey_light);
+                        btRequest.text = "Completo"
+                        btRequest.isEnabled = false
+                    }
+                }
+            } else if (trip.bookings?.isEmpty() == true) {
                 btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
                 btRequest.setOnClickListener {
                     mlistener.onClickAddMe(adapterPosition)
@@ -82,8 +97,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                 }
             } else {
                 btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
-                /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
-                trip.bookings?.forEach { _it->
+                trip.bookings?.forEach { _it ->
                     if (_it.passenger?.id ?: 0 == userSession.id) {
                         when (_it.status) {
                             ReservationStatus.ACCEPTED.status -> {

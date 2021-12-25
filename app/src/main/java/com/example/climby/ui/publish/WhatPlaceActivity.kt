@@ -83,6 +83,7 @@ class WhatPlaceActivity : AppCompatActivity() {
             putExtra("provincePublish", intent.extras?.getInt("provincePublish", 0))
             putExtra("typePublish", intent.extras?.getInt("typePublish", 0))
             putExtra("datePublish", intent.extras?.getString("datePublish", ""))
+            putExtra("datePublishWithOutFormat", intent.extras?.getString("datePublishWithOutFormat", ""))
             putExtra("placePublish", intent.extras?.getInt("placePublish", 0))
         }
         startActivity(intent)

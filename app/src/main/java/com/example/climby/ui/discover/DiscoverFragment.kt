@@ -86,35 +86,6 @@ class DiscoverFragment : Fragment() {
         binding.LYIDiscoverOutputs.setOnClickListener {
             loadProvinces()
         }
-        /*discoverViewModel.provincesModel.observe(viewLifecycleOwner, Observer {
-            val customDropDownAdapter = CustomDropDownAdapter(requireContext().applicationContext, it)
-            binding.SPCommunity.adapter = customDropDownAdapter
-            binding.SPCommunity.setSelection(getPositionItem(binding.SPCommunity, province))
-            binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    province = parent!!.getItemAtPosition(position).toString().split(" ")[0].split("=")[1].split(",")[0]
-                    discoverViewModel.getTrips(requireContext().applicationContext, province!!)
-                    binding.TBSeach.check(R.id.BTAll)
-                }
-            }
-            *//*val arrayAdapter = ArrayAdapter(requireContext().applicationContext, R.layout.spinner_province_row, R.id.TVMadrid, it)
-           arrayAdapter.setDropDownViewResource(R.layout.color_spinner)
-           binding.SPCommunity.adapter = arrayAdapter
-           binding.SPCommunity.setSelection(getPositionItem(binding.SPCommunity, province))
-           binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-               override fun onNothingSelected(parent: AdapterView<*>?) {
-               }
-               override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                   province = parent!!.getItemAtPosition(position).toString().split(" ")[0]
-                   discoverViewModel.getTrips(requireContext().applicationContext, province!!)
-                   binding.TBSeach.check(R.id.BTAll)
-                   binding.HSVTButton.scrollTo(0,0)
-               }
-           }*//*
-        })*/
-
 
         discoverViewModel.isBadResponse.observe(viewLifecycleOwner, Observer {
             binding.CLBadConnection.isVisible = it

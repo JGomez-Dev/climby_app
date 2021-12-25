@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
 import com.example.climby.data.model.user.UserModel
@@ -66,6 +67,12 @@ class AuthActivity : AppCompatActivity() {
             val signInIntent = googleClient.signInIntent
             googleSignIn.launch(signInIntent)
         }
+
+        authViewModel.isCharget.observe(this , {
+            if(it){
+                showMainActivity()
+            }
+        })
     }
 
     override fun onStart() {
@@ -76,21 +83,20 @@ class AuthActivity : AppCompatActivity() {
     private fun session() {
 
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-        /*prefs.edit().clear().apply()*/
+       /* prefs.edit().clear().apply()*/
         val email = prefs.getString("email", null)
         val id = prefs.getInt("id", 0)
         val provider = prefs.getString("provider", null)
         val photoUrl = prefs.getString("photoUrl", null)
         val displayName = prefs.getString("displayName", null)
         val phone = prefs.getString("phone", null)
-        var experience = prefs.getString("experience", null)
+        val experience = prefs.getString("experience", null)
 
         if (!email.isNullOrEmpty() && !provider.isNullOrEmpty() && !photoUrl.isNullOrEmpty() && !displayName.isNullOrEmpty()) {
             if (!experience.isNullOrEmpty()) {
                 binding.CLAuthentication.visibility = View.INVISIBLE
                 val userLogger = UserModel(id, displayName,experience, phone.toString(), email, 0.0, 0,0, photoUrl)
                 getData(userLogger)
-                showMainActivity()
             } else if (!phone.isNullOrEmpty()) {
                 binding.CLAuthentication.visibility = View.INVISIBLE
                 showOnBoardingSecond(email, photoUrl, displayName, ProviderType.valueOf(provider), phone)

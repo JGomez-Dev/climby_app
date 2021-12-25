@@ -105,15 +105,17 @@ class PublishFragment : Fragment(), IOnBackPressed {
             province = arguments?.getInt("provincePublish", 0)!!
             type = arguments?.getInt("typePublish", 0)!!
             date = arguments?.getString("datePublish", "")!!
+            dateFormat = arguments?.getString("datePublishWithOutFormat", "")!!
             places = arguments?.getInt("placePublish", 0)!!
 
             binding.ETSite.text = school
             binding.ETSite.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
 
-            binding.ETDate.setText(date)
-            binding.ETDate.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
-
-
+            if(date != "DD/MM"){
+                binding.ETDate.setText(date)
+                binding.ETDate.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
+            }
+            
             binding.SPPlacesAvailable.setSelection(places)
         } else {
             binding.ETSite.text = getString(R.string.text_select_school)
@@ -127,7 +129,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
     }
 
     private fun checkControls() {
-        if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem != "Boulder, Deportiva, Rocódromo..." /*&& binding.ETSite.text != "Elige una escuela o rocódromo…"*/) {
+        if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem != "Boulder, Deportiva, Rocódromo..." && binding.ETSite.text != "Elige una escuela o rocódromo…") {
             binding.BTNewExit.isEnabled = true
             binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(requireContext().applicationContext, R.color.primary))
         } else {
@@ -254,6 +256,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
             putExtra("provincePublish", binding.SPCommunity.selectedItemId.toInt())
             putExtra("typePublish", binding.SPType.selectedItemId.toInt())
             putExtra("datePublish", binding.ETDate.text.toString())
+            putExtra("datePublishWithOutFormat", dateFormat)
             putExtra("placePublish", binding.SPPlacesAvailable.selectedItemId.toInt())
         }
         startActivity(intent)

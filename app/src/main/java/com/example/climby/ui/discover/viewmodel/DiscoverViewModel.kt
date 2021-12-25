@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -142,11 +143,13 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
                         }
                         "NextWeekend" ->
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                result!!.forEach {
-                                    if ((it.province?.name == province && (it.departure?.split(" ")?.get(0) ?: "" == calcNextFriday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSaturday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSunday(LocalDate.now()).toString()))) {
+                                result!!.forEach {it->
+                                    if (it.province?.name.toString() == province && ((it.departure?.split(" ")?.get(0) ?: "" == calcNextFriday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSaturday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSunday(LocalDate.now()).toString()))) {
                                         resultType.add(it)
-                                    } else if (it.province?.name == province && (it.departure?.split(" ")?.get(0) ?: "" == calcNextFriday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSaturday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSunday(LocalDate.now()).toString()) && province == "Elige") {
+                                        Log.i("provinvia" , it.province?.name.toString())
+                                    } else if (it.province?.name.toString() == province && ((it.departure?.split(" ")?.get(0) ?: "" == calcNextFriday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSaturday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSunday(LocalDate.now()).toString()))) {
                                         resultType.add(it)
+                                        Log.i("provinvia" , it.province?.name.toString())
                                     }
                                 }
                             } else {
