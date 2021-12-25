@@ -13,13 +13,21 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
+import com.example.climby.data.model.booking.BookingModel
+import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.ActivityRefuseTripBinding
 import com.example.climby.ui.profile.viewmodel.RefuseTripViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RefuseTripActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRefuseTripBinding
     private lateinit var refuseTripViewModel: RefuseTripViewModel
+
+    private var booking: BookingModel? = null
+    private var trip: TripModel? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +35,29 @@ class RefuseTripActivity : AppCompatActivity() {
         binding = ActivityRefuseTripBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        getData()
+
         binding.IVBack.setOnClickListener {
-            onBackPressed()
-            /*generateNotification()*/
+            /*onBackPressed()*/
+            val intent = Intent(this, RequestsActivity::class.java).apply {
+                putExtra("trip", trip)
+            }
+            startActivity(intent)
+            overridePendingTransition(0, R.anim.slide_in_down)
+            finish()
         }
-        /*createNotificationChannel()*/
+        binding.BTRefuseTrip.setOnClickListener {
+            deleteBooking(booking)
+        }
+    }
+
+    private fun deleteBooking(booking: BookingModel?) {
+        refuseTripViewModel.deleteBooking(booking)
+    }
+
+    private fun getData() {
+        val bundle = intent.extras
+        booking = bundle?.getParcelable("booking")
+        trip = bundle?.getParcelable("trip")
     }
 }

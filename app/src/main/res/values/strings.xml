@@ -99,7 +99,7 @@
     <string name="cancel">cancelar</string>
     <string name="text_delete">Eliminar</string>
     <string name="text_send_button">Enviar</string>
-    <string name="text_request">Solicitudes pendientes</string>
+    <string name="text_request">Peticiones</string>
     <string name="text_accept">Aceptar</string>
     <string name="text_contact_by_whatsapp">Contactar por Whatsapp</string>
     <string name="text_refuse">Rechazar</string>

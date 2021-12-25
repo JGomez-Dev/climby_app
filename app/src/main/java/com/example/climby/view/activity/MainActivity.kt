@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.climby.R
+import com.example.climby.ui.profile.ProfileFragment
 import com.example.climby.ui.publish.PublishFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,12 +42,20 @@ class MainActivity : AppCompatActivity() {
             val date = bundle.getString("datePublish", "")
             val dateFormat = bundle.getString("datePublishWithOutFormat", "")
             val places = bundle.getInt("placePublish", 0)
+
+            /*val profile = bundle.getBoolean("profile", false)*/
+
             if(school != ""){
                 val f = PublishFragment()
                 f.arguments = bundle
                 val fm = supportFragmentManager
                 fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
-            }
+            }/*else if(profile){
+                val f = ProfileFragment()
+                f.arguments = bundle
+                val fm = supportFragmentManager
+                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
+            }*/
         }
     }
 }

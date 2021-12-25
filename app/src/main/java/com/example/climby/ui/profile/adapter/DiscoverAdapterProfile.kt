@@ -69,6 +69,7 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
         @SuppressLint("SetTextI18n")
         fun bind(trip: TripModel) {
             var accepted = 0
+            var request = 0
             val acceptedBookingList: MutableList<BookingModel> = arrayListOf()
 
             tvType.text = trip.type?.name + " en"
@@ -107,10 +108,12 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
                         when (it.status) {
                             ReservationStatus.ACCEPTED.status -> {
                                 accepted++
+                                request++
                                 acceptedBookingList.add(it)
                             }
                             ReservationStatus.UNANSWERED.status -> {
-                                accepted++
+                                /*accepted++*/
+                                request++
                                 acceptedBookingList.add(it)
                             }
                         }
@@ -119,13 +122,13 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
 
                 if (accepted == trip.availablePlaces/* && userAccepted*/) {
                     btRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey_light);
+                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                     btRequest.text = "Completo"
-                    btRequest.isEnabled = false
+                    /*btRequest.isEnabled = false*/
                 }
             }
             if (accepted > 0)
-                tVUsers.text = "Tú y $accepted más "
+                tVUsers.text = "Tú y $request más "
             else
                 tVUsers.text = "Tú"
 
@@ -135,6 +138,7 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
                     putExtra("trip", trip)
                 }
                 context.startActivities(arrayOf(intent))
+
             }
             btRequest.setOnClickListener {
                 val intent =Intent(context, RequestsActivity::class.java).apply {

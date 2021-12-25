@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class OnBoardingThreeViewModel @Inject constructor(private val putTrip: PutTrip,private val putBooking: PutBooking) : ViewModel() {
+class OnBoardingThreeViewModel @Inject constructor(private val putTrip: PutTrip, private val putBooking: PutBooking) : ViewModel() {
 
     fun updateTrip(tripModel: TripModel) {
         viewModelScope.launch {

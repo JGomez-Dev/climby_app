@@ -66,13 +66,14 @@ class RequestAdapter(bookingData: List<BookingModel>, context: Context) : Recycl
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(booking.passenger?.photo).into(cIPhotoUser)
             tVUserNameRequest.text = booking.passenger?.name?.split(" ")?.get(0) ?: ""
             if(booking.status == ReservationStatus.ACCEPTED.status ){
-                btContact.isVisible = true
+                btContact.visibility = View.VISIBLE
             }
             bTRefuseRquest.setOnClickListener {
                 mListener.onClickRefuse(adapterPosition)
             }
             bTAceptRquest.setOnClickListener {
                 mListener.onClickAcept(adapterPosition)
+                btContact.visibility = View.VISIBLE
             }
             btContact.setOnClickListener {
                 mListener.onClickContact(adapterPosition)

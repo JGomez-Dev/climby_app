@@ -13,14 +13,21 @@ import com.bumptech.glide.Glide
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
+import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityRequestsBinding
 import com.example.climby.ui.profile.adapter.RequestAdapter
 import com.example.climby.ui.profile.viewmodel.RequestsViewModel
+import com.example.climby.ui.publish.WhatPlaceActivity
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
+import com.example.climby.view.activity.MainActivity
 import com.example.climby.view.activity.OnBoardingFirstActivity
 import com.example.climby.view.activity.OnBoardingSecondActivity
+import com.google.gson.annotations.SerializedName
+import dagger.hilt.android.AndroidEntryPoint
+import java.text.FieldPosition
 
+@AndroidEntryPoint
 class RequestsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRequestsBinding
@@ -41,9 +48,15 @@ class RequestsActivity : AppCompatActivity() {
         init()
 
         binding.IVBack.setOnClickListener {
+            /*val intent = Intent(this, MainActivity::class.java).apply {
+                putExtra("profile", true)
+            }
+            startActivity(intent)*/
             onBackPressed()
         }
     }
+
+
 
     private fun getData() {
         val bundle = intent.extras
@@ -70,7 +83,7 @@ class RequestsActivity : AppCompatActivity() {
             }
 
             override fun onClickRefuse(position: Int) {
-                showRefuseTripActivity()
+                showRefuseTripActivity(position)
             }
 
             override fun onClickContact(position: Int) {
@@ -85,7 +98,7 @@ class RequestsActivity : AppCompatActivity() {
             }
 
             override fun onClickAcept(position: Int) {
-                Toast.makeText(applicationContext, "onClickAcept", Toast.LENGTH_SHORT).show()
+                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!, trip?.bookings?.get(position)?.passenger , trip?.id!!, true, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date))
             }
         })
         binding.FLBackgroundRequest.setOnClickListener {
@@ -93,9 +106,17 @@ class RequestsActivity : AppCompatActivity() {
         }
     }
 
-    private fun showRefuseTripActivity() {
-        val intent = Intent(this, RefuseTripActivity::class.java)
+    private fun updateBooking(bookingModel: BookingModel) {
+        requestsViewModel.updateBooking(bookingModel)
+    }
+
+    private fun showRefuseTripActivity(position: Int) {
+        val intent = Intent(this, RefuseTripActivity::class.java).apply {
+            putExtra("booking", trip?.bookings?.get(position))
+            putExtra("trip", trip)
+        }
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
         finish()
     }
 
