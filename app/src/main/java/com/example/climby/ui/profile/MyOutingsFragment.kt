@@ -1,11 +1,15 @@
 package com.example.climby.ui.profile
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.databinding.FragmentMyOutingsBinding
@@ -31,8 +35,9 @@ class MyOutingsFragment : Fragment() {
             if(it.isNullOrEmpty()){
                 binding.CLTripsEmpty.isVisible = true
                 binding.RVTrips.isVisible = false
+                moveHand()
             }else{
-                binding.CLTripsEmpty.isVisible = false
+                /*binding.CLTripsEmpty.isVisible = false*/
                 binding.RVTrips.isVisible = true
                 discoverAdapterProfile = DiscoverAdapterProfile(it, requireContext())
                 binding.RVTrips.adapter = discoverAdapterProfile
@@ -43,10 +48,22 @@ class MyOutingsFragment : Fragment() {
                 })
             }
         })
+        myOutingsViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+            binding.PBMyOutings.isVisible = it
+        })
 
         myOutingsViewModel.getMyTrips()
 
 
         return view
+    }
+
+    private fun moveHand(){
+        val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)
+        anim.duration = 1000
+        anim.repeatCount = Animation.INFINITE;
+        anim.repeatMode = ValueAnimator.REVERSE;
+
+        anim.start()
     }
 }

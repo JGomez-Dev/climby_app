@@ -16,8 +16,8 @@ import javax.inject.Inject
 class MyOutingsViewModel @Inject constructor(private val getTripsUser: GetTripsUser, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
 
     var tripsModel = MutableLiveData<List<TripModel>>()
-    private val isLoading = MutableLiveData<Boolean>()
-    lateinit var result: List<TripModel>
+    val isLoading = MutableLiveData<Boolean>()
+    var result: List<TripModel> = emptyList()
 
     fun getMyTrips() {
         viewModelScope.launch {
@@ -25,6 +25,8 @@ class MyOutingsViewModel @Inject constructor(private val getTripsUser: GetTripsU
             result = getTripsUser(sharedPref.getInt("id", 0))
             if (!result.isNullOrEmpty())
                 tripsModel.postValue(result.toList())
+            else
+                tripsModel.postValue(result)
             isLoading.postValue(false)
         }
     }
