@@ -46,14 +46,21 @@ class RefuseTripActivity : AppCompatActivity() {
             overridePendingTransition(0, R.anim.slide_in_down)
             finish()
         }
+
         binding.BTRefuseTrip.setOnClickListener {
-            deleteBooking(booking)
+            updateBooking(BookingModel(booking?.id!!, booking?.passenger , trip?.id!!, null, booking?.valuationStatus, booking?.date))
+
+            /*deleteBooking(booking)*/
         }
     }
 
-    private fun deleteBooking(booking: BookingModel?) {
-        refuseTripViewModel.deleteBooking(booking)
+    private fun updateBooking(bookingModel: BookingModel) {
+        refuseTripViewModel.updateBooking(bookingModel)
     }
+
+    /*private fun deleteBooking(booking: BookingModel?) {
+        refuseTripViewModel.deleteBooking(booking)
+    }*/
 
     private fun getData() {
         val bundle = intent.extras

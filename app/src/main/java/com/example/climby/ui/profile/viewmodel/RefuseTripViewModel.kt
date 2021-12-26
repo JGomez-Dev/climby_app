@@ -10,11 +10,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RefuseTripViewModel @Inject constructor(private val delete: Delete): ViewModel() {
+class RefuseTripViewModel @Inject constructor(private val delete: Delete, private val putBooking: PutBooking): ViewModel() {
 
     fun deleteBooking(bookingModel: BookingModel?) {
         viewModelScope.launch {
             delete(bookingModel?.id!!)
+        }
+    }
+
+    fun updateBooking(bookingModel: BookingModel) {
+        viewModelScope.launch {
+            /*val result = */putBooking(bookingModel)
         }
     }
 

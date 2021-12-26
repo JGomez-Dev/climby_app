@@ -41,7 +41,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
         viewModelScope.launch {
             isLoading.postValue(true)
             result = getAllTrips()
-            if (result == null) { //Fallo en BBDD
+            if (result == null) {
                 isLoading.postValue(false)
                 isBadResponse.postValue(true)
             } else {
@@ -65,10 +65,11 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun setTripByProvince(province: String) {
         val resultWithProvince: MutableList<TripModel> = arrayListOf()
         result?.forEach { it ->
-            if (it.province?.name.equals(province, ignoreCase = true)) {
+            if (it.province?.name.equals(province, ignoreCase = true) && it.departure!! >= SimpleDateFormat("yyyy-MM-dd 01:01:01").format(Date())) {
                 resultWithProvince.add(it)
             }
         }
@@ -103,6 +104,7 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
         return true
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun getTripsType(type: String, province: String) {
         viewModelScope.launch {
             val resultType: MutableList<TripModel> = arrayListOf()
@@ -111,31 +113,31 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
                 isLoading.postValue(false)
             } else {
                 if (result!!.isNotEmpty()) {
-
+                    val today = SimpleDateFormat("yyyy-MM-dd 01:01:01").format(Date())
                     when (type) {
                         "Boulder" -> result!!.forEach {
-                            if (it.type?.name == "Boulder" && it.province?.name == province) {
+                            if (it.type?.name == "Boulder" && it.province?.name == province && it.departure!! >= today) {
                                 resultType.add(it)
                             } else if (it.type?.name == "Boulder" && province == "Elige") {
                                 resultType.add(it)
                             }
                         }
                         "Deportiva" -> result!!.forEach {
-                            if (it.type?.name == "Deportiva" && it.province?.name == province) {
+                            if (it.type?.name == "Deportiva" && it.province?.name == province && it.departure!! >= today) {
                                 resultType.add(it)
                             } else if (it.type?.name == "Deportiva" && province == "Elige") {
                                 resultType.add(it)
                             }
                         }
                         "Rocódromo" -> result!!.forEach {
-                            if (it.type?.name == "Rocódromo" && it.province?.name == province) {
+                            if (it.type?.name == "Rocódromo" && it.province?.name == province && it.departure!! >= today) {
                                 resultType.add(it)
                             } else if (it.type?.name == "Rocódromo" && province == "Elige") {
                                 resultType.add(it)
                             }
                         }
                         "Clásica" -> result!!.forEach {
-                            if (it.type?.name == "Clásica" && it.province?.name == province) {
+                            if (it.type?.name == "Clásica" && it.province?.name == province && it.departure!! >= today) {
                                 resultType.add(it)
                             } else if (it.type?.name == "Clásica" && province == "Elige") {
                                 resultType.add(it)
