@@ -23,8 +23,8 @@ class AuthViewModel @Inject  constructor(private val get: Get, private val inser
         viewModelScope.launch {
             try {
                 val result = get(userModel.id)
-                Commons.userSession = result
-                isCharget.postValue(true)
+               /* Commons.userSession = result
+                isCharget.postValue(true)*/
             }catch (e: Exception){
                 postUser(userModel)
             }

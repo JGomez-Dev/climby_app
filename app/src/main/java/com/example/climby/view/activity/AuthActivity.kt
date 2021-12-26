@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityAuthBinding
+import com.example.climby.utils.Commons
 import com.example.climby.utils.ProviderType
 import com.example.climby.view.viewmodel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -21,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -68,11 +70,11 @@ class AuthActivity : AppCompatActivity() {
             googleSignIn.launch(signInIntent)
         }
 
-        authViewModel.isCharget.observe(this , {
+        /*authViewModel.isCharget.observe(this , {
             if(it){
                 showMainActivity()
             }
-        })
+        })*/
     }
 
     override fun onStart() {
@@ -83,7 +85,7 @@ class AuthActivity : AppCompatActivity() {
     private fun session() {
 
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-       /* prefs.edit().clear().apply()*/
+        /*prefs.edit().clear().apply()*/
         val email = prefs.getString("email", null)
         val id = prefs.getInt("id", 0)
         val provider = prefs.getString("provider", null)
@@ -92,11 +94,17 @@ class AuthActivity : AppCompatActivity() {
         val phone = prefs.getString("phone", null)
         val experience = prefs.getString("experience", null)
 
+        val outings = prefs.getInt("outputs", 0)
+        val score = prefs.getFloat("score", 0f)
+        val ratings = prefs.getInt("ratings", 0)
+
         if (!email.isNullOrEmpty() && !provider.isNullOrEmpty() && !photoUrl.isNullOrEmpty() && !displayName.isNullOrEmpty()) {
             if (!experience.isNullOrEmpty()) {
-                binding.CLAuthentication.visibility = View.INVISIBLE
+                Commons.userSession = UserModel(id,displayName, experience, phone, email, score.toDouble(), ratings, outings, photoUrl)
+                binding.CLAuthentication.visibility = View.INVISIBLE/*
                 val userLogger = UserModel(id, displayName,experience, phone.toString(), email, 0.0, 0,0, photoUrl)
-                getData(userLogger)
+                getData(userLogger)*/
+                showMainActivity()
             } else if (!phone.isNullOrEmpty()) {
                 binding.CLAuthentication.visibility = View.INVISIBLE
                 showOnBoardingSecond(email, photoUrl, displayName, ProviderType.valueOf(provider), phone)

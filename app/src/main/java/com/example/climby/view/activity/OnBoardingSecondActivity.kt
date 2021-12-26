@@ -4,9 +4,11 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
 import com.example.climby.data.model.user.UserModel
@@ -48,8 +50,13 @@ class OnBoardingSecondActivity : AppCompatActivity() {
         }
         binding.BTNext.setOnClickListener {
             insertUser()
-            showMainActivity()
         }
+        onBoardingSecondViewModel.okSaveUser.observe(this, Observer { it ->
+            if(it)
+                showMainActivity()
+            else
+                Toast.makeText(this, "Problema en el servidor", Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun checkPermissionSms() {
