@@ -2,18 +2,23 @@ package com.example.climby.ui.profile
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
+import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentComingOutingsBinding
+import com.example.climby.ui.discover.TripUsersActivity
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.profile.viewmodel.ComingOutingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +48,7 @@ class ComingOutingsFragment : Fragment() {
                 binding.RVTrips.adapter = discoverAdapter
                 discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
-                        //loadActivity(it[position])
+                        loadTripUsers(it[position])
                     }
 
                     override fun onClickAddMe(position: Int) {
@@ -51,7 +56,7 @@ class ComingOutingsFragment : Fragment() {
                     }
 
                     override fun onClickRemoveMe(_it: BookingModel, position: Int) {
-
+                        showDialog(view, _it, it, position)
                     }
                 })
             }
@@ -66,6 +71,26 @@ class ComingOutingsFragment : Fragment() {
         return view
     }
 
+    private fun showDialog(view: View, booking: BookingModel, it: List<TripModel>, position: Int) {
+        AlertDialog.Builder(view.context)
+            .setTitle("Eliminar solicitud")
+            .setMessage("Dejarás libre tu plaza para que otra persona pueda ocuparla")
+            .setNegativeButton(R.string.cancel) { view, _ ->
+                view.dismiss()
+            }
+            .setPositiveButton("Aceptar") { view, _ ->
+                deleteBooking(booking, it, position)
+                view.dismiss()
+            }
+            .setCancelable(false)
+            .create().show()
+    }
+
+    private fun deleteBooking(bookingModel: BookingModel, it: List<TripModel>, position: Int) {
+        /* discoverViewModel.deleteBooking(bookingModel)*/
+        /*it[position].bookings?.remove(bookingModel)
+        discoverAdapter.notifyDataSetChanged()*/
+    }
 
     private fun moveHand(){
         val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)
@@ -75,4 +100,12 @@ class ComingOutingsFragment : Fragment() {
 
         anim.start()
     }
+
+    private fun loadTripUsers(trip: TripModel) {
+        val intent = Intent(activity, TripUsersActivity::class.java).apply {
+            putExtra("trip", trip)
+        }
+        startActivity(intent)
+    }
+
 }

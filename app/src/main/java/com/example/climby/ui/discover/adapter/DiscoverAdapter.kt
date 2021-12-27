@@ -2,13 +2,15 @@ package com.example.climby.ui.discover.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.content.res.Resources
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +20,7 @@ import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
+import com.example.climby.ui.profile.RequestsActivity
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
 import de.hdodenhof.circleimageview.CircleImageView
@@ -73,72 +76,94 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(trip.driver?.photo).into(cvDriver)
             Commons.setTextButton(btRequest, trip)
 
-            if (trip.driver?.id == userSession.id) {
-                if (trip.bookings?.isEmpty() == true) {
-                    btRequest.text = "Aún no tienes peticiones"
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey_light);
-                    btRequest.isEnabled = false
-
-                } else {
-                    btRequest.text = "Ver peticiones"
-                    if (accepted == trip.availablePlaces) {
-                        btRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
-                        btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey_light);
-                        btRequest.text = "Completo"
-                        btRequest.isEnabled = false
+            if (trip.driver?.id == userSession.id) { //El viaje pertenece al usuario logueado
+                trip.bookings?.forEach { _it ->
+                    if (_it.status == ReservationStatus.ACCEPTED.status || _it.status ==ReservationStatus.UNANSWERED.status ) {
+                        acceptedBookingList.add(_it)
+                        accepted ++
                     }
                 }
-            } else if (trip.bookings?.isEmpty() == true) {
-                btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
-                btRequest.setOnClickListener {
-                    mlistener.onClickAddMe(adapterPosition)
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
-                    btRequest.text = "Solicitado"
+                if (trip.bookings?.isEmpty() == true) { // El viaje no tiene reservas
+                    btRequest.text = "Aún no tienes peticiones"
+                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.disable);
+                    btRequest.isEnabled = false
+
+                } else { // El viaje tiene reservas
+                    btRequest.text = "Ver peticiones"
+                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.primary);
+                    btRequest.isEnabled = true
+                    btRequest.setOnClickListener {
+                        val intent = Intent(context, RequestsActivity::class.java).apply {
+                            putExtra("trip", trip)
+                        }
+                        context.startActivities(arrayOf(intent))
+                    }
                 }
-            } else {
-                btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
+                if (accepted > 0)
+                    tVUsers.text = "Tú y $accepted más "
+                else
+                    tVUsers.text = "Tú"
+            } else { //El viaje no pertenece al usuario logueado
+                var userPassager = false
+                var userPassagerAccepted = false
+
                 trip.bookings?.forEach { _it ->
-                    if (_it.passenger?.id ?: 0 == userSession.id) {
+                    if (_it.passenger?.id ?: 0 == userSession.id) { //El usuario está como pasajero en este viaje
+                        userPassager = true
                         when (_it.status) {
-                            ReservationStatus.ACCEPTED.status -> {
+                            ReservationStatus.ACCEPTED.status -> { // Ha sido aceptado
                                 btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                                 btRequest.text = "Te has unido\r\nLiberar plaza"
+                                btRequest.isEnabled = true
+                                btRequest.setOnClickListener {
+                                    mlistener.onClickRemoveMe(_it, adapterPosition)
+                                }
                                 acceptedBookingList.add(_it)
+                                accepted++
+                                userPassagerAccepted = true
                             }
-                            ReservationStatus.UNANSWERED.status -> {
+                            ReservationStatus.UNANSWERED.status -> { // Esta esperando respuesta
                                 btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                                 btRequest.text = "Solicitado"
+                                btRequest.isEnabled = true
                                 btRequest.setOnClickListener {
                                     mlistener.onClickRemoveMe(_it, adapterPosition)
                                 }
                             }
-                            ReservationStatus.REFUSE.status -> {
+                            ReservationStatus.REFUSE.status -> { // Ha sido rechazado
                                 btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red_light);
                                 btRequest.text = "Rechazado"
                                 btRequest.isEnabled = false
                             }
                         }
-                    } else {
-                        when (_it.status) {
-                            ReservationStatus.ACCEPTED.status -> {
-                                accepted++
-                            }
+                    } else { //El usuario no está como pasajero en este viaje
+                        if (_it.status == ReservationStatus.ACCEPTED.status) {
+                            accepted++
                         }
+
                         acceptedBookingList.add(_it)
                     }
                 }
-
-                if (accepted == trip.availablePlaces/* && userAccepted*/) {
+                if(!userPassager){
+                    btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
+                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.primary);
+                    btRequest.setOnClickListener {
+                        mlistener.onClickAddMe(adapterPosition)
+                        btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
+                        btRequest.text = "Solicitado"
+                    }
+                }
+                if (accepted == trip.availablePlaces && !userPassagerAccepted) {
                     btRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey_light);
+                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.disable);
                     btRequest.text = "Completo"
                     btRequest.isEnabled = false
                 }
+                if (accepted > 0)
+                    tVUsers.text = (trip.driver?.name?.split(" ")?.get(0) ?: "") + " y " + accepted + " más "
+                else
+                    tVUsers.text = trip.driver?.name?.split(" ")?.get(0) ?: ""
             }
-            if (accepted > 0)
-                tVUsers.text = (trip.driver?.name?.split(" ")?.get(0) ?: "") + " y " + accepted + " más "
-            else
-                tVUsers.text = trip.driver?.name?.split(" ")?.get(0) ?: ""
 
             rvUserv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
 

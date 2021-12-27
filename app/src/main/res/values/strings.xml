@@ -92,7 +92,7 @@
     <string name="text_exits">13 Salidas</string>
     <string name="text_trip_empty">Parece que no hay salidas con estas opciones de búsqueda. ¡Anímate y créala tú!</string>
     <string name="text_trip_empty_profile">Aún no has publicado salidas. ¡Animate y crea una!</string>
-    <string name="text_trip_empty_profile_1">Parece que hay salidas con estas opciones de búsqueda. ¡Anímate y créala tú!</string>
+    <string name="text_trip_empty_profile_1">No estás apuntado a ninguna salida. Descubre y apúntate a nuevas salidas</string>
     <string name="text_bad_connection">Ha habido un problema al cargar las salidas</string>
     <string name="text_retry">Volver a intentar</string>
     <string name="text_madrid">Madrid</string>

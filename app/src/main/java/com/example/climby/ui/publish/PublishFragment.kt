@@ -93,7 +93,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
         }
 
         publishViewModel.tripCreated.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(requireActivity().applicationContext, "Creado", Toast.LENGTH_SHORT).show()
+            showMainActivity()
         })
 
         publishViewModel.getProvince()
@@ -122,6 +122,11 @@ class PublishFragment : Fragment(), IOnBackPressed {
         }
 
         return view
+    }
+
+    private fun showMainActivity() {
+        val intent = Intent(context, MainActivity::class.java)
+        startActivity(intent)
     }
 
     private fun saveTrip(tripModel: TripModel) {

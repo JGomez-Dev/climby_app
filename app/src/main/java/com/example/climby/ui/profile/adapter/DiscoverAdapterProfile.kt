@@ -77,13 +77,19 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
             trip.type?.name?.let { setPhotoTrip(it, ivPlace, context) }
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(trip.driver?.photo).into(cvDriver)
             Commons.setTextButton(btRequest, trip)
-
-            if (trip.bookings?.isEmpty() == true) {
+            var contRefuse = 0
+            trip.bookings?.forEach { it ->
+                if(it.status == ReservationStatus.REFUSE.status){
+                    contRefuse ++
+                }
+            }
+            if (trip.bookings?.isEmpty() == true || contRefuse == trip.bookings?.size) {
                 btRequest.text = "Aún no tienes peticiones"
-                btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey_light);
+                btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.disable);
                 btRequest.isEnabled = false
 
             } else {
+
                 btRequest.text = "Ver peticiones"
                 /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
                 trip.bookings?.forEach {
@@ -116,6 +122,11 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
                                 request++
                                 acceptedBookingList.add(it)
                             }
+                            /*ReservationStatus.REFUSE.status -> {
+                                *//*accepted++*//*
+                                *//*request++*//*
+                                acceptedBookingList.add(it)
+                            }*/
                         }
                     }
                 }

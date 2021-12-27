@@ -34,6 +34,7 @@ import com.example.climby.utils.Commons
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -48,7 +49,7 @@ class DiscoverFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
-    private var province: String? = "Barcelona"
+    private var province: String = "Seleccione..."
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         discoverViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java)
@@ -134,9 +135,9 @@ class DiscoverFragment : Fragment() {
 
 
     private fun deleteBooking(bookingModel: BookingModel, it: List<TripModel>, position: Int) {
-        /*discoverViewModel.deleteBooking(bookingModel)*/
-        it[position].bookings?.remove(bookingModel)
-        discoverAdapter.notifyDataSetChanged()
+       /* discoverViewModel.deleteBooking(bookingModel)*/
+        /*it[position].bookings?.remove(bookingModel)
+        discoverAdapter.notifyDataSetChanged()*/
     }
 
 
@@ -165,7 +166,7 @@ class DiscoverFragment : Fragment() {
     private fun getData() {
         val bundle = activity?.intent?.extras
         if (bundle != null) {
-            province = bundle.getString("province")
+            province = bundle.getString("province").toString()
             if (province != null) {
                 binding.TVCommunity.text = province
                 discoverViewModel.getTrips(requireContext().applicationContext, province!!)
@@ -182,20 +183,26 @@ class DiscoverFragment : Fragment() {
         if (ActivityCompat.checkSelfPermission(requireContext().applicationContext, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext().applicationContext, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(ACCESS_COARSE_LOCATION), 1000)
         }
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                latitude = location?.latitude!!
-                longitude = location.longitude
-                province = getProvinceByLatLong(location)
-                discoverViewModel.getTrips(requireContext().applicationContext, province!!)
+        try {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
 
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Sin localización / Lo tenemos que ver", Toast.LENGTH_SHORT).show()
-            }
+                    latitude = location?.latitude!!
+                    longitude = location.longitude
+                    province = getProvinceByLatLong(location)
+
+                    discoverViewModel.getTrips(requireContext().applicationContext, province)
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Sin localización / Lo tenemos que ver", Toast.LENGTH_SHORT).show()
+                }
+        }catch (e: Exception){
+            Toast.makeText(requireContext(), "No es posible saber su ubicacion", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
-    private fun getProvinceByLatLong(location: Location): String? {
+    private fun getProvinceByLatLong(location: Location): String {
         val geocoder = Geocoder(context, Locale.getDefault())
         val addresses: List<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1)
 
