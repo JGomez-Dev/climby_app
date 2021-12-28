@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CLRequest"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/CLRequest"
     android:background="@color/background">
 
 
@@ -25,8 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/text_request"
-        android:textSize="22sp"
         android:textColor="@color/black"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +41,7 @@
         android:layout_marginTop="23dp"
         android:layout_marginEnd="16dp"
         android:background="@color/white"
+        android:elevation="2dp"
         android:paddingStart="20dp"
         android:paddingEnd="16dp"
         android:paddingBottom="16dp"
@@ -101,6 +102,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/transparent_background"
+        android:elevation="3dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

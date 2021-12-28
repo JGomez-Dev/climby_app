@@ -167,7 +167,7 @@ class DiscoverFragment : Fragment() {
         val bundle = activity?.intent?.extras
         if (bundle != null) {
             province = bundle.getString("province").toString()
-            if (province != null) {
+            if (province != "null") {
                 binding.TVCommunity.text = province
                 discoverViewModel.getTrips(requireContext().applicationContext, province!!)
             } else {

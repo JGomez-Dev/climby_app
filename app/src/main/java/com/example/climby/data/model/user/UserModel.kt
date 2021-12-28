@@ -7,13 +7,13 @@ import com.google.gson.annotations.SerializedName
 data class UserModel(
         @SerializedName("id") val id: Int,
         @SerializedName("fullName") val name: String?,
-        @SerializedName("experience") val experience: String?,
-        @SerializedName("phone") val phone: String?,
+        @SerializedName("experience") var experience: String?,
+        @SerializedName("phone") var phone: String?,
         @SerializedName("email") val email: String?,
         @SerializedName("score") var score: Double,
         @SerializedName("ratings") var ratings: Int,
         @SerializedName("outputs") val outings: Int,
-        @SerializedName("userPhoto") val photo: String?
+        @SerializedName("userPhoto") var photo: String?
         ): Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readInt(),

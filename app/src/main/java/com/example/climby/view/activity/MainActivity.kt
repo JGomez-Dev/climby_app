@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         val bundle = intent.extras
         if (bundle != null) {
             val school =  bundle.getString("schoolPublish", "")
+            val exprience = bundle.getString("exprienceProfile", null)
             val province = bundle.getInt("provincePublish", 0)
             val type = bundle.getInt("typePublish", 0)
             val date = bundle.getString("datePublish", "")
@@ -50,12 +51,13 @@ class MainActivity : AppCompatActivity() {
                 f.arguments = bundle
                 val fm = supportFragmentManager
                 fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
-            }/*else if(profile){
-                val f = ProfileFragment()
+            }else if(!exprience.isNullOrEmpty()){
+                navView.selectedItemId = R.id.navigation_profile
+               /* val f = ProfileFragment()
                 f.arguments = bundle
                 val fm = supportFragmentManager
-                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
-            }*/
+                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()*/
+            }
         }
     }
 }

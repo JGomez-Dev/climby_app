@@ -59,13 +59,17 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
         if(trip?.bookings?.size == 0){
             binding.TVAssistants.visibility = View.GONE
         }
+        binding.CVAdmin.setOnClickListener {
+            Glide.with(applicationContext).load(trip?.driver?.photo).error(R.mipmap.user).into(binding.CVBackgroundRequest)
+            binding.FLBackgroundRequest.isVisible = !binding.FLBackgroundRequest.isVisible
+        }
         binding.RVAssistants.layoutManager = LinearLayoutManager(this)
         tripUsersAdapter = TripUsersAdapter(acceptedBooking(), this)
         binding.RVAssistants.adapter = tripUsersAdapter
         tripUsersAdapter.setOnClickListener(object : TripUsersAdapter.OnClickListener {
             override fun onItemClick(position: Int) {
-               /* Glide.with(applicationContext).load(trip?.bookings?.get(position)?.passenger?.photo).error(R.mipmap.user).into(binding.CVBackgroundRequest)
-                binding.FLBackgroundRequest.isVisible = !binding.FLBackgroundRequest.isVisible*/
+                Glide.with(applicationContext).load(trip?.bookings?.get(position)?.passenger?.photo).error(R.mipmap.user).into(binding.CVBackgroundRequest)
+                binding.FLBackgroundRequest.isVisible = !binding.FLBackgroundRequest.isVisible
             }
 
         })

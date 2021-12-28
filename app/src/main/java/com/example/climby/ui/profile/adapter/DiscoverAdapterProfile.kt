@@ -75,7 +75,7 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
             tvType.text = trip.type?.name + " en"
             tvPlaceDate.text = trip.site?.name + ", " + (trip.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip.departure?.let { Commons.getDate(it) }
             trip.type?.name?.let { setPhotoTrip(it, ivPlace, context) }
-            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(trip.driver?.photo).into(cvDriver)
+            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(trip.driver?.photo).into(cvDriver)
             Commons.setTextButton(btRequest, trip)
             var contRefuse = 0
             trip.bookings?.forEach { it ->

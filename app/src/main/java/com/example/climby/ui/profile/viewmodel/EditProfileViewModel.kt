@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.domain.user.Update
+import com.example.climby.utils.Commons
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.annotation.Nullable
@@ -17,6 +18,8 @@ class EditProfileViewModel @Inject constructor(private val update: Update, @Null
 
     private val _textMLD = MutableLiveData<Boolean>()
     val textLD: LiveData<Boolean> = _textMLD
+    var result: UserModel? = null
+    val isComplete = MutableLiveData<Boolean>()
 
     fun onUsernameTextChanged(text: CharSequence?) {
         _textMLD.value = text.toString().length == 12
@@ -24,12 +27,18 @@ class EditProfileViewModel @Inject constructor(private val update: Update, @Null
 
     fun updateUser(userModel: UserModel) {
         viewModelScope.launch {
-            val result = update(userModel)
-            val editor = sharedPref.edit()
-            editor.putString("experience", userModel.experience)
-            editor.putString("phone", userModel.phone)
-            editor.putString("photoUrl", userModel.photo)
-            editor.apply()
+            result = update(userModel)
+            /*if(result!=null){
+                val editor = sharedPref.edit()
+                editor.putString("experience", userModel.experience)
+                editor.putString("phone", userModel.phone)
+                editor.putString("photoUrl", userModel.photo)
+                editor.apply()
+                Commons.userSession?.photo = result?.photo
+                Commons.userSession?.phone = result?.phone
+                Commons.userSession?.experience = result?.experience
+            }*/
+            isComplete.postValue(true)
         }
     }
 }

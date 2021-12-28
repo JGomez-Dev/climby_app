@@ -63,7 +63,7 @@ class RequestAdapter(bookingData: List<BookingModel>, context: Context) : Recycl
 
         @SuppressLint("SetTextI18n")
         fun bind(booking: BookingModel) {
-            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(booking.passenger?.photo).into(cIPhotoUser)
+            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(booking.passenger?.photo).into(cIPhotoUser)
             tVUserNameRequest.text = booking.passenger?.name?.split(" ")?.get(0) ?: ""
             if(booking.status == ReservationStatus.ACCEPTED.status ){
                 btContact.visibility = View.VISIBLE

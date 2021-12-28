@@ -62,7 +62,7 @@ class OnBoardingThreeAdapter(listBookings: List<BookingModel>, context: Context)
             booking.passenger?.ratings = booking.passenger?.ratings?.plus(1)!!
             oldScore = booking.passenger.score
             booking.passenger.score = booking.passenger.score.times(booking.passenger.ratings).plus(contStart).div(booking.passenger.ratings)
-            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24)).load(booking.passenger.photo).into(cvAttendees)
+            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(booking.passenger.photo).into(cvAttendees)
             tvNameQualifyAttendees.text = booking.passenger.name?.split(" ")?.get(0)!!
             ivAddStart.setOnClickListener {
                 mListener.onClickAddStart(adapterPosition)

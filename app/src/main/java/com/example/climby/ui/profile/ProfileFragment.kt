@@ -31,6 +31,9 @@ class ProfileFragment: Fragment() {
     private lateinit var prefs: SharedPreferences
     private var userSession: UserModel = Commons.userSession!!
 
+    private var exprience : String? = null
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         binding = FragmentProfileBinding.inflate(layoutInflater)
@@ -40,6 +43,7 @@ class ProfileFragment: Fragment() {
         navBar.isVisible = true
 
         init()
+        getData()
 
         adapter = ViewPagerAdapter(parentFragmentManager,  lifecycle)
         binding.viewPager2.adapter=adapter
@@ -75,6 +79,16 @@ class ProfileFragment: Fragment() {
     private fun loadActivity(){
         val intent = Intent(activity, EditProfileActivity::class.java)
         startActivity(intent)
+        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+    }
+
+    private fun getData() {
+        val bundle = activity?.intent?.extras
+        if (bundle != null) {
+            exprience = bundle.getString("exprienceProfile", "")
+            binding.TVUserExperience.text = exprience
+        }
     }
 
     private fun setStart() {

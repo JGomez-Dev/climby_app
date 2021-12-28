@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:backgroundTint="@color/white"
-                android:elevation="5dp"
+                android:elevation="2dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:letterSpacing="0"
