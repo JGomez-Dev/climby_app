@@ -26,6 +26,7 @@ import com.example.climby.utils.IOnBackPressed
 import com.example.climby.view.activity.MainActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.NonDisposableHandle.parent
 
 
 @AndroidEntryPoint
@@ -76,10 +77,9 @@ class PublishFragment : Fragment(), IOnBackPressed {
 
         publishViewModel.typesModel.observe(viewLifecycleOwner, Observer {
             setupAdapterType(it)
-            if (type != 0) {
+            if (type != 0)
                 binding.SPType.setSelection(type)
 
-            }
 
         })
 
@@ -275,9 +275,5 @@ class PublishFragment : Fragment(), IOnBackPressed {
             it.overridePendingTransition(0, 0);
             it.finish()
         }
-        /*activity?.supportFragmentManager?.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);*/
-        /*activity?.supportFragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);*/
-
-        /*activity?.supportFragmentManager?.popBackStack();*/
     }
 }

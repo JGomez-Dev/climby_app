@@ -20,7 +20,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -203,8 +202,8 @@ class DiscoverFragment : Fragment() {
     }
 
     private fun getProvinceByLatLong(location: Location): String {
-        val geocoder = Geocoder(context, Locale.getDefault())
-        val addresses: List<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+        val geocode = Geocoder(context, Locale.getDefault())
+        val addresses: List<Address> = geocode.getFromLocation(location.latitude, location.longitude, 1)
 
         val direction = addresses[0].getAddressLine(0)
         val city = addresses[0].locality
