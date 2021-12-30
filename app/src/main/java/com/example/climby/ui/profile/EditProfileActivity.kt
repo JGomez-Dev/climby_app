@@ -95,7 +95,6 @@ class EditProfileActivity : AppCompatActivity() {
         }
         binding.IVBack.setOnClickListener {
             onBackPressed()
-            overridePendingTransition(0, R.anim.slide_in_down)
 
         }
         binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(PhoneNumberFormattingTextWatcher())

@@ -13,5 +13,5 @@ interface BookingApiClient {
     suspend fun postBooking(@Body bookingModel: BookingModel?): Response<BookingModel>
 
     @DELETE("reservation/{id}")
-    suspend fun deleteBooking(@Path("id") id: Int): Response<BookingModel>
+    suspend fun deleteBooking(@Path("id") id: Int)
 }

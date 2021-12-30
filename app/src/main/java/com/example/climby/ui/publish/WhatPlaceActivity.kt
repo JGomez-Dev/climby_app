@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
+import com.example.climby.data.model.school.SchoolModel
 import com.example.climby.databinding.ActivityWhatPlaceBinding
 import com.example.climby.ui.publish.viewmodel.WhatPlaceViewModel
 import com.example.climby.view.activity.MainActivity

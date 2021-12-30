@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class Delete @Inject constructor(private val repository : BookingRepository) {
 
-    suspend operator fun invoke(idBooking: Int): BookingModel = repository.deleteBooking(idBooking)
+    suspend operator fun invoke(idBooking: Int) = repository.deleteBooking(idBooking)
 
 }

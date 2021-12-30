@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "397180762969",
+    "firebase_url": "https://climby-ea413-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "climby-ea413",
     "storage_bucket": "climby-ea413.appspot.com"
   },
@@ -19,6 +20,14 @@
           "android_info": {
             "package_name": "com.example.climby",
             "certificate_hash": "b2ce03bc2c01f558d2627999b9b9239f53a38f4d"
+          }
+        },
+        {
+          "client_id": "397180762969-o4gfm30f74e9eben7jq265s7dk8r9noi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.climby",
+            "certificate_hash": "97c8d9a33bf59a6c892c8252a346f29ac8f8e369"
           }
         },
         {

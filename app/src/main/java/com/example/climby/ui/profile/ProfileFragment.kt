@@ -79,8 +79,7 @@ class ProfileFragment: Fragment() {
     private fun loadActivity(){
         val intent = Intent(activity, EditProfileActivity::class.java)
         startActivity(intent)
-        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-
+        /*activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)*/
     }
 
     private fun getData() {

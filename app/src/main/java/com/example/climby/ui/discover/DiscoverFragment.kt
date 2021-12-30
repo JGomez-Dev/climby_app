@@ -5,12 +5,14 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.app.Notification
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +27,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
+import com.example.climby.data.model.notification.NotificationModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentDiscoverBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
@@ -32,6 +35,13 @@ import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.example.climby.utils.Commons
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -125,7 +135,10 @@ class DiscoverFragment : Fragment() {
                 view.dismiss()
             }
             .setPositiveButton("Aceptar") { view, _ ->
-                deleteBooking(booking, it, position)
+                /*basicReadWrite("1","jgomez","Jgome@gomez")*/
+                /*  deleteBooking(booking, it, position)
+                  it[position].bookings?.remove(booking)
+                  discoverAdapter.notifyDataSetChanged()*/
                 view.dismiss()
             }
             .setCancelable(false)
@@ -133,13 +146,40 @@ class DiscoverFragment : Fragment() {
     }
 
 
+    /*private fun basicReadWrite(userId: String, name: String, email: String) {
+        val user = NotificationModel(name, email)
+        val database = Firebase.database.getReference("message")
+
+        database.child("users").child(userId).child("username").setValue(name)
+
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (childSnapshot in dataSnapshot.children) {
+                    var user = childSnapshot.getValue(NotificationModel::class.java)
+                }
+
+                val post = dataSnapshot.getValue<NotificationModel>()
+                // ...
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("NotificationModel", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        database.addValueEventListener(postListener)
+
+        // [END read_message]
+    }*/
+
     private fun deleteBooking(bookingModel: BookingModel, it: List<TripModel>, position: Int) {
-       /* discoverViewModel.deleteBooking(bookingModel)*/
-        /*it[position].bookings?.remove(bookingModel)
-        discoverAdapter.notifyDataSetChanged()*/
+        discoverViewModel.deleteBooking(bookingModel)
+        /*it[position].bookings?.remove(bookingModel)*/
+        /*discoverAdapter.notifyDataSetChanged()*/
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun saveBooking(it: List<TripModel>, position: Int) {
         val bookingModel = BookingModel(0, Commons.userSession, it[position].id, status = false, valuationStatus = false, date = now())
         discoverViewModel.saveBooking(bookingModel)

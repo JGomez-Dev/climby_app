@@ -2,6 +2,7 @@ package com.example.climby.ui.profile
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -80,6 +81,8 @@ class ComingOutingsFragment : Fragment() {
             }
             .setPositiveButton("Aceptar") { view, _ ->
                 deleteBooking(booking, it, position)
+                it[position].bookings?.remove(booking)
+                discoverAdapter.notifyDataSetChanged()
                 view.dismiss()
             }
             .setCancelable(false)
@@ -87,9 +90,9 @@ class ComingOutingsFragment : Fragment() {
     }
 
     private fun deleteBooking(bookingModel: BookingModel, it: List<TripModel>, position: Int) {
-        /* discoverViewModel.deleteBooking(bookingModel)*/
-        /*it[position].bookings?.remove(bookingModel)
-        discoverAdapter.notifyDataSetChanged()*/
+        comingOutingsViewModel.deleteBooking(bookingModel)
+        /*it[position].bookings?.remove(bookingModel)*/
+        /*discoverAdapter.notifyDataSetChanged()*/
     }
 
     private fun moveHand(){

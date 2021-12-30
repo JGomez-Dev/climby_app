@@ -24,10 +24,7 @@ class BookingService @Inject constructor(private val api: BookingApiClient) {
         }
     }
 
-    suspend fun deleteBooking(idBooking: Int): BookingModel {
-        return withContext(Dispatchers.IO) {
-            val response = api.deleteBooking(idBooking)
-            response.body()!!
-        }
+    suspend fun deleteBooking(idBooking: Int) {
+            api.deleteBooking(idBooking)
     }
 }

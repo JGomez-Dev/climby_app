@@ -28,16 +28,16 @@ class EditProfileViewModel @Inject constructor(private val update: Update, @Null
     fun updateUser(userModel: UserModel) {
         viewModelScope.launch {
             result = update(userModel)
-            /*if(result!=null){
+            if(result!=null){
                 val editor = sharedPref.edit()
                 editor.putString("experience", userModel.experience)
                 editor.putString("phone", userModel.phone)
                 editor.putString("photoUrl", userModel.photo)
                 editor.apply()
-                Commons.userSession?.photo = result?.photo
+               /* Commons.userSession?.photo = result?.photo
                 Commons.userSession?.phone = result?.phone
-                Commons.userSession?.experience = result?.experience
-            }*/
+                Commons.userSession?.experience = result?.experience*/
+            }
             isComplete.postValue(true)
         }
     }

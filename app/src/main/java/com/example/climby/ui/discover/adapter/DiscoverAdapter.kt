@@ -117,6 +117,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                                 btRequest.isEnabled = true
                                 btRequest.setOnClickListener {
                                     mlistener.onClickRemoveMe(_it, adapterPosition)
+
                                 }
                                 acceptedBookingList.add(_it)
                                 accepted++
@@ -128,6 +129,9 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                                 btRequest.isEnabled = true
                                 btRequest.setOnClickListener {
                                     mlistener.onClickRemoveMe(_it, adapterPosition)
+                                    trip.bookings!!.remove(_it)
+/*                                    btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
+                                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.primary);*/
                                 }
                             }
                             ReservationStatus.REFUSE.status -> { // Ha sido rechazado

@@ -4,7 +4,9 @@ import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
+import com.example.climby.domain.booking.Delete
 import com.example.climby.domain.trip.GetAllTrips
 import com.example.climby.domain.trip.GetTravelsWithUserBookings
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,11 +15,17 @@ import javax.annotation.Nullable
 import javax.inject.Inject
 
 @HiltViewModel
-class ComingOutingsViewModel @Inject constructor(private val getTravelsWithUserBookings: GetTravelsWithUserBookings, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
+class ComingOutingsViewModel @Inject constructor(private val getTravelsWithUserBookings: GetTravelsWithUserBookings, private val delete: Delete, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
 
     var tripsModel = MutableLiveData<List<TripModel>>()
     val isLoading = MutableLiveData<Boolean>()
     var result: List<TripModel> = emptyList()
+
+    fun deleteBooking(idBooking: BookingModel) {
+        viewModelScope.launch {
+            delete(idBooking.id)
+        }
+    }
 
     fun getMyTrips() {
         viewModelScope.launch {
