@@ -3,6 +3,7 @@ package com.example.climby.view.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.climby.R
 
 class SplashActivity : AppCompatActivity() {
 
@@ -16,6 +17,8 @@ class SplashActivity : AppCompatActivity() {
         }
         val authActivity = Intent(application, AuthActivity::class.java)
         startActivity(authActivity)
+
         finish()
+
     }
 }

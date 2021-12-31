@@ -15,40 +15,40 @@ class Commons {
             var formattedDate = ""
             when {
                 departureString.split("-".toRegex()).toTypedArray()[1] == "01" -> {
-                    formattedDate = "ENE"
+                    formattedDate = "Enero"
                 }
                 departureString.split("-".toRegex()).toTypedArray()[1] == "02" -> {
-                    formattedDate = "FEB"
+                    formattedDate = "Febrero"
                 }
                 departureString.split("-".toRegex()).toTypedArray()[1] == "03" -> {
-                    formattedDate = "MAR"
+                    formattedDate = "Marzo"
                 }
                 departureString.split("-".toRegex()).toTypedArray()[1] == "04" -> {
-                    formattedDate = "ABR"
+                    formattedDate = "Abril"
                 }
                 departureString.split("-".toRegex()).toTypedArray()[1] == "05" -> {
-                    formattedDate = "MAY"
+                    formattedDate = "Mayo"
                 }
                 departureString.split("-".toRegex()).toTypedArray()[1] == "06" -> {
-                    formattedDate = "JUN"
+                    formattedDate = "Junio"
                 }
                 departureString.split("-".toRegex()).toTypedArray()[1] == "07" -> {
-                    formattedDate = "JUL"
+                    formattedDate = "Julio"
                 }
                 departureString.split("-".toRegex()).toTypedArray()[1] == "08" -> {
-                    formattedDate = "AGO"
+                    formattedDate = "Agosto"
                 }
                 departureString.split("-".toRegex()).toTypedArray()[1] == "09" -> {
-                    formattedDate = "SEP"
+                    formattedDate = "Septiembre"
                 }
                 departureString.split("-".toRegex()).toTypedArray()[1] == "10" -> {
-                    formattedDate = "OCT"
+                    formattedDate = "Octubre"
                 }
                 departureString.split("-".toRegex()).toTypedArray()[1] == "11" -> {
-                    formattedDate = "NOV"
+                    formattedDate = "Noviembre"
                 }
                 departureString.split("-".toRegex()).toTypedArray()[1] == "12" -> {
-                    formattedDate = "DIC"
+                    formattedDate = "Diciembre"
                 }
             }
             return formattedDate

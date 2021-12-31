@@ -63,7 +63,7 @@ class AuthActivity : AppCompatActivity() {
 
         session()
         binding.root.findViewById<Button>(R.id.BTGoogle).setOnClickListener {
-            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("397180762969-g8tffs2qtcgaern8m9470lu60sidieph.apps.googleusercontent.com").requestEmail().build()
+            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
             val googleClient = GoogleSignIn.getClient(this, googleConf)
             googleClient.signOut()
             val signInIntent = googleClient.signInIntent

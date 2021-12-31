@@ -3,14 +3,10 @@ package com.example.climby.ui.discover.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,14 +16,13 @@ import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
+import com.example.climby.databinding.ItemDiscoverBinding
 import com.example.climby.ui.profile.RequestsActivity
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
-import de.hdodenhof.circleimageview.CircleImageView
 
 
 class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
-
 
     private var tripsList: List<TripModel> = ArrayList()
     private var context: Context
@@ -57,24 +52,17 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
             }
         }
 
-        private val tvType: TextView = itemView.findViewById(R.id.TVType)
-        private val tvPlaceDate: TextView = itemView.findViewById(R.id.TVPlaceDate)
-        private val ivPlace: ImageView = itemView.findViewById(R.id.IVPlace)
-        private val cvDriver: CircleImageView = itemView.findViewById(R.id.CVDriver)
-        private val btRequest: Button = itemView.findViewById(R.id.BTRequest)
-        private val tVUsers: TextView = itemView.findViewById(R.id.TVUsers)
-        private val rvUserv: RecyclerView = itemView.findViewById(R.id.RVUsers)
+        private val binding = ItemDiscoverBinding.bind(itemView)
 
         @SuppressLint("SetTextI18n")
-        fun bind(trip: TripModel) {
+        fun bind(trip: TripModel) = with(binding) {
             var accepted = 0
             val acceptedBookingList: MutableList<BookingModel> = arrayListOf()
-
-            tvType.text = trip.type?.name + " en"
-            tvPlaceDate.text = trip.site?.name + ", " + (trip.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip.departure?.let { Commons.getDate(it) }
-            trip.type?.name?.let { setPhotoTrip(it, ivPlace, context) }
-            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(trip.driver?.photo).into(cvDriver)
-            Commons.setTextButton(btRequest, trip)
+            TVType.text = trip.type?.name + " en"
+            TVPlaceDate.text = trip.site?.name + ", \n" + (trip.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip.departure?.let { Commons.getDate(it) }
+            trip.type?.name?.let { setPhotoTrip(it, IVPlace,  context) }
+            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(trip.driver?.photo).into(CVDriver)
+            Commons.setTextButton(BTRequest, trip)
 
             if (trip.driver?.id == userSession.id) { //El viaje pertenece al usuario logueado
                 trip.bookings?.forEach { _it ->
@@ -84,15 +72,15 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                     }
                 }
                 if (trip.bookings?.isEmpty() == true) { // El viaje no tiene reservas
-                    btRequest.text = "Aún no tienes peticiones"
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.disable);
-                    btRequest.isEnabled = false
+                    BTRequest.text = "Aún no tienes peticiones"
+                    BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.disable)
+                    false.also { BTRequest.isEnabled = it }
 
                 } else { // El viaje tiene reservas
-                    btRequest.text = "Ver peticiones"
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.primary);
-                    btRequest.isEnabled = true
-                    btRequest.setOnClickListener {
+                    BTRequest.text = "Ver peticiones"
+                    BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.primary)
+                    BTRequest.isEnabled = true
+                    BTRequest.setOnClickListener {
                         val intent = Intent(context, RequestsActivity::class.java).apply {
                             putExtra("trip", trip)
                         }
@@ -100,9 +88,9 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                     }
                 }
                 if (accepted > 0)
-                    tVUsers.text = "Tú y $accepted más "
+                    TVUsers.text = "Tú y $accepted más "
                 else
-                    tVUsers.text = "Tú"
+                    TVUsers.text = "Tú"
             } else { //El viaje no pertenece al usuario logueado
                 var userPassager = false
                 var userPassagerAccepted = false
@@ -112,10 +100,10 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                         userPassager = true
                         when (_it.status) {
                             ReservationStatus.ACCEPTED.status -> { // Ha sido aceptado
-                                btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
-                                btRequest.text = "Te has unido\r\nLiberar plaza"
-                                btRequest.isEnabled = true
-                                btRequest.setOnClickListener {
+                                BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black)
+                                BTRequest.text = "Te has unido\r\nLiberar plaza"
+                                BTRequest.isEnabled = true
+                                BTRequest.setOnClickListener {
                                     mlistener.onClickRemoveMe(_it, adapterPosition)
 
                                 }
@@ -124,20 +112,18 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                                 userPassagerAccepted = true
                             }
                             ReservationStatus.UNANSWERED.status -> { // Esta esperando respuesta
-                                btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
-                                btRequest.text = "Solicitado"
-                                btRequest.isEnabled = true
-                                btRequest.setOnClickListener {
+                                BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black)
+                                BTRequest.text = "Solicitado"
+                                BTRequest.isEnabled = true
+                                BTRequest.setOnClickListener {
                                     mlistener.onClickRemoveMe(_it, adapterPosition)
                                     trip.bookings!!.remove(_it)
-/*                                    btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
-                                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.primary);*/
                                 }
                             }
                             ReservationStatus.REFUSE.status -> { // Ha sido rechazado
-                                btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red_light);
-                                btRequest.text = "Rechazado"
-                                btRequest.isEnabled = false
+                                BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red_light)
+                                BTRequest.text = "Rechazado"
+                                BTRequest.isEnabled = false
                             }
                         }
                     } else { //El usuario no está como pasajero en este viaje
@@ -149,31 +135,31 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                     }
                 }
                 if(!userPassager){
-                    btRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.primary);
-                    btRequest.setOnClickListener {
+                    BTRequest.text = "Pedir unirme\r\n" + trip.availablePlaces + " plazas"
+                    BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.primary)
+                    BTRequest.setOnClickListener {
                         mlistener.onClickAddMe(adapterPosition)
-                        btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
-                        btRequest.text = "Solicitado"
+                        BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black)
+                        BTRequest.text = "Solicitado"
                     }
                 }
                 if (accepted == trip.availablePlaces && !userPassagerAccepted) {
-                    btRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
-                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.disable);
-                    btRequest.text = "Completo"
-                    btRequest.isEnabled = false
+                    BTRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
+                    BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.disable)
+                    BTRequest.text = "Completo"
+                    BTRequest.isEnabled = false
                 }
                 if (accepted > 0)
-                    tVUsers.text = (trip.driver?.name?.split(" ")?.get(0) ?: "") + " y " + accepted + " más "
+                    TVUsers.text = (trip.driver?.name?.split(" ")?.get(0) ?: "") + " y " + accepted + " más "
                 else
-                    tVUsers.text = trip.driver?.name?.split(" ")?.get(0) ?: ""
+                    TVUsers.text = trip.driver?.name?.split(" ")?.get(0) ?: ""
             }
 
-            rvUserv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+            RVUsers.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
 
             if (!acceptedBookingList.isNullOrEmpty()) {
                 userDiscoverAdapter = UserDiscoverAdapter(acceptedBookingList, context)
-                rvUserv.adapter = userDiscoverAdapter
+                RVUsers.adapter = userDiscoverAdapter
             }
         }
     }

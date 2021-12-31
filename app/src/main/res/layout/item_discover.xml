@@ -8,15 +8,14 @@
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="8dp"
     android:background="@color/white"
-    android:elevation="2dp"
-    android:paddingBottom="16dp">
+    android:elevation="2dp">
 
     <TextView
         android:id="@+id/TVType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/text_lead"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -25,9 +24,13 @@
 
     <TextView
         android:id="@+id/TVPlaceDate"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
         android:maxWidth="200dp"
+        android:maxLines="3"
+        android:scrollHorizontally="true"
         android:text="@string/text_predriza"
         android:textColor="@color/black"
         android:textSize="22sp"
@@ -37,36 +40,29 @@
         app:layout_constraintStart_toStartOf="@+id/TVType"
         app:layout_constraintTop_toBottomOf="@+id/TVType" />
 
-    <TextView
-        android:id="@+id/TVDeparture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/TVPlaceDate"
-        app:layout_constraintEnd_toStartOf="@+id/IVPlace"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/TVPlaceDate"
-        app:layout_constraintTop_toTopOf="@+id/TVPlaceDate"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/TVTripID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/TVPlaceDate"
-        app:layout_constraintTop_toBottomOf="@+id/TVPlaceDate" />
+    <!--  <TextView
+          android:id="@+id/TVDeparture"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:textColor="@color/black"
+          android:text="@string/text_date_discover"
+          android:textSize="22sp"
+          android:textStyle="bold"
+          app:layout_constraintBottom_toBottomOf="@+id/TVPlaceDate"
+          app:layout_constraintEnd_toStartOf="@+id/IVPlace"
+          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintStart_toEndOf="@+id/TVPlaceDate"
+          app:layout_constraintTop_toTopOf="@+id/TVPlaceDate"
+          app:layout_constraintVertical_bias="0.0" />-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/BTRequest"
         app:layout_constraintEnd_toStartOf="@+id/BTRequest"
-        app:layout_constraintStart_toStartOf="@+id/TVTripID"
+        app:layout_constraintStart_toStartOf="@+id/TVPlaceDate"
         app:layout_constraintTop_toTopOf="@+id/BTRequest">
 
 
@@ -97,6 +93,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -107,15 +107,15 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <ImageView
-            android:id="@+id/IVPlace"
-            android:layout_width="111dp"
-            android:layout_height="111dp"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/text_empty"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@mipmap/boulder" />
+    <ImageView
+        android:id="@+id/IVPlace"
+        android:layout_width="111dp"
+        android:layout_height="111dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/text_empty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@mipmap/boulder" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -123,6 +123,7 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/primary"
         android:insetTop="0dp"
         android:insetBottom="0dp"
@@ -135,6 +136,7 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/IVPlace"
         app:layout_constraintStart_toStartOf="@+id/IVPlace"
         app:layout_constraintTop_toBottomOf="@+id/IVPlace" />

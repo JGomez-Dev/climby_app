@@ -87,7 +87,7 @@ class RequestsActivity : AppCompatActivity() {
             }
 
             override fun onClickContact(position: Int) {
-                val url = "https://api.whatsapp.com/send?phone=34 " + trip?.bookings?.get(position)?.passenger?.phone.toString() + "&text=!Hola " + trip?.bookings?.get(position)?.passenger?.name?.split(" ")?.get(0).toString() + "! soy " + trip?.driver?.name?.split(" ")?.get(0).toString() + " gracias por unirte al viaje de " + trip?.site?.name
+                val url = "https://api.whatsapp.com/send?phone=+34 " + trip?.bookings?.get(position)?.passenger?.phone.toString() + "&text=!Hola " + trip?.bookings?.get(position)?.passenger?.name?.split(" ")?.get(0).toString() + "! soy " + trip?.driver?.name?.split(" ")?.get(0).toString() + " gracias por unirte al viaje de " + trip?.site?.name
                 val sendIntent = Intent()
                 sendIntent.action = Intent.ACTION_VIEW
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")

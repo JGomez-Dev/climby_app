@@ -5,14 +5,12 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.app.Notification
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,12 +20,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
-import com.example.climby.data.model.notification.NotificationModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentDiscoverBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
@@ -35,13 +31,6 @@ import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.example.climby.utils.Commons
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -60,15 +49,15 @@ class DiscoverFragment : Fragment() {
     private var longitude: Double = 0.0
     private var province: String = "Seleccione..."
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        discoverViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        discoverViewModel = ViewModelProvider(this)[DiscoverViewModel::class.java]
         binding = FragmentDiscoverBinding.inflate(layoutInflater)
         val view: View = binding.root
 
         getData()
 
         binding.RVTrips.layoutManager = LinearLayoutManager(activity)
-        discoverViewModel.tripsModel.observe(viewLifecycleOwner, Observer {
+        discoverViewModel.tripsModel.observe(viewLifecycleOwner,  {
             if (it.isNullOrEmpty()) {
                 binding.CLTripsEmpty.isVisible = true
                 binding.RVTrips.isVisible = false
@@ -97,16 +86,16 @@ class DiscoverFragment : Fragment() {
             loadProvinces()
         }
 
-        discoverViewModel.isBadResponse.observe(viewLifecycleOwner, Observer {
+        discoverViewModel.isBadResponse.observe(viewLifecycleOwner,  {
             binding.CLBadConnection.isVisible = it
             binding.CLTripsEmpty.isVisible = !it
         })
 
         binding.TVRetry.setOnClickListener {
-            discoverViewModel.getTrips(requireContext().applicationContext, province!!)
+            discoverViewModel.getTrips(requireContext().applicationContext, province)
         }
 
-        discoverViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+        discoverViewModel.isLoading.observe(viewLifecycleOwner,  {
             binding.PBDiscover.isVisible = it
         })
 
@@ -114,68 +103,41 @@ class DiscoverFragment : Fragment() {
             getFilterAndSendQuery(isChecked, checkedId)
         }
 
-
-        val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)
-        anim.duration = 1000
-        anim.repeatCount = Animation.INFINITE;
-        anim.repeatMode = ValueAnimator.REVERSE;
-
-        anim.start()
-
+        animateHand()
 
         return view
     }
 
+    private fun animateHand() {
+        val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)
+        anim.duration = 1000
+        anim.repeatCount = Animation.INFINITE
+        anim.repeatMode = ValueAnimator.REVERSE
 
+        anim.start()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     private fun showDialog(view: View, booking: BookingModel, it: List<TripModel>, position: Int) {
         AlertDialog.Builder(view.context)
             .setTitle("Eliminar solicitud")
             .setMessage("Dejarás libre tu plaza para que otra persona pueda ocuparla")
-            .setNegativeButton(R.string.cancel) { view, _ ->
-                view.dismiss()
+            .setNegativeButton(R.string.cancel) { View, _ ->
+                View.dismiss()
             }
-            .setPositiveButton("Aceptar") { view, _ ->
-                /*basicReadWrite("1","jgomez","Jgome@gomez")*/
-                /*  deleteBooking(booking, it, position)
-                  it[position].bookings?.remove(booking)
-                  discoverAdapter.notifyDataSetChanged()*/
-                view.dismiss()
+            .setPositiveButton("Aceptar") { View, _ ->
+                deleteBooking(booking)
+                it[position].bookings?.remove(booking)
+                discoverAdapter.notifyDataSetChanged()
+                View.dismiss()
             }
             .setCancelable(false)
             .create().show()
     }
 
-
-    /*private fun basicReadWrite(userId: String, name: String, email: String) {
-        val user = NotificationModel(name, email)
-        val database = Firebase.database.getReference("message")
-
-        database.child("users").child(userId).child("username").setValue(name)
-
-        val postListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (childSnapshot in dataSnapshot.children) {
-                    var user = childSnapshot.getValue(NotificationModel::class.java)
-                }
-
-                val post = dataSnapshot.getValue<NotificationModel>()
-                // ...
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.w("NotificationModel", "loadPost:onCancelled", databaseError.toException())
-            }
-        }
-        database.addValueEventListener(postListener)
-
-        // [END read_message]
-    }*/
-
-    private fun deleteBooking(bookingModel: BookingModel, it: List<TripModel>, position: Int) {
+    private fun deleteBooking(bookingModel: BookingModel) {
         discoverViewModel.deleteBooking(bookingModel)
-        /*it[position].bookings?.remove(bookingModel)*/
-        /*discoverAdapter.notifyDataSetChanged()*/
+
     }
 
 
@@ -192,7 +154,7 @@ class DiscoverFragment : Fragment() {
         return SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Date()).toString()
     }
 
-    private fun getPositionItem(spinner: Spinner, province: String?): Int {
+    /*private fun getPositionItem(spinner: Spinner, province: String?): Int {
         var position = 0
         for (i in 0 until spinner.count) {
             if (spinner.getItemAtPosition(i).toString().split(" ")[0].equals(province, ignoreCase = true)) {
@@ -200,7 +162,7 @@ class DiscoverFragment : Fragment() {
             }
         }
         return position
-    }
+    }*/
 
     private fun getData() {
         val bundle = activity?.intent?.extras
@@ -208,7 +170,7 @@ class DiscoverFragment : Fragment() {
             province = bundle.getString("province").toString()
             if (province != "null") {
                 binding.TVCommunity.text = province
-                discoverViewModel.getTrips(requireContext().applicationContext, province!!)
+                discoverViewModel.getTrips(requireContext().applicationContext, province)
             } else {
                 getLocation()
             }
@@ -225,7 +187,6 @@ class DiscoverFragment : Fragment() {
         try {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location: Location? ->
-
                     latitude = location?.latitude!!
                     longitude = location.longitude
                     province = getProvinceByLatLong(location)
@@ -245,14 +206,14 @@ class DiscoverFragment : Fragment() {
         val geocode = Geocoder(context, Locale.getDefault())
         val addresses: List<Address> = geocode.getFromLocation(location.latitude, location.longitude, 1)
 
-        val direction = addresses[0].getAddressLine(0)
-        val city = addresses[0].locality
-        val province = addresses[0].subAdminArea
-        val community = addresses[0].adminArea
+        /*val direction = addresses[0].getAddressLine(0)
+        val city = addresses[0].locality*/
+        /*val province = addresses[0].subAdminArea*/
+        /*val community = addresses[0].adminArea
         val country = addresses[0].countryName
         val postalCode = addresses[0].postalCode
-        val knownName = addresses[0].featureName
-        return province
+        val knownName = addresses[0].featureName*/
+        return addresses[0].subAdminArea
     }
 
     private fun loadProvinces() {
@@ -262,7 +223,7 @@ class DiscoverFragment : Fragment() {
 
         startActivity(intent)
 
-        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
 
     }
 
@@ -276,12 +237,12 @@ class DiscoverFragment : Fragment() {
     private fun getFilterAndSendQuery(isChecked: Boolean, checkedId: Int) {
         if (isChecked) {
             when (checkedId) {
-                R.id.BTAll -> discoverViewModel.getTrips(requireContext().applicationContext, province!!)
-                R.id.BTNextWeekend -> discoverViewModel.getTripsType("NextWeekend", province!!.split(" ")[0])
-                R.id.BTBoulder -> discoverViewModel.getTripsType("Boulder", province!!.split(" ")[0])
-                R.id.BTLead -> discoverViewModel.getTripsType("Deportiva", province!!.split(" ")[0])
-                R.id.BTRocodromo -> discoverViewModel.getTripsType("Rocódromo", province!!.split(" ")[0])
-                R.id.BTClassic -> discoverViewModel.getTripsType("Clásica", province!!.split(" ")[0])
+                R.id.BTAll -> discoverViewModel.getTrips(requireContext().applicationContext, province)
+                R.id.BTNextWeekend -> discoverViewModel.getTripsType("NextWeekend", province.split(" ")[0])
+                R.id.BTBoulder -> discoverViewModel.getTripsType("Boulder", province.split(" ")[0])
+                R.id.BTLead -> discoverViewModel.getTripsType("Deportiva", province.split(" ")[0])
+                R.id.BTRocodromo -> discoverViewModel.getTripsType("Rocódromo", province.split(" ")[0])
+                R.id.BTClassic -> discoverViewModel.getTripsType("Clásica", province.split(" ")[0])
             }
         }
     }

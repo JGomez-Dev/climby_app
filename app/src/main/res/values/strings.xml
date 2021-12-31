@@ -35,6 +35,7 @@
     <string name="text_bt_next">Continuar</string>
     <string name="text_where_do_you_come_from">¿Desde donde sales?</string>
     <string name="text_date">DD/MM</string>
+    <string name="text_date_discover">31 Diciembre</string>
     <string name="date">Fecha</string>
     <string name="text_places_available">Plazas disponibles</string>
     <string name="text_create_output">Crear salida</string>
@@ -83,7 +84,7 @@
     <string name="text_experience">Experiencia</string>
     <string name="text_back">Atras</string>
     <string name="text_edit_information">Editar tu información</string>
-    <string name="text_predriza">La Pedriza,</string>
+    <string name="text_predriza">La Pedriza, 31 Diciembre</string>
     <string name="text_lead">Deportiva en</string>
     <string name="text_places">Pedir unirme 4 plazas</string>
     <string name="text_travel">Viaje</string>
