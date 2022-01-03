@@ -190,7 +190,7 @@ class DiscoverFragment : Fragment() {
                     latitude = location?.latitude!!
                     longitude = location.longitude
                     province = getProvinceByLatLong(location)
-
+                    binding.TVCommunity.text = province
                     discoverViewModel.getTrips(requireContext().applicationContext, province)
                 }
                 .addOnFailureListener {

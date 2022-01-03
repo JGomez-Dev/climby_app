@@ -105,7 +105,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
             places = arguments?.getInt("placePublish", 0)!!
 
             binding.ETSite.text = school
-            binding.ETSite.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.end_background))
+            binding.ETSite.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
 
             if (date != "DD/MM") {
                 binding.ETDate.setText(date)
