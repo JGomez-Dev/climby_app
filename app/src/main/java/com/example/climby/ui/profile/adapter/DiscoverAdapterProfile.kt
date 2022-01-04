@@ -44,6 +44,7 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
+        fun onItemEdit(position: Int)
     }
 
     fun SetOnItemClickListener(listener: OnItemClickListener) {
@@ -145,11 +146,7 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
 
             rvUserv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
             tVEdit.setOnClickListener {
-                val intent =Intent(context, EditTripActivity::class.java).apply {
-                    putExtra("trip", trip)
-                }
-                context.startActivities(arrayOf(intent))
-
+                mlistener.onItemEdit(adapterPosition)
             }
             btRequest.setOnClickListener {
                 val intent =Intent(context, RequestsActivity::class.java).apply {

@@ -59,9 +59,9 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
         }
     }
 
-    fun deleteBooking(idBooking: BookingModel) {
+    fun deleteBooking(booking: BookingModel) {
         viewModelScope.launch {
-            delete(idBooking.id)
+            delete(booking.id)
         }
     }
 

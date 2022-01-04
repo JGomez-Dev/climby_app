@@ -15,9 +15,13 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
+import com.example.climby.data.model.province.ProvinceModel
+import com.example.climby.data.model.school.SchoolModel
 import com.example.climby.data.model.trip.TripModel
+import com.example.climby.data.model.types.TypesModel
 import com.example.climby.databinding.ActivityEditTripBinding
 import com.example.climby.ui.profile.viewmodel.EditTripViewModel
+import com.example.climby.utils.Commons
 import com.example.climby.utils.DatePickerFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.NonCancellable.cancel
@@ -48,6 +52,7 @@ class EditTripActivity : AppCompatActivity() {
 
         binding.IVBack.setOnClickListener {
             onBackPressed()
+            overridePendingTransition(0, R.anim.slide_in_down);
         }
 
         binding.BTDeleteExit.setOnClickListener {
@@ -64,17 +69,21 @@ class EditTripActivity : AppCompatActivity() {
                 view.dismiss()
             }
             .setPositiveButton(R.string.text_delete) { view, _ ->
-                Toast.makeText(this,"Eliminar",Toast.LENGTH_SHORT ).show()
+                deleteTrip()
                 view.dismiss()
             }
             .setCancelable(false)
             .create().show()
     }
 
+    private fun deleteTrip() {
+        editTripViewModel.deleteTrip(trip!!)
+    }
 
     private fun getData() {
         val bundle = intent.extras
-        trip = bundle?.getParcelable("trip")
+        if (bundle != null)
+            trip = bundle.getParcelable("trip")
     }
 
     @SuppressLint("SetTextI18n")
@@ -83,15 +92,9 @@ class EditTripActivity : AppCompatActivity() {
         editTripViewModel.getTypes()
         editTripViewModel.getProvince()
         editTripViewModel.typesModel.observe(this, {
-            /*val adapter = ArrayAdapter(this, com.example.climby.R.layout.support_simple_spinner_dropdown_item, it)
-            binding.SPType.adapter = adapter
-            binding.SPType.setSelection(adapter.getPosition(trip?.type?.name.toString()))*/
             setupAdapterType(it)
         })
         editTripViewModel.provincesModel.observe(this, Observer {
-            /*val adapter = ArrayAdapter(this, com.example.climby.R.layout.support_simple_spinner_dropdown_item, it)
-            binding.SPCommunity.adapter = adapter
-            binding.SPCommunity.setSelection(adapter.getPosition(trip?.province?.name.toString()))*/
             setupAdapterProvinces(it)
         })
         trip?.availablePlaces?.let { binding.SPPlacesAvailable.setSelection(it - 1) }

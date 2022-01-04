@@ -11,10 +11,10 @@ class TripService @Inject constructor(private val api: TripApiClient) {
 
     suspend fun getTrips(): List<TripModel>? {
         return withContext(Dispatchers.IO) {
-            try{
+            try {
                 val response = api.getTrips()
                 response.body() ?: emptyList()
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 null
             }
         }
@@ -46,5 +46,9 @@ class TripService @Inject constructor(private val api: TripApiClient) {
             val response = api.putTrip(tripModel)
             response.body()!!
         }
+    }
+
+    suspend fun deleteTrip(id: Int) {
+        api.deleteTrip(id)
     }
 }
