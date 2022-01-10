@@ -22,6 +22,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.climby.FcmNotificationsSender
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
@@ -101,6 +102,7 @@ class DiscoverFragment : Fragment() {
 
         binding.TBSeach.addOnButtonCheckedListener { _, checkedId, isChecked ->
             getFilterAndSendQuery(isChecked, checkedId)
+
         }
 
         animateHand()
@@ -237,7 +239,11 @@ class DiscoverFragment : Fragment() {
     private fun getFilterAndSendQuery(isChecked: Boolean, checkedId: Int) {
         if (isChecked) {
             when (checkedId) {
-                R.id.BTAll -> discoverViewModel.getTrips(requireContext().applicationContext, province)
+                R.id.BTAll -> {
+                    discoverViewModel.getTrips(requireContext().applicationContext, province)
+                    var fcmNotificationsSender: FcmNotificationsSender = FcmNotificationsSender("coG7zadtRGSZ1HYOxaTeab:APA91bFgEl8tNABm_rGM5qLS8FuXPSm8ANjfxUVToJS0lASphWCkKbH5tgd9ZlcftqSK0uTMsN9y3RaoJfW7Rh_fS789EQU5FC8kdRHBS_5SR3g-RznuN84aJngidlMYfgM88z4c7YAt", "Hola", "Hola", context, activity)
+                    fcmNotificationsSender.SendNotifications()
+                }
                 R.id.BTNextWeekend -> discoverViewModel.getTripsType("NextWeekend", province.split(" ")[0])
                 R.id.BTBoulder -> discoverViewModel.getTripsType("Boulder", province.split(" ")[0])
                 R.id.BTLead -> discoverViewModel.getTripsType("Deportiva", province.split(" ")[0])
