@@ -14,9 +14,9 @@
     <application
         android:name=".ClimbyApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_app"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon_app"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Climby"
@@ -39,7 +39,12 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"  android:exported="false">
+            <intent-filter>
+                <action android:name="OPEN_MainActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.activity.OnBoardingFirstActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -64,7 +69,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".ui.profile.RequestsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity
             android:name=".ui.profile.RefuseTripActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

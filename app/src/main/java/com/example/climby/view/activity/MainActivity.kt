@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.climby.R
+import com.example.climby.ui.profile.ProfileFragment
 import com.example.climby.ui.publish.PublishFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
             // Log and toast
             Log.i(TAG, token)
-            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+            /*Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()*/
         })
 
 
@@ -63,8 +64,17 @@ class MainActivity : AppCompatActivity() {
             val date = bundle.getString("datePublish", "")
             val dateFormat = bundle.getString("datePublishWithOutFormat", "")
             val places = bundle.getInt("placePublish", 0)
+            val to =  bundle.getString("to", "")
 
             /*val profile = bundle.getBoolean("profile", false)*/
+            if(to != ""){
+                if(to == "myOutigsFragment"){
+                    val f = ProfileFragment()
+                    f.arguments = bundle
+                    val fm = supportFragmentManager
+                    fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
+                }
+            }
 
             if(school != ""){
                 val f = PublishFragment()

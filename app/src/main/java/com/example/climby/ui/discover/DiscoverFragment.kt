@@ -5,6 +5,8 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -74,6 +76,17 @@ class DiscoverFragment : Fragment() {
 
                     override fun onClickAddMe(position: Int) {
                         saveBooking(it, position)
+
+                        val fcmNotificationsSender = FcmNotificationsSender(
+                            "coG7zadtRGSZ1HYOxaTeab:APA91bGYshP0aZ7UoOYU5bCRptCAnCFQFefpj-Shnx6_1oVI1yVlDrGnC4dg1m_NcrCI_01sNZXim3gnzpFDrFccxnFtP4R_9YIUtzMq1UvxVaOR3f7sCDkfrDucFF8jKDzcZVb-UrOk",
+                            "Tienes una solicitud pendiente",
+                            "OPEN_MainActivity",
+                            "myOutigsFragment",
+                            Commons.userSession?.name.toString().split(" ")[0] + " ha pedido unirse a tu salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2]+ " de " +  Commons.getDate(it[position].departure.toString()) ,
+                            context!!,
+                            activity!!
+                        )
+                        fcmNotificationsSender.sendNotifications()
                     }
 
                     override fun onClickRemoveMe(_it: BookingModel, position: Int) {
@@ -189,11 +202,13 @@ class DiscoverFragment : Fragment() {
         try {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location: Location? ->
-                    latitude = location?.latitude!!
-                    longitude = location.longitude
-                    province = getProvinceByLatLong(location)
-                    binding.TVCommunity.text = province
-                    discoverViewModel.getTrips(requireContext().applicationContext, province)
+                    if(location != null) {
+                        latitude = location?.latitude!!
+                        longitude = location.longitude
+                        province = getProvinceByLatLong(location)
+                        binding.TVCommunity.text = province
+                        discoverViewModel.getTrips(requireContext().applicationContext, province)
+                    }
                 }
                 .addOnFailureListener {
                     Toast.makeText(context, "Sin localización / Lo tenemos que ver", Toast.LENGTH_SHORT).show()
@@ -241,8 +256,6 @@ class DiscoverFragment : Fragment() {
             when (checkedId) {
                 R.id.BTAll -> {
                     discoverViewModel.getTrips(requireContext().applicationContext, province)
-                    var fcmNotificationsSender: FcmNotificationsSender = FcmNotificationsSender("coG7zadtRGSZ1HYOxaTeab:APA91bFgEl8tNABm_rGM5qLS8FuXPSm8ANjfxUVToJS0lASphWCkKbH5tgd9ZlcftqSK0uTMsN9y3RaoJfW7Rh_fS789EQU5FC8kdRHBS_5SR3g-RznuN84aJngidlMYfgM88z4c7YAt", "Hola", "Hola", context, activity)
-                    fcmNotificationsSender.SendNotifications()
                 }
                 R.id.BTNextWeekend -> discoverViewModel.getTripsType("NextWeekend", province.split(" ")[0])
                 R.id.BTBoulder -> discoverViewModel.getTripsType("Boulder", province.split(" ")[0])
