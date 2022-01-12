@@ -43,14 +43,17 @@ class RequestsActivity : AppCompatActivity() {
         init()
 
         binding.IVBack.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java).apply {
-                putExtra("profile", true)
-            }
-            startActivity(intent)
-            overridePendingTransition(0, R.anim.slide_out_right)
+            showMainActivity()
         }
     }
 
+    private fun showMainActivity() {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("profile", true)
+        }
+        startActivity(intent)
+        overridePendingTransition(0, R.anim.slide_out_right)
+    }
 
 
     private fun getData() {
@@ -62,7 +65,7 @@ class RequestsActivity : AppCompatActivity() {
     private fun init() {
         trip?.type?.name?.let { setPhotoTrip(it) }
         binding.TVType.text = trip?.type?.name + " en"
-        binding.TVPlaceDate.text = trip?.site?.name + ", " + (trip?.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip?.departure?.let { Commons.getDate(it) }
+        binding.TVPlaceDate.text = trip?.site?.name + ", \n" + (trip?.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip?.departure?.let { Commons.getDate(it) }
         binding.RVRequest.layoutManager = LinearLayoutManager(this)
         trip?.bookings?.forEach {
             if ((it.status == ReservationStatus.ACCEPTED.status) || (it.status == ReservationStatus.UNANSWERED.status)) {

@@ -82,7 +82,9 @@
             android:name=".ui.discover.ProvinceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
-
+        <activity
+            android:name=".ui.profile.ResumeTripActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <service
             android:name=".utils.MyFirebaseMessagingService"
             tools:ignore="ExportedService"

@@ -17,6 +17,7 @@
     <string name="text_info">¿Tu información es correcta?</string>
     <string name="text_change_photo">Cambiar mi foto</string>
     <string name="text_name">Nombre</string>
+    <string name="text_example">Gracias por organizar esta salida. Ayer fué un día fantástico y aprendimos mogollón. La próxima vez llevo comida y no te dejo sin bocata.</string>
     <string name="text_province">Elige tu provincia</string>
     <string name="text_empty">…</string>
     <string name="text_join_a_group">Lo usaremos como medio de contacto solo cuando quieras unirte a un grupo.</string>
@@ -117,6 +118,7 @@
     <string name="basic_channel_name">basic_channel_name</string>
     <string name="basic_channel_description">basic_channel_description</string>
     <string name="text_aualify_attendees">Valorar a los asistentes</string>
+    <string name="text_resume_trip">Resumen de la salida</string>
     <string name="text_send_menssage">Envía un mensaje a Javier</string>
     <string name="text_qualify_attendees">Cuenta cómo te sentiste escalando con el grupo o ayuda a Javier a mejorar para la próxima vez…</string>
     <string name="text_private_message_1">El mensaje privado a</string>

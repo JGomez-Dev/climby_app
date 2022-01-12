@@ -2,14 +2,13 @@ package com.example.climby.ui.profile
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
-import androidx.core.content.ContextCompat.startActivities
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.R
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentMyOutingsBinding
-import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.profile.adapter.DiscoverAdapterProfile
 import com.example.climby.ui.profile.viewmodel.MyOutingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,14 +46,17 @@ class MyOutingsFragment : Fragment() {
                 binding.RVTrips.isVisible = true
                 discoverAdapterProfile = DiscoverAdapterProfile(it, requireContext())
                 binding.RVTrips.adapter = discoverAdapterProfile
-                discoverAdapterProfile.SetOnItemClickListener(object : DiscoverAdapterProfile.OnItemClickListener {
+                discoverAdapterProfile.setOnItemClickListener(object : DiscoverAdapterProfile.OnItemClickListener {
                     override fun onItemClick(position: Int) {
                         //loadActivity(it[position])
                     }
 
                     override fun onItemEdit(position: Int) {
                         showEditTripActivity(it[position])
+                    }
 
+                    override fun onItemShowResume(position: Int) {
+                        showResumeTripActivity(it[position])
                     }
                 })
             }
@@ -69,6 +70,14 @@ class MyOutingsFragment : Fragment() {
 
         return view
     }
+
+    private fun showResumeTripActivity(tripModel: TripModel) {
+        val intent = Intent(activity, ResumeTripActivity::class.java).apply {
+            putExtra("trip", tripModel)
+        }
+        startActivity(intent)
+    }
+
 
     private fun showEditTripActivity(tripModel: TripModel) {
         val intent = Intent(activity, EditTripActivity::class.java).apply {

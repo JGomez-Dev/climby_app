@@ -50,9 +50,10 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
     interface OnItemClickListener {
         fun onItemClick(position: Int)
         fun onItemEdit(position: Int)
+        fun onItemShowResume(position: Int)
     }
 
-    fun SetOnItemClickListener(listener: OnItemClickListener) {
+    fun setOnItemClickListener(listener: OnItemClickListener) {
         mlistener = listener
     }
 
@@ -88,8 +89,8 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
             Commons.setTextButton(btRequest, trip)
             var contRefuse = 0
             trip.bookings?.forEach { it ->
-                if(it.status == ReservationStatus.REFUSE.status){
-                    contRefuse ++
+                if (it.status == ReservationStatus.REFUSE.status) {
+                    contRefuse++
                 }
             }
             if (trip.bookings?.isEmpty() == true || contRefuse == trip.bookings?.size) {
@@ -99,7 +100,12 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
 
             } else {
                 btRequest.text = "Ver peticiones"
-
+                btRequest.setOnClickListener {
+                    val intent = Intent(context, RequestsActivity::class.java).apply {
+                        putExtra("trip", trip)
+                    }
+                    context.startActivities(arrayOf(intent))
+                }
                 /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
                 trip.bookings?.forEach {
                     if (it.passenger?.id ?: 0 == userSession.id) {
@@ -141,22 +147,39 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
                     }
                 }
 
-                if (accepted == trip.availablePlaces ) {
+                if (accepted == trip.availablePlaces) {
+                    btRequest.setOnClickListener {
+                        val intent = Intent(context, RequestsActivity::class.java).apply {
+                            putExtra("trip", trip)
+                        }
+                        context.startActivities(arrayOf(intent))
+                    }
                     btRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
                     btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                     btRequest.text = "Completo"
-                    /*btRequest.isEnabled = false*/
                 }
+            }
 
-                val currentDate = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Date())
-                if(trip.departure.toString() < currentDate){
+            val currentDate = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Date())
+            if (trip.departure.toString() < currentDate) {
+                tVEdit.isVisible = false
+                if (trip.bookings.isNullOrEmpty()) {
+                    btRequest.text = "Terminado\r\nSin peticiones"
+                    btRequest.isEnabled = false
+                } else {
+                    /*TODO Aquí debería contar cuantos mensajes hay sin leer y meterlos en la burbuja
+                       en caso de que no tenga mensajes sin leer o el viaje no haya tenido pasajeros unicamente pondremos
+                       'Terminado' en negro la burbuja se esconcerá*/
+                    btRequest.setOnClickListener {
+                        mlistener.onItemShowResume(adapterPosition)
+                    }
                     tvNumberMessage.isVisible = true
                     cvNumberMessage.isVisible = true
                     btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                     btRequest.text = "Terminado\r\nVer resumen"
                 }
-
             }
+
             if (accepted > 0)
                 tVUsers.text = "Tú y $request más "
             else
@@ -166,12 +189,7 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
             tVEdit.setOnClickListener {
                 mlistener.onItemEdit(adapterPosition)
             }
-            btRequest.setOnClickListener {
-                val intent =Intent(context, RequestsActivity::class.java).apply {
-                    putExtra("trip", trip)
-                }
-                context.startActivities(arrayOf(intent))
-            }
+
             if (!acceptedBookingList.isNullOrEmpty()) {
                 userDiscoverAdapter = trip.bookings?.let { UserDiscoverAdapter(acceptedBookingList, context) }!!
                 rvUserv.adapter = userDiscoverAdapter
