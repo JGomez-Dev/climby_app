@@ -97,10 +97,11 @@ class AuthActivity : AppCompatActivity() {
         val outings = prefs.getInt("outputs", 0)
         val score = prefs.getFloat("score", 0f)
         val ratings = prefs.getInt("ratings", 0)
+        val token = prefs.getString("token", null)
 
         if (!email.isNullOrEmpty() && !provider.isNullOrEmpty() && !photoUrl.isNullOrEmpty() && !displayName.isNullOrEmpty()) {
             if (!experience.isNullOrEmpty()) {
-                Commons.userSession = UserModel(id,displayName, experience, phone, email, score.toDouble(), ratings, outings, photoUrl)
+                Commons.userSession = UserModel(id,displayName, experience, phone, email, score.toDouble(), ratings, outings, photoUrl,token)
                 binding.CLAuthentication.visibility = View.INVISIBLE/*
                 val userLogger = UserModel(id, displayName,experience, phone.toString(), email, 0.0, 0,0, photoUrl)
                 getData(userLogger)*/

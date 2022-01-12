@@ -1,15 +1,16 @@
 package com.example.climby.view.viewmodel
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.climby.R
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.domain.user.Insert
 import com.example.climby.utils.Commons
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.annotation.Nullable
@@ -20,8 +21,12 @@ class OnBoardingSecondViewModel @Inject constructor(private val insert: Insert, 
 
     var result: UserModel? = null
     var okSaveUser = MutableLiveData<Boolean>()
+    var token = MutableLiveData<String>()
+
+    private var TAG: String = "PushNotifiacion"
 
     fun saveUser(userModel: UserModel) {
+
         viewModelScope.launch {
             result = insert(userModel)
             if (result != null) {
@@ -35,13 +40,25 @@ class OnBoardingSecondViewModel @Inject constructor(private val insert: Insert, 
                 editor.putString("phone", result!!.phone)
                 editor.putString("photoUrl", result!!.photo)
                 editor.putInt("ratings", result!!.ratings)
+                editor.putString("token", result!!.token)
+
                 editor.apply()
                 Commons.userSession = result
                 okSaveUser.postValue(true)
             } else {
                 okSaveUser.postValue(false)
             }
-
         }
+    }
+
+    fun generateToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.i(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+            token.postValue(task.result)
+            Log.i(TAG, token.toString())
+        })
     }
 }

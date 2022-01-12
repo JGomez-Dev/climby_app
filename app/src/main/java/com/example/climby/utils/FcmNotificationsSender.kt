@@ -1,4 +1,4 @@
-package com.example.climby
+package com.example.climby.utils
 
 import android.app.Activity
 import android.app.PendingIntent
@@ -30,6 +30,7 @@ class FcmNotificationsSender(var userFcmToken: String, private var title: String
                 notiObject.put("body", body)
                 notiObject.put("icon", R.drawable.icon_app) // enter icon that exists in drawable only
                 notiObject.put("click_action", intent) //Actividad que se abre cuando hacemos click en la notifiacion
+
             mainObj.put("notification", notiObject)
 
             val extraObject = JSONObject()

@@ -5,8 +5,6 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.app.PendingIntent
-import android.app.TaskStackBuilder
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -24,7 +22,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.climby.FcmNotificationsSender
+import com.example.climby.utils.FcmNotificationsSender
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
@@ -60,7 +58,7 @@ class DiscoverFragment : Fragment() {
         getData()
 
         binding.RVTrips.layoutManager = LinearLayoutManager(activity)
-        discoverViewModel.tripsModel.observe(viewLifecycleOwner,  {
+        discoverViewModel.tripsModel.observe(viewLifecycleOwner, {
             if (it.isNullOrEmpty()) {
                 binding.CLTripsEmpty.isVisible = true
                 binding.RVTrips.isVisible = false
@@ -76,17 +74,6 @@ class DiscoverFragment : Fragment() {
 
                     override fun onClickAddMe(position: Int) {
                         saveBooking(it, position)
-
-                        val fcmNotificationsSender = FcmNotificationsSender(
-                            "coG7zadtRGSZ1HYOxaTeab:APA91bGYshP0aZ7UoOYU5bCRptCAnCFQFefpj-Shnx6_1oVI1yVlDrGnC4dg1m_NcrCI_01sNZXim3gnzpFDrFccxnFtP4R_9YIUtzMq1UvxVaOR3f7sCDkfrDucFF8jKDzcZVb-UrOk",
-                            "Tienes una solicitud pendiente",
-                            "OPEN_MainActivity",
-                            "myOutigsFragment",
-                            Commons.userSession?.name.toString().split(" ")[0] + " ha pedido unirse a tu salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2]+ " de " +  Commons.getDate(it[position].departure.toString()) ,
-                            context!!,
-                            activity!!
-                        )
-                        fcmNotificationsSender.sendNotifications()
                     }
 
                     override fun onClickRemoveMe(_it: BookingModel, position: Int) {
@@ -100,7 +87,7 @@ class DiscoverFragment : Fragment() {
             loadProvinces()
         }
 
-        discoverViewModel.isBadResponse.observe(viewLifecycleOwner,  {
+        discoverViewModel.isBadResponse.observe(viewLifecycleOwner, {
             binding.CLBadConnection.isVisible = it
             binding.CLTripsEmpty.isVisible = !it
         })
@@ -109,7 +96,7 @@ class DiscoverFragment : Fragment() {
             discoverViewModel.getTrips(requireContext().applicationContext, province)
         }
 
-        discoverViewModel.isLoading.observe(viewLifecycleOwner,  {
+        discoverViewModel.isLoading.observe(viewLifecycleOwner, {
             binding.PBDiscover.isVisible = it
         })
 
@@ -141,6 +128,7 @@ class DiscoverFragment : Fragment() {
                 View.dismiss()
             }
             .setPositiveButton("Aceptar") { View, _ ->
+                Commons.sendNotification(it[position].driver?.token!!, booking.passenger?.name!!.split(" ")[0] + " ha cancelado su asistencia", "OPEN_MainActivity", "myOutigsFragment", booking.passenger.name.split(" ")[0] + " ha cancelado su asistencia a la salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(it[position].departure.toString() + "."), context!!, activity!!)
                 deleteBooking(booking)
                 it[position].bookings?.remove(booking)
                 discoverAdapter.notifyDataSetChanged()
@@ -155,9 +143,17 @@ class DiscoverFragment : Fragment() {
 
     }
 
-
     @SuppressLint("NotifyDataSetChanged")
     private fun saveBooking(it: List<TripModel>, position: Int) {
+        Commons.sendNotification(
+            it[position].driver?.token!!,
+            "Tienes una solicitud pendiente",
+            "OPEN_MainActivity",
+            "myOutigsFragment",
+            Commons.userSession?.name.toString().split(" ")[0] + " ha pedido unirse a tu salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(it[position].departure.toString()),
+            context!!,
+            activity!!
+        )
         val bookingModel = BookingModel(0, Commons.userSession, it[position].id, status = false, valuationStatus = false, date = now())
         discoverViewModel.saveBooking(bookingModel)
         it[position].bookings?.add(bookingModel)
@@ -202,7 +198,7 @@ class DiscoverFragment : Fragment() {
         try {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location: Location? ->
-                    if(location != null) {
+                    if (location != null) {
                         latitude = location?.latitude!!
                         longitude = location.longitude
                         province = getProvinceByLatLong(location)
@@ -213,7 +209,7 @@ class DiscoverFragment : Fragment() {
                 .addOnFailureListener {
                     Toast.makeText(context, "Sin localización / Lo tenemos que ver", Toast.LENGTH_SHORT).show()
                 }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Toast.makeText(requireContext(), "No es posible saber su ubicacion", Toast.LENGTH_SHORT).show()
         }
 

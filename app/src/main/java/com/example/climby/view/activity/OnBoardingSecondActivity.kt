@@ -49,10 +49,13 @@ class OnBoardingSecondActivity : AppCompatActivity() {
             selectedExperienced()
         }
         binding.BTNext.setOnClickListener {
-            insertUser()
+            onBoardingSecondViewModel.generateToken()
+            onBoardingSecondViewModel.token.observe(this, Observer { token ->
+                insertUser(token)
+            })
         }
         onBoardingSecondViewModel.okSaveUser.observe(this, Observer { it ->
-            if(it)
+            if (it)
                 showMainActivity()
             else
                 Toast.makeText(this, "Problema en el servidor", Toast.LENGTH_SHORT).show()
@@ -125,8 +128,8 @@ class OnBoardingSecondActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun insertUser() {
-        onBoardingSecondViewModel.saveUser(UserModel(0, displayName.toString(), getExperience(userExperience), phone.toString(), email.toString(), 0.0,0, 0, photoUrl.toString()))
+    private fun insertUser(token: String) {
+        onBoardingSecondViewModel.saveUser(UserModel(0, displayName.toString(), getExperience(userExperience), phone.toString(), email.toString(), 0.0, 0, 0, photoUrl.toString(), token))
     }
 
     private fun getExperience(userExperience: String): String {

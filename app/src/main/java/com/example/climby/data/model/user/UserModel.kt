@@ -13,7 +13,8 @@ data class UserModel(
         @SerializedName("score") var score: Double,
         @SerializedName("ratings") var ratings: Int,
         @SerializedName("outputs") val outings: Int,
-        @SerializedName("userPhoto") var photo: String?
+        @SerializedName("userPhoto") var photo: String?,
+        @SerializedName("token") var token: String?
         ): Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readInt(),
@@ -24,7 +25,9 @@ data class UserModel(
                 parcel.readDouble(),
                 parcel.readInt(),
                 parcel.readInt(),
+                parcel.readString(),
                 parcel.readString()
+
         ) {
         }
 
@@ -38,6 +41,8 @@ data class UserModel(
                 parcel.writeInt(ratings)
                 parcel.writeInt(outings)
                 parcel.writeString(photo)
+                parcel.writeString(token)
+
         }
 
         override fun describeContents(): Int {
