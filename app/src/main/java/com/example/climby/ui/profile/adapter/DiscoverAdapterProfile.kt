@@ -10,6 +10,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -25,6 +26,10 @@ import com.example.climby.ui.profile.RequestsActivity
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
 import de.hdodenhof.circleimageview.CircleImageView
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : RecyclerView.Adapter<DiscoverAdapterProfile.DataViewHolder>() {
@@ -67,7 +72,10 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
         private val rvUserv: RecyclerView = itemView.findViewById(R.id.RVUsers)
         private val tVEdit: TextView = itemView.findViewById(R.id.TVEdit)
 
-        @SuppressLint("SetTextI18n")
+        private val cvNumberMessage: CircleImageView = itemView.findViewById(R.id.CVNumberMessage)
+        private val tvNumberMessage: TextView = itemView.findViewById(R.id.TVNumberMessage)
+
+        @SuppressLint("SetTextI18n", "SimpleDateFormat")
         fun bind(trip: TripModel) {
             var accepted = 0
             var request = 0
@@ -90,8 +98,8 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
                 btRequest.isEnabled = false
 
             } else {
-
                 btRequest.text = "Ver peticiones"
+
                 /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
                 trip.bookings?.forEach {
                     if (it.passenger?.id ?: 0 == userSession.id) {
@@ -100,6 +108,7 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
                                 btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                                 btRequest.text = "Te has unido\r\nLiberar plaza"
                                 acceptedBookingList.add(it)
+                                //El viaje es de una semana atrás
                             }
                             ReservationStatus.UNANSWERED.status -> {
                                 btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
@@ -132,12 +141,21 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
                     }
                 }
 
-                if (accepted == trip.availablePlaces/* && userAccepted*/) {
+                if (accepted == trip.availablePlaces ) {
                     btRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
                     btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                     btRequest.text = "Completo"
                     /*btRequest.isEnabled = false*/
                 }
+
+                val currentDate = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Date())
+                if(trip.departure.toString() < currentDate){
+                    tvNumberMessage.isVisible = true
+                    cvNumberMessage.isVisible = true
+                    btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
+                    btRequest.text = "Terminado\r\nVer resumen"
+                }
+
             }
             if (accepted > 0)
                 tVUsers.text = "Tú y $request más "

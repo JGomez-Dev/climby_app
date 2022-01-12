@@ -123,4 +123,5 @@
     <string name="text_private_message_2">está vacío.</string>
     <string name="text_if_cancel">Si cancelas la valoración ya no podrás volver a valorar esta salida</string>
     <string name="text_0">0</string>
+    <string name="text_one">1</string>
 </resources>
