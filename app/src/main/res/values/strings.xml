@@ -102,6 +102,7 @@
     <string name="text_delete_exit">Eliminar salida</string>
     <string name="text_sure">¿Estás seguro?</string>
     <string name="text_asistance">En caso de tener asistentes confirmados, perderás el conacto a través de climby."</string>
+    <string name="text_contact">Perderás el conacto a través de climby."</string>
     <string name="text_qualify_attendes">¿Quieres enviar la valoración igualmente?</string>
     <string name="cancel">cancelar</string>
     <string name="text_delete">Eliminar</string>

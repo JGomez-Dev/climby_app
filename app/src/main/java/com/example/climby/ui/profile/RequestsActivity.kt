@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -13,19 +14,13 @@ import com.bumptech.glide.Glide
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
-import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityRequestsBinding
 import com.example.climby.ui.profile.adapter.RequestAdapter
 import com.example.climby.ui.profile.viewmodel.RequestsViewModel
-import com.example.climby.ui.publish.WhatPlaceActivity
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
 import com.example.climby.view.activity.MainActivity
-import com.example.climby.view.activity.OnBoardingFirstActivity
-import com.example.climby.view.activity.OnBoardingSecondActivity
-import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.FieldPosition
 
 @AndroidEntryPoint
 class RequestsActivity : AppCompatActivity() {
@@ -48,11 +43,11 @@ class RequestsActivity : AppCompatActivity() {
         init()
 
         binding.IVBack.setOnClickListener {
-            /*val intent = Intent(this, MainActivity::class.java).apply {
+            val intent = Intent(this, MainActivity::class.java).apply {
                 putExtra("profile", true)
             }
-            startActivity(intent)*/
-            onBackPressed()
+            startActivity(intent)
+            overridePendingTransition(0, R.anim.slide_out_right)
         }
     }
 
@@ -83,22 +78,16 @@ class RequestsActivity : AppCompatActivity() {
             }
 
             override fun onClickRefuse(position: Int) {
-                showRefuseTripActivity(position)
+                /*showRefuseTripActivity(position)*/
+                showDialogs(position)
             }
 
             override fun onClickContact(position: Int) {
-                val url = "https://api.whatsapp.com/send?phone=+34 " + trip?.bookings?.get(position)?.passenger?.phone.toString() + "&text=!Hola " + trip?.bookings?.get(position)?.passenger?.name?.split(" ")?.get(0).toString() + "! soy " + trip?.driver?.name?.split(" ")?.get(0).toString() + " gracias por unirte al viaje de " + trip?.site?.name
-                val sendIntent = Intent()
-                sendIntent.action = Intent.ACTION_VIEW
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
-                sendIntent.type = "text/plain"
-                sendIntent.data = Uri.parse(url)
-                startActivity(sendIntent)
-                /*Toast.makeText(applicationContext, "onClickContact", Toast.LENGTH_SHORT).show()*/
+                sendWhatsApp(position)
             }
 
             override fun onClickAcept(position: Int) {
-                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!, trip?.bookings?.get(position)?.passenger , trip?.id!!, true, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date))
+                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!, trip?.bookings?.get(position)?.passenger , trip?.id!!, true, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date),"accepted", trip!!)
             }
         })
         binding.FLBackgroundRequest.setOnClickListener {
@@ -106,11 +95,40 @@ class RequestsActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateBooking(bookingModel: BookingModel) {
-        requestsViewModel.updateBooking(bookingModel)
+    private fun sendWhatsApp(position: Int) {
+        val url = "https://api.whatsapp.com/send?phone=+34 " + trip?.bookings?.get(position)?.passenger?.phone.toString() + "&text=!Hola " + trip?.bookings?.get(position)?.passenger?.name?.split(" ")?.get(0).toString() + "! soy " + trip?.driver?.name?.split(" ")?.get(0).toString() + " gracias por unirte al viaje de " + trip?.site?.name
+        val sendIntent = Intent()
+        sendIntent.action = Intent.ACTION_VIEW
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
+        sendIntent.type = "text/plain"
+        sendIntent.data = Uri.parse(url)
+        startActivity(sendIntent)
     }
 
-    private fun showRefuseTripActivity(position: Int) {
+    private fun showDialogs(position: Int) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.text_sure)
+            .setMessage(R.string.text_contact)
+            .setNegativeButton(R.string.cancel) { view, _ ->
+                Toast.makeText(this,"Cancelar",Toast.LENGTH_SHORT ).show()
+                view.dismiss()
+            }
+            .setPositiveButton(R.string.text_delete) { view, _ ->
+                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!,  trip?.bookings?.get(position)?.passenger , trip?.id!!, null, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date), "refuse", trip!!)
+                requestAdapter.deleteItem(position)
+                view.dismiss()
+            }
+            .setCancelable(false)
+            .create().show()
+    }
+
+
+
+    private fun updateBooking(bookingModel: BookingModel, request: String, trip: TripModel ) {
+        requestsViewModel.updateBooking(bookingModel, request, trip,  this.applicationContext, this)
+    }
+
+    /*private fun showRefuseTripActivity(position: Int) {
         val intent = Intent(this, RefuseTripActivity::class.java).apply {
             putExtra("booking", trip?.bookings?.get(position))
             putExtra("trip", trip)
@@ -118,7 +136,7 @@ class RequestsActivity : AppCompatActivity() {
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
         finish()
-    }
+    }*/
 
     private fun setPhotoTrip(type: String) {
         when (type) {

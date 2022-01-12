@@ -128,7 +128,13 @@ class DiscoverFragment : Fragment() {
                 View.dismiss()
             }
             .setPositiveButton("Aceptar") { View, _ ->
-                Commons.sendNotification(it[position].driver?.token!!, booking.passenger?.name!!.split(" ")[0] + " ha cancelado su asistencia", "OPEN_MainActivity", "myOutigsFragment", booking.passenger.name.split(" ")[0] + " ha cancelado su asistencia a la salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(it[position].departure.toString() + "."), context!!, activity!!)
+                Commons.sendNotification(it[position].driver?.token!!,
+                    booking.passenger?.name!!.split(" ")[0] + " ha cancelado su asistencia",
+                    "OPEN_MainActivity", "myOutigsFragment",
+                    booking.passenger.name.split(" ")[0] + " ha cancelado su asistencia a la salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(it[position].departure.toString() + "."),
+                    context!!,
+                    activity!!
+                )
                 deleteBooking(booking)
                 it[position].bookings?.remove(booking)
                 discoverAdapter.notifyDataSetChanged()

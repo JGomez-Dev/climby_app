@@ -17,6 +17,7 @@ import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.ActivityRefuseTripBinding
 import com.example.climby.ui.profile.viewmodel.RefuseTripViewModel
+import com.example.climby.utils.Commons
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,6 +56,15 @@ class RefuseTripActivity : AppCompatActivity() {
     }
 
     private fun updateBooking(bookingModel: BookingModel) {
+        Commons.sendNotification(
+            bookingModel.passenger?.token!!,
+            trip?.driver?.name!!.split(" ")[0] + " ha rechazado tu solicitud",
+            "OPEN_MainActivity",
+            "myOutigsFragment",
+            trip?.driver?.name!!.split(" ")[0]  + " ha rechazado tu solicitud para la salida a " + trip?.site?.name + " el " + trip?.departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(trip?.departure.toString()),
+            applicationContext,
+            this
+        )
         refuseTripViewModel.updateBooking(bookingModel)
     }
 

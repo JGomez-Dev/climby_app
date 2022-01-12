@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             /*val to =  bundle.getString("to", "")*/
 
 
-            /*val profile = bundle.getBoolean("profile", false)*/
+            val profile = bundle.getBoolean("profile", false)
             /*if (to != "") {
                 if (to == "myOutigsFragment") {
                     val f = ProfileFragment()
@@ -78,6 +78,9 @@ class MainActivity : AppCompatActivity() {
                     fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
                 }
             }*/
+            if(profile){
+                navView.selectedItemId = R.id.navigation_profile
+            }
 
             if (school != "") {
                 val f = PublishFragment()

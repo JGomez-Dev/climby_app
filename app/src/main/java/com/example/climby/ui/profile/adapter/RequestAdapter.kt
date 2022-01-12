@@ -20,9 +20,9 @@ import com.example.climby.utils.ReservationStatus
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
-class RequestAdapter(bookingData: List<BookingModel>, context: Context) : RecyclerView.Adapter<RequestAdapter.DataViewHolder>() {
+class RequestAdapter(bookingData: MutableList<BookingModel>, context: Context) : RecyclerView.Adapter<RequestAdapter.DataViewHolder>() {
 
-    private var bookingData: List<BookingModel> = ArrayList()
+    private var bookingData:  MutableList<BookingModel> = arrayListOf()
     private var context: Context = context
     private lateinit var mListener: OnClickListener
 
@@ -70,6 +70,7 @@ class RequestAdapter(bookingData: List<BookingModel>, context: Context) : Recycl
             }
             bTRefuseRquest.setOnClickListener {
                 mListener.onClickRefuse(adapterPosition)
+
             }
             bTAceptRquest.setOnClickListener {
                 mListener.onClickAcept(adapterPosition)
@@ -86,6 +87,8 @@ class RequestAdapter(bookingData: List<BookingModel>, context: Context) : Recycl
             }
             booking.passenger?.let { setStart(it) }
         }
+
+
 
         private fun setStart(passenger: UserModel) {
             when {
@@ -123,6 +126,10 @@ class RequestAdapter(bookingData: List<BookingModel>, context: Context) : Recycl
         }
     }
 
+    fun deleteItem(index: Int){
+        bookingData.removeAt(index)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DataViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_user_request, parent, false), mListener)
 
