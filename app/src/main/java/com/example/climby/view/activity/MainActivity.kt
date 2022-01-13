@@ -16,6 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessaging
 import android.content.Intent
+import androidx.fragment.app.FragmentTransaction
+import com.example.climby.ui.discover.DiscoverFragment
 import java.util.logging.Level.INFO
 
 
@@ -66,20 +68,35 @@ class MainActivity : AppCompatActivity() {
             val date = bundle.getString("datePublish", "")
             val dateFormat = bundle.getString("datePublishWithOutFormat", "")
             val places = bundle.getInt("placePublish", 0)
-            /*val to =  bundle.getString("to", "")*/
+            val to =  bundle.getString("to", "")
 
 
-            val profile = bundle.getBoolean("profile", false)
-            /*if (to != "") {
+            val from = bundle.getString("from", null)
+
+            if (to != "") {
                 if (to == "myOutigsFragment") {
                     val f = ProfileFragment()
                     f.arguments = bundle
                     val fm = supportFragmentManager
                     fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
                 }
-            }*/
-            if(profile){
+            }
+            if(from == "profile"){
                 navView.selectedItemId = R.id.navigation_profile
+            }else if(from == "discover"){
+                onBackPressed()
+                val f = DiscoverFragment()
+                f.arguments = bundle
+                val fm = supportFragmentManager
+                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
+                /*val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(com.example.climby.R.id.nav_host_fragment, DiscoverFragment())
+                fragmentTransaction.commit()*/
+                /*val f = DiscoverFragment()
+                f.arguments = bundle
+                val fm = supportFragmentManager
+                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()*/
+                /*navView.selectedItemId = R.id.navigation_discover*/
             }
 
             if (school != "") {
