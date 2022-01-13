@@ -23,20 +23,16 @@ import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
 
 
-class DiscoverAdapter(tripData: List<TripModel>, context: Context, province: String?) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
+class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
 
     private var tripsList: List<TripModel> = ArrayList()
     private var context: Context
-    /*private var userSession: UserModel = Commons.userSession!!*/
     private lateinit var userDiscoverAdapter: UserDiscoverAdapter
     private lateinit var mlistener: OnItemClickListener
-
-    private var province: String?
 
     init {
         this.tripsList = tripData
         this.context = context
-        this.province = province
     }
 
     interface OnItemClickListener {
@@ -106,9 +102,9 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, province: Str
                         val intent = Intent(context, RequestsActivity::class.java).apply {
                             putExtra("trip", trip)
                             putExtra("from", "discover")
-                            if(!province.isNullOrEmpty()){
+                            /*if(!province.isNullOrEmpty()){
                                 putExtra("provincePublish", province)
-                            }
+                            }*/
                         }
                         context.startActivities(arrayOf(intent))
                     }

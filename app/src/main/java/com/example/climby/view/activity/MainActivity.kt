@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
             val from = bundle.getString("from", null)
 
             if (to != "") {
+                /*TODO tengo que meter en los extras cuando venga del dialog que se tiene que marcar la navvar*/
                 if (to == "myOutigsFragment") {
                     val f = ProfileFragment()
                     f.arguments = bundle
@@ -83,22 +84,7 @@ class MainActivity : AppCompatActivity() {
             }
             if(from == "profile"){
                 navView.selectedItemId = R.id.navigation_profile
-            }else if(from == "discover"){
-                onBackPressed()
-                val f = DiscoverFragment()
-                f.arguments = bundle
-                val fm = supportFragmentManager
-                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
-                /*val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.replace(com.example.climby.R.id.nav_host_fragment, DiscoverFragment())
-                fragmentTransaction.commit()*/
-                /*val f = DiscoverFragment()
-                f.arguments = bundle
-                val fm = supportFragmentManager
-                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()*/
-                /*navView.selectedItemId = R.id.navigation_discover*/
             }
-
             if (school != "") {
                 val f = PublishFragment()
                 f.arguments = bundle

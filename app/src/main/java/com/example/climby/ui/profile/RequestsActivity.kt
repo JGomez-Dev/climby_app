@@ -32,7 +32,6 @@ class RequestsActivity : AppCompatActivity() {
 
     private var trip: TripModel? = null
     private var from: String? = null
-    private var province: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +54,6 @@ class RequestsActivity : AppCompatActivity() {
     private fun showMainActivity(from : String) {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("from", from)
-            putExtra("province", province)
         }
         startActivity(intent)
         overridePendingTransition(0, R.anim.slide_out_right)
@@ -67,7 +65,7 @@ class RequestsActivity : AppCompatActivity() {
         val bundle = intent.extras
         trip = bundle?.getParcelable("trip")
         from = bundle?.getString("from")
-        province = bundle?.getString("provincePublish")
+        /*province = bundle?.getString("provincePublish")*/
     }
 
     @SuppressLint("SetTextI18n")
