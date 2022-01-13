@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.climby.R
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentMyOutingsBinding
-import com.example.climby.ui.profile.adapter.DiscoverAdapterProfile
+import com.example.climby.ui.profile.adapter.DiscoverProfileAdapter
 import com.example.climby.ui.profile.viewmodel.MyOutingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,12 +25,12 @@ class MyOutingsFragment : Fragment() {
 
     private lateinit var binding: FragmentMyOutingsBinding
     private lateinit var myOutingsViewModel: MyOutingsViewModel
-    private lateinit var discoverAdapterProfile: DiscoverAdapterProfile
+    private lateinit var discoverAdapterProfile: DiscoverProfileAdapter
 
     private lateinit var listTrip: List<TripModel>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        myOutingsViewModel = ViewModelProvider(this).get(MyOutingsViewModel::class.java)
+        myOutingsViewModel = ViewModelProvider(this)[MyOutingsViewModel::class.java]
         binding = FragmentMyOutingsBinding.inflate(layoutInflater)
         val view: View = binding.root
 
@@ -44,9 +43,9 @@ class MyOutingsFragment : Fragment() {
             }else{
                 /*binding.CLTripsEmpty.isVisible = false*/
                 binding.RVTrips.isVisible = true
-                discoverAdapterProfile = DiscoverAdapterProfile(it, requireContext())
+                discoverAdapterProfile = DiscoverProfileAdapter(it, requireContext())
                 binding.RVTrips.adapter = discoverAdapterProfile
-                discoverAdapterProfile.setOnItemClickListener(object : DiscoverAdapterProfile.OnItemClickListener {
+                discoverAdapterProfile.setOnItemClickListener(object : DiscoverProfileAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
                         //loadActivity(it[position])
                     }

@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import android.widget.AdapterView.OnItemClickListener
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,22 +15,20 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
+import com.example.climby.data.model.message.MessageModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.ui.discover.adapter.UserDiscoverAdapter
-import com.example.climby.ui.profile.EditProfileActivity
-import com.example.climby.ui.profile.EditTripActivity
 import com.example.climby.ui.profile.RequestsActivity
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : RecyclerView.Adapter<DiscoverAdapterProfile.DataViewHolder>() {
+class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context) : RecyclerView.Adapter<DiscoverProfileAdapter.DataViewHolder>() {
 
 
     private var tripsList: List<TripModel> = ArrayList()
@@ -100,9 +96,28 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
 
             } else {
                 btRequest.text = "Ver peticiones"
+                btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black)
+
+                var unreadMessages = 0
+                trip.bookings?.forEach { it ->
+                    if (it.status == false) {
+                        unreadMessages++
+                    }
+                }
+
+                if(unreadMessages != 0){
+                    cvNumberMessage.isVisible = true
+                    tvNumberMessage.isVisible = true
+                    tvNumberMessage.text = unreadMessages.toString()
+                }else{
+                    tvNumberMessage.isVisible = false
+                    cvNumberMessage.isVisible = false
+                }
+
                 btRequest.setOnClickListener {
                     val intent = Intent(context, RequestsActivity::class.java).apply {
                         putExtra("trip", trip)
+                        putExtra("from", "profile")
                     }
                     context.startActivities(arrayOf(intent))
                 }
@@ -170,11 +185,34 @@ class DiscoverAdapterProfile(tripData: List<TripModel>, context: Context) : Recy
                     /*TODO Aquí debería contar cuantos mensajes hay sin leer y meterlos en la burbuja
                        en caso de que no tenga mensajes sin leer o el viaje no haya tenido pasajeros unicamente pondremos
                        'Terminado' en negro la burbuja se esconcerá*/
+
+
+                    /* TODO ojo al manojo, esto solo es un test*/
+                    /*trip.bookings?.forEach { it ->
+                        val message = MessageModel(false, "Gracias por organizar esta salida. Ayer fué un día fantástico y aprendimos mogollón. La próxima vez llevo comida y no te dejo sin bocata.")
+                        it.message = message
+                    }*/
+
+                    var unreadMessages = 0
+                    trip.bookings?.forEach { it ->
+                        if (it.message?.read == false) {
+                            unreadMessages++
+                        }
+                    }
+
+                    if(unreadMessages != 0){
+                        tvNumberMessage.isVisible = true
+                        cvNumberMessage.isVisible = true
+                        tvNumberMessage.text = unreadMessages.toString()
+                    }else{
+                        tvNumberMessage.isVisible = false
+                        cvNumberMessage.isVisible = false
+                    }
+
                     btRequest.setOnClickListener {
                         mlistener.onItemShowResume(adapterPosition)
                     }
-                    tvNumberMessage.isVisible = true
-                    cvNumberMessage.isVisible = true
+
                     btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                     btRequest.text = "Terminado\r\nVer resumen"
                 }

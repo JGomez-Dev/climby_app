@@ -32,6 +32,7 @@ import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.example.climby.utils.Commons
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -55,6 +56,9 @@ class DiscoverFragment : Fragment() {
         binding = FragmentDiscoverBinding.inflate(layoutInflater)
         val view: View = binding.root
 
+        val navBar: BottomNavigationView = activity?.findViewById(R.id.nav_view)!!
+        navBar.isVisible = true
+
         getData()
 
         binding.RVTrips.layoutManager = LinearLayoutManager(activity)
@@ -65,7 +69,7 @@ class DiscoverFragment : Fragment() {
             } else {
                 binding.CLTripsEmpty.isVisible = false
                 binding.RVTrips.isVisible = true
-                discoverAdapter = DiscoverAdapter(it, requireContext())
+                discoverAdapter = DiscoverAdapter(it, requireContext(), province)
                 binding.RVTrips.adapter = discoverAdapter
                 discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
@@ -160,7 +164,7 @@ class DiscoverFragment : Fragment() {
             context!!,
             activity!!
         )
-        val bookingModel = BookingModel(0, Commons.userSession, it[position].id, status = false, valuationStatus = false, date = now())
+        val bookingModel = BookingModel(0, Commons.userSession, it[position].id, status = false, valuationStatus = false, date = now(), null)
         discoverViewModel.saveBooking(bookingModel)
         it[position].bookings?.add(bookingModel)
         discoverAdapter.notifyDataSetChanged()

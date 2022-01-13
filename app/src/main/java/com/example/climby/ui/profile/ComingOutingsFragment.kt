@@ -45,7 +45,7 @@ class ComingOutingsFragment : Fragment() {
             }else{
                 binding.CLTripsEmpty.isVisible = false
                 binding.RVTrips.isVisible = true
-                discoverAdapter = DiscoverAdapter(it, requireContext())
+                discoverAdapter = DiscoverAdapter(it, requireContext(), province = null)
                 binding.RVTrips.adapter = discoverAdapter
                 discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {

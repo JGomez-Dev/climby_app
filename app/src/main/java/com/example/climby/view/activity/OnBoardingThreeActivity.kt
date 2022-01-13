@@ -1,21 +1,16 @@
 package com.example.climby.view.activity
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.PendingIntent
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.telephony.SmsManager
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
+import com.example.climby.data.model.message.MessageModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityOnboardingThreeBinding
@@ -104,7 +99,8 @@ class OnBoardingThreeActivity : AppCompatActivity() {
             onBoardingThreeViewModel.updateTrip(TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
             onBackPressed()
         } else {
-            onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date))
+            val message = MessageModel(false, binding.ETSendMenssage.text.toString())
+            onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this)
         }
     }
 

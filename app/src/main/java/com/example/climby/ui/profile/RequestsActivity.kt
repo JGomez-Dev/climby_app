@@ -31,7 +31,8 @@ class RequestsActivity : AppCompatActivity() {
     private val acceptedBookingList: MutableList<BookingModel> = arrayListOf()
 
     private var trip: TripModel? = null
-
+    private var from: String? = null
+    private var province: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,22 +44,30 @@ class RequestsActivity : AppCompatActivity() {
         init()
 
         binding.IVBack.setOnClickListener {
-            showMainActivity()
+            if(from == "profile"){
+                showMainActivity("profile")
+            } else if (from == "discover") {
+                showMainActivity("discover")
+            }
         }
     }
 
-    private fun showMainActivity() {
+    private fun showMainActivity(from : String) {
         val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("profile", true)
+            putExtra("from", from)
+            putExtra("province", province)
         }
         startActivity(intent)
         overridePendingTransition(0, R.anim.slide_out_right)
+        finish()
     }
 
 
     private fun getData() {
         val bundle = intent.extras
         trip = bundle?.getParcelable("trip")
+        from = bundle?.getString("from")
+        province = bundle?.getString("provincePublish")
     }
 
     @SuppressLint("SetTextI18n")
@@ -90,7 +99,7 @@ class RequestsActivity : AppCompatActivity() {
             }
 
             override fun onClickAcept(position: Int) {
-                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!, trip?.bookings?.get(position)?.passenger , trip?.id!!, true, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date),"accepted", trip!!)
+                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!, trip?.bookings?.get(position)?.passenger , trip?.id!!, true, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date, trip?.bookings?.get(position)?.message),"accepted", trip!!)
             }
         })
         binding.FLBackgroundRequest.setOnClickListener {
@@ -117,7 +126,7 @@ class RequestsActivity : AppCompatActivity() {
                 view.dismiss()
             }
             .setPositiveButton(R.string.text_delete) { view, _ ->
-                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!,  trip?.bookings?.get(position)?.passenger , trip?.id!!, null, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date), "refuse", trip!!)
+                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!,  trip?.bookings?.get(position)?.passenger , trip?.id!!, null, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date, trip?.bookings?.get(position)?.message), "refuse", trip!!)
                 requestAdapter.deleteItem(position)
                 view.dismiss()
             }

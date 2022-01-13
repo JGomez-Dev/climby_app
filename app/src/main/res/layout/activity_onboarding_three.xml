@@ -54,7 +54,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/white"
-                android:elevation="1dp"
+                android:elevation="2dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="16dp"
@@ -106,7 +106,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/white"
-                android:elevation="1dp"
+                android:elevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/CLQualifyAttendees">

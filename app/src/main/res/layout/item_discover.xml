@@ -141,4 +141,36 @@
         app:layout_constraintStart_toStartOf="@+id/IVPlace"
         app:layout_constraintTop_toBottomOf="@+id/IVPlace" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/CVNumberMessage"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginBottom="34dp"
+        android:src="@color/primary"
+        android:visibility="gone"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/BTRequest"
+        app:layout_constraintEnd_toEndOf="@+id/BTRequest"
+        app:layout_constraintStart_toEndOf="@+id/BTRequest"
+        app:layout_constraintStart_toStartOf="@+id/BTRequest"
+        app:layout_constraintTop_toTopOf="@+id/BTRequest" />
+
+    <TextView
+        android:id="@+id/TVNumberMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/text_one"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/CVNumberMessage"
+        app:layout_constraintEnd_toEndOf="@+id/CVNumberMessage"
+        app:layout_constraintStart_toStartOf="@+id/CVNumberMessage"
+        app:layout_constraintTop_toTopOf="@+id/CVNumberMessage" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

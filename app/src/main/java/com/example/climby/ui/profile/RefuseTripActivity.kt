@@ -49,7 +49,7 @@ class RefuseTripActivity : AppCompatActivity() {
         }
 
         binding.BTRefuseTrip.setOnClickListener {
-            updateBooking(BookingModel(booking?.id!!, booking?.passenger , trip?.id!!, null, booking?.valuationStatus, booking?.date))
+            updateBooking(BookingModel(booking?.id!!, booking?.passenger , trip?.id!!, null, booking?.valuationStatus, booking?.date, booking?.message ))
 
             /*deleteBooking(booking)*/
         }

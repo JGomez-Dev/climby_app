@@ -3,6 +3,7 @@ package com.example.climby.ui.profile
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Message
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -10,9 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
+import com.example.climby.data.model.message.MessageModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.ActivityResumeTripBinding
 import com.example.climby.ui.profile.adapter.RequestAdapter
+import com.example.climby.ui.profile.adapter.ResumeTripAdapter
 import com.example.climby.ui.profile.viewmodel.ResumeTripViewModel
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
@@ -22,6 +25,7 @@ class ResumeTripActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityResumeTripBinding
     private lateinit var resumeTripViewModel: ResumeTripViewModel
+    private lateinit var resumeTripAdapter: ResumeTripAdapter
 
     private var trip: TripModel? = null
 
@@ -61,6 +65,17 @@ class ResumeTripActivity : AppCompatActivity() {
         trip?.type?.name?.let { setPhotoTrip(it) }
         binding.TVTypeQualifyAttendees.text = trip?.type?.name + " en"
         binding.TVSiteQualifyAttendees.text = trip?.site?.name + ", \n" + (trip?.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip?.departure?.let { Commons.getDate(it) }
+        binding.RVResumenTrip.layoutManager = LinearLayoutManager(this)
+        /* TODO ojo al manojo, esto solo es un test*/
+        /*trip?.bookings?.forEach { it ->
+            val message = MessageModel(false, "Gracias por organizar esta salida. Ayer fué un día fantástico y aprendimos mogollón. La próxima vez llevo comida y no te dejo sin bocata.")
+            it.message = message
+        }*/
+        if(!trip?.bookings.isNullOrEmpty()){
+            resumeTripAdapter = ResumeTripAdapter(trip?.bookings!!, this)
+            binding.RVResumenTrip.adapter = resumeTripAdapter
+        }
+
     }
 
     private fun setPhotoTrip(type: String) {

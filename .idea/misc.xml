@@ -6,7 +6,9 @@
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/drawable-v24/splash_background.xml" value="0.4114583333333333" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.3958333333333333" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/drawable/icon_app_background.xml" value="0.41041666666666665" />
+        <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/activity_edit_profile.xml" value="0.33016304347826086" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/activity_main.xml" value="0.33061594202898553" />
+        <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/activity_onboarding_first.xml" value="0.33016304347826086" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/activity_onboarding_second.xml" value="0.3342391304347826" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/activity_onboarding_three.xml" value="0.3342391304347826" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/activity_province.xml" value="0.3342391304347826" />
@@ -25,8 +27,9 @@
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/item_discover_profile.xml" value="0.67" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/item_discover_user.xml" value="0.3342391304347826" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/item_qualify_attendees.xml" value="0.3342391304347826" />
-        <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/item_resume_trip.xml" value="0.22" />
+        <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/item_resume_trip.xml" value="0.33" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/item_trip_users.xml" value="0.3342391304347826" />
+        <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/item_user_request.xml" value="0.33016304347826086" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/layout/shimmer_discover.xml" value="0.2674772036474164" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.41041666666666665" />
         <entry key="..\:/Users/USUARIO/AndroidStudioProjects/climby/app/src/main/res/mipmap-anydpi-v26/icon_app.xml" value="0.41041666666666665" />

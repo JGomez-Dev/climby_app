@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -22,17 +23,20 @@ import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
 
 
-class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
+class DiscoverAdapter(tripData: List<TripModel>, context: Context, province: String?) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
 
     private var tripsList: List<TripModel> = ArrayList()
     private var context: Context
-    private var userSession: UserModel = Commons.userSession!!
+    /*private var userSession: UserModel = Commons.userSession!!*/
     private lateinit var userDiscoverAdapter: UserDiscoverAdapter
     private lateinit var mlistener: OnItemClickListener
+
+    private var province: String?
 
     init {
         this.tripsList = tripData
         this.context = context
+        this.province = province
     }
 
     interface OnItemClickListener {
@@ -64,7 +68,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(trip.driver?.photo).into(CVDriver)
             Commons.setTextButton(BTRequest, trip)
 
-            if (trip.driver?.id == userSession.id) { //El viaje pertenece al usuario logueado
+            if (trip.driver?.id == Commons.userSession?.id) { //El viaje pertenece al usuario logueado
                 trip.bookings?.forEach { _it ->
                     if (_it.status == ReservationStatus.ACCEPTED.status || _it.status ==ReservationStatus.UNANSWERED.status ) {
                         acceptedBookingList.add(_it)
@@ -78,11 +82,33 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
 
                 } else { // El viaje tiene reservas
                     BTRequest.text = "Ver peticiones"
-                    BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.primary)
+                    BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black)
                     BTRequest.isEnabled = true
+
+                    var unreadMessages = 0
+                    trip.bookings?.forEach { it ->
+                        if (it.status == false) {
+                            unreadMessages++
+                        }
+                    }
+
+                    if(unreadMessages != 0){
+                        binding.TVNumberMessage.isVisible = true
+                        binding.CVNumberMessage.isVisible = true
+                        binding.TVNumberMessage.text = unreadMessages.toString()
+                    }else{
+                        binding.TVNumberMessage.isVisible = false
+                        binding.CVNumberMessage.isVisible = false
+                    }
+
+                    binding.TVNumberMessage.text = unreadMessages.toString()
                     BTRequest.setOnClickListener {
                         val intent = Intent(context, RequestsActivity::class.java).apply {
                             putExtra("trip", trip)
+                            putExtra("from", "discover")
+                            if(!province.isNullOrEmpty()){
+                                putExtra("provincePublish", province)
+                            }
                         }
                         context.startActivities(arrayOf(intent))
                     }
@@ -96,7 +122,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                 var userPassagerAccepted = false
 
                 trip.bookings?.forEach { _it ->
-                    if (_it.passenger?.id ?: 0 == userSession.id) { //El usuario está como pasajero en este viaje
+                    if (_it.passenger?.id ?: 0 == Commons.userSession?.id) { //El usuario está como pasajero en este viaje
                         userPassager = true
                         when (_it.status) {
                             ReservationStatus.ACCEPTED.status -> { // Ha sido aceptado
