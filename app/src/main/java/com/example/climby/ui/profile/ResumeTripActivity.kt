@@ -48,7 +48,7 @@ class ResumeTripActivity : AppCompatActivity() {
 
     private fun showMainActivity() {
         val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("profile", true)
+            putExtra("from", "profile")
         }
         startActivity(intent)
         overridePendingTransition(0, R.anim.slide_out_right)
