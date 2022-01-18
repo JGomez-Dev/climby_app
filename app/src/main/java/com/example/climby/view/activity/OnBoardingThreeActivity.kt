@@ -1,10 +1,12 @@
 package com.example.climby.view.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import android.telephony.SmsManager
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -52,10 +54,15 @@ class OnBoardingThreeActivity : AppCompatActivity() {
             if (binding.ETSendMenssage.text.isNullOrEmpty()) {
                 showDialog()
             } else {
-                sendSMS(trip?.driver?.phone!!, binding.ETSendMenssage.text.toString())
                 updateBooking()
             }
         }
+
+        onBoardingThreeViewModel.isComplete.observe(this, Observer { it ->
+            if(it){
+                showMainActivity()
+            }
+        })
     }
 
     private fun showDialogSure() {
@@ -67,7 +74,7 @@ class OnBoardingThreeActivity : AppCompatActivity() {
             }
             .setPositiveButton(R.string.text_send_button) { view, _ ->
                 updateBooking()
-                onBackPressed()
+                /*onBackPressed()*/
                 view.dismiss()
             }
             .setCancelable(false)
@@ -89,19 +96,41 @@ class OnBoardingThreeActivity : AppCompatActivity() {
             .create().show()
     }
 
-    private fun sendSMS(phoneNumber: String, mensaje: String) {
-        val sms = SmsManager.getDefault()
-        sms.sendTextMessage(phoneNumber, null, mensaje, null, null)
+    private fun updateBooking() {
+        if(userScores){
+            if(!binding.ETSendMenssage.text.toString().isNullOrEmpty()){
+                val message = MessageModel(false, binding.ETSendMenssage.text.toString())
+                onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip, this.applicationContext, this, true, TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
+            }else{
+                val message = MessageModel(false, null)
+                onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this,false, TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
+            }
+
+        }else{
+            val message = MessageModel(false, null)
+            onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this, false,TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
+        }
+        /*if (userScores) {
+            if(binding.ETSendMenssage.text.toString() != ""){
+                val message = MessageModel(false, binding.ETSendMenssage.text.toString())
+                onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this, true)
+            }else{
+                val message = MessageModel(false, null)
+                onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this,false)
+            }
+            onBoardingThreeViewModel.updateTrip(TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
+            showMainActivity()
+        }else if (userScores == false) {
+            val message = MessageModel(false, null)
+            onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this, false)
+            showMainActivity()
+        }*/
     }
 
-    private fun updateBooking() {
-        if (userScores) {
-            onBoardingThreeViewModel.updateTrip(TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
-            onBackPressed()
-        } else {
-            val message = MessageModel(false, binding.ETSendMenssage.text.toString())
-            onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this)
-        }
+    private fun showMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     @SuppressLint("SetTextI18n")
@@ -127,27 +156,29 @@ class OnBoardingThreeActivity : AppCompatActivity() {
         binding.TVNameQualifyAttendeesOrganizer.text = trip?.driver?.name?.split(" ")?.get(0) ?: "Organizador"
         var contStart = 3.0
         val oldScore = trip?.driver?.score!!
-        var firtTime = true
+        /*var firtTime = true*/
+        trip?.driver?.ratings = trip?.driver?.ratings!! + 1
+        trip?.driver?.score = (oldScore + contStart) / trip?.driver?.ratings!!
         binding.IVAddStartOrganizer.setOnClickListener {
-            if(firtTime){
+            /*if(firtTime){
                 trip?.driver?.ratings = trip?.driver?.ratings!! + 1
-            }
+            }*/
             if (contStart != 3.0) {
                 contStart += 0.5
                 setStart(contStart)
                 trip?.driver?.score = (oldScore + contStart) / trip?.driver?.ratings!!
-                firtTime = false
+                /*firtTime = false*/
             }
         }
         binding.IVRemoveStartOrganizer.setOnClickListener {
-            if(firtTime){
+            /*if(firtTime){
                 trip?.driver?.ratings = trip?.driver?.ratings!! + 1
-            }
+            }*/
             if (contStart != 0.0) {
                 contStart -= 0.5
                 setStart(contStart)
                 trip?.driver?.score = (oldScore + contStart) / trip?.driver?.ratings!!
-                firtTime = false
+               /* firtTime = false*/
 
             }
         }
