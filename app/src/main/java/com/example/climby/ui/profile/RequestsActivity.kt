@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -41,7 +43,6 @@ class RequestsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         getData()
-        init()
 
         binding.IVBack.setOnClickListener {
             when (from) {
@@ -56,6 +57,11 @@ class RequestsActivity : AppCompatActivity() {
                 }
             }
         }
+
+        requestsViewModel.tripModel.observe(this, Observer {
+            trip = it
+            init()
+        })
     }
 
     private fun showMainActivity(from : String) {
@@ -72,12 +78,17 @@ class RequestsActivity : AppCompatActivity() {
         val bundle = intent.extras
         trip = bundle?.getParcelable("trip")
         from = bundle?.getString("from")
-        /*val idTrip  = bundle?.getInt("idTrip")
-        val siteTrip  = bundle?.getString("siteTrip")
+        val idTrip  = bundle?.getInt("idTrip")
+        if(idTrip != 0){
+            requestsViewModel.getTripById(idTrip!!)
+        }else{
+            init()
+        }
+        /*val siteTrip  = bundle?.getString("siteTrip")
         if(idTrip != null){
             binding.TVPlaceDate.text = siteTrip
-        }*/
-
+        }
+*/
     }
 
     @SuppressLint("SetTextI18n")

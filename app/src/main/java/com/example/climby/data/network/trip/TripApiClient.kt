@@ -13,6 +13,9 @@ interface TripApiClient {
     @GET("travel/users/{id}")
     suspend fun getTripsUser(@Path("id") id: Int) : Response<List<TripModel>>
 
+    @GET("travel/travel/{id}")
+    suspend fun getTripById(@Path("id") id: Int) : Response<TripModel>
+
     @GET("travel/reservations/idUser/{id}")
     suspend fun getTravelsWithUserReservation(@Path("id") id: Int) : Response<List<TripModel>>
 

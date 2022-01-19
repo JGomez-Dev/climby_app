@@ -1,11 +1,14 @@
 package com.example.climby.ui.profile.viewmodel
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.domain.booking.PutBooking
+import com.example.climby.domain.trip.GetTripById
+import com.example.climby.domain.trip.GetTripsUser
 import com.example.climby.ui.profile.RequestsActivity
 import com.example.climby.utils.Commons
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +16,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RequestsViewModel @Inject constructor(private val putBooking: PutBooking): ViewModel() {
+class RequestsViewModel @Inject constructor(private val putBooking: PutBooking, private val _getTripById: GetTripById): ViewModel() {
+
+    var tripModel = MutableLiveData<TripModel>()
+    lateinit var result: TripModel
 
     fun updateBooking(bookingModel: BookingModel, request: String, trip: TripModel, applicationContext: Context, requestsActivity: RequestsActivity) {
         viewModelScope.launch {
@@ -39,6 +45,13 @@ class RequestsViewModel @Inject constructor(private val putBooking: PutBooking):
                     requestsActivity
                 )
             }
+        }
+    }
+
+    fun getTripById(idTrip: Int) {
+        viewModelScope.launch {
+            result = _getTripById(idTrip)
+            tripModel.postValue(result)
         }
     }
 

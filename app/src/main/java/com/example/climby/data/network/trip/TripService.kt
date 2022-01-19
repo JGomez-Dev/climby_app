@@ -27,6 +27,13 @@ class TripService @Inject constructor(private val api: TripApiClient) {
         }
     }
 
+    suspend fun getTripById(id: Int): TripModel {
+        return withContext(Dispatchers.IO) {
+            val response = api.getTripById(id)
+            response.body()!!
+        }
+    }
+
     suspend fun getTravelsWithUserReservation(id: Int): List<TripModel> {
         return withContext(Dispatchers.IO) {
             val response = api.getTravelsWithUserReservation(id)

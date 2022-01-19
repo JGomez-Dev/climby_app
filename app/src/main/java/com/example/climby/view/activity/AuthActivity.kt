@@ -147,7 +147,7 @@ class AuthActivity : AppCompatActivity() {
 
     private fun goToDetalleRequest(idTrip: String?) {
 
-        //TODO se debería buscar el viaje en la siguien pantalla
+        /*//TODO se debería buscar el viaje en la siguien pantalla
         authViewModel.getMyTrips()
         authViewModel.tripsModel.observe(this, Observer {
             var trip: TripModel? = null
@@ -156,14 +156,14 @@ class AuthActivity : AppCompatActivity() {
                     trip = it
                 }
             }
-            val intent = Intent(applicationContext.applicationContext, RequestsActivity::class.java).apply {
-                putExtra("from", "profile")
-                putExtra("trip", trip)
-                /*putExtra("idTrip", idTrip)*/
-            }
-            startActivity(intent)
-            finish()
-        })
+
+        })*/
+        val intent = Intent(applicationContext.applicationContext, RequestsActivity::class.java).apply {
+            putExtra("from", "profile")
+            putExtra("idTrip", idTrip?.toInt())
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun showOnBoardingFirst(email: String, photoUrl: String?, displayName: String?, provider: ProviderType) {
