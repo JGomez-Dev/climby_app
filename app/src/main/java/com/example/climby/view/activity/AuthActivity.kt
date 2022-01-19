@@ -105,7 +105,7 @@ class AuthActivity : AppCompatActivity() {
 
         if (!email.isNullOrEmpty() && !provider.isNullOrEmpty() && !photoUrl.isNullOrEmpty() && !displayName.isNullOrEmpty()) {
             if (!experience.isNullOrEmpty()) {
-                Commons.userSession = UserModel(id,displayName, experience, phone, email, score.toDouble(), ratings, outings, photoUrl,token)
+                Commons.userSession = UserModel(id, displayName, experience, phone, email, score.toDouble(), ratings, outings, photoUrl, token)
                 binding.CLAuthentication.visibility = View.INVISIBLE
 
                 val i = intent
@@ -114,11 +114,16 @@ class AuthActivity : AppCompatActivity() {
                 if (extras != null) {
                     val push = extras.getString("push")
                     if (push != null) {
-                        val id = extras.getString("data")
-                        goToDetalleRequest(id)
-                    } else if (extras.getString("tag") != null) {
-                        val id = extras.getString("tag")!!.toInt()
-                        /*goToDetalleRequest(id, "site")*/
+                        val to = extras.getString("to")
+                        if (to != null) {
+                            val ID = extras.getString("id")
+                            when (to) {
+                                "RequestsActivity" -> goToDetalleRequest(ID)
+                                else -> {
+                                    showMainActivity()
+                                }
+                            }
+                        }
                     } else {
                         showMainActivity()
                     }
@@ -144,10 +149,10 @@ class AuthActivity : AppCompatActivity() {
 
         //TODO se debería buscar el viaje en la siguien pantalla
         authViewModel.getMyTrips()
-        authViewModel.tripsModel.observe(this,  Observer {
-            var trip : TripModel? = null
+        authViewModel.tripsModel.observe(this, Observer {
+            var trip: TripModel? = null
             it.forEach {
-                if(idTrip?.toInt() == it.id){
+                if (idTrip?.toInt() == it.id) {
                     trip = it
                 }
             }
@@ -158,10 +163,7 @@ class AuthActivity : AppCompatActivity() {
             }
             startActivity(intent)
             finish()
-
         })
-
-
     }
 
     private fun showOnBoardingFirst(email: String, photoUrl: String?, displayName: String?, provider: ProviderType) {

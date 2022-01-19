@@ -67,8 +67,8 @@ class Commons {
             fcmNotificationsSender.sendNotifications()
         }
 
-        fun sendNotificationTest(token: String, title: String, intent: String, trip: String, body: String, context: Context, activity: Activity){
-            val fcmNotificationsSender = FcmNotificationsSenderTest(token, title, intent, trip, body, context, activity)
+        fun sendNotificationTest(token: String, title: String, intent: String, id: String, to: String, body: String, context: Context, activity: Activity){
+            val fcmNotificationsSender = FcmNotificationsSenderTest(token, title, intent, id, to, body, context, activity)
             fcmNotificationsSender.sendNotifications()
         }
     }

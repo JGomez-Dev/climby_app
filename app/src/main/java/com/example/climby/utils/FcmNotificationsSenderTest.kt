@@ -14,7 +14,7 @@ import com.example.climby.data.model.trip.TripModel
 import org.json.JSONException
 import java.util.HashMap
 
-class FcmNotificationsSenderTest(var userFcmToken: String, private var title: String, var intent: String, private var extra: String, var body: String, mContext: Context, var mActivity: Activity) {
+class FcmNotificationsSenderTest(var userFcmToken: String, private var title: String, var intent: String, private var id: String, private var to: String, var body: String, mContext: Context, var mActivity: Activity) {
     private var requestQueue: RequestQueue? = null
     private val postUrl = "https://fcm.googleapis.com/fcm/send"
     private val fcmServerKey = mContext.getString(R.string.fcmServerKey)
@@ -33,7 +33,8 @@ class FcmNotificationsSenderTest(var userFcmToken: String, private var title: St
 
             val extraObject = JSONObject()
             extraObject.put("push", true)
-            extraObject.putOpt("data", extra)
+            extraObject.put("to", to)
+            extraObject.put("id", id)
 
             mainObj.put("data", extraObject)
 

@@ -159,6 +159,7 @@ class DiscoverFragment : Fragment() {
             "Tienes una solicitud pendiente",
             "AuthActivity",
             it[position].id.toString(),
+            "RequestsActivity",
             Commons.userSession?.name.toString().split(" ")[0] + " ha pedido unirse a tu salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(it[position].departure.toString()),
             context!!,
             activity!!
