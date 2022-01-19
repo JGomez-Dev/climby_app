@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -43,10 +44,16 @@ class RequestsActivity : AppCompatActivity() {
         init()
 
         binding.IVBack.setOnClickListener {
-            if(from == "profile"){
-                showMainActivity("profile")
-            } else if (from == "discover") {
-                showMainActivity("discover")
+            when (from) {
+                "profile" -> {
+                    showMainActivity("profile")
+                }
+                "discover" -> {
+                    showMainActivity("discover")
+                }
+                else -> {
+                    onBackPressed()
+                }
             }
         }
     }
@@ -65,7 +72,12 @@ class RequestsActivity : AppCompatActivity() {
         val bundle = intent.extras
         trip = bundle?.getParcelable("trip")
         from = bundle?.getString("from")
-        /*province = bundle?.getString("provincePublish")*/
+        /*val idTrip  = bundle?.getInt("idTrip")
+        val siteTrip  = bundle?.getString("siteTrip")
+        if(idTrip != null){
+            binding.TVPlaceDate.text = siteTrip
+        }*/
+
     }
 
     @SuppressLint("SetTextI18n")

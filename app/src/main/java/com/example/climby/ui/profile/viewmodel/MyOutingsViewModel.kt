@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.climby.data.model.trip.TripModel
-import com.example.climby.domain.trip.GetAllTrips
 import com.example.climby.domain.trip.GetTripsUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

@@ -20,22 +20,28 @@ class OnBoardingThreeViewModel @Inject constructor(private val putTrip: PutTrip,
 
     val isComplete = MutableLiveData<Boolean>()
 
-    fun updateTrip(tripModel: TripModel) {
+    private fun updateTrip(tripModel: TripModel) {
         viewModelScope.launch {
             val result = putTrip(tripModel)
             isComplete.postValue(true)
         }
     }
 
-    fun updateBooking(bookingModel: BookingModel, trip: TripModel?, applicationContext: Context, requestsActivity: OnBoardingThreeActivity, notify: Boolean, tripModel: TripModel) {
+    fun updateBooking(bookingModel: BookingModel, trip: TripModel, applicationContext: Context, requestsActivity: OnBoardingThreeActivity, notify: Boolean, withTrip: Boolean) {
         viewModelScope.launch {
-            putBooking(bookingModel)
-            updateTrip(tripModel)
+            if(withTrip){
+                //TODO Cuando eduardo cambie el update de viajes se podrá quitar en teoria
+                putBooking(bookingModel)
+                updateTrip(trip)
+            }else{
+                putBooking(bookingModel)
+                isComplete.postValue(true)
+            }
             if (notify) {
                 Commons.sendNotification(
-                    trip?.driver?.token!!,
+                    trip.driver?.token!!,
                     bookingModel.passenger?.name!!.split(" ")[0] + " te ha enviado un mensaje",
-                    "OPEN_ResumeTripActivity",
+                    "",
                     "",
                     bookingModel.passenger.name.split(" ")[0] + " te ha enviado un mensaje acerca de la salida a " + trip?.site?.name + " el " + trip?.departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(trip?.departure.toString() + "."),
                     applicationContext,

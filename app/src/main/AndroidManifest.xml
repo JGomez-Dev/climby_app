@@ -36,17 +36,18 @@
         <activity
             android:name=".view.activity.AuthActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="AuthActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="OPEN_MainActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.activity.OnBoardingFirstActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -71,7 +72,13 @@
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".ui.profile.RequestsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="RequestsActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.profile.RefuseTripActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -93,10 +100,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".utils.MyFirebaseMessagingService"
+            android:directBootAware="true"
             android:exported="true"
-            tools:ignore="ExportedService">
+            tools:ignore="ExportedService"
+            tools:targetApi="n">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

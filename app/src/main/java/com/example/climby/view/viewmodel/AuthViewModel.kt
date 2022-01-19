@@ -4,7 +4,9 @@ import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
+import com.example.climby.domain.trip.GetTripsUser
 import com.example.climby.domain.user.Get
 import com.example.climby.domain.user.Insert
 import com.example.climby.utils.Commons
@@ -15,9 +17,11 @@ import javax.annotation.Nullable
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject  constructor(private val get: Get, private val insert: Insert, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
+class AuthViewModel @Inject  constructor(private val get: Get, private val insert: Insert, private val getTripsUser: GetTripsUser, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
 
-    var isCharget = MutableLiveData<Boolean>()
+    var tripsModel = MutableLiveData<List<TripModel>>()
+    val finish = MutableLiveData<Boolean>()
+    var result: List<TripModel> = emptyList()
 
     fun getUser(userModel: UserModel) {
         viewModelScope.launch {
@@ -38,6 +42,18 @@ class AuthViewModel @Inject  constructor(private val get: Get, private val inser
             editor.putInt("id", result.id)
             editor.apply()
             Commons.userSession = result
+        }
+    }
+
+    fun getMyTrips() {
+        viewModelScope.launch {
+            finish.postValue(true)
+            result = getTripsUser(sharedPref.getInt("id", 0))
+            if (!result.isNullOrEmpty())
+                tripsModel.postValue(result.toList())
+            else
+                tripsModel.postValue(result)
+            finish.postValue(false)
         }
     }
 }

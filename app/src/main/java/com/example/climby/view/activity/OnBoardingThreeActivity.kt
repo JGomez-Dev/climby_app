@@ -3,7 +3,6 @@ package com.example.climby.view.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -100,15 +99,12 @@ class OnBoardingThreeActivity : AppCompatActivity() {
         if(userScores){
             if(!binding.ETSendMenssage.text.toString().isNullOrEmpty()){
                 val message = MessageModel(false, binding.ETSendMenssage.text.toString())
-                onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip, this.applicationContext, this, true, TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
+                onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip!!, this.applicationContext, this, true, withTrip = true)
             }else{
-                val message = MessageModel(false, null)
-                onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this,false, TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
+                onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, null), trip!!, this.applicationContext, this, false, withTrip = true)
             }
-
         }else{
-            val message = MessageModel(false, null)
-            onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this, false,TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
+            onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, null), trip!!,  this.applicationContext, this, false, withTrip = false)
         }
         /*if (userScores) {
             if(binding.ETSendMenssage.text.toString() != ""){

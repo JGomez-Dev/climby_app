@@ -22,7 +22,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.climby.utils.FcmNotificationsSender
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
@@ -155,11 +154,11 @@ class DiscoverFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun saveBooking(it: List<TripModel>, position: Int) {
-        Commons.sendNotification(
+        Commons.sendNotificationTest(
             it[position].driver?.token!!,
             "Tienes una solicitud pendiente",
-            "OPEN_MainActivity",
-            "myOutigsFragment",
+            "AuthActivity",
+            it[position].id.toString(),
             Commons.userSession?.name.toString().split(" ")[0] + " ha pedido unirse a tu salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(it[position].departure.toString()),
             context!!,
             activity!!

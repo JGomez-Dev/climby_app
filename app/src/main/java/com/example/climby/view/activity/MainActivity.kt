@@ -1,24 +1,16 @@
 package com.example.climby.view.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.climby.R
-import com.example.climby.ui.profile.ProfileFragment
 import com.example.climby.ui.publish.PublishFragment
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import com.google.firebase.installations.FirebaseInstallations
-import com.google.firebase.messaging.FirebaseMessaging
 import android.content.Intent
-import androidx.fragment.app.FragmentTransaction
-import com.example.climby.ui.discover.DiscoverFragment
-import java.util.logging.Level.INFO
+import com.example.climby.ui.profile.RequestsActivity
 
 
 @AndroidEntryPoint
@@ -59,6 +51,26 @@ class MainActivity : AppCompatActivity() {
             *//*goToDetalleDenuncia(id)*//*
         }*/
 
+       /* val i = intent
+        val extras = i.extras
+
+        if (extras != null) {
+
+            val push = extras?.getString("push")
+            if (push != null) {
+                val id = extras.getString("idTrip")!!.toInt()
+                val site = extras.getString("siteTrip")!!
+                goToDetalleRequest(id, site)
+            } else if (extras.getString("tag") != null) {
+                val id = extras.getString("tag")!!.toInt()
+                goToDetalleRequest(id, "site")
+            } else{
+                *//*goToMenu()*//*
+            }
+        } else {
+            *//*goToMenu()*//*
+        }*/
+
         val bundle = intent.extras
         if (bundle != null) {
             val school = bundle.getString("schoolPublish", "")
@@ -68,21 +80,21 @@ class MainActivity : AppCompatActivity() {
             val date = bundle.getString("datePublish", "")
             val dateFormat = bundle.getString("datePublishWithOutFormat", "")
             val places = bundle.getInt("placePublish", 0)
-            val to =  bundle.getString("to", "")
+            /*val to = bundle.getString("to", "")*/
 
 
             val from = bundle.getString("from", null)
 
-            if (to != "") {
-                /*TODO tengo que meter en los extras cuando venga del dialog que se tiene que marcar la navvar*/
+            /*if (to != "") {
+                *//*TODO tengo que meter en los extras cuando venga del dialog que se tiene que marcar la navvar*//*
                 if (to == "myOutigsFragment") {
                     val f = ProfileFragment()
                     f.arguments = bundle
                     val fm = supportFragmentManager
                     fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
                 }
-            }
-            if(from == "profile"){
+            }*/
+            if (from == "profile") {
                 navView.selectedItemId = R.id.navigation_profile
             }
             if (school != "") {
@@ -98,5 +110,15 @@ class MainActivity : AppCompatActivity() {
                  fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()*/
             }
         }
+    }
+
+    private fun goToDetalleRequest(idTrip: Int, siteTrip: String) {
+        val intent = Intent(applicationContext.applicationContext, RequestsActivity::class.java).apply {
+            putExtra("from", "profile")
+            putExtra("idTrip", idTrip)
+            putExtra("siteTrip", siteTrip)
+        }
+        startActivity(intent)
+
     }
 }

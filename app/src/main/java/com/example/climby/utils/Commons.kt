@@ -3,11 +3,7 @@ package com.example.climby.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.icu.text.CaseMap
 import android.widget.Button
-import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.example.climby.R
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 
@@ -66,8 +62,13 @@ class Commons {
         }
         var userSession: UserModel? = null
 
-        fun sendNotification( token: String, title: String, intent: String, extras: String, body: String, context: Context, activity: Activity){
+        fun sendNotification(token: String, title: String, intent: String, extras: String, body: String, context: Context, activity: Activity){
             val fcmNotificationsSender = FcmNotificationsSender(token, title, intent, extras, body, context, activity)
+            fcmNotificationsSender.sendNotifications()
+        }
+
+        fun sendNotificationTest(token: String, title: String, intent: String, trip: String, body: String, context: Context, activity: Activity){
+            val fcmNotificationsSender = FcmNotificationsSenderTest(token, title, intent, trip, body, context, activity)
             fcmNotificationsSender.sendNotifications()
         }
     }

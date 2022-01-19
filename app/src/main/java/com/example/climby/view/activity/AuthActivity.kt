@@ -9,11 +9,14 @@ import android.view.View
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
+import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityAuthBinding
+import com.example.climby.ui.profile.RequestsActivity
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ProviderType
 import com.example.climby.view.viewmodel.AuthViewModel
@@ -22,7 +25,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,6 +62,8 @@ class AuthActivity : AppCompatActivity() {
         authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         session()
         binding.root.findViewById<Button>(R.id.BTGoogle).setOnClickListener {
@@ -102,10 +106,26 @@ class AuthActivity : AppCompatActivity() {
         if (!email.isNullOrEmpty() && !provider.isNullOrEmpty() && !photoUrl.isNullOrEmpty() && !displayName.isNullOrEmpty()) {
             if (!experience.isNullOrEmpty()) {
                 Commons.userSession = UserModel(id,displayName, experience, phone, email, score.toDouble(), ratings, outings, photoUrl,token)
-                binding.CLAuthentication.visibility = View.INVISIBLE/*
-                val userLogger = UserModel(id, displayName,experience, phone.toString(), email, 0.0, 0,0, photoUrl)
-                getData(userLogger)*/
-                showMainActivity()
+                binding.CLAuthentication.visibility = View.INVISIBLE
+
+                val i = intent
+                val extras = i.extras
+
+                if (extras != null) {
+                    val push = extras.getString("push")
+                    if (push != null) {
+                        val id = extras.getString("data")
+                        goToDetalleRequest(id)
+                    } else if (extras.getString("tag") != null) {
+                        val id = extras.getString("tag")!!.toInt()
+                        /*goToDetalleRequest(id, "site")*/
+                    } else {
+                        showMainActivity()
+                    }
+                } else {
+                    showMainActivity()
+                }
+
             } else if (!phone.isNullOrEmpty()) {
                 binding.CLAuthentication.visibility = View.INVISIBLE
                 showOnBoardingSecond(email, photoUrl, displayName, ProviderType.valueOf(provider), phone)
@@ -118,6 +138,30 @@ class AuthActivity : AppCompatActivity() {
 
     private fun getData(userModel: UserModel) {
         authViewModel.getUser(userModel)
+    }
+
+    private fun goToDetalleRequest(idTrip: String?) {
+
+        //TODO se debería buscar el viaje en la siguien pantalla
+        authViewModel.getMyTrips()
+        authViewModel.tripsModel.observe(this,  Observer {
+            var trip : TripModel? = null
+            it.forEach {
+                if(idTrip?.toInt() == it.id){
+                    trip = it
+                }
+            }
+            val intent = Intent(applicationContext.applicationContext, RequestsActivity::class.java).apply {
+                putExtra("from", "profile")
+                putExtra("trip", trip)
+                /*putExtra("idTrip", idTrip)*/
+            }
+            startActivity(intent)
+            finish()
+
+        })
+
+
     }
 
     private fun showOnBoardingFirst(email: String, photoUrl: String?, displayName: String?, provider: ProviderType) {

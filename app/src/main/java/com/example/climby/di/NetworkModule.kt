@@ -28,7 +28,7 @@ object NetworkModule {
     fun provideRetrofit():Retrofit{
         return Retrofit.Builder()
             /*.baseUrl("https://climbyheroku.herokuapp.com/")*/
-            .baseUrl("http://192.168.1.138:5000/")
+            .baseUrl("http://192.168.1.134:5000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

@@ -71,8 +71,14 @@ class ResumeTripActivity : AppCompatActivity() {
             val message = MessageModel(false, "Gracias por organizar esta salida. Ayer fué un día fantástico y aprendimos mogollón. La próxima vez llevo comida y no te dejo sin bocata.")
             it.message = message
         }*/
+        val bookingWithMessage:  MutableList<BookingModel> = arrayListOf()
+        trip?.bookings!!.forEach {
+            if(it.message != null){
+                bookingWithMessage.add(it)
+            }
+        }
         if(!trip?.bookings.isNullOrEmpty()){
-            resumeTripAdapter = ResumeTripAdapter(trip?.bookings!!, this)
+            resumeTripAdapter = ResumeTripAdapter(bookingWithMessage, this)
             binding.RVResumenTrip.adapter = resumeTripAdapter
         }
 
