@@ -35,11 +35,12 @@ class RequestsViewModel @Inject constructor(private val putBooking: PutBooking, 
                     requestsActivity
                 )
             }else if(request == "refuse"){
-                Commons.sendNotification(
+                Commons.sendNotificationTest(
                     bookingModel.passenger?.token!!,
                     trip.driver?.name!!.split(" ")[0] + " ha rechazado tu solicitud",
-                    "OPEN_MainActivity",
-                    "myOutigsFragment",
+                    "AuthActivity",
+                    "",
+                    "ProfileFragment",
                     trip.driver.name.split(" ")[0]  + " ha rechazado tu solicitud para la salida a " + trip.site?.name + " el " + trip.departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(trip.departure.toString() + ". Pronto te contactará. "),
                     applicationContext,
                     requestsActivity

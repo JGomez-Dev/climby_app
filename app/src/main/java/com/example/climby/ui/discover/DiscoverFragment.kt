@@ -29,6 +29,7 @@ import com.example.climby.databinding.FragmentDiscoverBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.example.climby.utils.Commons
+import com.example.climby.utils.ReservationStatus
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -36,6 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.net.ssl.SSLEngineResult
 
 
 @AndroidEntryPoint
@@ -68,6 +70,16 @@ class DiscoverFragment : Fragment() {
             } else {
                 binding.CLTripsEmpty.isVisible = false
                 binding.RVTrips.isVisible = true
+                /*val acceptedTripList: MutableList<TripModel> = arrayListOf()
+                it.forEach { _it ->
+                    if(_it.bookings?.isNullOrEmpty() != true){
+                        _it.bookings!!.forEach { b_it->
+                            if(b_it.status != ReservationStatus.REFUSE.status){
+                                acceptedTripList.add(_it)
+                            }
+                        }
+                    }
+                }*/
                 discoverAdapter = DiscoverAdapter(it, requireContext())
                 binding.RVTrips.adapter = discoverAdapter
                 discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {

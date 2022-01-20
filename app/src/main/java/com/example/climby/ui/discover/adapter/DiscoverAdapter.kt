@@ -63,7 +63,12 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
             trip.type?.name?.let { setPhotoTrip(it, IVPlace,  context) }
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(trip.driver?.photo).into(CVDriver)
             Commons.setTextButton(BTRequest, trip)
-
+            var contRefuse = 0
+            trip.bookings?.forEach { it ->
+                if (it.status == ReservationStatus.REFUSE.status) {
+                    contRefuse++
+                }
+            }
             if (trip.driver?.id == Commons.userSession?.id) { //El viaje pertenece al usuario logueado
                 trip.bookings?.forEach { _it ->
                     if (_it.status == ReservationStatus.ACCEPTED.status || _it.status ==ReservationStatus.UNANSWERED.status ) {
@@ -71,7 +76,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                         accepted ++
                     }
                 }
-                if (trip.bookings?.isEmpty() == true) { // El viaje no tiene reservas
+                if (trip.bookings?.isEmpty() == true || contRefuse == trip.bookings?.size) { // El viaje no tiene reservas
                     BTRequest.text = "Aún no tienes peticiones"
                     BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.disable)
                     false.also { BTRequest.isEnabled = it }

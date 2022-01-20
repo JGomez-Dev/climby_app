@@ -78,7 +78,7 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
     private fun acceptedBooking(): MutableList<BookingModel> {
         val acceptedBookingList: MutableList<BookingModel> = arrayListOf()
         trip?.bookings?.forEach { it ->
-            if (it.passenger?.id ?: 0 == userSession.id) {
+            if ((trip?.driver?.id ?: 0 == userSession.id) || (it.passenger?.id == userSession.id)) {
                 when (it.status) {
                     ReservationStatus.ACCEPTED.status -> {
                         acceptedBookingList.add(it)
@@ -87,6 +87,9 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
             } else {
                 acceptedBookingList.add(it)
             }
+        }
+        if(acceptedBookingList.isEmpty()){
+            binding.TVAssistants.visibility =  View.GONE
         }
         return acceptedBookingList
     }

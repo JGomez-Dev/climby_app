@@ -119,6 +119,7 @@ class AuthActivity : AppCompatActivity() {
                             val ID = extras.getString("id")
                             when (to) {
                                 "RequestsActivity" -> goToDetalleRequest(ID)
+                                "ProfileFragment" -> goToProfile()
                                 else -> {
                                     showMainActivity()
                                 }
@@ -141,23 +142,19 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
+    private fun goToProfile() {
+        val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
+            putExtra("from", "profile")
+        }
+        startActivity(intent)
+        finish()
+    }
+
     private fun getData(userModel: UserModel) {
         authViewModel.getUser(userModel)
     }
 
     private fun goToDetalleRequest(idTrip: String?) {
-
-        /*//TODO se debería buscar el viaje en la siguien pantalla
-        authViewModel.getMyTrips()
-        authViewModel.tripsModel.observe(this, Observer {
-            var trip: TripModel? = null
-            it.forEach {
-                if (idTrip?.toInt() == it.id) {
-                    trip = it
-                }
-            }
-
-        })*/
         val intent = Intent(applicationContext.applicationContext, RequestsActivity::class.java).apply {
             putExtra("from", "profile")
             putExtra("idTrip", idTrip?.toInt())

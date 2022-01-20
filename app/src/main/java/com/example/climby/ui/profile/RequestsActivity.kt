@@ -64,7 +64,7 @@ class RequestsActivity : AppCompatActivity() {
         })
     }
 
-    private fun showMainActivity(from : String) {
+    private fun showMainActivity(from: String) {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("from", from)
         }
@@ -73,22 +73,16 @@ class RequestsActivity : AppCompatActivity() {
         finish()
     }
 
-
     private fun getData() {
         val bundle = intent.extras
         trip = bundle?.getParcelable("trip")
         from = bundle?.getString("from")
-        val idTrip  = bundle?.getInt("idTrip")
-        if(idTrip != 0){
+        val idTrip = bundle?.getInt("idTrip")
+        if (idTrip != 0) {
             requestsViewModel.getTripById(idTrip!!)
-        }else{
+        } else {
             init()
         }
-        /*val siteTrip  = bundle?.getString("siteTrip")
-        if(idTrip != null){
-            binding.TVPlaceDate.text = siteTrip
-        }
-*/
     }
 
     @SuppressLint("SetTextI18n")
@@ -111,7 +105,6 @@ class RequestsActivity : AppCompatActivity() {
             }
 
             override fun onClickRefuse(position: Int) {
-                /*showRefuseTripActivity(position)*/
                 showDialogs(position)
             }
 
@@ -120,7 +113,7 @@ class RequestsActivity : AppCompatActivity() {
             }
 
             override fun onClickAcept(position: Int) {
-                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!, trip?.bookings?.get(position)?.passenger , trip?.id!!, true, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date, trip?.bookings?.get(position)?.message),"accepted", trip!!)
+                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!, trip?.bookings?.get(position)?.passenger, trip?.id!!, true, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date, trip?.bookings?.get(position)?.message), "accepted", trip!!)
             }
         })
         binding.FLBackgroundRequest.setOnClickListener {
@@ -143,11 +136,11 @@ class RequestsActivity : AppCompatActivity() {
             .setTitle(R.string.text_sure)
             .setMessage(R.string.text_contact)
             .setNegativeButton(R.string.cancel) { view, _ ->
-                Toast.makeText(this,"Cancelar",Toast.LENGTH_SHORT ).show()
+                Toast.makeText(this, "Cancelar", Toast.LENGTH_SHORT).show()
                 view.dismiss()
             }
             .setPositiveButton(R.string.text_delete) { view, _ ->
-                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!,  trip?.bookings?.get(position)?.passenger , trip?.id!!, null, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date, trip?.bookings?.get(position)?.message), "refuse", trip!!)
+                updateBooking(BookingModel(trip?.bookings?.get(position)?.id!!, trip?.bookings?.get(position)?.passenger, trip?.id!!, null, trip?.bookings?.get(position)?.valuationStatus, trip?.bookings?.get(position)?.date, trip?.bookings?.get(position)?.message), "refuse", trip!!)
                 requestAdapter.deleteItem(position)
                 view.dismiss()
             }
@@ -155,21 +148,9 @@ class RequestsActivity : AppCompatActivity() {
             .create().show()
     }
 
-
-
-    private fun updateBooking(bookingModel: BookingModel, request: String, trip: TripModel ) {
-        requestsViewModel.updateBooking(bookingModel, request, trip,  this.applicationContext, this)
+    private fun updateBooking(bookingModel: BookingModel, request: String, trip: TripModel) {
+        requestsViewModel.updateBooking(bookingModel, request, trip, this.applicationContext, this)
     }
-
-    /*private fun showRefuseTripActivity(position: Int) {
-        val intent = Intent(this, RefuseTripActivity::class.java).apply {
-            putExtra("booking", trip?.bookings?.get(position))
-            putExtra("trip", trip)
-        }
-        startActivity(intent)
-        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-        finish()
-    }*/
 
     private fun setPhotoTrip(type: String) {
         when (type) {
