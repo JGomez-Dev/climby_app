@@ -145,6 +145,8 @@ class AuthActivity : AppCompatActivity() {
     private fun goToProfile() {
         val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
             putExtra("from", "profile")
+            putExtra("to", "notification")
+            putExtra("viewPager", 1)
         }
         startActivity(intent)
         finish()

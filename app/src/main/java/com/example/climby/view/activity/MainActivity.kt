@@ -10,6 +10,7 @@ import com.example.climby.ui.publish.PublishFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import android.content.Intent
+import com.example.climby.ui.profile.ProfileFragment
 import com.example.climby.ui.profile.RequestsActivity
 
 
@@ -35,42 +36,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        /*Log.d("PushNotifiacion", intent.extras.toString())
-
-        val i = intent
-        val extras = i.extras
-
-        if (extras != null) {
-            val push = extras.getString("to")
-            if (push != null) {
-                if (push == "myOutigsFragment") {
-                    navView.selectedItemId = R.id.navigation_profile
-                }
-            }
-            *//*val id = extras.getString("id")!!.toInt()*//*
-            *//*goToDetalleDenuncia(id)*//*
-        }*/
-
-       /* val i = intent
-        val extras = i.extras
-
-        if (extras != null) {
-
-            val push = extras?.getString("push")
-            if (push != null) {
-                val id = extras.getString("idTrip")!!.toInt()
-                val site = extras.getString("siteTrip")!!
-                goToDetalleRequest(id, site)
-            } else if (extras.getString("tag") != null) {
-                val id = extras.getString("tag")!!.toInt()
-                goToDetalleRequest(id, "site")
-            } else{
-                *//*goToMenu()*//*
-            }
-        } else {
-            *//*goToMenu()*//*
-        }*/
-
         val bundle = intent.extras
         if (bundle != null) {
             val school = bundle.getString("schoolPublish", "")
@@ -84,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
             val from = bundle.getString("from", null)
+            val notification = bundle.getString("notification", null)
 
             /*if (to != "") {
                 *//*TODO tengo que meter en los extras cuando venga del dialog que se tiene que marcar la navvar*//*
@@ -95,7 +61,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }*/
             if (from == "profile") {
-                navView.selectedItemId = R.id.navigation_profile
+                if(notification == null){
+                    navView.selectedItemId = R.id.navigation_profile
+                }else{
+                    bundle.getInt("viewPager", 0)
+                    val f = ProfileFragment()
+                    f.arguments = bundle
+                    val fm = supportFragmentManager
+                    fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
+                }
             }
             if (school != "") {
                 val f = PublishFragment()

@@ -31,8 +31,8 @@ class ProfileFragment: Fragment() {
     private lateinit var prefs: SharedPreferences
     private var userSession: UserModel = Commons.userSession!!
 
-    private var exprience : String? = null
-
+    private var experience : String? = null
+    private var viewPager : Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
@@ -63,6 +63,8 @@ class ProfileFragment: Fragment() {
             loadActivity()
         }
 
+        binding.viewPager2.currentItem = viewPager
+
         return view
     }
 
@@ -85,9 +87,11 @@ class ProfileFragment: Fragment() {
     private fun getData() {
         val bundle = activity?.intent?.extras
         if (bundle != null) {
-            exprience = bundle.getString("exprienceProfile", "")
-            binding.TVUserExperience.text = exprience
+            experience = bundle.getString("exprienceProfile", "")
+            viewPager = bundle.getInt("viewPager", 0)
+            binding.TVUserExperience.text = experience
         }
+
     }
 
     private fun setStart() {
