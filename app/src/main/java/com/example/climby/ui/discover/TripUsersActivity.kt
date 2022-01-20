@@ -1,11 +1,13 @@
 package com.example.climby.ui.discover
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -19,6 +21,7 @@ import com.example.climby.ui.discover.viewmodel.TripUsersViewModel
 import com.example.climby.utils.Commons
 import com.example.climby.utils.IOnBackPressed
 import com.example.climby.utils.ReservationStatus
+import com.example.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,6 +33,8 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
     private var trip: TripModel? = null
     private var userSession: UserModel = Commons.userSession!!
 
+    private var from: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tripUsersViewModel = ViewModelProvider(this).get(TripUsersViewModel::class.java)
@@ -40,8 +45,33 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
         init()
 
         binding.IVBack.setOnClickListener {
-            onBackPressed()
+            when (from) {
+                "profile" -> {
+                    showMainActivity("profile")
+                }
+                "discover" -> {
+                    onBackPressed()
+                }
+                else -> {
+                    onBackPressed()
+                }
+            }
         }
+
+        tripUsersViewModel.tripModel.observe(this, Observer {
+            trip = it
+            init()
+        })
+    }
+
+    private fun showMainActivity(from: String) {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("from", from)
+            putExtra("viewPager", 1)
+        }
+        startActivity(intent)
+        overridePendingTransition(0, R.anim.slide_out_right)
+        finish()
     }
 
     @SuppressLint("SetTextI18n")
@@ -58,6 +88,8 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
         trip?.driver?.let { setStart(it)}
         if(trip?.bookings?.size == 0){
             binding.TVAssistants.visibility = View.GONE
+        }else{
+            binding.TVAssistants.visibility = View.VISIBLE
         }
         binding.CVAdmin.setOnClickListener {
             Glide.with(applicationContext).load(trip?.driver?.photo).error(R.mipmap.user).into(binding.CVBackgroundRequest)
@@ -96,7 +128,16 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
 
     private fun getData() {
         val bundle = intent.extras
-        trip = bundle?.getParcelable("trip")
+        if(bundle != null){
+            trip = bundle.getParcelable("trip")
+            from = bundle.getString("from")
+            val idTrip = bundle.getInt("idTrip")
+            if (idTrip != 0) {
+                tripUsersViewModel.getTripById(idTrip!!)
+            } else {
+                init()
+            }
+        }
     }
 
     private fun setStart(passenger: UserModel) {

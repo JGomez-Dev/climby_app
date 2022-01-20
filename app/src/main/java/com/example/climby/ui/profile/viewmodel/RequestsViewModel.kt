@@ -25,11 +25,12 @@ class RequestsViewModel @Inject constructor(private val putBooking: PutBooking, 
         viewModelScope.launch {
             putBooking(bookingModel)
             if(request == "accepted"){
-                Commons.sendNotification(
+                Commons.sendNotificationTest(
                     bookingModel.passenger?.token!!,
                     trip.driver?.name!!.split(" ")[0] + " te ha aceptado en su grupo",
-                    "OPEN_MainActivity",
-                    "myOutigsFragment",
+                    "AuthActivity",
+                    trip.id.toString(),
+                    "TripUsersActivity",
                     trip.driver.name.split(" ")[0]  + " ha aceptado tu solicitud para la salida a " + trip.site?.name + " el " + trip.departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(trip.departure.toString() + ". Pronto te contactará. "),
                     applicationContext,
                     requestsActivity

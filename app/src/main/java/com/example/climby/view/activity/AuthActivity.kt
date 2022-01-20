@@ -16,6 +16,7 @@ import com.example.climby.R
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityAuthBinding
+import com.example.climby.ui.discover.TripUsersActivity
 import com.example.climby.ui.profile.RequestsActivity
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ProviderType
@@ -119,6 +120,7 @@ class AuthActivity : AppCompatActivity() {
                             val ID = extras.getString("id")
                             when (to) {
                                 "RequestsActivity" -> goToDetalleRequest(ID)
+                                "TripUsersActivity" -> goToDetalleTripUsers(ID)
                                 "ProfileFragment" -> goToProfile()
                                 else -> {
                                     showMainActivity()
@@ -158,6 +160,15 @@ class AuthActivity : AppCompatActivity() {
 
     private fun goToDetalleRequest(idTrip: String?) {
         val intent = Intent(applicationContext.applicationContext, RequestsActivity::class.java).apply {
+            putExtra("from", "profile")
+            putExtra("idTrip", idTrip?.toInt())
+        }
+        startActivity(intent)
+        finish()
+    }
+
+    private fun goToDetalleTripUsers(idTrip: String?) {
+        val intent = Intent(applicationContext.applicationContext, TripUsersActivity::class.java).apply {
             putExtra("from", "profile")
             putExtra("idTrip", idTrip?.toInt())
         }

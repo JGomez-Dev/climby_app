@@ -265,6 +265,7 @@ class DiscoverFragment : Fragment() {
     private fun loadTripUsers(trip: TripModel) {
         val intent = Intent(activity, TripUsersActivity::class.java).apply {
             putExtra("trip", trip)
+            putExtra("from", "discover")
         }
         startActivity(intent)
     }
