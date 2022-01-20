@@ -28,8 +28,8 @@ import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentDiscoverBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
+import com.example.climby.ui.profile.ResumeTripActivity
 import com.example.climby.utils.Commons
-import com.example.climby.utils.ReservationStatus
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -37,7 +37,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.net.ssl.SSLEngineResult
 
 
 @AndroidEntryPoint
@@ -94,6 +93,10 @@ class DiscoverFragment : Fragment() {
                     override fun onClickRemoveMe(_it: BookingModel, position: Int) {
                         showDialog(view, _it, it, position)
                     }
+
+                    override fun onItemShowResume(position: Int) {
+
+                    }
                 })
             }
         })
@@ -146,7 +149,7 @@ class DiscoverFragment : Fragment() {
                 deleteBooking(booking)
                 it[position].bookings?.remove(booking)
                 discoverAdapter.notifyDataSetChanged()
-                Commons.sendNotificationTest(it[position].driver?.token!!,
+                Commons.sendNotification(it[position].driver?.token!!,
                     booking.passenger?.name!!.split(" ")[0] + " ha cancelado su asistencia",
                     "AuthActivity",
                     it[position].id.toString(),
@@ -168,7 +171,7 @@ class DiscoverFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun saveBooking(it: List<TripModel>, position: Int) {
-        Commons.sendNotificationTest(
+        Commons.sendNotification(
             it[position].driver?.token!!,
             "Tienes una solicitud pendiente",
             "AuthActivity",

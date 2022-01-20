@@ -62,13 +62,8 @@ class Commons {
         }
         var userSession: UserModel? = null
 
-        fun sendNotification(token: String, title: String, intent: String, extras: String, body: String, context: Context, activity: Activity){
-            val fcmNotificationsSender = FcmNotificationsSender(token, title, intent, extras, body, context, activity)
-            fcmNotificationsSender.sendNotifications()
-        }
-
-        fun sendNotificationTest(token: String, title: String, intent: String, id: String, to: String, body: String, context: Context, activity: Activity){
-            val fcmNotificationsSender = FcmNotificationsSenderTest(token, title, intent, id, to, body, context, activity)
+        fun sendNotification(token: String, title: String, intent: String, id: String, to: String, body: String, context: Context, activity: Activity){
+            val fcmNotificationsSender = FcmNotificationsSender(token, title, intent, id, to, body, context, activity)
             fcmNotificationsSender.sendNotifications()
         }
     }

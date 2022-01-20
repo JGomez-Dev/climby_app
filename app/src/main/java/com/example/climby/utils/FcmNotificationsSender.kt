@@ -10,10 +10,11 @@ import com.android.volley.toolbox.JsonObjectRequest
 import kotlin.Throws
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
+import com.example.climby.data.model.trip.TripModel
 import org.json.JSONException
 import java.util.HashMap
 
-class FcmNotificationsSender(var userFcmToken: String, private var title: String, var intent: String, var extra: String, var body: String, mContext: Context, var mActivity: Activity) {
+class FcmNotificationsSender(var userFcmToken: String, private var title: String, var intent: String, private var id: String, private var to: String, var body: String, mContext: Context, var mActivity: Activity) {
     private var requestQueue: RequestQueue? = null
     private val postUrl = "https://fcm.googleapis.com/fcm/send"
     private val fcmServerKey = mContext.getString(R.string.fcmServerKey)
@@ -23,16 +24,17 @@ class FcmNotificationsSender(var userFcmToken: String, private var title: String
         try {
             mainObj.put("to", userFcmToken)
             val notiObject = JSONObject()
-                notiObject.put("title", title)
-                notiObject.put("body", body)
-                notiObject.put("icon", R.drawable.icon_app) // enter icon that exists in drawable only
-                notiObject.put("click_action", intent) //Actividad que se abre cuando hacemos click en la notifiacion
+            notiObject.put("title", title)
+            notiObject.put("body", body)
+            notiObject.put("icon", R.drawable.icon_app) // enter icon that exists in drawable only
+            notiObject.put("click_action", intent) //Actividad que se abre cuando hacemos click en la notifiacion
 
             mainObj.put("notification", notiObject)
 
             val extraObject = JSONObject()
-                extraObject.put("push", true)
-                extraObject.put("id", extra);
+            extraObject.put("push", true)
+            extraObject.put("to", to)
+            extraObject.put("id", id)
 
             mainObj.put("data", extraObject)
 

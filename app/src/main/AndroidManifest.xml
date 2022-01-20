@@ -17,7 +17,6 @@
         android:icon="@mipmap/icon_app"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_app"
-        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Climby"
         android:usesCleartextTraffic="true"
@@ -26,6 +25,7 @@
             android:name=".view.activity.SplashActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +35,7 @@
         </activity>
         <activity
             android:name=".view.activity.AuthActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan"
             android:exported="false">
@@ -45,33 +46,41 @@
         </activity>
         <activity
             android:name=".view.activity.MainActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.activity.OnBoardingFirstActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.activity.OnBoardingSecondActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".ui.profile.EditProfileActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.publish.WhatPlaceActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.discover.TripUsersActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.profile.EditTripActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".ui.profile.RequestsActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false">
             <intent-filter>
@@ -81,18 +90,22 @@
         </activity>
         <activity
             android:name=".ui.profile.RefuseTripActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.activity.OnBoardingThreeActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.discover.ProvinceActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.profile.ResumeTripActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false">
             <intent-filter>

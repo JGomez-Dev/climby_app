@@ -1,14 +1,8 @@
 package com.example.climby.ui.profile
 
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
 import com.example.climby.data.model.booking.BookingModel
@@ -54,15 +48,16 @@ class RefuseTripActivity : AppCompatActivity() {
     }
 
     private fun updateBooking(bookingModel: BookingModel) {
-        Commons.sendNotification(
+       /* Commons.sendNotification(
             bookingModel.passenger?.token!!,
             trip?.driver?.name!!.split(" ")[0] + " ha rechazado tu solicitud",
             "OPEN_MainActivity",
             "myOutigsFragment",
+            "myOutigsFragment",
             trip?.driver?.name!!.split(" ")[0]  + " ha rechazado tu solicitud para la salida a " + trip?.site?.name + " el " + trip?.departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(trip?.departure.toString()),
             applicationContext,
             this
-        )
+        )*/
         refuseTripViewModel.updateBooking(bookingModel)
     }
 

@@ -42,7 +42,7 @@ class ComingOutingsFragment : Fragment() {
             if(it.isNullOrEmpty()){
                 binding.CLTripsEmpty.isVisible = true
                 binding.RVTrips.isVisible = false
-                moveHand()
+                /*moveHand()*/
             }else{
                 binding.CLTripsEmpty.isVisible = false
                 binding.RVTrips.isVisible = true
@@ -97,7 +97,7 @@ class ComingOutingsFragment : Fragment() {
                 deleteBooking(booking, it, position)
                 it[position].bookings?.remove(booking)
                 discoverAdapter.notifyDataSetChanged()
-                Commons.sendNotificationTest(it[position].driver?.token!!,
+                Commons.sendNotification(it[position].driver?.token!!,
                     booking.passenger?.name!!.split(" ")[0] + " ha cancelado su asistencia",
                     "AuthActivity",
                     it[position].id.toString(),
@@ -116,14 +116,14 @@ class ComingOutingsFragment : Fragment() {
         comingOutingsViewModel.deleteBooking(bookingModel)
     }
 
-    private fun moveHand(){
+    /*private fun moveHand(){
         val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)
         anim.duration = 1000
         anim.repeatCount = Animation.INFINITE;
         anim.repeatMode = ValueAnimator.REVERSE;
 
         anim.start()
-    }
+    }*/
 
     private fun loadTripUsers(trip: TripModel) {
         val intent = Intent(activity, TripUsersActivity::class.java).apply {

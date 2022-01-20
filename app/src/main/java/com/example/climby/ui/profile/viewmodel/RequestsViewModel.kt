@@ -8,7 +8,6 @@ import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.domain.booking.PutBooking
 import com.example.climby.domain.trip.GetTripById
-import com.example.climby.domain.trip.GetTripsUser
 import com.example.climby.ui.profile.RequestsActivity
 import com.example.climby.utils.Commons
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +24,7 @@ class RequestsViewModel @Inject constructor(private val putBooking: PutBooking, 
         viewModelScope.launch {
             putBooking(bookingModel)
             if(request == "accepted"){
-                Commons.sendNotificationTest(
+                Commons.sendNotification(
                     bookingModel.passenger?.token!!,
                     trip.driver?.name!!.split(" ")[0] + " te ha aceptado en su grupo",
                     "AuthActivity",
@@ -36,7 +35,7 @@ class RequestsViewModel @Inject constructor(private val putBooking: PutBooking, 
                     requestsActivity
                 )
             }else if(request == "refuse"){
-                Commons.sendNotificationTest(
+                Commons.sendNotification(
                     bookingModel.passenger?.token!!,
                     trip.driver?.name!!.split(" ")[0] + " ha rechazado tu solicitud",
                     "AuthActivity",
