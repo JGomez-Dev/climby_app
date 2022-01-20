@@ -56,5 +56,4 @@ class RequestsViewModel @Inject constructor(private val putBooking: PutBooking, 
             tripModel.postValue(result)
         }
     }
-
 }

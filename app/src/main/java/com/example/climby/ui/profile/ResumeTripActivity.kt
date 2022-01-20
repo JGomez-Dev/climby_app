@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Message
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -20,7 +21,9 @@ import com.example.climby.ui.profile.viewmodel.ResumeTripViewModel
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
 import com.example.climby.view.activity.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ResumeTripActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityResumeTripBinding
@@ -38,12 +41,15 @@ class ResumeTripActivity : AppCompatActivity() {
 
 
         getData()
-        init()
 
         binding.IVBack.setOnClickListener {
             showMainActivity()
         }
 
+        resumeTripViewModel.tripModel.observe(this, Observer {
+            trip = it
+            init()
+        })
     }
 
     private fun showMainActivity() {
@@ -57,31 +63,33 @@ class ResumeTripActivity : AppCompatActivity() {
 
     private fun getData() {
         val bundle = intent.extras
-        trip = bundle?.getParcelable("trip")
+        if (bundle != null) {
+            trip = bundle.getParcelable("trip")
+            val idTrip = bundle.getInt("idTrip")
+            if (idTrip != 0) {
+                resumeTripViewModel.getTripById(idTrip)
+            } else {
+                init()
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun init(){
+    private fun init() {
         trip?.type?.name?.let { setPhotoTrip(it) }
         binding.TVTypeQualifyAttendees.text = trip?.type?.name + " en"
         binding.TVSiteQualifyAttendees.text = trip?.site?.name + ", \n" + (trip?.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip?.departure?.let { Commons.getDate(it) }
         binding.RVResumenTrip.layoutManager = LinearLayoutManager(this)
-        /* TODO ojo al manojo, esto solo es un test*/
-        /*trip?.bookings?.forEach { it ->
-            val message = MessageModel(false, "Gracias por organizar esta salida. Ayer fué un día fantástico y aprendimos mogollón. La próxima vez llevo comida y no te dejo sin bocata.")
-            it.message = message
-        }*/
-        val bookingWithMessage:  MutableList<BookingModel> = arrayListOf()
+        val bookingWithMessage: MutableList<BookingModel> = arrayListOf()
         trip?.bookings!!.forEach {
-            if(it.message != null){
+            if (it.message != null) {
                 bookingWithMessage.add(it)
             }
         }
-        if(!trip?.bookings.isNullOrEmpty()){
+        if (!trip?.bookings.isNullOrEmpty()) {
             resumeTripAdapter = ResumeTripAdapter(bookingWithMessage, this)
             binding.RVResumenTrip.adapter = resumeTripAdapter
         }
-
     }
 
     private fun setPhotoTrip(type: String) {
@@ -103,5 +111,4 @@ class ResumeTripActivity : AppCompatActivity() {
             }
         }
     }
-
 }

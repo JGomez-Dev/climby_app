@@ -22,6 +22,7 @@ import com.example.climby.databinding.FragmentComingOutingsBinding
 import com.example.climby.ui.discover.TripUsersActivity
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.profile.viewmodel.ComingOutingsViewModel
+import com.example.climby.utils.Commons
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -72,6 +73,7 @@ class ComingOutingsFragment : Fragment() {
         return view
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun showDialog(view: View, booking: BookingModel, it: List<TripModel>, position: Int) {
         AlertDialog.Builder(view.context)
             .setTitle("Eliminar solicitud")
@@ -83,6 +85,15 @@ class ComingOutingsFragment : Fragment() {
                 deleteBooking(booking, it, position)
                 it[position].bookings?.remove(booking)
                 discoverAdapter.notifyDataSetChanged()
+                Commons.sendNotificationTest(it[position].driver?.token!!,
+                    booking.passenger?.name!!.split(" ")[0] + " ha cancelado su asistencia",
+                    "AuthActivity",
+                    it[position].id.toString(),
+                    "RequestsActivity",
+                    booking.passenger.name.split(" ")[0] + " ha cancelado su asistencia a la salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(it[position].departure.toString() + "."),
+                    context!!,
+                    activity!!
+                )
                 view.dismiss()
             }
             .setCancelable(false)

@@ -75,13 +75,15 @@ class RequestsActivity : AppCompatActivity() {
 
     private fun getData() {
         val bundle = intent.extras
-        trip = bundle?.getParcelable("trip")
-        from = bundle?.getString("from")
-        val idTrip = bundle?.getInt("idTrip")
-        if (idTrip != 0) {
-            requestsViewModel.getTripById(idTrip!!)
-        } else {
-            init()
+        if(bundle!=null){
+            trip = bundle?.getParcelable("trip")
+            from = bundle?.getString("from")
+            val idTrip = bundle?.getInt("idTrip")
+            if (idTrip != 0) {
+                requestsViewModel.getTripById(idTrip!!)
+            } else {
+                init()
+            }
         }
     }
 

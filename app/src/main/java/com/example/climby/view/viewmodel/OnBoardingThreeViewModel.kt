@@ -38,11 +38,12 @@ class OnBoardingThreeViewModel @Inject constructor(private val putTrip: PutTrip,
                 isComplete.postValue(true)
             }
             if (notify) {
-                Commons.sendNotification(
+                Commons.sendNotificationTest(
                     trip.driver?.token!!,
                     bookingModel.passenger?.name!!.split(" ")[0] + " te ha enviado un mensaje",
-                    "",
-                    "",
+                    "AuthActivity",
+                    trip.id.toString(),
+                    "ResumeTripActivity",
                     bookingModel.passenger.name.split(" ")[0] + " te ha enviado un mensaje acerca de la salida a " + trip?.site?.name + " el " + trip?.departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(trip?.departure.toString() + "."),
                     applicationContext,
                     requestsActivity

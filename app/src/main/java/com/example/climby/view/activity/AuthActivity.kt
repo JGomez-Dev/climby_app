@@ -18,6 +18,7 @@ import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityAuthBinding
 import com.example.climby.ui.discover.TripUsersActivity
 import com.example.climby.ui.profile.RequestsActivity
+import com.example.climby.ui.profile.ResumeTripActivity
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ProviderType
 import com.example.climby.view.viewmodel.AuthViewModel
@@ -122,6 +123,7 @@ class AuthActivity : AppCompatActivity() {
                                 "RequestsActivity" -> goToDetalleRequest(ID)
                                 "TripUsersActivity" -> goToDetalleTripUsers(ID)
                                 "ProfileFragment" -> goToProfile()
+                                "ResumeTripActivity" -> goToResumeTrip(ID)
                                 else -> {
                                     showMainActivity()
                                 }
@@ -144,6 +146,15 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
+    private fun goToResumeTrip(idTrip: String?) {
+        val intent = Intent(applicationContext.applicationContext, ResumeTripActivity::class.java).apply {
+            putExtra("from", "profile")
+            putExtra("idTrip", idTrip?.toInt())
+        }
+        startActivity(intent)
+        finish()
+    }
+
     private fun goToProfile() {
         val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
             putExtra("from", "profile")
@@ -152,10 +163,6 @@ class AuthActivity : AppCompatActivity() {
         }
         startActivity(intent)
         finish()
-    }
-
-    private fun getData(userModel: UserModel) {
-        authViewModel.getUser(userModel)
     }
 
     private fun goToDetalleRequest(idTrip: String?) {
@@ -174,6 +181,10 @@ class AuthActivity : AppCompatActivity() {
         }
         startActivity(intent)
         finish()
+    }
+
+    private fun getData(userModel: UserModel) {
+        authViewModel.getUser(userModel)
     }
 
     private fun showOnBoardingFirst(email: String, photoUrl: String?, displayName: String?, provider: ProviderType) {

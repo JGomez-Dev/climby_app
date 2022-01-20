@@ -182,16 +182,6 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context) : Recy
                     btRequest.text = "Terminado\r\nSin peticiones"
                     btRequest.isEnabled = false
                 } else {
-                    /*TODO Aquí debería contar cuantos mensajes hay sin leer y meterlos en la burbuja
-                       en caso de que no tenga mensajes sin leer o el viaje no haya tenido pasajeros unicamente pondremos
-                       'Terminado' en negro la burbuja se esconcerá*/
-
-
-                    /* TODO ojo al manojo, esto solo es un test*/
-                    /*trip.bookings?.forEach { it ->
-                        val message = MessageModel(false, "Gracias por organizar esta salida. Ayer fué un día fantástico y aprendimos mogollón. La próxima vez llevo comida y no te dejo sin bocata.")
-                        it.message = message
-                    }*/
 
                     var unreadMessages = 0
                     trip.bookings?.forEach { it ->
