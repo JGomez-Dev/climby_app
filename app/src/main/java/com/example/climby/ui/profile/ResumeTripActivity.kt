@@ -31,7 +31,7 @@ class ResumeTripActivity : AppCompatActivity() {
     private lateinit var resumeTripAdapter: ResumeTripAdapter
 
     private var trip: TripModel? = null
-
+    private var from: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +55,9 @@ class ResumeTripActivity : AppCompatActivity() {
     private fun showMainActivity() {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("from", "profile")
+            if(from =="ComingOutings"){
+                putExtra("viewPager", 1)
+            }
         }
         startActivity(intent)
         overridePendingTransition(0, R.anim.slide_out_right)
@@ -65,6 +68,7 @@ class ResumeTripActivity : AppCompatActivity() {
         val bundle = intent.extras
         if (bundle != null) {
             trip = bundle.getParcelable("trip")
+            from = bundle.getString("from")
             val idTrip = bundle.getInt("idTrip")
             if (idTrip != 0) {
                 resumeTripViewModel.getTripById(idTrip)

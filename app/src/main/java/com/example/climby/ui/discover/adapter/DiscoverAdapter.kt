@@ -21,6 +21,9 @@ import com.example.climby.databinding.ItemDiscoverBinding
 import com.example.climby.ui.profile.RequestsActivity
 import com.example.climby.utils.Commons
 import com.example.climby.utils.ReservationStatus
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
@@ -39,6 +42,8 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
         fun onItemClick(position: Int)
         fun onClickAddMe(position: Int)
         fun onClickRemoveMe(_it: BookingModel, position: Int)
+        fun onItemShowResume(position: Int)
+
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -176,6 +181,39 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                     BTRequest.text = "Completo"
                     BTRequest.isEnabled = false
                 }
+
+                val currentDate = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Date())
+                if (trip.departure.toString() < currentDate) {
+                    if (trip.bookings.isNullOrEmpty()) {
+                        BTRequest.text = "Terminado\r\nSin peticiones"
+                        BTRequest.isEnabled = false
+                    } else {
+
+                        var unreadMessages = 0
+                        trip.bookings?.forEach { it ->
+                            if (it.message?.read == false) {
+                                unreadMessages++
+                            }
+                        }
+
+                        if(unreadMessages != 0){
+                            TVNumberMessage.isVisible = true
+                            CVNumberMessage.isVisible = true
+                            TVNumberMessage.text = unreadMessages.toString()
+                        }else{
+                            TVNumberMessage.isVisible = false
+                            CVNumberMessage.isVisible = false
+                        }
+
+                        BTRequest.setOnClickListener {
+                            mlistener.onItemShowResume(adapterPosition)
+                        }
+
+                        BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
+                        BTRequest.text = "Terminado\r\nVer resumen"
+                    }
+                }
+
                 if (accepted > 0)
                     TVUsers.text = (trip.driver?.name?.split(" ")?.get(0) ?: "") + " y " + accepted + " más "
                 else

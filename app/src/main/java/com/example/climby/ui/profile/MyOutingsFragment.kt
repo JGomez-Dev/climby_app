@@ -27,8 +27,6 @@ class MyOutingsFragment : Fragment() {
     private lateinit var myOutingsViewModel: MyOutingsViewModel
     private lateinit var discoverAdapterProfile: DiscoverProfileAdapter
 
-    private lateinit var listTrip: List<TripModel>
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         myOutingsViewModel = ViewModelProvider(this)[MyOutingsViewModel::class.java]
         binding = FragmentMyOutingsBinding.inflate(layoutInflater)

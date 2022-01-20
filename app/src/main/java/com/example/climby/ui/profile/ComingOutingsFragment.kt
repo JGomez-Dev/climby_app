@@ -60,6 +60,10 @@ class ComingOutingsFragment : Fragment() {
                     override fun onClickRemoveMe(_it: BookingModel, position: Int) {
                         showDialog(view, _it, it, position)
                     }
+
+                    override fun onItemShowResume(position: Int) {
+                        showResumeTripActivity(it[position])
+                    }
                 })
             }
         })
@@ -71,6 +75,14 @@ class ComingOutingsFragment : Fragment() {
 
 
         return view
+    }
+
+    private fun showResumeTripActivity(tripModel: TripModel) {
+        val intent = Intent(activity, ResumeTripActivity::class.java).apply {
+            putExtra("trip", tripModel)
+            putExtra("from", "ComingOutings")
+        }
+        startActivity(intent)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -102,8 +114,6 @@ class ComingOutingsFragment : Fragment() {
 
     private fun deleteBooking(bookingModel: BookingModel, it: List<TripModel>, position: Int) {
         comingOutingsViewModel.deleteBooking(bookingModel)
-        /*it[position].bookings?.remove(bookingModel)*/
-        /*discoverAdapter.notifyDataSetChanged()*/
     }
 
     private fun moveHand(){
