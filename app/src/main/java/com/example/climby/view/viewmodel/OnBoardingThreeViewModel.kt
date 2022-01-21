@@ -8,6 +8,7 @@ import com.example.climby.data.model.booking.BookingModel
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.domain.booking.PutBooking
 import com.example.climby.domain.trip.PutTrip
+import com.example.climby.domain.user.Update
 import com.example.climby.utils.Commons
 import com.example.climby.view.activity.OnBoardingThreeActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,23 +17,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class OnBoardingThreeViewModel @Inject constructor(private val putTrip: PutTrip, private val putBooking: PutBooking) : ViewModel() {
+class OnBoardingThreeViewModel @Inject constructor(private val putUser: Update, private val putBooking: PutBooking) : ViewModel() {
 
     val isComplete = MutableLiveData<Boolean>()
-
-    private fun updateTrip(tripModel: TripModel) {
-        viewModelScope.launch {
-            val result = putTrip(tripModel)
-            isComplete.postValue(true)
-        }
-    }
 
     fun updateBooking(bookingModel: BookingModel, trip: TripModel, applicationContext: Context, requestsActivity: OnBoardingThreeActivity, notify: Boolean, withTrip: Boolean) {
         viewModelScope.launch {
             if(withTrip){
                 //TODO Cuando eduardo cambie el update de viajes se podrá quitar en teoria
                 putBooking(bookingModel)
-                updateTrip(trip)
+                putUser(trip.driver!!)
+                trip.bookings?.forEach {
+                    if(it.passenger?.id != Commons.userSession?.id){
+                        putUser(it.passenger!!)
+                    }
+                }
+                isComplete.postValue(true)
             }else{
                 putBooking(bookingModel)
                 isComplete.postValue(true)
