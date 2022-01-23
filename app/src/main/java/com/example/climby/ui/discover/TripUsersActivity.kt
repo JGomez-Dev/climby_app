@@ -142,32 +142,32 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
 
     private fun setStart(passenger: UserModel) {
         when {
-            passenger.score > 2.75 -> {
+            passenger.score / passenger.ratings  > 2.75 -> {
                 binding.IVStart1.setImageResource(R.mipmap.star)
                 binding.IVStart2.setImageResource(R.mipmap.star)
                 binding.IVStart3.setImageResource(R.mipmap.star)
             }
-            passenger.score in 2.25..2.75 -> {
+            passenger.score / passenger.ratings  in 2.25..2.75 -> {
                 binding.IVStart1.setImageResource(R.mipmap.star)
                 binding.IVStart2.setImageResource(R.mipmap.star)
                 binding.IVStart3.setImageResource(R.mipmap.medstart)
             }
-            passenger.score in 1.75..2.25 -> {
+            passenger.score / passenger.ratings  in 1.75..2.25 -> {
                 binding.IVStart1.setImageResource(R.mipmap.star)
                 binding.IVStart2.setImageResource(R.mipmap.star)
                 binding.IVStart3.setImageResource(R.mipmap.withoutstart)
             }
-            passenger.score in 1.25..1.75 -> {
+            passenger.score / passenger.ratings  in 1.25..1.75 -> {
                 binding.IVStart1.setImageResource(R.mipmap.star)
                 binding.IVStart2.setImageResource(R.mipmap.medstart)
                 binding.IVStart3.setImageResource(R.mipmap.withoutstart)
             }
-            passenger.score in 0.75..1.25 -> {
+            passenger.score / passenger.ratings  in 0.75..1.25 -> {
                 binding.IVStart1.setImageResource(R.mipmap.star)
                 binding.IVStart2.setImageResource(R.mipmap.withoutstart)
                 binding.IVStart3.setImageResource(R.mipmap.withoutstart)
             }
-            passenger.score <= 0.75 -> {
+            passenger.score / passenger.ratings  <= 0.75 -> {
                 binding.IVStart1.setImageResource(R.mipmap.medstart)
                 binding.IVStart2.setImageResource(R.mipmap.withoutstart)
                 binding.IVStart3.setImageResource(R.mipmap.withoutstart)

@@ -61,7 +61,7 @@ class OnBoardingThreeAdapter(listBookings: List<BookingModel>, context: Context)
         fun bind(booking: BookingModel) {
             booking.passenger?.ratings = booking.passenger?.ratings?.plus(1)!!
             oldScore = booking.passenger.score
-            booking.passenger.score  = (oldScore + contStart) / booking.passenger?.ratings !!
+            booking.passenger.score  = (booking.passenger.score.plus(contStart))
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(booking.passenger.photo).into(cvAttendees)
             tvNameQualifyAttendees.text = booking.passenger.name?.split(" ")?.get(0)!!
             ivAddStart.setOnClickListener {
@@ -72,7 +72,7 @@ class OnBoardingThreeAdapter(listBookings: List<BookingModel>, context: Context)
                 if (contStart != 3.0) {
                     contStart += 0.5
                     setStart(contStart)
-                    booking.passenger.score = (oldScore + contStart) / booking.passenger.ratings
+                    booking.passenger.score =  (booking.passenger.score.plus(contStart))
                     firstTime = false
                 }
             }
@@ -84,7 +84,7 @@ class OnBoardingThreeAdapter(listBookings: List<BookingModel>, context: Context)
                 if (contStart != 0.0) {
                     contStart -= 0.5
                     setStart(contStart)
-                    booking.passenger.score = (oldScore + contStart) / booking.passenger.ratings
+                    booking.passenger.score = (booking.passenger.score.plus(contStart))
                     firstTime = false
                 }
             }

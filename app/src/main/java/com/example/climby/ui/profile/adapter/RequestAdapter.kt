@@ -92,32 +92,32 @@ class RequestAdapter(bookingData: MutableList<BookingModel>, context: Context) :
 
         private fun setStart(passenger: UserModel) {
             when {
-                passenger.score > 2.75 -> {
+                passenger.score / passenger.ratings > 2.75 -> {
                     iVStart1.setImageResource(R.mipmap.star)
                     iVStart2.setImageResource(R.mipmap.star)
                     iVStart3.setImageResource(R.mipmap.star)
                 }
-                passenger.score in 2.25..2.75 -> {
+                passenger.score / passenger.ratings in 2.25..2.75 -> {
                     iVStart1.setImageResource(R.mipmap.star)
                     iVStart2.setImageResource(R.mipmap.star)
                     iVStart3.setImageResource(R.mipmap.medstart)
                 }
-                passenger.score in 1.75..2.25 -> {
+                passenger.score / passenger.ratings in 1.75..2.25 -> {
                     iVStart1.setImageResource(R.mipmap.star)
                     iVStart2.setImageResource(R.mipmap.star)
                     iVStart3.setImageResource(R.mipmap.withoutstart)
                 }
-                passenger.score in 1.25..1.75 -> {
+                passenger.score / passenger.ratings in 1.25..1.75 -> {
                     iVStart1.setImageResource(R.mipmap.star)
                     iVStart2.setImageResource(R.mipmap.medstart)
                     iVStart3.setImageResource(R.mipmap.withoutstart)
                 }
-                passenger.score in 0.75..1.25 -> {
+                passenger.score / passenger.ratings in 0.75..1.25 -> {
                     iVStart1.setImageResource(R.mipmap.star)
                     iVStart2.setImageResource(R.mipmap.withoutstart)
                     iVStart3.setImageResource(R.mipmap.withoutstart)
                 }
-                passenger.score <= 0.75 -> {
+                passenger.score / passenger.ratings <= 0.75 -> {
                     iVStart1.setImageResource(R.mipmap.medstart)
                     iVStart2.setImageResource(R.mipmap.withoutstart)
                     iVStart3.setImageResource(R.mipmap.withoutstart)

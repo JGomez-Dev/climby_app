@@ -35,6 +35,9 @@ class OnBoardingThreeActivity : AppCompatActivity() {
 
     private var bookingWithOutUser: ArrayList<BookingModel>? = ArrayList()
 
+    private var contStart = 3.0
+    private var oldScore = 0.0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onBoardingThreeViewModel = ViewModelProvider(this).get(OnBoardingThreeViewModel::class.java)
@@ -97,6 +100,8 @@ class OnBoardingThreeActivity : AppCompatActivity() {
 
     private fun updateBooking() {
         if(userScores){
+            trip?.driver?.ratings = trip?.driver?.ratings!! + 1
+            trip?.driver?.score = (trip?.driver?.score?.plus(contStart))!!
             if(!binding.ETSendMenssage.text.toString().isNullOrEmpty()){
                 val message = MessageModel(false, binding.ETSendMenssage.text.toString())
                 onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip!!, this.applicationContext, this, true, withTrip = true)
@@ -106,21 +111,6 @@ class OnBoardingThreeActivity : AppCompatActivity() {
         }else{
             onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, null), trip!!,  this.applicationContext, this, false, withTrip = false)
         }
-        /*if (userScores) {
-            if(binding.ETSendMenssage.text.toString() != ""){
-                val message = MessageModel(false, binding.ETSendMenssage.text.toString())
-                onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this, true)
-            }else{
-                val message = MessageModel(false, null)
-                onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this,false)
-            }
-            onBoardingThreeViewModel.updateTrip(TripModel(trip!!.id, trip!!.site, trip!!.type, trip!!.availablePlaces, trip!!.departure, trip!!.province, trip!!.driver, trip!!.bookings))
-            showMainActivity()
-        }else if (userScores == false) {
-            val message = MessageModel(false, null)
-            onBoardingThreeViewModel.updateBooking(BookingModel(booking?.id!!, booking?.passenger, booking?.tripId!!, booking?.status, true, booking?.date, message), trip,  this.applicationContext, this, false)
-            showMainActivity()
-        }*/
     }
 
     private fun showMainActivity() {
@@ -150,32 +140,17 @@ class OnBoardingThreeActivity : AppCompatActivity() {
         })
         Glide.with(this).load(trip?.driver?.photo).error(R.mipmap.user).into(binding.CVAttendeesOrganizer)
         binding.TVNameQualifyAttendeesOrganizer.text = trip?.driver?.name?.split(" ")?.get(0) ?: "Organizador"
-        var contStart = 3.0
-        val oldScore = trip?.driver?.score!!
-        /*var firtTime = true*/
-        trip?.driver?.ratings = trip?.driver?.ratings!! + 1
-        trip?.driver?.score = (oldScore + contStart) / trip?.driver?.ratings!!
+
         binding.IVAddStartOrganizer.setOnClickListener {
-            /*if(firtTime){
-                trip?.driver?.ratings = trip?.driver?.ratings!! + 1
-            }*/
             if (contStart != 3.0) {
                 contStart += 0.5
                 setStart(contStart)
-                trip?.driver?.score = (oldScore + contStart) / trip?.driver?.ratings!!
-                /*firtTime = false*/
             }
         }
         binding.IVRemoveStartOrganizer.setOnClickListener {
-            /*if(firtTime){
-                trip?.driver?.ratings = trip?.driver?.ratings!! + 1
-            }*/
             if (contStart != 0.0) {
                 contStart -= 0.5
                 setStart(contStart)
-                trip?.driver?.score = (oldScore + contStart) / trip?.driver?.ratings!!
-               /* firtTime = false*/
-
             }
         }
     }

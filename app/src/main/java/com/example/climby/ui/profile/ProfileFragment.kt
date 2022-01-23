@@ -96,32 +96,32 @@ class ProfileFragment: Fragment() {
 
     private fun setStart() {
         when {
-            userSession.score > 2.75 -> {
+            userSession.score / userSession.ratings  > 2.75 -> {
                 binding.IVStartProfile1.setImageResource(R.mipmap.star)
                 binding.IVStartProfile2.setImageResource(R.mipmap.star)
                 binding.IVStartProfile3.setImageResource(R.mipmap.star)
             }
-            userSession.score in 2.25..2.75 -> {
+            userSession.score / userSession.ratings in 2.25..2.75 -> {
                 binding.IVStartProfile1.setImageResource(R.mipmap.star)
                 binding.IVStartProfile2.setImageResource(R.mipmap.star)
                 binding.IVStartProfile3.setImageResource(R.mipmap.medstart)
             }
-            userSession.score in 1.75..2.25 -> {
+            userSession.score / userSession.ratings in 1.75..2.25 -> {
                 binding.IVStartProfile1.setImageResource(R.mipmap.star)
                 binding.IVStartProfile2.setImageResource(R.mipmap.star)
                 binding.IVStartProfile3.setImageResource(R.mipmap.withoutstart)
             }
-            userSession.score in 1.25..1.75 -> {
+            userSession.score / userSession.ratings in 1.25..1.75 -> {
                 binding.IVStartProfile1.setImageResource(R.mipmap.star)
                 binding.IVStartProfile2.setImageResource(R.mipmap.medstart)
                 binding.IVStartProfile3.setImageResource(R.mipmap.withoutstart)
             }
-            userSession.score in 0.75..1.25 -> {
+            userSession.score / userSession.ratings in 0.75..1.25 -> {
                 binding.IVStartProfile1.setImageResource(R.mipmap.star)
                 binding.IVStartProfile2.setImageResource(R.mipmap.withoutstart)
                 binding.IVStartProfile3.setImageResource(R.mipmap.withoutstart)
             }
-            userSession.score <= 0.75 -> {
+            userSession.score / userSession.ratings <= 0.75 -> {
                 binding.IVStartProfile1.setImageResource(R.mipmap.medstart)
                 binding.IVStartProfile2.setImageResource(R.mipmap.withoutstart)
                 binding.IVStartProfile3.setImageResource(R.mipmap.withoutstart)
