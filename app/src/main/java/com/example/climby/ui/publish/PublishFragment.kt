@@ -1,15 +1,14 @@
 package com.example.climby.ui.publish
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.*
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -26,12 +25,8 @@ import com.example.climby.utils.DatePickerFragment
 import com.example.climby.utils.IOnBackPressed
 import com.example.climby.view.activity.MainActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class PublishFragment : Fragment(), IOnBackPressed {
@@ -59,62 +54,66 @@ class PublishFragment : Fragment(), IOnBackPressed {
         val navBar: BottomNavigationView = activity?.findViewById(R.id.nav_view)!!
         navBar.isVisible = false
 
-        binding.ETSite.setOnClickListener {
-            loadFragment()
-        }
+        if(!Commons.isInternetAvailable(requireContext().applicationContext)){
+            binding.CLNotConnection.isVisible = true
+        }else{
+            binding.CLNotConnection.isVisible = false
 
-        binding.IVBack.setOnClickListener {
-            onBackPressed()
-        }
-
-        publishViewModel.provincesModel.observe(viewLifecycleOwner,  {
-            setupAdapterProvinces(it)
-            if (province != 0)
-                binding.SPCommunity.setSelection(province)
-
-        })
-
-        publishViewModel.typesModel.observe(viewLifecycleOwner,  {
-            setupAdapterType(it)
-            if (type != 0)
-                binding.SPType.setSelection(type)
-        })
-
-        binding.ETDate.setOnClickListener {
-            showDatePickerDialog()
-        }
-
-        binding.BTNewExit.setOnClickListener {
-            val tripModel = TripModel(0, SchoolModel(binding.ETSite.text.toString()), TypesModel(binding.SPType.selectedItem.toString()), binding.SPPlacesAvailable.selectedItem.toString().toInt(), dateFormat, ProvinceModel(binding.SPCommunity.selectedItem.toString(), 0), Commons.userSession, arrayListOf())
-            saveTrip(tripModel)
-        }
-
-        publishViewModel.tripCreated.observe(viewLifecycleOwner,  {
-            showMainActivity()
-        })
-
-        publishViewModel.getProvince()
-        publishViewModel.getTypes()
-
-        if (arguments != null) {
-            school = arguments?.getString("schoolPublish", "")
-            province = arguments?.getInt("provincePublish", 0)!!
-            type = arguments?.getInt("typePublish", 0)!!
-            date = arguments?.getString("datePublish", "")!!
-            dateFormat = arguments?.getString("datePublishWithOutFormat", "")!!
-            places = arguments?.getInt("placePublish", 0)!!
-
-            binding.ETSite.text = school
-            binding.ETSite.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
-
-            if (date != "DD/MM") {
-                binding.ETDate.setText(date)
-                binding.ETDate.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
+            binding.ETSite.setOnClickListener {
+                loadFragment()
             }
 
-            binding.SPPlacesAvailable.setSelection(places)
-        } else {
-            binding.ETSite.text = getString(R.string.text_select_school)
+            publishViewModel.provincesModel.observe(viewLifecycleOwner) {
+                setupAdapterProvinces(it)
+                if (province != 0)
+                    binding.SPCommunity.setSelection(province)
+
+            }
+
+            publishViewModel.typesModel.observe(viewLifecycleOwner) {
+                setupAdapterType(it)
+                if (type != 0)
+                    binding.SPType.setSelection(type)
+            }
+
+            binding.ETDate.setOnClickListener {
+                showDatePickerDialog()
+            }
+
+            binding.BTNewExit.setOnClickListener {
+                val tripModel = TripModel(0, SchoolModel(binding.ETSite.text.toString()), TypesModel(binding.SPType.selectedItem.toString()), binding.SPPlacesAvailable.selectedItem.toString().toInt(), dateFormat, ProvinceModel(binding.SPCommunity.selectedItem.toString(), 0), Commons.userSession, arrayListOf())
+                saveTrip(tripModel)
+            }
+
+            publishViewModel.tripCreated.observe(viewLifecycleOwner) {
+                showMainActivity()
+            }
+
+            publishViewModel.getProvince()
+            publishViewModel.getTypes()
+
+            if (arguments != null) {
+                school = arguments?.getString("schoolPublish", "")
+                province = arguments?.getInt("provincePublish", 0)!!
+                type = arguments?.getInt("typePublish", 0)!!
+                date = arguments?.getString("datePublish", "")!!
+                dateFormat = arguments?.getString("datePublishWithOutFormat", "")!!
+                places = arguments?.getInt("placePublish", 0)!!
+
+                binding.ETSite.text = school
+                binding.ETSite.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
+
+                if (date != "DD/MM") {
+                    binding.ETDate.setText(date)
+                    binding.ETDate.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
+                }
+                binding.SPPlacesAvailable.setSelection(places)
+            } else {
+                binding.ETSite.text = getString(R.string.text_select_school)
+            }
+        }
+        binding.IVBack.setOnClickListener {
+            onBackPressed()
         }
 
         return view
@@ -166,7 +165,11 @@ class PublishFragment : Fragment(), IOnBackPressed {
 
     private fun setupAdapterType(it: List<String>) {
 
-        val arrayAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.support_simple_spinner_dropdown_item, it) {
+        binding.SPType.setSelection(0, true)
+        val v: View = binding.SPType.selectedView
+        (v as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.grey))
+
+        val arrayAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.spinner_dropdown_item, it) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val row: View
 
@@ -175,10 +178,11 @@ class PublishFragment : Fragment(), IOnBackPressed {
                     row.setBackgroundColor(ContextCompat.getColor(context, R.color.primary))
                     row.setTextColor(ContextCompat.getColor(context, R.color.white))
                 } else {
-                    row = super.getDropDownView(position, null, parent)
+                    row = super.getDropDownView(position, null, parent) as TextView
                     if (position == selectedType) {
                         row.setBackgroundColor(ContextCompat.getColor(context, R.color.primary_light))
                     }
+                    row.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
                 }
                 return row
             }
@@ -187,25 +191,28 @@ class PublishFragment : Fragment(), IOnBackPressed {
                 return position != 0
             }
         }
+
+
         arrayAdapter.notifyDataSetChanged()
         binding.SPType.adapter = arrayAdapter
         binding.SPType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (position == 0) {
                     (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.grey))
+                }else{
+                    (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
                 }
                 selectedType = position
                 checkControls()
-                type = parent!!.getItemIdAtPosition(position).toInt()
+                type = parent.getItemIdAtPosition(position).toInt()
             }
         }
     }
 
     private fun setupAdapterProvinces(it: List<String>) {
-        val arrayAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.support_simple_spinner_dropdown_item, it) {
+        val arrayAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.spinner_dropdown_item, it) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val row: View
                 if (position == 0) {
@@ -213,11 +220,13 @@ class PublishFragment : Fragment(), IOnBackPressed {
                     row.setBackgroundColor(ContextCompat.getColor(context, R.color.primary))
                     row.setTextColor(ContextCompat.getColor(context, R.color.white))
                 } else {
-                    row = super.getDropDownView(position, null, parent)
+                    row = super.getDropDownView(position, null, parent) as TextView
                     if (position == selectedProvince) {
                         row.setBackgroundColor(ContextCompat.getColor(context, R.color.primary_light))
                     }
+                    row.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
                 }
+
                 return row
             }
 
@@ -226,7 +235,6 @@ class PublishFragment : Fragment(), IOnBackPressed {
             }
         }
         binding.SPCommunity.adapter = arrayAdapter
-
         binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -234,6 +242,8 @@ class PublishFragment : Fragment(), IOnBackPressed {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (position == 0) {
                     (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.grey))
+                }else{
+                    (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
                 }
                 selectedProvince = position
                 checkControls()

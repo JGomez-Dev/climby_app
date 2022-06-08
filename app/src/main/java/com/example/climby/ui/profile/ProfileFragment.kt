@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -45,26 +46,27 @@ class ProfileFragment: Fragment() {
         init()
         getData()
 
-        adapter = ViewPagerAdapter(parentFragmentManager,  lifecycle)
-        binding.viewPager2.adapter=adapter
+        adapter = ViewPagerAdapter(parentFragmentManager, lifecycle)
+        binding.viewPager2.adapter = adapter
 
-        TabLayoutMediator(binding.TLProfile,  binding.viewPager2){tab, position ->
-            when (position){
-                0->{
-                    tab.text= "Mis salidas"
+        TabLayoutMediator(binding.TLProfile, binding.viewPager2) { tab, position ->
+            when (position) {
+                0 -> {
+                    tab.text = "Mis salidas"
                 }
-                1->{
+                1 -> {
                     tab.text = "Próximas salidas"
                 }
             }
         }.attach()
 
-        binding.ETEditProfile.setOnClickListener {
-            loadActivity()
+        if(Commons.isInternetAvailable(requireContext().applicationContext)){
+            binding.ETEditProfile.setOnClickListener {
+                loadActivity()
+            }
         }
 
         binding.viewPager2.currentItem = viewPager
-
         return view
     }
 

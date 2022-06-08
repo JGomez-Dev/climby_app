@@ -12,5 +12,5 @@ class UserRepository @Inject constructor(private val userService : UserService){
 
     suspend fun getUser(id: Int) = userService.getUser(id)
 
-
+    suspend fun getUserByEmail(email: String) = userService.getUserByEmail(email)
 }

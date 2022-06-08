@@ -9,18 +9,15 @@ import android.view.View
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
-import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityAuthBinding
 import com.example.climby.ui.discover.TripUsersActivity
 import com.example.climby.ui.profile.RequestsActivity
 import com.example.climby.ui.profile.ResumeTripActivity
 import com.example.climby.utils.Commons
-import com.example.climby.utils.ProviderType
 import com.example.climby.view.viewmodel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -47,7 +44,15 @@ class AuthActivity : AppCompatActivity() {
                         FirebaseAuth.getInstance().signInWithCredential(credential)
                             .addOnCompleteListener {
                                 if (it.isSuccessful) {
-                                    showOnBoardingFirst(account.email ?: "", account.photoUrl?.toString(), account.displayName, ProviderType.GOOGLE)
+                                    val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+                                    val email = prefs.getString("email", null)
+                                    authViewModel.getUserByEmail(account.email?: "")
+                                    authViewModel.exists.observe(this, Observer { it ->
+                                        if(it)
+                                            showMainActivity()
+                                        else
+                                            showOnBoardingFirst(account.email ?: "", account.photoUrl?.toString(), account.displayName)
+                                    })
                                 } else {
                                     showAlert()
                                 }
@@ -61,11 +66,9 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
+        authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
 
         session()
         binding.root.findViewById<Button>(R.id.BTGoogle).setOnClickListener {
@@ -75,6 +78,7 @@ class AuthActivity : AppCompatActivity() {
             val signInIntent = googleClient.signInIntent
             googleSignIn.launch(signInIntent)
         }
+
 
         /*authViewModel.isCharget.observe(this , {
             if(it){
@@ -105,7 +109,7 @@ class AuthActivity : AppCompatActivity() {
         val ratings = prefs.getInt("ratings", 0)
         val token = prefs.getString("token", null)
 
-        if (!email.isNullOrEmpty() && !provider.isNullOrEmpty() && !photoUrl.isNullOrEmpty() && !displayName.isNullOrEmpty()) {
+        if (!email.isNullOrEmpty() && !photoUrl.isNullOrEmpty() && !displayName.isNullOrEmpty()) {
             if (!experience.isNullOrEmpty()) {
                 Commons.userSession = UserModel(id, displayName, experience, phone, email, score.toDouble(), ratings, outings, photoUrl, token)
                 binding.CLAuthentication.visibility = View.INVISIBLE
@@ -138,10 +142,10 @@ class AuthActivity : AppCompatActivity() {
 
             } else if (!phone.isNullOrEmpty()) {
                 binding.CLAuthentication.visibility = View.INVISIBLE
-                showOnBoardingSecond(email, photoUrl, displayName, ProviderType.valueOf(provider), phone)
+                showOnBoardingSecond(email, photoUrl, displayName,  phone)
             } else {
                 binding.CLAuthentication.visibility = View.INVISIBLE
-                showOnBoardingFirst(email, photoUrl, displayName, ProviderType.valueOf(provider))
+                showOnBoardingFirst(email, photoUrl, displayName)
             }
         }
     }
@@ -183,26 +187,28 @@ class AuthActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun getData(userModel: UserModel) {
-        authViewModel.getUser(userModel)
+    private fun getData(email: String){
+        return authViewModel.getUserByEmail(email)
     }
 
-    private fun showOnBoardingFirst(email: String, photoUrl: String?, displayName: String?, provider: ProviderType) {
+
+
+    private fun showOnBoardingFirst(email: String, photoUrl: String?, displayName: String?) {
         val intent = Intent(this, OnBoardingFirstActivity::class.java).apply {
             putExtra("email", email)
             putExtra("photoUrl", photoUrl)
-            putExtra("provider", provider.name)
+            //putExtra("provider", provider.name)
             putExtra("displayName", displayName)
         }
         startActivity(intent)
         finish()
     }
 
-    private fun showOnBoardingSecond(email: String, photoUrl: String?, displayName: String?, provider: ProviderType, phone: String?) {
+    private fun showOnBoardingSecond(email: String, photoUrl: String?, displayName: String?, phone: String?) {
         val intent = Intent(this, OnBoardingSecondActivity::class.java).apply {
             putExtra("email", email)
             putExtra("photoUrl", photoUrl)
-            putExtra("provider", provider.name)
+            //putExtra("provider", provider.name)
             putExtra("displayName", displayName)
             putExtra("phone", phone)
         }
@@ -215,7 +221,12 @@ class AuthActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
+    override fun onBackPressed() {
+        val a = Intent(Intent.ACTION_MAIN)
+        a.addCategory(Intent.CATEGORY_HOME)
+        a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(a)
+    }
     private fun showAlert() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")

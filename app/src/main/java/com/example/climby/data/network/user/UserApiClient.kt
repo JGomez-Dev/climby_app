@@ -16,4 +16,7 @@ interface UserApiClient {
     @GET("user/{id}")
     suspend fun getUser(@Path("id") id: Int): Response<UserModel>
 
+    @GET("user/email/{email}")
+    suspend fun getUserBymail(@Path("email") email: String): Response<UserModel>
+
 }

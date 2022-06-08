@@ -2,12 +2,14 @@ package com.example.climby.ui.profile
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
+import android.telephony.PhoneNumberUtils
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -21,14 +23,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.climby.R
+import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityEditProfileBinding
 import com.example.climby.ui.profile.viewmodel.EditProfileViewModel
 import com.example.climby.utils.Commons
 import com.example.climby.utils.UserExperience
+import com.example.climby.view.activity.AuthActivity
 import com.example.climby.view.activity.MainActivity
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -36,6 +41,7 @@ import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
+import java.util.regex.Pattern
 
 
 @AndroidEntryPoint
@@ -95,7 +101,16 @@ class EditProfileActivity : AppCompatActivity() {
         }
         binding.IVBack.setOnClickListener {
             onBackPressed()
+        }
 
+        binding.BTLogout.setOnClickListener {
+            val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+            prefs.clear()
+            prefs.putString("email", userSession.email)
+            prefs.putInt("id", userSession.id)
+            prefs.apply()
+            FirebaseAuth.getInstance().signOut()
+            showResumeTripActivity()
         }
         binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(PhoneNumberFormattingTextWatcher())
         binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(object : TextWatcher {
@@ -109,14 +124,19 @@ class EditProfileActivity : AppCompatActivity() {
                 editProfileViewModel.onUsernameTextChanged(s)
             }
         })
-        editProfileViewModel.textLD.observe(this, {
+        editProfileViewModel.textLD.observe(this) {
             binding.root.findViewById<Button>(R.id.BTSave).isEnabled = it
-        })
+        }
 
-      /*  editProfileViewModel.isComplete.observe(this, Observer {
-            showMainActivity()
-        })*/
+        /*  editProfileViewModel.isComplete.observe(this, Observer {
+              showMainActivity()
+          })*/
         init()
+    }
+
+    private fun showResumeTripActivity() {
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showMainActivity() {
@@ -147,7 +167,12 @@ class EditProfileActivity : AppCompatActivity() {
                 }
             }
         }else{
-            editProfileViewModel.updateUser(UserModel(userSession.id, userSession.name, getExperince(userExperience), binding.ETPhone.text.toString().replace(" ", ""), userSession.email, userSession.score, userSession.ratings, userSession.outings, userSession.photo, userSession.token))
+            val re = Regex("[^0-9]")
+            val tlf = re.replace( binding.ETPhone.text.toString(), "")// works
+            if(tlf.length != 9)
+                Toast.makeText(applicationContext, "El número de telefono no es válido.", Toast.LENGTH_LONG).show()
+            else
+                editProfileViewModel.updateUser(UserModel(userSession.id, userSession.name, getExperince(userExperience), tlf.toString(), userSession.email, userSession.score, userSession.ratings, userSession.outings, userSession.photo, userSession.token))
         }
     }
 

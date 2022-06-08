@@ -69,10 +69,10 @@
         <item>20</item>
     </string-array>
     <string-array name="empty_list">
-        <item>Boulder, Deportiva, Rocódromo</item>
+        <item>Boulder, Deportiva, Rocódromo…</item>
     </string-array>
     <string-array name="empty_province">
-        <item>Seleccione una provincia</item>
+        <item>Seleccione su provincia</item>
     </string-array>
     <string name="text_my_outings">Mis salidas</string>
     <string name="text_coming_outings">Proximas salidas</string>
@@ -98,7 +98,9 @@
     <string name="text_trip_empty_profile">Aún no has publicado salidas.\n ¡Animate y crea una!</string>
     <string name="text_trip_empty_profile_1">No estás apuntado a ninguna salida. Descubre y apúntate a nuevas salidas</string>
     <string name="text_bad_connection">Ha habido un problema al cargar las salidas</string>
-    <string name="text_retry">Volver a intentar</string>
+    <string name="text_not_connection">Sin conexión a Internet</string>
+    <string name="text_not_connection_1">No hay conexión</string>
+    <string name="text_retry">REINTENTAR</string>
     <string name="text_madrid">Madrid</string>
     <string name="text_delete_exit">Eliminar salida</string>
     <string name="text_sure">¿Estás seguro?</string>

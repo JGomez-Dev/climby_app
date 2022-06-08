@@ -37,7 +37,7 @@ class OnBoardingSecondActivity : AppCompatActivity() {
 
         getData()
 
-        checkPermissionSms()
+        //checkPermissionSms()
 
         binding.CVBeginner.setOnClickListener {
             selectedBeginner()
@@ -62,11 +62,11 @@ class OnBoardingSecondActivity : AppCompatActivity() {
         })
     }
 
-    private fun checkPermissionSms() {
+    /*private fun checkPermissionSms() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), 1000)
         }
-    }
+    }*/
 
     private fun selectedExperienced() {
         binding.RBExperienced.isChecked = true

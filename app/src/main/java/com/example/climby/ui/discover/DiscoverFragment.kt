@@ -28,13 +28,12 @@ import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentDiscoverBinding
 import com.example.climby.ui.discover.adapter.DiscoverAdapter
 import com.example.climby.ui.discover.viewmodel.DiscoverViewModel
-import com.example.climby.ui.profile.ResumeTripActivity
 import com.example.climby.utils.Commons
+import com.example.climby.view.activity.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -59,17 +58,25 @@ class DiscoverFragment : Fragment() {
         val navBar: BottomNavigationView = activity?.findViewById(R.id.nav_view)!!
         navBar.isVisible = true
 
-        getData()
-
-        binding.RVTrips.layoutManager = LinearLayoutManager(activity)
-        discoverViewModel.tripsModel.observe(viewLifecycleOwner, {
-            if (it.isNullOrEmpty()) {
-                binding.CLTripsEmpty.isVisible = true
-                binding.RVTrips.isVisible = false
-            } else {
-                binding.CLTripsEmpty.isVisible = false
-                binding.RVTrips.isVisible = true
-                /*val acceptedTripList: MutableList<TripModel> = arrayListOf()
+        if(!Commons.isInternetAvailable(requireContext().applicationContext)){
+            binding.CLNotConnection.isVisible = true
+            animateConnection()
+            binding.TVRetryConexion.setOnClickListener {
+                reloadFragment()
+            }
+        }
+        else {
+            getData()
+            binding.CLNotConnection.isVisible = false
+            binding.RVTrips.layoutManager = LinearLayoutManager(activity)
+            discoverViewModel.tripsModel.observe(viewLifecycleOwner) {
+                if (it.isNullOrEmpty()) {
+                    binding.CLTripsEmpty.isVisible = true
+                    binding.RVTrips.isVisible = false
+                } else {
+                    binding.CLTripsEmpty.isVisible = false
+                    binding.RVTrips.isVisible = true
+                    /*val acceptedTripList: MutableList<TripModel> = arrayListOf()
                 it.forEach { _it ->
                     if(_it.bookings?.isNullOrEmpty() != true){
                         _it.bookings!!.forEach { b_it->
@@ -79,54 +86,72 @@ class DiscoverFragment : Fragment() {
                         }
                     }
                 }*/
-                discoverAdapter = DiscoverAdapter(it, requireContext())
-                binding.RVTrips.adapter = discoverAdapter
-                discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
-                    override fun onItemClick(position: Int) {
-                        loadTripUsers(it[position])
-                    }
+                    discoverAdapter = DiscoverAdapter(it, requireContext())
+                    binding.RVTrips.adapter = discoverAdapter
+                    discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
+                        override fun onItemClick(position: Int) {
+                            loadTripUsers(it[position])
+                        }
 
-                    override fun onClickAddMe(position: Int) {
-                        saveBooking(it, position)
-                    }
+                        override fun onClickAddMe(position: Int) {
+                            saveBooking(it, position)
+                        }
 
-                    override fun onClickRemoveMe(_it: BookingModel, position: Int) {
-                        showDialog(view, _it, it, position)
-                    }
+                        override fun onClickRemoveMe(_it: BookingModel, position: Int) {
+                            showDialog(view, _it, it, position)
+                        }
 
-                    override fun onItemShowResume(position: Int) {
+                        override fun onItemShowResume(position: Int) {
 
-                    }
-                })
+                        }
+                    })
+                }
             }
-        })
 
-        binding.LYIDiscoverOutputs.setOnClickListener {
-            loadProvinces()
+            binding.LYIDiscoverOutputs.setOnClickListener {
+                loadProvinces()
+            }
+
+            discoverViewModel.isBadResponse.observe(viewLifecycleOwner) {
+                binding.CLBadConnection.isVisible = it
+                binding.CLTripsEmpty.isVisible = !it
+            }
+
+            binding.TVRetry.setOnClickListener {
+                discoverViewModel.getTrips(requireContext().applicationContext, province)
+            }
+
+            discoverViewModel.isLoading.observe(viewLifecycleOwner) {
+                binding.PBDiscover.isVisible = it
+            }
+
+            binding.TBSeach.addOnButtonCheckedListener { _, checkedId, isChecked ->
+                getFilterAndSendQuery(isChecked, checkedId)
+
+            }
+
+            animateHand()
         }
-
-        discoverViewModel.isBadResponse.observe(viewLifecycleOwner, {
-            binding.CLBadConnection.isVisible = it
-            binding.CLTripsEmpty.isVisible = !it
-        })
-
-        binding.TVRetry.setOnClickListener {
-            discoverViewModel.getTrips(requireContext().applicationContext, province)
-        }
-
-        discoverViewModel.isLoading.observe(viewLifecycleOwner, {
-            binding.PBDiscover.isVisible = it
-        })
-
-        binding.TBSeach.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            getFilterAndSendQuery(isChecked, checkedId)
-
-        }
-
-        animateHand()
-
         return view
     }
+
+    private fun reloadFragment() {
+        activity?.let {
+            val intent = Intent(requireContext().applicationContext, MainActivity::class.java)
+            it.startActivity(intent)
+            it.overridePendingTransition(0, 0)
+            it.finish()
+        }
+    }
+
+    private fun animateConnection() {
+        val anim = ObjectAnimator.ofFloat(binding.TVDontService, "translationY", 50f, 0f)
+        anim.duration = 1000
+        anim.repeatCount = Animation.ABSOLUTE
+
+        anim.start()
+    }
+
 
     private fun animateHand() {
         val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)
@@ -155,8 +180,8 @@ class DiscoverFragment : Fragment() {
                     it[position].id.toString(),
                     "RequestsActivity",
                     booking.passenger.name.split(" ")[0] + " ha cancelado su asistencia a la salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(it[position].departure.toString() + "."),
-                    context!!,
-                    activity!!
+                    requireContext(),
+                    requireActivity()
                 )
                 View.dismiss()
             }
@@ -178,8 +203,8 @@ class DiscoverFragment : Fragment() {
             it[position].id.toString(),
             "RequestsActivity",
             Commons.userSession?.name.toString().split(" ")[0] + " ha pedido unirse a tu salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(it[position].departure.toString()),
-            context!!,
-            activity!!
+            requireContext(),
+            requireActivity()
         )
         val bookingModel = BookingModel(0, Commons.userSession, it[position].id, status = false, valuationStatus = false, date = now(), null)
         discoverViewModel.saveBooking(bookingModel)

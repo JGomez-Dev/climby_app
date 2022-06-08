@@ -13,6 +13,8 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:fontFamily">@font/rounded_semibold</item>
         <!-- Customize your theme here. -->
+        <item name="android:spinnerItemStyle">@style/mySpinnerItemStyle</item>
+
     </style>
     <!-- Colores togglegoup de descrubre. -->
     <style name="toggle_group">
@@ -40,5 +42,8 @@
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/grey</item>
     </style>
 </resources>

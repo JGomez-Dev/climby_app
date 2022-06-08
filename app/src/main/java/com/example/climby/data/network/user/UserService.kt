@@ -27,4 +27,11 @@ class UserService @Inject constructor(private val userApiClient: UserApiClient) 
             response.body()!!
         }
     }
+
+    suspend fun getUserByEmail(email: String): UserModel {
+        return withContext(Dispatchers.IO) {
+            val response = userApiClient.getUserBymail(email)
+            response.body()!!
+        }
+    }
 }

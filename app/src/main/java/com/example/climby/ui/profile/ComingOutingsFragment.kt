@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -37,42 +38,46 @@ class ComingOutingsFragment : Fragment() {
         binding = FragmentComingOutingsBinding.inflate(layoutInflater)
         val view: View = binding.root
 
-        binding.RVTrips.layoutManager = LinearLayoutManager(activity)
-        comingOutingsViewModel.tripsModel.observe(viewLifecycleOwner,  {
-            if(it.isNullOrEmpty()){
-                binding.CLTripsEmpty.isVisible = true
-                binding.RVTrips.isVisible = false
-                /*moveHand()*/
-            }else{
-                binding.CLTripsEmpty.isVisible = false
-                binding.RVTrips.isVisible = true
-                discoverAdapter = DiscoverAdapter(it, requireContext())
-                binding.RVTrips.adapter = discoverAdapter
-                discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
-                    override fun onItemClick(position: Int) {
-                        loadTripUsers(it[position])
-                    }
+        if(!Commons.isInternetAvailable(requireContext().applicationContext)){
+            binding.CLNotConnection.isVisible = true
+        }else {
+            binding.CLNotConnection.isVisible = false
+            binding.RVTrips.layoutManager = LinearLayoutManager(activity)
+            comingOutingsViewModel.tripsModel.observe(viewLifecycleOwner) {
+                if (it.isNullOrEmpty()) {
+                    binding.CLTripsEmpty.isVisible = true
+                    binding.RVTrips.isVisible = false
+                    /*moveHand()*/
+                } else {
+                    binding.CLTripsEmpty.isVisible = false
+                    binding.RVTrips.isVisible = true
+                    discoverAdapter = DiscoverAdapter(it, requireContext())
+                    binding.RVTrips.adapter = discoverAdapter
+                    discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
+                        override fun onItemClick(position: Int) {
+                            loadTripUsers(it[position])
+                        }
 
-                    override fun onClickAddMe(position: Int) {
+                        override fun onClickAddMe(position: Int) {
 
-                    }
+                        }
 
-                    override fun onClickRemoveMe(_it: BookingModel, position: Int) {
-                        showDialog(view, _it, it, position)
-                    }
+                        override fun onClickRemoveMe(_it: BookingModel, position: Int) {
+                            showDialog(view, _it, it, position)
+                        }
 
-                    override fun onItemShowResume(position: Int) {
-                        showResumeTripActivity(it[position])
-                    }
-                })
+                        override fun onItemShowResume(position: Int) {
+                            showResumeTripActivity(it[position])
+                        }
+                    })
+                }
             }
-        })
-        comingOutingsViewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            binding.PBMyOutings.isVisible = it
-        })
+            comingOutingsViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+                binding.PBMyOutings.isVisible = it
+            })
 
-        comingOutingsViewModel.getMyTrips()
-
+            comingOutingsViewModel.getMyTrips()
+        }
 
         return view
     }
@@ -103,8 +108,8 @@ class ComingOutingsFragment : Fragment() {
                     it[position].id.toString(),
                     "RequestsActivity",
                     booking.passenger.name.split(" ")[0] + " ha cancelado su asistencia a la salida a " + it[position].site?.name + " el " + it[position].departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(it[position].departure.toString() + "."),
-                    context!!,
-                    activity!!
+                    requireContext(),
+                    requireActivity()
                 )
                 view.dismiss()
             }

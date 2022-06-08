@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,6 +19,7 @@ import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.FragmentMyOutingsBinding
 import com.example.climby.ui.profile.adapter.DiscoverProfileAdapter
 import com.example.climby.ui.profile.viewmodel.MyOutingsViewModel
+import com.example.climby.utils.Commons
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,37 +34,43 @@ class MyOutingsFragment : Fragment() {
         binding = FragmentMyOutingsBinding.inflate(layoutInflater)
         val view: View = binding.root
 
-        binding.RVTrips.layoutManager = LinearLayoutManager(activity)
-        myOutingsViewModel.tripsModel.observe(viewLifecycleOwner,  {
-            if(it.isNullOrEmpty()){
-                binding.CLTripsEmpty.isVisible = true
-                binding.RVTrips.isVisible = false
-                moveHand()
-            }else{
-                /*binding.CLTripsEmpty.isVisible = false*/
-                binding.RVTrips.isVisible = true
-                discoverAdapterProfile = DiscoverProfileAdapter(it, requireContext())
-                binding.RVTrips.adapter = discoverAdapterProfile
-                discoverAdapterProfile.setOnItemClickListener(object : DiscoverProfileAdapter.OnItemClickListener {
-                    override fun onItemClick(position: Int) {
-                        //loadActivity(it[position])
-                    }
+        if(!Commons.isInternetAvailable(requireContext().applicationContext)){
+            binding.CLNotConnection.isVisible = true
+        }else {
+            binding.CLNotConnection.isVisible = false
+            binding.RVTrips.layoutManager = LinearLayoutManager(activity)
+            myOutingsViewModel.tripsModel.observe(viewLifecycleOwner) {
+                if (it.isNullOrEmpty()) {
+                    binding.CLTripsEmpty.isVisible = true
+                    binding.RVTrips.isVisible = false
+                    moveHand()
+                } else {
+                    /*binding.CLTripsEmpty.isVisible = false*/
+                    binding.RVTrips.isVisible = true
+                    discoverAdapterProfile = DiscoverProfileAdapter(it, requireContext())
+                    binding.RVTrips.adapter = discoverAdapterProfile
+                    discoverAdapterProfile.setOnItemClickListener(object : DiscoverProfileAdapter.OnItemClickListener {
+                        override fun onItemClick(position: Int) {
+                            //loadActivity(it[position])
+                        }
 
-                    override fun onItemEdit(position: Int) {
-                        showEditTripActivity(it[position])
-                    }
+                        override fun onItemEdit(position: Int) {
+                            showEditTripActivity(it[position])
+                        }
 
-                    override fun onItemShowResume(position: Int) {
-                        showResumeTripActivity(it[position])
-                    }
-                })
+                        override fun onItemShowResume(position: Int) {
+                            showResumeTripActivity(it[position])
+                        }
+                    })
+                }
             }
-        })
-        myOutingsViewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            binding.PBMyOutings.isVisible = it
-        })
+            myOutingsViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+                binding.PBMyOutings.isVisible = it
+            })
 
-        myOutingsViewModel.getMyTrips()
+            myOutingsViewModel.getMyTrips()
+
+        }
 
 
         return view
@@ -74,7 +82,6 @@ class MyOutingsFragment : Fragment() {
         }
         startActivity(intent)
     }
-
 
     private fun showEditTripActivity(tripModel: TripModel) {
         val intent = Intent(activity, EditTripActivity::class.java).apply {
