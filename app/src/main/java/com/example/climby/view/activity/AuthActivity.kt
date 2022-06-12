@@ -44,8 +44,8 @@ class AuthActivity : AppCompatActivity() {
                         FirebaseAuth.getInstance().signInWithCredential(credential)
                             .addOnCompleteListener {
                                 if (it.isSuccessful) {
-                                    val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-                                    val email = prefs.getString("email", null)
+                                    //val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+                                    //val email = prefs.getString("email", null)
                                     authViewModel.getUserByEmail(account.email?: "")
                                     authViewModel.exists.observe(this, Observer { it ->
                                         if(it)
@@ -98,7 +98,7 @@ class AuthActivity : AppCompatActivity() {
         /*prefs.edit().clear().apply()*/
         val email = prefs.getString("email", null)
         val id = prefs.getInt("id", 0)
-        val provider = prefs.getString("provider", null)
+        //val provider = prefs.getString("provider", null)
         val photoUrl = prefs.getString("photoUrl", null)
         val displayName = prefs.getString("displayName", null)
         val phone = prefs.getString("phone", null)
@@ -187,11 +187,9 @@ class AuthActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun getData(email: String){
+    /*private fun getData(email: String){
         return authViewModel.getUserByEmail(email)
-    }
-
-
+    }*/
 
     private fun showOnBoardingFirst(email: String, photoUrl: String?, displayName: String?) {
         val intent = Intent(this, OnBoardingFirstActivity::class.java).apply {

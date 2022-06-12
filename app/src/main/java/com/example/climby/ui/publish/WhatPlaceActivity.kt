@@ -13,7 +13,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.climby.R
 import com.example.climby.data.model.school.SchoolModel
+import com.example.climby.data.model.trip.TripModel
 import com.example.climby.databinding.ActivityWhatPlaceBinding
+import com.example.climby.ui.profile.EditTripActivity
 import com.example.climby.ui.publish.viewmodel.WhatPlaceViewModel
 import com.example.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +28,10 @@ class WhatPlaceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWhatPlaceBinding
 
     private lateinit var school: String
-    private lateinit var date: String
+    private lateinit var from: String
+
+    private var trip: TripModel? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,10 +62,10 @@ class WhatPlaceActivity : AppCompatActivity() {
             }
         })
 
-        whatPlaceViewModel.schoolsModel.observe(this, {
+        whatPlaceViewModel.schoolsModel.observe(this) {
             val adapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, it)
             binding.ACSchool.setAdapter(adapter)
-        })
+        }
 
         binding.ACSchool.setOnItemClickListener { parent, _, position, _ ->
             school = parent.getItemAtPosition(position) as String
@@ -68,18 +73,30 @@ class WhatPlaceActivity : AppCompatActivity() {
         }
 
         binding.BTSave.setOnClickListener {
-            /*onBackPressed()*/
-            /*replaceFragment()*/
-            replaceFragment()
-            closeKeyboard()
+            if(from == "publish") {
+                replaceFragment()
+                closeKeyboard()
+            }
+            else if(from == "editTrip"){
+                showEditTripActivity(trip!!)
+                closeKeyboard()
+            }
         }
-
         whatPlaceViewModel.getAllSchools()
+    }
+
+    private fun showEditTripActivity(tripModel: TripModel) {
+        val intent = Intent(this, EditTripActivity::class.java).apply {
+            putExtra("trip", tripModel)
+            putExtra("schoolPublish", binding.ACSchool.text.toString())
+
+        }
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
     }
 
     private fun replaceFragment() {
         val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
-
             putExtra("schoolPublish", binding.ACSchool.text.toString())
             putExtra("provincePublish", intent.extras?.getInt("provincePublish", 0))
             putExtra("typePublish", intent.extras?.getInt("typePublish", 0))
@@ -118,7 +135,8 @@ class WhatPlaceActivity : AppCompatActivity() {
         val bundle = intent.extras
         if (bundle != null) {
             school = bundle.getString("schoolPublish", "")
-
+            from = bundle.getString("from", "")
+            trip = bundle.getParcelable("trip")
         }
     }
 }

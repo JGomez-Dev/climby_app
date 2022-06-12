@@ -156,10 +156,8 @@ class DiscoverFragment : Fragment() {
         val anim = ObjectAnimator.ofFloat(binding.TVDontService, "translationY", 50f, 0f)
         anim.duration = 1000
         anim.repeatCount = Animation.ABSOLUTE
-
         anim.start()
     }
-
 
     private fun animateHand() {
         val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)

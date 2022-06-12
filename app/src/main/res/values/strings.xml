@@ -46,6 +46,8 @@
     <string name="create_output">Crear una salida</string>
     <string name="edit_output">Editar salida</string>
     <string name="text_site">¿Dónde será la salida?</string>
+    <string name="dont_valid">El número de teléfono no es válido.</string>
+    <string name="problem_with_image">Ha habido un problema al cargar la imagen.</string>
     <string-array name="places">
         <item>1</item>
         <item>2</item>

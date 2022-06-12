@@ -298,8 +298,6 @@
 
     </ScrollView>
 
-
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/BTNewExit"
         android:layout_width="match_parent"
@@ -326,12 +324,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/CLNotConnection"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/TVDontService"

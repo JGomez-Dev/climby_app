@@ -7,13 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.climby.data.model.trip.TripModel
 import com.example.climby.domain.province.GetAllProvinces
 import com.example.climby.domain.trip.DeleteTrip
+import com.example.climby.domain.trip.PutTrip
 import com.example.climby.domain.type.Get
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EditTripViewModel  @Inject constructor(private val getAllProvinces: GetAllProvinces, private val delete: DeleteTrip, private val getAllTypes: Get) : ViewModel() {
+class EditTripViewModel  @Inject constructor(private val getAllProvinces: GetAllProvinces, private val delete: DeleteTrip, private val getAllTypes: Get, private val putTrip: PutTrip) : ViewModel() {
 
     var provincesModel = MutableLiveData<List<String>>()
     var typesModel = MutableLiveData<List<String>>()
@@ -21,6 +22,12 @@ class EditTripViewModel  @Inject constructor(private val getAllProvinces: GetAll
     fun deleteTrip(tripModel: TripModel) {
         viewModelScope.launch {
             delete(tripModel.id)
+        }
+    }
+
+    fun updateTrip(tripModel: TripModel) {
+        viewModelScope.launch {
+            val result: TripModel = putTrip(tripModel)
         }
     }
 

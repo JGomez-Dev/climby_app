@@ -12,7 +12,7 @@ import java.util.ArrayList
 
 data class TripModel(
     @SerializedName("id") val id: Int,
-    @SerializedName("school") val site: SchoolModel?,
+    @SerializedName("school") var site: SchoolModel?,
     @SerializedName("ClimbingType") val type: TypesModel?,
     @SerializedName("numberSeats") val availablePlaces: Int,
     @SerializedName("Date") val departure: String?,

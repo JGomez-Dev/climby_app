@@ -1,14 +1,14 @@
 package com.example.climby.ui.publish
 
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -67,7 +67,6 @@ class PublishFragment : Fragment(), IOnBackPressed {
                 setupAdapterProvinces(it)
                 if (province != 0)
                     binding.SPCommunity.setSelection(province)
-
             }
 
             publishViewModel.typesModel.observe(viewLifecycleOwner) {
@@ -87,6 +86,20 @@ class PublishFragment : Fragment(), IOnBackPressed {
 
             publishViewModel.tripCreated.observe(viewLifecycleOwner) {
                 showMainActivity()
+            }
+
+            binding.SPPlacesAvailable.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    if (position == 0) {
+                        (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.grey))
+                    }else{
+                        (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
+                    }
+                    checkControls()
+                    places = parent.getItemIdAtPosition(position).toInt()
+                }
             }
 
             publishViewModel.getProvince()
@@ -154,7 +167,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
     }
 
     private fun checkControls() {
-        if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem != "Boulder, Deportiva, Rocódromo..." && binding.ETSite.text != "Elige una escuela o rocódromo…") {
+        if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem != "Boulder, Deportiva, Rocódromo..." && binding.ETSite.text != "Elige una escuela o rocódromo…" && binding.SPPlacesAvailable.selectedItem != "0" ) {
             binding.BTNewExit.isEnabled = true
             binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(requireContext().applicationContext, R.color.primary))
         } else {
@@ -247,7 +260,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
                 }
                 selectedProvince = position
                 checkControls()
-                province = parent!!.getItemIdAtPosition(position).toInt()
+                province = parent.getItemIdAtPosition(position).toInt()
             }
         }
     }
@@ -283,6 +296,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
             putExtra("datePublish", binding.ETDate.text.toString())
             putExtra("datePublishWithOutFormat", dateFormat)
             putExtra("placePublish", binding.SPPlacesAvailable.selectedItemId.toInt())
+            putExtra("from", "publish")
         }
         startActivity(intent)
         activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)

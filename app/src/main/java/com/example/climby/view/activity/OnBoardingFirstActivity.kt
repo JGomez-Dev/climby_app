@@ -1,38 +1,24 @@
 package com.example.climby.view.activity
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.climby.R
 import com.example.climby.databinding.ActivityOnboardingFirstBinding
 import com.example.climby.view.viewmodel.OnBoardingFirstViewModel
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
-import java.io.File
 
 
 @AndroidEntryPoint
@@ -58,7 +44,7 @@ class OnBoardingFirstActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        onBoardingFirstViewModel = ViewModelProvider(this).get(OnBoardingFirstViewModel::class.java)
+        onBoardingFirstViewModel = ViewModelProvider(this)[OnBoardingFirstViewModel::class.java]
         binding = ActivityOnboardingFirstBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
@@ -70,26 +56,33 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         binding.BTSelectPhoto.setOnClickListener {
             openGallery()
         }
-        binding.ETPhone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+        binding.ETPhone.addTextChangedListener(PhoneNumberFormattingTextWatcher("ES"))
         binding.ETPhone.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                //TODO hacer algo
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //TODO hacer algo
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                onBoardingFirstViewModel.onUsernameTextChanged(s)
+                onBoardingFirstViewModel.onUserPhoneTextChanged(s)
             }
         })
-        onBoardingFirstViewModel.textLD.observe(this, {
+
+        binding.IVBack.setOnClickListener {
+            onBackPressed()
+        }
+
+        onBoardingFirstViewModel.textLD.observe(this) {
             binding.BTContinue.isEnabled = it
-            if(it){
+            if (it) {
                 binding.BTContinue.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
-            }else{
+            } else {
                 binding.BTContinue.setBackgroundColor(ContextCompat.getColor(this, R.color.disable))
             }
-        })
+        }
         binding.BTContinue.setOnClickListener {
             prefs.putString("phone", binding.ETPhone.text.toString().replace(" ", ""))
             prefs.apply()
@@ -97,11 +90,11 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkPermissionSms() {
+    /*private fun checkPermissionSms() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), 1000)
         }
-    }
+    }*/
 
     private fun getData() {
         val bundle = intent.extras
@@ -129,6 +122,22 @@ class OnBoardingFirstActivity : AppCompatActivity() {
             putExtra("phone", binding.ETPhone.text.toString().replace(" ", ""))
         }
         startActivity(intent)
+        finish()
+    }
+
+    private fun showResumeTripActivity() {
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition( 0, R.anim.slide_out_right)
+        finish()
+    }
+
+    override fun onBackPressed() {
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE).edit()
+        prefs.clear()
+        prefs.apply()
+        FirebaseAuth.getInstance().signOut()
+        showResumeTripActivity()
         finish()
     }
 

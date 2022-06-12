@@ -122,13 +122,12 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
-    private fun goToDetalleRequest(idTrip: Int, siteTrip: String) {
+    /*private fun goToDetalleRequest(idTrip: Int, siteTrip: String) {
         val intent = Intent(applicationContext.applicationContext, RequestsActivity::class.java).apply {
             putExtra("from", "profile")
             putExtra("idTrip", idTrip)
             putExtra("siteTrip", siteTrip)
         }
         startActivity(intent)
-
-    }
+    }*/
 }

@@ -1,29 +1,22 @@
 package com.example.climby.ui.profile
 
-import android.app.Activity
-import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
-import android.telephony.PhoneNumberUtils
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.climby.R
-import com.example.climby.data.model.trip.TripModel
 import com.example.climby.data.model.user.UserModel
 import com.example.climby.databinding.ActivityEditProfileBinding
 import com.example.climby.ui.profile.viewmodel.EditProfileViewModel
@@ -31,17 +24,11 @@ import com.example.climby.utils.Commons
 import com.example.climby.utils.UserExperience
 import com.example.climby.view.activity.AuthActivity
 import com.example.climby.view.activity.MainActivity
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
-import java.util.regex.Pattern
 
 
 @AndroidEntryPoint
@@ -81,8 +68,6 @@ class EditProfileActivity : AppCompatActivity() {
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         binding.BTSelectPhotoEdit.setOnClickListener {
             openGallery()
         }
@@ -104,20 +89,16 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         binding.BTLogout.setOnClickListener {
-            val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-            prefs.clear()
-            prefs.putString("email", userSession.email)
-            prefs.putInt("id", userSession.id)
-            prefs.apply()
-            FirebaseAuth.getInstance().signOut()
-            showResumeTripActivity()
+            authActivity()
         }
-        binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(PhoneNumberFormattingTextWatcher())
+        binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(PhoneNumberFormattingTextWatcher("ES"))
         binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                //TODO algo despues del cambio del texto
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //TODO algo despues del cambio del texto
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -134,9 +115,21 @@ class EditProfileActivity : AppCompatActivity() {
         init()
     }
 
+    private fun authActivity() {
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE).edit()
+        prefs.clear()
+        prefs.putString("email", userSession.email)
+        prefs.putInt("id", userSession.id)
+        prefs.apply()
+        FirebaseAuth.getInstance().signOut()
+        showResumeTripActivity()
+
+    }
+
     private fun showResumeTripActivity() {
         val intent = Intent(this, AuthActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun showMainActivity() {
@@ -163,14 +156,14 @@ class EditProfileActivity : AppCompatActivity() {
                     val downloadUri = task.result.toString()
                     editProfileViewModel.updateUser(UserModel(userSession.id, userSession.name, getExperince(userExperience), binding.ETPhone.text.toString().replace(" ", ""), userSession.email, userSession.score, userSession.ratings, userSession.outings, downloadUri, userSession.token))
                 } else {
-                    Toast.makeText(applicationContext, "Ha habido un problema al cargar la imagen", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, R.string.problem_with_image, Toast.LENGTH_LONG).show()
                 }
             }
         }else{
             val re = Regex("[^0-9]")
             val tlf = re.replace( binding.ETPhone.text.toString(), "")// works
             if(tlf.length != 9)
-                Toast.makeText(applicationContext, "El número de telefono no es válido.", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, R.string.dont_valid, Toast.LENGTH_LONG).show()
             else
                 editProfileViewModel.updateUser(UserModel(userSession.id, userSession.name, getExperince(userExperience), tlf.toString(), userSession.email, userSession.score, userSession.ratings, userSession.outings, userSession.photo, userSession.token))
         }

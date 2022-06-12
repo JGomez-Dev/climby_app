@@ -26,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:includeFontPadding="false"
         android:ellipsize="end"
         android:maxWidth="200dp"
         android:maxLines="2"
@@ -140,7 +141,6 @@
         android:id="@+id/BTRequest"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/primary"
         android:insetTop="0dp"
@@ -157,7 +157,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/IVPlace"
         app:layout_constraintStart_toStartOf="@+id/IVPlace"
-        app:layout_constraintTop_toBottomOf="@+id/IVPlace" />
+        app:layout_constraintTop_toBottomOf="@+id/TVEdit" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/CVNumberMessage"
