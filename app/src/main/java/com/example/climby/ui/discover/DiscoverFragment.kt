@@ -18,6 +18,7 @@ import android.view.animation.Animation
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -128,6 +129,13 @@ class DiscoverFragment : Fragment() {
             binding.TBSeach.addOnButtonCheckedListener { _, checkedId, isChecked ->
                 getFilterAndSendQuery(isChecked, checkedId)
 
+            }
+
+            binding.pullToRefresh.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.primary))
+
+            binding.pullToRefresh.setOnRefreshListener {
+                getData()
+                binding.pullToRefresh.isRefreshing = false
             }
 
             animateHand()

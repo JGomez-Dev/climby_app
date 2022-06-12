@@ -11,9 +11,9 @@
         android:id="@+id/IVBackground"
         android:layout_width="373.6dp"
         android:layout_height="209dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="170dp"
         android:scaleType="center"
-        app:layout_constraintBottom_toTopOf="@+id/BTGoogle"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -60,6 +60,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/primary" />
 -->
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/BTGoogle"
         android:layout_width="match_parent"
@@ -80,9 +81,11 @@
         app:iconTintMode="multiply"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_google"

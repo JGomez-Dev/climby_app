@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -67,6 +68,12 @@ class MyOutingsFragment : Fragment() {
             myOutingsViewModel.isLoading.observe(viewLifecycleOwner, Observer {
                 binding.PBMyOutings.isVisible = it
             })
+
+            binding.pullToRefresh.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.primary))
+            binding.pullToRefresh.setOnRefreshListener {
+                myOutingsViewModel.getMyTrips()
+                binding.pullToRefresh.isRefreshing = false
+            }
 
             myOutingsViewModel.getMyTrips()
 

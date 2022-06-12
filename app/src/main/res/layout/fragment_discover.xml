@@ -412,17 +412,25 @@
 
     </com.facebook.shimmer.ShimmerFrameLayout>-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RVTrips"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/pullToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:clipToPadding="false"
-        android:paddingTop="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HSVTButton" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/HSVTButton" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVTrips"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:clipToPadding="false"
+            android:paddingTop="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/HSVTButton" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/PBDiscover"
