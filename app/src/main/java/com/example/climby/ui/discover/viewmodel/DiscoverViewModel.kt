@@ -88,7 +88,6 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
                     }
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(intent)
-
                 }
             }
         }
@@ -149,9 +148,11 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
                                     if (it.province?.name.toString() == province && ((it.departure?.split(" ")?.get(0) ?: "" == calcNextFriday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSaturday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSunday(LocalDate.now()).toString()))) {
                                         resultType.add(it)
                                         Log.i("provinvia" , it.province?.name.toString())
-                                    } else if (it.province?.name.toString() == province && ((it.departure?.split(" ")?.get(0) ?: "" == calcNextFriday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSaturday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSunday(LocalDate.now()).toString()))) {
-                                        resultType.add(it)
-                                        Log.i("provinvia" , it.province?.name.toString())
+                                    } else {
+                                        if (it.province?.name.toString() == province && ((it.departure?.split(" ")?.get(0) ?: "" == calcNextFriday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSaturday(LocalDate.now()).toString()) || (it.departure?.split(" ")?.get(0) ?: "" == calcNextSunday(LocalDate.now()).toString()))) {
+                                            resultType.add(it)
+                                            Log.i("provinvia" , it.province?.name.toString())
+                                        }
                                     }
                                 }
                             } else {

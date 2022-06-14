@@ -25,6 +25,6 @@ interface TripApiClient {
     @PUT("travel")
     suspend fun putTrip(@Body tripModel: TripModel?): Response<TripModel>
 
-    @PUT("travel/{id}")
+    @DELETE("travel/{id}")
     suspend fun deleteTrip(@Path("id") id: Int)
 }

@@ -120,7 +120,6 @@ class EditTripActivity : AppCompatActivity() {
             .setTitle(R.string.text_sure)
             .setMessage(R.string.text_asistance)
             .setNegativeButton(R.string.cancel) { view, _ ->
-                Toast.makeText(this, "Cancelar", Toast.LENGTH_SHORT).show()
                 view.dismiss()
             }
             .setPositiveButton(R.string.text_delete) { view, _ ->
@@ -143,6 +142,21 @@ class EditTripActivity : AppCompatActivity() {
 
     private fun deleteTrip() {
         editTripViewModel.deleteTrip(trip!!)
+        if(trip!!.bookings!!.size != 0)
+        {
+            trip!!.bookings!!.forEach {
+                Commons.sendNotification(it.passenger?.token!!,
+                    trip!!.driver?.name!!.split(" ")[0] + " ha eliminado el viaje.",
+                    "AuthActivity",
+                    trip!!.id.toString(),
+                    "RequestsActivity",
+                    trip!!.driver?.name!!.split(" ")[0] + " ha eliminado el viaje a " + trip!!.site?.name + " el " + trip!!.departure.toString().split(" ")[0].split("-")[2] + " de " + Commons.getDate(trip!!.departure.toString() + "."),
+                    this,
+                    this
+                )
+            }
+        }
+        showMainActivity()
     }
 
     private fun getData() {

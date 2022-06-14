@@ -21,7 +21,11 @@ class EditTripViewModel  @Inject constructor(private val getAllProvinces: GetAll
 
     fun deleteTrip(tripModel: TripModel) {
         viewModelScope.launch {
-            delete(tripModel.id)
+            try {
+                delete(tripModel.id)
+            }catch (e:Exception){}
+
+
         }
     }
 
