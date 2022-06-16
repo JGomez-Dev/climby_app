@@ -3,8 +3,8 @@
     <string name="title_discover">Descubre</string>
     <string name="title_publish">Publicar</string>
     <string name="title_profile">Mi perfil</string>
-    <string name="prefs_file">com.example.climby.PREFERENCE_FILE_KEY</string>
-    <string name="fcmServerKey">AAAAXHnRe1k:APA91bEuRbdgRf4b7CduMNb7n7pZf-zg_fKwxLH6YO3rUEPjUZcjHEPGK7PLE3XECrahUqAsD82RbgFSh1I5lOBlk0hK8xw90qdea2-dyRCOqAnmvXMJA0nlp57jEVNrK9OdsiyZoIef</string>
+    <string name="prefs_file">com.app.climby.PREFERENCE_FILE_KEY</string>
+    <string name="fcmServerKey">AAAAT_7_3l0:APA91bEJ48hCipuIfVEIS1nuMxNBFjoEYYdNsZk-YvOZLPAgVjoP9eadZovHVB1-PWgRpCe5e8-6FrTW_urCjso177feI2mJsS9IDtwTcJG5XsTXBzPQtmInwCh9-8xnVF_usXls7JWz</string>
     <string name="text_rocodromo">Rocódromo</string>
     <string name="text_clasica">Clásica</string>
     <string name="text_deportiva">Deportiva</string>

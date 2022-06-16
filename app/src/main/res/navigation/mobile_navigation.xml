@@ -7,42 +7,42 @@
 
     <fragment
         android:id="@+id/navigation_discover"
-        android:name="com.example.climby.ui.discover.DiscoverFragment"
+        android:name="com.app.climby.ui.discover.DiscoverFragment"
         android:label="@string/title_discover"
         tools:layout="@layout/fragment_discover" />
 
     <fragment
         android:id="@+id/navigation_publish"
-        android:name="com.example.climby.ui.publish.PublishFragment"
+        android:name="com.app.climby.ui.publish.PublishFragment"
         android:label="@string/title_publish"
         tools:layout="@layout/fragment_publish"/>
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.climby.ui.profile.ProfileFragment"
+        android:name="com.app.climby.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/navigation_AuthActivity"
-        android:name="com.example.climby.view.activity.AuthActivity"
+        android:name="com.app.climby.view.activity.AuthActivity"
         android:label="AuthActivity"
         tools:layout="@layout/activity_auth" />
 
     <fragment
         android:id="@+id/navigation_onBoardingFirstActivity"
-        android:name="com.example.climby.view.activity.OnBoardingFirstActivity"
+        android:name="com.app.climby.view.activity.OnBoardingFirstActivity"
         android:label="AuthActivity"
         tools:layout="@layout/activity_onboarding_first" />
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.example.climby.view.activity.MainActivity"
+        android:name="com.app.climby.view.activity.MainActivity"
         android:label="MainActivity"
         tools:layout="@layout/activity_main" />
 
     <fragment
         android:id="@+id/whatPlaceFragment"
-        android:name="com.example.climby.ui.publish.WhatPlaceActivity"
+        android:name="com.app.climby.ui.publish.WhatPlaceActivity"
         android:label="WhatPlaceFragment"
         tools:layout="@layout/activity_what_place">
         <action

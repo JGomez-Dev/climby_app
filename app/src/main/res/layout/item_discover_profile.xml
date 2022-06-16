@@ -69,10 +69,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginBottom="3dp"
         android:text="@string/text_edit"
         android:textColor="@color/primary"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TVPlaceDate" />
 
@@ -141,6 +143,7 @@
         android:id="@+id/BTRequest"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/primary"
         android:insetTop="0dp"
@@ -157,7 +160,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/IVPlace"
         app:layout_constraintStart_toStartOf="@+id/IVPlace"
-        app:layout_constraintTop_toBottomOf="@+id/TVEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/IVPlace" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/CVNumberMessage"
