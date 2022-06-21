@@ -1,36 +1,26 @@
 package com.app.climby.view.activity
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.location.Location
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.app.climby.R
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.ui.profile.ProfileFragment
 import com.app.climby.ui.publish.PublishFragment
 import com.app.climby.utils.Commons
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -106,10 +96,15 @@ class MainActivity : AppCompatActivity() {
                  fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()*/
             }
         }
+
+        /*navView.getOrCreateBadge(R.id.navigation_profile).apply {
+            isVisible = true
+            backgroundColor = (ContextCompat.getColor(applicationContext, R.color.primary))
+        }*/
+
     }
 
     private fun changeItemWiseTextProperties(menu: Menu) {
-
         Glide.with(this)
             .asBitmap()
             .circleCrop()

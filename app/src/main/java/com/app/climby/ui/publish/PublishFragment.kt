@@ -2,7 +2,9 @@ package com.app.climby.ui.publish
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
+import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,14 +24,13 @@ import com.app.climby.databinding.FragmentPublishBinding
 import com.app.climby.ui.publish.viewmodel.PublishViewModel
 import com.app.climby.utils.Commons
 import com.app.climby.utils.DatePickerFragment
-import com.app.climby.utils.IOnBackPressed
 import com.app.climby.view.activity.MainActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class PublishFragment : Fragment(), IOnBackPressed {
+class PublishFragment : Fragment()/*, IOnBackPressed*/ {
 
     private lateinit var publishViewModel: PublishViewModel
     private lateinit var binding: FragmentPublishBinding
@@ -60,13 +61,14 @@ class PublishFragment : Fragment(), IOnBackPressed {
             binding.CLNotConnection.isVisible = false
 
             binding.ETSite.setOnClickListener {
-                loadFragment()
+                loadActivity()
             }
 
             publishViewModel.provincesModel.observe(viewLifecycleOwner) {
                 setupAdapterProvinces(it)
                 if (province != 0)
                     binding.SPCommunity.setSelection(province)
+
             }
 
             publishViewModel.typesModel.observe(viewLifecycleOwner) {
@@ -93,10 +95,10 @@ class PublishFragment : Fragment(), IOnBackPressed {
                 }
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     if (position == 0) {
-                        (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.grey))
-                    }else{
                         (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
-                    }
+                    }else{
+                         (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
+                     }
                     checkControls()
                     places = parent.getItemIdAtPosition(position).toInt()
                 }
@@ -126,16 +128,23 @@ class PublishFragment : Fragment(), IOnBackPressed {
             }
         }
         binding.IVBack.setOnClickListener {
-            onBackPressed()
+            requireActivity().onBackPressed()
         }
 
         return view
     }
 
     private fun showMainActivity() {
-        val intent = Intent(context, MainActivity::class.java)
+       /* val intent = Intent(context, MainActivity::class.java)
+        startActivity(intent)*/
+        val intent = Intent(context, MainActivity::class.java).apply {
+            putExtra("exprienceProfile", Commons.userSession?.experience)
+        }
         startActivity(intent)
+        activity?.overridePendingTransition(0, R.anim.slide_in_down )
     }
+
+
 
     private fun saveTrip(tripModel: TripModel) {
         publishViewModel.saveTrip(tripModel)
@@ -167,7 +176,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
     }
 
     private fun checkControls() {
-        if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem != "Boulder, Deportiva, Rocódromo..." && binding.ETSite.text != "Elige una escuela o rocódromo…" && binding.SPPlacesAvailable.selectedItem != "0" ) {
+        if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem != "Selecciona el tipo de Escalada" && binding.ETSite.text != "Elige una escuela o rocódromo…" && binding.SPPlacesAvailable.selectedItem != "0") {
             binding.BTNewExit.isEnabled = true
             binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(requireContext().applicationContext, R.color.primary))
         } else {
@@ -288,7 +297,7 @@ class PublishFragment : Fragment(), IOnBackPressed {
         checkControls()
     }
 
-    private fun loadFragment() {
+    private fun loadActivity() {
         val intent = Intent(activity, WhatPlaceActivity::class.java).apply {
             putExtra("schoolPublish", binding.ETSite.text)
             putExtra("provincePublish", binding.SPCommunity.selectedItemId.toInt())
@@ -299,15 +308,14 @@ class PublishFragment : Fragment(), IOnBackPressed {
             putExtra("from", "publish")
         }
         startActivity(intent)
-        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
     }
 
-    override fun onBackPressed() {
+    /*override fun onBackPressed() {
         activity?.let {
             val intent = Intent(requireContext().applicationContext, MainActivity::class.java)
             it.startActivity(intent)
             it.overridePendingTransition(0, 0)
             it.finish()
         }
-    }
+    }*/
 }

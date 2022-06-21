@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -40,9 +41,15 @@ class ProfileFragment: Fragment() {
         binding = FragmentProfileBinding.inflate(layoutInflater)
         val view: View = binding.root
 
+
         val navBar: BottomNavigationView = activity?.findViewById(R.id.nav_view)!!
         navBar.isVisible = true
 
+        /*navBar.getOrCreateBadge(R.id.navigation_profile).apply {
+            isVisible = false
+            backgroundColor = (ContextCompat.getColor(requireContext(), R.color.primary))
+        }
+*/
         init()
         getData()
 

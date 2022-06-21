@@ -42,8 +42,12 @@ class ResumeTripActivity : AppCompatActivity() {
 
         getData()
 
-        binding.IVBack.setOnClickListener {
+        /*binding.IVBack.setOnClickListener {
             showMainActivity()
+        }*/
+
+        binding.IVBack.setOnClickListener {
+            onBackPressed()
         }
 
         resumeTripViewModel.tripModel.observe(this, Observer {

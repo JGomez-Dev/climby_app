@@ -1,6 +1,7 @@
 package com.app.climby.view.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -30,6 +32,8 @@ class OnBoardingFirstActivity : AppCompatActivity() {
     private var provider: String? = null
     private var photoUrl: String? = null
     private var displayName: String? = null
+    private var phone: String? = null
+
     private lateinit var prefs: SharedPreferences.Editor
 
     private var openGallery =
@@ -50,9 +54,11 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         
         getData()
         setPreferences()
+        showKeyboard()
 
         Glide.with(this).load(photoUrl).error(R.mipmap.user).into(binding.root.findViewById<CircleImageView>(R.id.CIPhotoUser))
         binding.ETName.setText(displayName.toString())
+
         binding.BTSelectPhoto.setOnClickListener {
             openGallery()
         }
@@ -70,8 +76,10 @@ class OnBoardingFirstActivity : AppCompatActivity() {
                 onBoardingFirstViewModel.onUserPhoneTextChanged(s)
             }
         })
-
+        binding.ETPhone.setText(phone)
+        binding.ETPhone.text?.let { binding.ETPhone.setSelection(it.length) }
         binding.IVBack.setOnClickListener {
+
             onBackPressed()
         }
 
@@ -88,6 +96,20 @@ class OnBoardingFirstActivity : AppCompatActivity() {
             prefs.apply()
             showOnBoardingSecond()
         }
+
+
+
+    }
+
+    private fun showKeyboard() {
+        binding.ETPhone.requestFocus()
+        val inputMethodManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+    }
+
+    private fun closeKeyboard() {
+        val inputMethodManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
     }
 
     /*private fun checkPermissionSms() {
@@ -102,6 +124,7 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         provider = bundle?.getString("provider")
         photoUrl = bundle?.getString("photoUrl")
         displayName = bundle?.getString("displayName")
+        phone = bundle?.getString("phone")
     }
 
     private fun setPreferences() {
@@ -121,12 +144,13 @@ class OnBoardingFirstActivity : AppCompatActivity() {
             putExtra("displayName", displayName)
             putExtra("phone", binding.ETPhone.text.toString().replace(" ", ""))
         }
+        closeKeyboard()
         startActivity(intent)
-        finish()
     }
 
     private fun showResumeTripActivity() {
         val intent = Intent(this, AuthActivity::class.java)
+        closeKeyboard()
         startActivity(intent)
         overridePendingTransition( 0, R.anim.slide_out_right)
         finish()

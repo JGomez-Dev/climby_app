@@ -35,6 +35,7 @@ class ProvinceActivity : AppCompatActivity(), IOnBackPressed {
 
         binding.IVBack.setOnClickListener {
             onBackPressed()
+            overridePendingTransition(0, R.anim.slide_in_down);
         }
     }
 

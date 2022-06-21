@@ -69,6 +69,7 @@ class WhatPlaceActivity : AppCompatActivity() {
 
         binding.ACSchool.setOnItemClickListener { parent, _, position, _ ->
             school = parent.getItemAtPosition(position) as String
+            binding.ACSchool.clearFocus();
             closeKeyboard()
         }
 

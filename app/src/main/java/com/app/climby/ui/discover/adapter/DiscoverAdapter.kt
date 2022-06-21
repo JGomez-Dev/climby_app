@@ -182,8 +182,9 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
                     BTRequest.isEnabled = false
                 }
 
-                val currentDate = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Date())
-                if (trip.departure.toString() < currentDate) {
+                val currentDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
+                val departure =  trip.departure.toString().split(" ")[0]
+                if (departure < currentDate) {
                     if (trip.bookings.isNullOrEmpty()) {
                         BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                         BTRequest.text = "Terminado\r\nSin peticiones"

@@ -15,6 +15,7 @@ import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ActivityOnboardingSecondBinding
 import com.app.climby.utils.UserExperience
 import com.app.climby.view.viewmodel.OnBoardingSecondViewModel
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,13 +61,29 @@ class OnBoardingSecondActivity : AppCompatActivity() {
             else
                 Toast.makeText(this, "Problema en el servidor", Toast.LENGTH_SHORT).show()
         })
+
+        binding.IVBack.setOnClickListener {
+            onBackPressed()
+        }
+
     }
 
-    /*private fun checkPermissionSms() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), 1000)
+    override fun onBackPressed() {
+        showOnBoardingFirst(email, photoUrl, displayName)
+    }
+
+    private fun showOnBoardingFirst(email: String?, photoUrl: String?, displayName: String?) {
+        val intent = Intent(this, OnBoardingFirstActivity::class.java).apply {
+            putExtra("email", email)
+            putExtra("photoUrl", photoUrl)
+            putExtra("displayName", displayName)
+            putExtra("phone", phone)
         }
-    }*/
+        startActivity(intent)
+        overridePendingTransition(0, R.anim.slide_out_right)
+        finish()
+    }
+
 
     private fun selectedExperienced() {
         binding.RBExperienced.isChecked = true

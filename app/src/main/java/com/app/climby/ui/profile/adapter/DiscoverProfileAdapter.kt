@@ -175,8 +175,9 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context) : Recy
                 }
             }
 
-            val currentDate = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Date())
-            if (trip.departure.toString() < currentDate) {
+            val currentDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
+            val departure =  trip.departure.toString().split(" ")[0]
+            if (departure < currentDate) {
                 tVEdit.isVisible = false
                 if (trip.bookings.isNullOrEmpty()) {
                     btRequest.text = "Terminado\r\nSin peticiones"

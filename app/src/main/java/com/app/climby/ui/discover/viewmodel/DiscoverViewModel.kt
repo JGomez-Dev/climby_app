@@ -100,12 +100,12 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
 
     @SuppressLint("SimpleDateFormat")
     private fun checkDate(date: String): Boolean {
-        val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-        val strDate: Date = sdf.parse(date)!!
-        if (Date().before(strDate)) {
-            return false
+        val currentDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
+        val departure =  date.split(" ")[0]
+        if (departure < currentDate) {
+            return true
         }
-        return true
+        return false
     }
 
     @SuppressLint("SimpleDateFormat")

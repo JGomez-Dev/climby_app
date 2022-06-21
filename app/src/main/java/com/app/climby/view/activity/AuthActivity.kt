@@ -139,7 +139,6 @@ class AuthActivity : AppCompatActivity() {
                 } else {
                     showMainActivity()
                 }
-
             } else if (!phone.isNullOrEmpty()) {
                 binding.CLAuthentication.visibility = View.INVISIBLE
                 showOnBoardingSecond(email, photoUrl, displayName, phone)

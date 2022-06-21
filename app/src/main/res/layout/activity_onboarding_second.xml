@@ -5,6 +5,17 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
+    <ImageView
+        android:id="@+id/IVBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/text_back"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+        app:tint="@color/black" />
+
     <TextView
         android:id="@+id/TVExperience"
         android:layout_width="wrap_content"

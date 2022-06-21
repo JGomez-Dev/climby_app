@@ -63,8 +63,10 @@ class PublishViewModel @Inject constructor(private val getAllProvinces: GetAllPr
             result.forEach {
                 it.name?.let { it1 -> resultName.add(it1) }
             }
-            if (!result.isNullOrEmpty())
-                typesModel.postValue(resultName)
+            if (!result.isNullOrEmpty()) {
+                typesModel.postValue(resultName.sortedDescending())
+            }
         }
     }
 }
+

@@ -131,7 +131,7 @@ class EditTripActivity : AppCompatActivity() {
     }
 
     private fun checkControls() {
-        if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem != "Boulder, Deportiva, Rocódromo..." && binding.ETSite.text != "Elige una escuela o rocódromo…" && binding.SPPlacesAvailable.selectedItem != "0") {
+        if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem != "Selecciona el tipo de Escalada" && binding.ETSite.text != "Elige una escuela o rocódromo…" && binding.SPPlacesAvailable.selectedItem != "0") {
             binding.BTNewExit.isEnabled = true
             binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.primary))
         } else {

@@ -71,7 +71,7 @@
         <item>20</item>
     </string-array>
     <string-array name="empty_list">
-        <item>Boulder, Deportiva, Rocódromo…</item>
+        <item>Selecciona el tipo de Escalada</item>
     </string-array>
     <string-array name="empty_province">
         <item>Seleccione su provincia</item>
@@ -96,9 +96,9 @@
     <string name="text_passenger">Asistentes</string>
     <string name="text_select">Seleccione…</string>
     <string name="text_exits">13 Salidas</string>
-    <string name="text_trip_empty">Parece que no hay salidas con estas opciones de búsqueda. ¡Anímate y créala tú!</string>
+    <string name="text_trip_empty">Parece que no hay salidas con estas opciones de búsqueda.\n ¡Anímate y créala tú!</string>
     <string name="text_trip_empty_profile">Aún no has publicado salidas.\n ¡Animate y crea una!</string>
-    <string name="text_trip_empty_profile_1">No estás apuntado a ninguna salida. Descubre y apúntate a nuevas salidas</string>
+    <string name="text_trip_empty_profile_1">No estás apuntado a ninguna salida. Descubre y apúntate a nuevas salidas.</string>
     <string name="text_bad_connection">Ha habido un problema al cargar las salidas</string>
     <string name="text_not_connection">Sin conexión a Internet</string>
     <string name="text_not_connection_1">No hay conexión</string>
