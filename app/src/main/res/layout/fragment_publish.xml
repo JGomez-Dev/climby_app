@@ -63,7 +63,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
+            <com.app.climby.utils.SpinnerExtension
                 android:id="@+id/SPCommunity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
