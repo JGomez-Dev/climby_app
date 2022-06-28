@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.data.model.user.UserModel
+import com.app.climby.domain.trip.GetTrip
+import com.app.climby.domain.trip.GetTripById
+import com.app.climby.domain.trip.GetTripById_Factory
 import com.app.climby.domain.user.Get
 import com.app.climby.domain.user.GetByEmail
 import com.app.climby.domain.user.Insert
@@ -17,14 +20,23 @@ import javax.annotation.Nullable
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(private val get: Get, private val getByEmail: GetByEmail, private val insert: Insert, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
+class AuthViewModel @Inject constructor(private val _getTripById: GetTripById,private val get: Get, private val getByEmail: GetByEmail, private val insert: Insert, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
 
-    var tripsModel = MutableLiveData<List<TripModel>>()
+    //var tripsModel = MutableLiveData<List<TripModel>>()
     val finish = MutableLiveData<Boolean>()
     var result: List<TripModel> = emptyList()
     val exists = MutableLiveData<Boolean>()
+    lateinit var trip: TripModel
+    var tripModel = MutableLiveData<TripModel>()
 
-    fun getUser(userId: Int) {
+    fun getTripById(idTrip: Int) {
+        viewModelScope.launch {
+            trip = _getTripById(idTrip)
+            tripModel.postValue(trip)
+        }
+    }
+
+    /*fun getUser(userId: Int) {
         viewModelScope.launch {
             try {
                 val result = get(userId)
@@ -51,7 +63,7 @@ class AuthViewModel @Inject constructor(private val get: Get, private val getByE
                 //postUser(userModel)
             }
         }
-    }
+    }*/
 
     fun getUserByEmail(email: String) {
         viewModelScope.launch {
@@ -80,7 +92,7 @@ class AuthViewModel @Inject constructor(private val get: Get, private val getByE
         }
     }
 
-    private fun postUser(userModel: UserModel) {
+    /*private fun postUser(userModel: UserModel) {
         viewModelScope.launch {
             val result = insert(userModel)
             val editor = sharedPref.edit()
@@ -88,5 +100,5 @@ class AuthViewModel @Inject constructor(private val get: Get, private val getByE
             editor.apply()
             Commons.userSession = result
         }
-    }
+    }*/
 }

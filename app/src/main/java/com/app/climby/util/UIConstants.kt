@@ -14,3 +14,9 @@ enum class ReservationStatus(val status: Boolean?) {
     ACCEPTED(true),
     UNANSWERED(false),
 }
+
+enum class From(val status: String) {
+    DISCOVER("discover"),
+    COMINGOUTINGS("comingOutings"),
+    PROFILE("profile"),
+}

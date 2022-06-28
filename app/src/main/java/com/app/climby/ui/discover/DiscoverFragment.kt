@@ -31,6 +31,7 @@ import com.app.climby.ui.discover.adapter.DiscoverAdapter
 import com.app.climby.ui.discover.router.TripUsersRouter
 import com.app.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.app.climby.util.Commons
+import com.app.climby.util.From
 import com.app.climby.view.activity.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -301,19 +302,13 @@ class DiscoverFragment : Fragment() {
     }
 
     private fun loadTripUsers(trip: TripModel) {
-
-
-        activity?.let {
-            TripUsersRouter().launch(it, trip)
-            it.finish()
+            TripUsersRouter().launch(requireActivity(), trip, From.DISCOVER)
             /*val intent = Intent(it, TripUsersActivity::class.java).apply {
                 putExtra("trip", trip)
                 putExtra("from", "discover")
             }
             startActivity(intent)
             it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
-        }
-
     }
 
     private fun getFilterAndSendQuery(isChecked: Boolean, checkedId: Int) {

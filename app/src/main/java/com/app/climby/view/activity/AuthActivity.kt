@@ -15,9 +15,11 @@ import com.app.climby.R
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ActivityAuthBinding
 import com.app.climby.ui.discover.TripUsersActivity
+import com.app.climby.ui.discover.router.TripUsersRouter
 import com.app.climby.ui.profile.RequestsActivity
 import com.app.climby.ui.profile.ResumeTripActivity
 import com.app.climby.util.Commons
+import com.app.climby.util.From
 import com.app.climby.view.viewmodel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -125,7 +127,7 @@ class AuthActivity : AppCompatActivity() {
                             val id = extras.getString("id")
                             when (to) {
                                 "RequestsActivity" -> goToDetalleRequest(id)
-                                "TripUsersActivity" -> goToDetalleTripUsers(id)
+                                "TripUsersActivity" -> loadTripUsers(id)
                                 "ProfileFragment" -> goToProfile()
                                 "ResumeTripActivity" -> goToResumeTrip(id)
                                 else -> {
@@ -177,13 +179,18 @@ class AuthActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun goToDetalleTripUsers(idTrip: String?) {
-        val intent = Intent(applicationContext.applicationContext, TripUsersActivity::class.java).apply {
+    private fun loadTripUsers(tripId: String?) {
+        authViewModel.getTripById(tripId!!.toInt())
+        authViewModel.tripModel.observe(this, Observer {
+            TripUsersRouter().launch(this, it, From.PROFILE)
+            finish()
+        })
+       /* val intent = Intent(applicationContext.applicationContext, TripUsersActivity::class.java).apply {
             putExtra("from", "profile")
             putExtra("idTrip", idTrip?.toInt())
         }
         startActivity(intent)
-        finish()
+        finish()*/
     }
 
     /*private fun getData(email: String){

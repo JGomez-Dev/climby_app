@@ -17,10 +17,11 @@ import com.app.climby.R
 import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.FragmentComingOutingsBinding
-import com.app.climby.ui.discover.TripUsersActivity
 import com.app.climby.ui.discover.adapter.DiscoverAdapter
+import com.app.climby.ui.discover.router.TripUsersRouter
 import com.app.climby.ui.profile.viewmodel.ComingOutingsViewModel
 import com.app.climby.util.Commons
+import com.app.climby.util.From
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -137,13 +138,14 @@ class ComingOutingsFragment : Fragment() {
     }*/
 
     private fun loadTripUsers(trip: TripModel) {
-        activity?.let {
+        TripUsersRouter().launch(requireActivity(), trip,From.COMINGOUTINGS)
+        /*activity?.let {
             val intent = Intent(activity, TripUsersActivity::class.java).apply {
                 putExtra("trip", trip)
             }
             it.startActivity(intent)
             it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+        }*/
     }
 
 }
