@@ -9,7 +9,7 @@
         android:id="@+id/IVBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/text_back"
+        android:contentDescription="@string/onboarding.page1.back"
         android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/text_what_experience_you_have"
+        android:text="@string/onboarding.page1.title"
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -73,7 +73,7 @@
                     android:id="@+id/TVBeginner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_beginner"
+                    android:text="@string/onboarding.page1.beginner"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:alpha="0.7"
-                    android:text="@string/text_i_am_starting_out"
+                    android:text="@string/onboarding.page1.beginner.body"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -135,7 +135,7 @@
                     android:id="@+id/TVIntermediate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_intermediate"
+                    android:text="@string/onboarding.page1.intermediate"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -145,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:alpha="0.7"
-                    android:text="@string/text_often"
+                    android:text="@string/onboarding.page1.intermediate.body"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -196,7 +196,7 @@
                     android:id="@+id/TVExperienced"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_experienced"
+                    android:text="@string/onboarding.page1.experienced"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -206,7 +206,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:alpha="0.7"
-                    android:text="@string/text_a_long_time"
+                    android:text="@string/onboarding.page1.experienced.body"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -228,7 +228,7 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:letterSpacing="0"
-        android:text="@string/text_bt_next"
+        android:text="@string/onboarding.page1.continue"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"

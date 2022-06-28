@@ -97,7 +97,7 @@ class EditTripActivity : AppCompatActivity() {
             putExtra("exprienceProfile", Commons.userSession?.experience)
         }
         startActivity(intent)
-        overridePendingTransition(0, R.anim.slide_out_right)
+        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
     private fun loadFragment() {
@@ -211,6 +211,7 @@ class EditTripActivity : AppCompatActivity() {
                 return position != 0
             }
         }
+        arrayAdapter.notifyDataSetChanged()
         binding.SPCommunity.adapter = arrayAdapter
         binding.SPCommunity.setSelection(arrayAdapter.getPosition(trip?.province?.name.toString()))
         binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

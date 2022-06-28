@@ -1,10 +1,45 @@
 <resources>
+
+    <!-- Generic -->
     <string name="app_name">Climby</string>
     <string name="title_discover">Descubre</string>
     <string name="title_publish">Publicar</string>
     <string name="title_profile">Mi perfil</string>
     <string name="prefs_file">com.app.climby.PREFERENCE_FILE_KEY</string>
     <string name="fcmServerKey">AAAAT_7_3l0:APA91bEJ48hCipuIfVEIS1nuMxNBFjoEYYdNsZk-YvOZLPAgVjoP9eadZovHVB1-PWgRpCe5e8-6FrTW_urCjso177feI2mJsS9IDtwTcJG5XsTXBzPQtmInwCh9-8xnVF_usXls7JWz</string>
+
+    <!-- OnBoarding 0 -->
+    <string name="onboarding.page0.name">Nombre</string>
+    <string name="onboarding.page0.photo">Cambiar mi foto</string>
+    <string name="onboarding.page0.title">¿Tu información es correcta?</string>
+    <string name="onboarding.page0.hint.empty">…</string>
+    <string name="onboarding.page0.phone">Teléfono</string>
+    <string name="onboarding.page0.hint.prefix">+ 34</string>
+    <string name="onboarding.page0.join">Lo usaremos como medio de contacto solo cuando quieras unirte a un grupo.</string>
+    <string name="onboarding.page0.continue">Continuar</string>
+    <string name="onboarding.page0.back">Atrás</string>
+
+    <!-- OnBoarding 1 -->
+    <string name="onboarding.page1.back">Atrás</string>
+    <string name="onboarding.page1.title">¿Qué experiencia tienes?</string>
+    <string name="onboarding.page1.beginner">Principiante</string>
+    <string name="onboarding.page1.beginner.body">Estoy iniciándome en este mundo, tengo todo por aprender.</string>
+    <string name="onboarding.page1.intermediate">Intermedio</string>
+    <string name="onboarding.page1.intermediate.body">Escalo con frecuencia y me encuentro cómodo escalando en la naturaleza.</string>
+    <string name="onboarding.page1.experienced">Experimentado</string>
+    <string name="onboarding.page1.experienced.body">Llevo años escalando de manera continuada y me encuentro cómodo con cualquier modalidad.</string>
+    <string name="onboarding.page1.continue">Continuar</string>
+
+    <!-- OnBoarding 2 -->
+    <string name="onboarding.page2.title">Valorar a los asistentes</string>
+    <string name="onboarding.page2.lead">Deportiva en</string>
+    <string name="onboarding.page2.date">La Pedriza, 31 Diciembre</string>
+    <string name="onboarding.page2.name.user">Javier</string>
+    <string name="onboarding.page2.send">Envía un mensaje a Javier</string>
+    <string name="onboarding.page2.body.qualify">Cuenta cómo te sentiste escalando con el grupo o ayuda a Javier a mejorar para la próxima vez…</string>
+    <string name="onboarding.page2.button.send">Enviar mi valoración</string>
+
+
     <string name="text_rocodromo">Rocódromo</string>
     <string name="text_clasica">Clásica</string>
     <string name="text_deportiva">Deportiva</string>
@@ -14,27 +49,11 @@
     <string name="text_google">Entrar con Google</string>
     <string name="text_facebook">Entrar con Facebook</string>
     <string name="text_join">Únete a otros escaladores como tú y sal a escalar de forma segura</string>
-    <string name="text_info">¿Tu información es correcta?</string>
-    <string name="text_change_photo">Cambiar mi foto</string>
-    <string name="text_name">Nombre</string>
     <string name="text_example">Gracias por organizar esta salida. Ayer fué un día fantástico y aprendimos mogollón. La próxima vez llevo comida y no te dejo sin bocata.</string>
     <string name="text_province">Elige tu provincia</string>
-    <string name="text_empty">…</string>
-    <string name="text_join_a_group">Lo usaremos como medio de contacto solo cuando quieras unirte a un grupo.</string>
-    <string name="text_continue">Continuar</string>
-    <string name="text_telefono">Teléfono</string>
     <string name="facebook_app_id">386355422974436</string>
     <string name="fb_login_protocol_scheme">fb386355422974436</string>
-    <string name="text_prefix_phone">+ 34</string>
     <string name="text_exit_from">Próximas salidas desde </string>
-    <string name="text_beginner">Principiante</string>
-    <string name="text_intermediate">Intermedio</string>
-    <string name="text_experienced">Experimentado</string>
-    <string name="text_what_experience_you_have">¿Qué experiencia tienes?</string>
-    <string name="text_i_am_starting_out">Estoy iniciándome en este mundo, tengo todo por aprender.</string>
-    <string name="text_often">Escalo con frecuencia y me encuentro cómodo escalando en la naturaleza.</string>
-    <string name="text_a_long_time">Llevo años escalando de manera continuada y me encuentro cómodo con cualquier modalidad.</string>
-    <string name="text_bt_next">Continuar</string>
     <string name="text_where_do_you_come_from">¿Desde donde sales?</string>
     <string name="text_date">DD/MM</string>
     <string name="text_date_discover">31 Diciembre</string>
@@ -81,15 +100,11 @@
     <string name="text_edit">Editar</string>
     <string name="text_user_name">Usuario</string>
     <string name="text_save">Guardar</string>
-    <string name="text_send">Enviar mi valoración</string>
     <string name="text_save_changes">Guardar cambios</string>
     <string name="text_logout">Cerrar sesión</string>
     <string name="text_where_will_you_climb">¿Dondé vas a escalar?</string>
     <string name="text_experience">Experiencia</string>
-    <string name="text_back">Atras</string>
     <string name="text_edit_information">Editar tu información</string>
-    <string name="text_predriza">La Pedriza, 31 Diciembre</string>
-    <string name="text_lead">Deportiva en</string>
     <string name="text_places">Pedir unirme 4 plazas</string>
     <string name="text_travel">Viaje</string>
     <string name="text_admin">Organizador</string>
@@ -121,13 +136,11 @@
     <string name="basic_channel_id">basic_channel_id</string>
     <string name="basic_channel_name">basic_channel_name</string>
     <string name="basic_channel_description">basic_channel_description</string>
-    <string name="text_aualify_attendees">Valorar a los asistentes</string>
     <string name="text_resume_trip">Resumen de la salida</string>
-    <string name="text_send_menssage">Envía un mensaje a Javier</string>
-    <string name="text_qualify_attendees">Cuenta cómo te sentiste escalando con el grupo o ayuda a Javier a mejorar para la próxima vez…</string>
     <string name="text_private_message_1">El mensaje privado a</string>
     <string name="text_private_message_2">está vacío.</string>
     <string name="text_if_cancel">Si cancelas la valoración ya no podrás volver a valorar esta salida</string>
     <string name="text_0">0</string>
     <string name="text_one">1</string>
+    <string name="select">Seleccione…</string>
 </resources>

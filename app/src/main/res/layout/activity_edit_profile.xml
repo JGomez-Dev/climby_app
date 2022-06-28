@@ -11,7 +11,7 @@
         android:id="@+id/IVBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/text_back"
+        android:contentDescription="@string/onboarding.page0.back"
         android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -70,7 +70,7 @@
                 android:insetBottom="0dp"
                 android:letterSpacing="0"
                 android:stateListAnimator="@null"
-                android:text="@string/text_change_photo"
+                android:text="@string/onboarding.page0.photo"
                 android:textAllCaps="false"
                 android:textColor="@color/primary"
                 android:textSize="16sp"
@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@string/text_name"
+                android:text="@string/onboarding.page0.name"
                 android:textAlignment="center"
                 android:textColor="@color/grey_dark"
                 android:textSize="16sp"
@@ -104,7 +104,7 @@
                 android:elevation="1dp"
                 android:ems="10"
                 android:focusable="false"
-                android:hint="@string/text_empty"
+                android:hint="@string/onboarding.page0.hint.empty"
                 android:inputType="textCapWords"
                 android:padding="16dp"
                 android:textColor="@color/grey_dark"
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
-                android:text="@string/text_telefono"
+                android:text="@string/onboarding.page0.phone"
                 android:textAlignment="center"
                 android:textColor="@color/grey_dark"
                 android:textSize="16sp"
@@ -141,7 +141,7 @@
                 android:elevation="1dp"
                 android:ems="5"
                 android:focusable="false"
-                android:hint="@string/text_prefix_phone"
+                android:hint="@string/onboarding.page0.hint.prefix"
                 android:inputType="phone"
                 android:padding="16dp"
                 android:textColorHint="@color/grey_dark"
@@ -162,7 +162,7 @@
                 android:background="@color/white"
                 android:elevation="1dp"
                 android:ems="9"
-                android:hint="@string/text_empty"
+                android:hint="@string/onboarding.page0.hint.empty"
                 android:inputType="phone"
                 android:maxLength="12"
                 android:padding="16dp"
@@ -234,7 +234,7 @@
                             android:id="@+id/TVBeginner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/text_beginner"
+                            android:text="@string/onboarding.page1.beginner"
                             android:textColor="@color/black"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -243,7 +243,7 @@
                             android:id="@+id/TVTextBeginner"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/text_i_am_starting_out"
+                            android:text="@string/onboarding.page1.beginner.body"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -294,7 +294,7 @@
                             android:id="@+id/TVIntermediate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/text_intermediate"
+                            android:text="@string/onboarding.page1.intermediate"
                             android:textColor="@color/black"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -303,7 +303,7 @@
                             android:id="@+id/TVTextIntermediate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/text_often"
+                            android:text="@string/onboarding.page1.intermediate.body"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -353,7 +353,7 @@
                             android:id="@+id/TVExperienced"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/text_experienced"
+                            android:text="@string/onboarding.page1.experienced"
                             android:textColor="@color/black"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -362,7 +362,7 @@
                             android:id="@+id/TVTextExperienced"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/text_a_long_time"
+                            android:text="@string/onboarding.page1.experienced.body"
                             android:textSize="16sp" />
 
                     </LinearLayout>

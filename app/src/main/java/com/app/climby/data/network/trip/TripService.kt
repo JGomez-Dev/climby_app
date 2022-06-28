@@ -1,7 +1,6 @@
 package com.app.climby.data.network.trip
 
 import com.app.climby.data.model.trip.TripModel
-import com.app.climby.data.model.user.UserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

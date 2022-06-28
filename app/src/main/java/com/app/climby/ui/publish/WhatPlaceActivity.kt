@@ -40,12 +40,13 @@ class WhatPlaceActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        showKeyboard()
+
         getData()
 
         binding.IVBack.setOnClickListener {
             onBackPressed()
             closeKeyboard()
+            overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
         }
 
         binding.ACSchool.addTextChangedListener(object : TextWatcher {
@@ -65,6 +66,7 @@ class WhatPlaceActivity : AppCompatActivity() {
         whatPlaceViewModel.schoolsModel.observe(this) {
             val adapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, it)
             binding.ACSchool.setAdapter(adapter)
+            showKeyboard()
         }
 
         binding.ACSchool.setOnItemClickListener { parent, _, position, _ ->
@@ -84,6 +86,8 @@ class WhatPlaceActivity : AppCompatActivity() {
             }
         }
         whatPlaceViewModel.getAllSchools()
+
+
     }
 
     private fun showEditTripActivity(tripModel: TripModel) {

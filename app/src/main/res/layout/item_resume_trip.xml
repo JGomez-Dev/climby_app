@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="@string/text_name"
+        android:text="@string/onboarding.page0.name"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"

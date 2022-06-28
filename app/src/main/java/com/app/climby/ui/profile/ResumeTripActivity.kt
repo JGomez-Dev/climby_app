@@ -3,23 +3,18 @@ package com.app.climby.ui.profile
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Message
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.app.climby.R
 import com.app.climby.data.model.booking.BookingModel
-import com.app.climby.data.model.message.MessageModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ActivityResumeTripBinding
-import com.app.climby.ui.profile.adapter.RequestAdapter
 import com.app.climby.ui.profile.adapter.ResumeTripAdapter
 import com.app.climby.ui.profile.viewmodel.ResumeTripViewModel
 import com.app.climby.utils.Commons
-import com.app.climby.utils.ReservationStatus
 import com.app.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,8 +41,10 @@ class ResumeTripActivity : AppCompatActivity() {
             showMainActivity()
         }*/
 
+
+
         binding.IVBack.setOnClickListener {
-            onBackPressed()
+            showMainActivity()
         }
 
         resumeTripViewModel.tripModel.observe(this, Observer {
@@ -56,15 +53,16 @@ class ResumeTripActivity : AppCompatActivity() {
         })
     }
 
+    private fun markMessagesAsRead(trip: TripModel?) {
+        resumeTripViewModel.markMessagesAsRead(trip)
+    }
+
     private fun showMainActivity() {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("from", "profile")
-            if(from =="ComingOutings"){
-                putExtra("viewPager", 1)
-            }
         }
         startActivity(intent)
-        overridePendingTransition(0, R.anim.slide_out_right)
+        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
 
@@ -98,6 +96,7 @@ class ResumeTripActivity : AppCompatActivity() {
             resumeTripAdapter = ResumeTripAdapter(bookingWithMessage, this)
             binding.RVResumenTrip.adapter = resumeTripAdapter
         }
+        markMessagesAsRead(trip)
     }
 
     private fun setPhotoTrip(type: String) {

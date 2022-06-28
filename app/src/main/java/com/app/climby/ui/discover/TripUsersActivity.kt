@@ -26,7 +26,7 @@ import com.app.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
+class TripUsersActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTripUsersBinding
     private lateinit var tripUsersViewModel: TripUsersViewModel
@@ -71,13 +71,18 @@ class TripUsersActivity : AppCompatActivity(), IOnBackPressed {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
     private fun showMainActivity(from: String) {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("from", from)
             putExtra("viewPager", 1)
         }
         startActivity(intent)
-        overridePendingTransition(0, R.anim.slide_out_right)
+        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
         finish()
     }
 

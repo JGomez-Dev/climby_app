@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import com.app.climby.R
 import com.app.climby.data.network.booking.BookingApiClient
+import com.app.climby.data.network.message.MessageApiClient
 import com.app.climby.data.network.province.ProvincesApiClient
 import com.app.climby.data.network.school.SchoolApiClient
 import com.app.climby.data.network.trip.TripApiClient
@@ -19,6 +20,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+private const val URL_BASE = "http://192.168.1.40:8080/"
+//private const val URL_BASE = "https://climby-ci-ga.herokuapp.com/"
+//private const val URL_BASE = "https://climbyheroku.herokuapp.com/"
+
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -27,8 +32,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit():Retrofit{
         return Retrofit.Builder()
-        .baseUrl("https://climbyheroku.herokuapp.com/")
-        //.baseUrl("http://192.168.1.40:8080/")
+            .baseUrl(URL_BASE)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -73,6 +77,12 @@ object NetworkModule {
     @Provides
     fun provideBookingApiClient(retrofit: Retrofit): BookingApiClient {
         return retrofit.create(BookingApiClient::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMessageApiClient(retrofit: Retrofit): MessageApiClient {
+        return retrofit.create(MessageApiClient::class.java)
     }
 }
 

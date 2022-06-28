@@ -8,6 +8,9 @@ import android.view.Menu
 import android.view.View
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.app.climby.R
@@ -15,6 +18,7 @@ import com.app.climby.data.model.user.UserModel
 import com.app.climby.ui.profile.ProfileFragment
 import com.app.climby.ui.publish.PublishFragment
 import com.app.climby.utils.Commons
+import com.app.climby.view.viewmodel.MainViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
@@ -27,9 +31,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navView: BottomNavigationView
     private var userSession: UserModel = Commons.userSession!!
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
         setContentView(R.layout.activity_main)
         navView = findViewById(R.id.nav_view)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -41,12 +48,26 @@ class MainActivity : AppCompatActivity() {
         changeItemWiseTextProperties(navView.menu)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
+
             if (destination.id == R.id.navigation_publish) {
                 navView.visibility = View.GONE
             } else {
                 navView.visibility = View.VISIBLE
             }
+            mainViewModel.getNotification(Commons.userSession?.id!!)
         }
+
+        mainViewModel.exitsNotification.observe(this, Observer {
+            if (it != 0) {
+                navView.getOrCreateBadge(R.id.navigation_profile).apply {
+                    isVisible = true
+                    backgroundColor = (ContextCompat.getColor(applicationContext, R.color.primary))
+                }
+            }else
+                navView.getOrCreateBadge(R.id.navigation_profile).apply {
+                    isVisible = false
+                }
+        })
 
         val bundle = intent.extras
         if (bundle != null) {
@@ -72,6 +93,13 @@ class MainActivity : AppCompatActivity() {
                     fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
                 }
             }*/
+            if (from == "comingOutings") {
+                bundle.getInt("viewPager", 1)
+                val f = ProfileFragment()
+                f.arguments = bundle
+                val fm = supportFragmentManager
+                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
+            }
             if (from == "profile") {
                 if(notification == null){
                     navView.selectedItemId = R.id.navigation_profile
@@ -96,11 +124,6 @@ class MainActivity : AppCompatActivity() {
                  fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()*/
             }
         }
-
-        /*navView.getOrCreateBadge(R.id.navigation_profile).apply {
-            isVisible = true
-            backgroundColor = (ContextCompat.getColor(applicationContext, R.color.primary))
-        }*/
 
     }
 

@@ -27,7 +27,7 @@ class ComingOutingsViewModel @Inject constructor(private val getTravelsWithUserB
         }
     }
 
-    fun getMyTrips() {
+    fun getMyNextOutings() {
         viewModelScope.launch {
             isLoading.postValue(true)
             result = getTravelsWithUserBookings(sharedPref.getInt("id", 0))

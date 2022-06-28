@@ -1,7 +1,6 @@
 package com.app.climby.data.repository
 
 import com.app.climby.data.model.trip.TripModel
-import com.app.climby.data.model.user.UserModel
 import com.app.climby.data.network.trip.TripService
 import javax.inject.Inject
 

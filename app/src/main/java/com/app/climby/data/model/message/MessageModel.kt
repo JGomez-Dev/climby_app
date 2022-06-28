@@ -2,7 +2,6 @@ package com.app.climby.data.model.message
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.app.climby.data.model.user.UserModel
 import com.google.gson.annotations.SerializedName
 
 data class MessageModel(

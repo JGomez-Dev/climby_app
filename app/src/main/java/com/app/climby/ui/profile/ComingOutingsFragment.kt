@@ -1,15 +1,11 @@
 package com.app.climby.ui.profile
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -52,7 +48,7 @@ class ComingOutingsFragment : Fragment() {
                 } else {
                     binding.CLTripsEmpty.isVisible = false
                     binding.RVTrips.isVisible = true
-                    discoverAdapter = DiscoverAdapter(it, requireContext())
+                    discoverAdapter = DiscoverAdapter(it, requireContext(), "comingOutings")
                     binding.RVTrips.adapter = discoverAdapter
                     discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
@@ -78,21 +74,24 @@ class ComingOutingsFragment : Fragment() {
             })
             binding.pullToRefresh.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.primary))
             binding.pullToRefresh.setOnRefreshListener {
-                comingOutingsViewModel.getMyTrips()
+                comingOutingsViewModel.getMyNextOutings()
                 binding.pullToRefresh.isRefreshing = false
             }
-            comingOutingsViewModel.getMyTrips()
+            comingOutingsViewModel.getMyNextOutings()
         }
 
         return view
     }
 
     private fun showResumeTripActivity(tripModel: TripModel) {
-        val intent = Intent(activity, ResumeTripActivity::class.java).apply {
-            putExtra("trip", tripModel)
-            putExtra("from", "ComingOutings")
+        activity?.let {
+            val intent = Intent(activity, ResumeTripActivity::class.java).apply {
+                putExtra("trip", tripModel)
+                putExtra("from", "ComingOutings")
+            }
+            it.startActivity(intent)
+            it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        startActivity(intent)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -136,10 +135,13 @@ class ComingOutingsFragment : Fragment() {
     }*/
 
     private fun loadTripUsers(trip: TripModel) {
-        val intent = Intent(activity, TripUsersActivity::class.java).apply {
-            putExtra("trip", trip)
+        activity?.let {
+            val intent = Intent(activity, TripUsersActivity::class.java).apply {
+                putExtra("trip", trip)
+            }
+            it.startActivity(intent)
+            it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        startActivity(intent)
     }
 
 }

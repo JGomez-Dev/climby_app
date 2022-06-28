@@ -84,10 +84,13 @@ class MyOutingsFragment : Fragment() {
     }
 
     private fun showResumeTripActivity(tripModel: TripModel) {
-        val intent = Intent(activity, ResumeTripActivity::class.java).apply {
-            putExtra("trip", tripModel)
+        activity?.let {
+            val intent = Intent(activity, ResumeTripActivity::class.java).apply {
+                putExtra("trip", tripModel)
+            }
+            it.startActivity(intent)
+            it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        startActivity(intent)
     }
 
     private fun showEditTripActivity(tripModel: TripModel) {

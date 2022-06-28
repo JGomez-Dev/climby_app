@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.app.climby.data.model.user.UserModel
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlin.collections.ArrayList
 import com.bumptech.glide.request.RequestOptions
 import com.app.climby.R
 import com.app.climby.data.model.booking.BookingModel
+import com.app.climby.databinding.ItemDiscoverUserBinding
 
 
 class UserDiscoverAdapter(bookingsList: List<BookingModel>, context: Context) : RecyclerView.Adapter<UserDiscoverAdapter.DataViewHolder>() {
@@ -34,13 +33,10 @@ class UserDiscoverAdapter(bookingsList: List<BookingModel>, context: Context) : 
 
     override fun getItemCount(): Int= bookingsList.size
 
-
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val cvPassenger: CircleImageView = itemView.findViewById(R.id.CVPassenger)
-
-        fun bind(result: BookingModel){
-            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(result.passenger?.photo).into(cvPassenger)
+        private val binding = ItemDiscoverUserBinding.bind(itemView)
+        fun bind(result: BookingModel)= with(binding){
+            Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(result.passenger?.photo).into(CVPassenger)
         }
     }
 }

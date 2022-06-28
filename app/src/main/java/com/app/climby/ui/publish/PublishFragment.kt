@@ -194,7 +194,6 @@ class PublishFragment : Fragment()/*, IOnBackPressed*/ {
         val arrayAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.spinner_dropdown_item, it) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val row: View
-
                 if (position == 0) {
                     row = super.getDropDownView(position, convertView, parent) as TextView
                     row.setBackgroundColor(ContextCompat.getColor(context, R.color.primary))
@@ -256,6 +255,7 @@ class PublishFragment : Fragment()/*, IOnBackPressed*/ {
                 return position != 0
             }
         }
+        arrayAdapter.notifyDataSetChanged()
         binding.SPCommunity.adapter = arrayAdapter
         binding.SPCommunity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -298,16 +298,20 @@ class PublishFragment : Fragment()/*, IOnBackPressed*/ {
     }
 
     private fun loadActivity() {
-        val intent = Intent(activity, WhatPlaceActivity::class.java).apply {
-            putExtra("schoolPublish", binding.ETSite.text)
-            putExtra("provincePublish", binding.SPCommunity.selectedItemId.toInt())
-            putExtra("typePublish", binding.SPType.selectedItemId.toInt())
-            putExtra("datePublish", binding.ETDate.text.toString())
-            putExtra("datePublishWithOutFormat", dateFormat)
-            putExtra("placePublish", binding.SPPlacesAvailable.selectedItemId.toInt())
-            putExtra("from", "publish")
+        activity?.let {
+            val intent = Intent(it, WhatPlaceActivity::class.java).apply {
+                putExtra("schoolPublish", binding.ETSite.text)
+                putExtra("provincePublish", binding.SPCommunity.selectedItemId.toInt())
+                putExtra("typePublish", binding.SPType.selectedItemId.toInt())
+                putExtra("datePublish", binding.ETDate.text.toString())
+                putExtra("datePublishWithOutFormat", dateFormat)
+                putExtra("placePublish", binding.SPPlacesAvailable.selectedItemId.toInt())
+                putExtra("from", "publish")
+            }
+            it.startActivity(intent)
+            it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        startActivity(intent)
+
     }
 
     /*override fun onBackPressed() {

@@ -88,19 +88,20 @@ class ProfileFragment: Fragment() {
     }
 
     private fun loadActivity(){
-        val intent = Intent(activity, EditProfileActivity::class.java)
-        startActivity(intent)
-        /*activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)*/
+        activity?.let {
+            val intent = Intent(activity, EditProfileActivity::class.java)
+            it.startActivity(intent)
+            it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
     }
 
     private fun getData() {
         val bundle = activity?.intent?.extras
         if (bundle != null) {
-            experience = bundle.getString("exprienceProfile", "")
+           /* experience = bundle.getString("exprienceProfile", "")*/
             viewPager = bundle.getInt("viewPager", 0)
-            binding.TVUserExperience.text = experience
+            binding.TVUserExperience.text = Commons.userSession?.experience
         }
-
     }
 
     private fun setStart() {

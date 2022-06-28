@@ -1,6 +1,5 @@
 package com.app.climby.data.network.user
 
-import androidx.annotation.NonNull
 import com.app.climby.data.model.user.UserModel
 import retrofit2.Response
 import retrofit2.http.*

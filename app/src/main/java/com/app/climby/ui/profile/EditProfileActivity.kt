@@ -24,6 +24,7 @@ import com.app.climby.utils.Commons
 import com.app.climby.utils.UserExperience
 import com.app.climby.view.activity.AuthActivity
 import com.app.climby.view.activity.MainActivity
+import com.google.android.gms.common.internal.service.Common
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
@@ -86,6 +87,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
         binding.IVBack.setOnClickListener {
             onBackPressed()
+            overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
         }
 
         binding.BTLogout.setOnClickListener {
@@ -167,6 +169,7 @@ class EditProfileActivity : AppCompatActivity() {
             else
                 editProfileViewModel.updateUser(UserModel(userSession.id, userSession.name, getExperince(userExperience), tlf.toString(), userSession.email, userSession.score, userSession.ratings, userSession.outings, userSession.photo, userSession.token))
         }
+        Commons.userSession?.experience = getExperince(userExperience)
     }
 
     private fun init() {

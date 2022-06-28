@@ -90,17 +90,7 @@ class DiscoverFragment : Fragment() {
                 } else {
                     binding.CLTripsEmpty.isVisible = false
                     binding.RVTrips.isVisible = true
-                    /*val acceptedTripList: MutableList<TripModel> = arrayListOf()
-                    it.forEach { _it ->
-                        if(_it.bookings?.isNullOrEmpty() != true){
-                            _it.bookings!!.forEach { b_it->
-                                if(b_it.status != ReservationStatus.REFUSE.status){
-                                    acceptedTripList.add(_it)
-                                }
-                            }
-                        }
-                    }*/
-                    discoverAdapter = DiscoverAdapter(it, requireContext())
+                    discoverAdapter = DiscoverAdapter(it, requireContext(), "discover")
                     binding.RVTrips.adapter = discoverAdapter
                     discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
@@ -301,17 +291,20 @@ class DiscoverFragment : Fragment() {
         }
 
         startActivity(intent)
-
         activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
 
     }
 
     private fun loadTripUsers(trip: TripModel) {
-        val intent = Intent(activity, TripUsersActivity::class.java).apply {
-            putExtra("trip", trip)
-            putExtra("from", "discover")
+        activity?.let {
+            val intent = Intent(it, TripUsersActivity::class.java).apply {
+                putExtra("trip", trip)
+                putExtra("from", "discover")
+            }
+            startActivity(intent)
+            it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        startActivity(intent)
+
     }
 
     private fun getFilterAndSendQuery(isChecked: Boolean, checkedId: Int) {

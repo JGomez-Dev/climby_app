@@ -4,14 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.app.climby.R
 import com.app.climby.data.model.province.ProvinceModel
-import com.app.climby.data.model.province.ProvinceTripsModel
+import com.app.climby.databinding.CustomSpinnerItemBinding
+import com.app.climby.databinding.ItemDiscoverBinding
 
 
 class ProvinceAdapter(tripData: List<ProvinceModel>, province: String?, context: Context) : RecyclerView.Adapter<ProvinceAdapter.DataViewHolder>() {
@@ -27,7 +26,6 @@ class ProvinceAdapter(tripData: List<ProvinceModel>, province: String?, context:
         this.provinceSelected = province
     }
 
-
     interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
@@ -36,6 +34,15 @@ class ProvinceAdapter(tripData: List<ProvinceModel>, province: String?, context:
         mlistener = listener
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DataViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.custom_spinner_item, parent, false), mlistener
+    )
+
+    override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
+        holder.bind(tripsList[position])
+    }
+
+    override fun getItemCount(): Int = tripsList.size
 
     inner class DataViewHolder(itemView: View, listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
         init {
@@ -44,57 +51,18 @@ class ProvinceAdapter(tripData: List<ProvinceModel>, province: String?, context:
             }
         }
 
-        private val tvCommunitySP: TextView = itemView.findViewById(R.id.TVCommunitySP)
-        private val tvNumberSP: TextView = itemView.findViewById(R.id.TVNumberSP)
+        private val binding = CustomSpinnerItemBinding.bind(itemView)
 
-        fun bind(province: ProvinceModel) {
+        fun bind(province: ProvinceModel) = with(binding) {
             if (provinceSelected?.equals(province.name)!!) {
-                tvCommunitySP.setTextColor(ContextCompat.getColorStateList(context, R.color.primary))
-                tvNumberSP.setTextColor(ContextCompat.getColorStateList(context, R.color.primary))
-/*
-                tvNumberSP.requestFocus()
-*/
+                TVCommunitySP.setTextColor(ContextCompat.getColorStateList(context, R.color.primary))
+                TVNumberSP.setTextColor(ContextCompat.getColorStateList(context, R.color.primary))
             }else {
-                tvCommunitySP.setTextColor(ContextCompat.getColorStateList(context, R.color.grey_dark))
-                tvNumberSP.setTextColor(ContextCompat.getColorStateList(context, R.color.grey))
+                TVCommunitySP.setTextColor(ContextCompat.getColorStateList(context, R.color.grey_dark))
+                TVNumberSP.setTextColor(ContextCompat.getColorStateList(context, R.color.grey))
             }
-            tvCommunitySP.text = province.name
-            tvNumberSP.text = province.number_travels.toString()
+            TVCommunitySP.text = province.name
+            TVNumberSP.text = province.number_travels.toString()
         }
     }
-    
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DataViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.custom_spinner_item, parent, false), mlistener
-    )
-
-    /*override fun onViewDetachedFromWindow(holder: DataViewHolder) {
-        super.onViewDetachedFromWindow(holder)
-        tripsList.forEach {
-            if(it.name == provinceSelected){
-                holder.itemView.findViewById<TextView>(R.id.TVCommunitySP).requestFocus()
-            }
-        }
-
-    }*/
-
-   /* override fun onViewAttachedToWindow(holder: DataViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        tripsList.forEach {
-            if(it.name == provinceSelected){
-                holder.itemView.findViewById<TextView>(R.id.TVCommunitySP).requestFocus()
-            }
-        }
-
-    }*/
-
-    override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.bind(tripsList[position])
-    }
-
-
-
-    override fun getItemCount(): Int = tripsList.size
-
 }

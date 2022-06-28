@@ -39,7 +39,7 @@
         android:layout_margin="16dp"
         android:background="@color/white"
         android:completionThreshold="1"
-        android:hint="@string/text_empty"
+        android:hint="@string/onboarding.page0.hint.empty"
         android:inputType="textCapSentences"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -47,8 +47,8 @@ class RequestsActivity : AppCompatActivity() {
                 "profile" -> {
                     showMainActivity("profile")
                 }
-                "discover" -> {
-                    showMainActivity("discover")
+                "discover","comingOutings" -> {
+                    onBackPressed()
                 }
                 else -> {
                     onBackPressed()
@@ -68,12 +68,17 @@ class RequestsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
     private fun showMainActivity(from: String) {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("from", from)
         }
         startActivity(intent)
-        overridePendingTransition(0, R.anim.slide_out_right)
+        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
         finish()
     }
 

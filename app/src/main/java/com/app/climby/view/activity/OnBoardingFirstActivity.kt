@@ -152,7 +152,7 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         val intent = Intent(this, AuthActivity::class.java)
         closeKeyboard()
         startActivity(intent)
-        overridePendingTransition( 0, R.anim.slide_out_right)
+        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
         finish()
     }
 

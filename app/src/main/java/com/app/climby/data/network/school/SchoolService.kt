@@ -7,16 +7,11 @@ import javax.inject.Inject
 
 class SchoolService  @Inject constructor(private val api: SchoolApiClient) {
 
-  /*  private val COUNTRIES = arrayOf(
-        "Belgium", "France", "Italy", "Germany", "Spain"
-    )*/
-
     suspend fun getSchools(): List<SchoolModel> {
         return withContext(Dispatchers.IO) {
             val response = api.getSchools()
             response.body() ?: emptyList()
         }
-        /*return COUNTRIES.asList()*/
     }
 
     suspend fun postSchool(school: String): String {
@@ -25,7 +20,4 @@ class SchoolService  @Inject constructor(private val api: SchoolApiClient) {
             response.body()!!
         }
     }
-
-
-
 }

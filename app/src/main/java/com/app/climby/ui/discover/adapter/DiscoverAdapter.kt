@@ -16,7 +16,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.app.climby.R
 import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
-import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ItemDiscoverBinding
 import com.app.climby.ui.profile.RequestsActivity
 import com.app.climby.utils.Commons
@@ -26,16 +25,18 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
+class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: String) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
 
     private var tripsList: List<TripModel> = ArrayList()
     private var context: Context
     private lateinit var userDiscoverAdapter: UserDiscoverAdapter
     private lateinit var mlistener: OnItemClickListener
+    private var from: String
 
     init {
         this.tripsList = tripData
         this.context = context
+        this.from = from
     }
 
     interface OnItemClickListener {
@@ -109,14 +110,14 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context) : RecyclerVie
 
                     binding.TVNumberMessage.text = unreadMessages.toString()
                     BTRequest.setOnClickListener {
-                        val intent = Intent(context, RequestsActivity::class.java).apply {
-                            putExtra("trip", trip)
-                            putExtra("from", "discover")
-                            /*if(!province.isNullOrEmpty()){
-                                putExtra("provincePublish", province)
-                            }*/
+                        context.applicationContext.let {
+                            val intent = Intent(context, RequestsActivity::class.java).apply {
+                                putExtra("trip", trip)
+                                putExtra("from", from)
+                            }
+                            context.startActivities(arrayOf(intent))
                         }
-                        context.startActivities(arrayOf(intent))
+
                     }
                 }
                 if (accepted > 0)
