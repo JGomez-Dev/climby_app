@@ -14,7 +14,7 @@ import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ActivityResumeTripBinding
 import com.app.climby.ui.profile.adapter.ResumeTripAdapter
 import com.app.climby.ui.profile.viewmodel.ResumeTripViewModel
-import com.app.climby.utils.Commons
+import com.app.climby.util.Commons
 import com.app.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 

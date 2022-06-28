@@ -15,7 +15,7 @@ import com.app.climby.data.model.message.MessageModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ActivityOnboardingThreeBinding
-import com.app.climby.utils.Commons
+import com.app.climby.util.Commons
 import com.app.climby.view.adapter.OnBoardingThreeAdapter
 import com.app.climby.view.viewmodel.OnBoardingThreeViewModel
 import dagger.hilt.android.AndroidEntryPoint

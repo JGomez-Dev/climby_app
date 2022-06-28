@@ -1,25 +1,13 @@
 package com.app.climby.ui.publish.viewmodel
 
 
-import android.app.Activity
-import android.provider.SyncStateContract.Helpers.insert
-import android.util.Log
-import androidx.core.app.NotificationCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.climby.R
 import com.app.climby.data.model.trip.TripModel
-import com.app.climby.data.model.user.UserModel
 import com.app.climby.domain.province.GetAllProvinces
 import com.app.climby.domain.trip.Insert
 import com.app.climby.domain.type.Get
-import com.app.climby.utils.Commons
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

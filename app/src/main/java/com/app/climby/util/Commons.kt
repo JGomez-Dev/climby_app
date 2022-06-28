@@ -1,4 +1,4 @@
-package com.app.climby.utils
+package com.app.climby.util
 
 import android.annotation.SuppressLint
 import android.app.Activity

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -22,8 +21,8 @@ import com.app.climby.data.model.types.TypesModel
 import com.app.climby.databinding.ActivityEditTripBinding
 import com.app.climby.ui.profile.viewmodel.EditTripViewModel
 import com.app.climby.ui.publish.WhatPlaceActivity
-import com.app.climby.utils.Commons
-import com.app.climby.utils.DatePickerFragment
+import com.app.climby.util.Commons
+import com.app.climby.util.DatePickerFragment
 import com.app.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,7 +53,7 @@ class EditTripActivity : AppCompatActivity() {
 
         getData()
         init()
-        checkControls()
+        /*checkControls()*/
 
         binding.ETDate.setOnClickListener {
             showDatePickerDialog()
@@ -65,8 +64,7 @@ class EditTripActivity : AppCompatActivity() {
         }
 
         binding.IVBack.setOnClickListener {
-            onBackPressed()
-            overridePendingTransition(0, R.anim.slide_in_down);
+           onBackPressed()
         }
 
         binding.BTDeleteExit.setOnClickListener {
@@ -80,7 +78,7 @@ class EditTripActivity : AppCompatActivity() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent!!.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(applicationContext, R.color.black))
-                checkControls()
+                /*checkControls()*/
                 places = parent.getItemIdAtPosition(position).toInt()
             }
         }
@@ -92,12 +90,21 @@ class EditTripActivity : AppCompatActivity() {
         }
     }
 
-    private fun showMainActivity() {
-        val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
-            putExtra("exprienceProfile", Commons.userSession?.experience)
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("from", "profile")
         }
         startActivity(intent)
-        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
+        overridePendingTransition(0, R.anim.slide_in_down)
+    }
+
+    private fun showMainActivity() {
+        val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
+            putExtra("from", "profile")
+        }
+        startActivity(intent)
+        overridePendingTransition(0, R.anim.slide_in_down)
     }
 
     private fun loadFragment() {
@@ -112,7 +119,7 @@ class EditTripActivity : AppCompatActivity() {
             putExtra("from", "editTrip")
         }
         startActivity(intent)
-        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     private fun showDialog() {
@@ -130,7 +137,7 @@ class EditTripActivity : AppCompatActivity() {
             .create().show()
     }
 
-    private fun checkControls() {
+    /*private fun checkControls() {
         if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem != "Selecciona el tipo de Escalada" && binding.ETSite.text != "Elige una escuela o rocódromo…" && binding.SPPlacesAvailable.selectedItem != "0") {
             binding.BTNewExit.isEnabled = true
             binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.primary))
@@ -138,7 +145,7 @@ class EditTripActivity : AppCompatActivity() {
             binding.BTNewExit.isEnabled = false
             binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.disable))
         }
-    }
+    }*/
 
     private fun deleteTrip() {
         editTripViewModel.deleteTrip(trip!!)

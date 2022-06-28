@@ -2,7 +2,6 @@ package com.app.climby.ui.profile.viewmodel
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,10 +10,9 @@ import com.app.climby.data.model.trip.TripModel
 import com.app.climby.domain.booking.PutBooking
 import com.app.climby.domain.trip.GetTripById
 import com.app.climby.ui.profile.RequestsActivity
-import com.app.climby.utils.Commons
+import com.app.climby.util.Commons
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.io.Console
 import java.lang.Exception
 import javax.inject.Inject
 

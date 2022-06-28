@@ -17,8 +17,8 @@ import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ActivityRequestsBinding
 import com.app.climby.ui.profile.adapter.RequestAdapter
 import com.app.climby.ui.profile.viewmodel.RequestsViewModel
-import com.app.climby.utils.Commons
-import com.app.climby.utils.ReservationStatus
+import com.app.climby.util.Commons
+import com.app.climby.util.ReservationStatus
 import com.app.climby.view.activity.MainActivity
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint

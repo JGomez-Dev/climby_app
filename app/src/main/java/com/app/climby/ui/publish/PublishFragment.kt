@@ -2,9 +2,7 @@ package com.app.climby.ui.publish
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Point
 import android.os.Bundle
-import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +20,8 @@ import com.app.climby.data.model.trip.TripModel
 import com.app.climby.data.model.types.TypesModel
 import com.app.climby.databinding.FragmentPublishBinding
 import com.app.climby.ui.publish.viewmodel.PublishViewModel
-import com.app.climby.utils.Commons
-import com.app.climby.utils.DatePickerFragment
+import com.app.climby.util.Commons
+import com.app.climby.util.DatePickerFragment
 import com.app.climby.view.activity.MainActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -138,7 +136,7 @@ class PublishFragment : Fragment()/*, IOnBackPressed*/ {
        /* val intent = Intent(context, MainActivity::class.java)
         startActivity(intent)*/
         val intent = Intent(context, MainActivity::class.java).apply {
-            putExtra("exprienceProfile", Commons.userSession?.experience)
+            putExtra("from", "profile")
         }
         startActivity(intent)
         activity?.overridePendingTransition(0, R.anim.slide_in_down )

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,25 +19,27 @@ import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ItemDiscoverBinding
 import com.app.climby.ui.profile.RequestsActivity
-import com.app.climby.utils.Commons
-import com.app.climby.utils.ReservationStatus
+import com.app.climby.util.Commons
+import com.app.climby.util.ReservationStatus
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: String) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
+class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: String, fragmentActivity: FragmentActivity) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
 
     private var tripsList: List<TripModel> = ArrayList()
     private var context: Context
     private lateinit var userDiscoverAdapter: UserDiscoverAdapter
     private lateinit var mlistener: OnItemClickListener
     private var from: String
+    private var fragmentActivity: FragmentActivity
 
     init {
         this.tripsList = tripData
         this.context = context
         this.from = from
+        this.fragmentActivity = fragmentActivity
     }
 
     interface OnItemClickListener {
@@ -116,6 +119,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: String)
                                 putExtra("from", from)
                             }
                             context.startActivities(arrayOf(intent))
+                            fragmentActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                         }
 
                     }

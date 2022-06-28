@@ -1,21 +1,17 @@
 package com.app.climby.view.activity
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.app.climby.R
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ActivityOnboardingSecondBinding
-import com.app.climby.utils.UserExperience
+import com.app.climby.util.UserExperience
 import com.app.climby.view.viewmodel.OnBoardingSecondViewModel
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

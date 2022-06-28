@@ -8,17 +8,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.app.climby.R
 import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.user.UserModel
-import com.app.climby.utils.ReservationStatus
+import com.app.climby.util.ReservationStatus
 import de.hdodenhof.circleimageview.CircleImageView
-import java.util.*
 
 class RequestAdapter(bookingData: MutableList<BookingModel>, context: Context) : RecyclerView.Adapter<RequestAdapter.DataViewHolder>() {
 

@@ -17,7 +17,7 @@ import com.app.climby.R
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.ui.profile.ProfileFragment
 import com.app.climby.ui.publish.PublishFragment
-import com.app.climby.utils.Commons
+import com.app.climby.util.Commons
 import com.app.climby.view.viewmodel.MainViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -101,15 +101,15 @@ class MainActivity : AppCompatActivity() {
                 fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
             }
             if (from == "profile") {
-                if(notification == null){
+                /*if(notification == null){*/
                     navView.selectedItemId = R.id.navigation_profile
-                }else{
+                /*}else{
                     bundle.getInt("viewPager", 0)
                     val f = ProfileFragment()
                     f.arguments = bundle
                     val fm = supportFragmentManager
                     fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
-                }
+                }*/
             }
             if (school != "") {
                 val f = PublishFragment()

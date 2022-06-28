@@ -17,7 +17,7 @@ import com.app.climby.databinding.ActivityAuthBinding
 import com.app.climby.ui.discover.TripUsersActivity
 import com.app.climby.ui.profile.RequestsActivity
 import com.app.climby.ui.profile.ResumeTripActivity
-import com.app.climby.utils.Commons
+import com.app.climby.util.Commons
 import com.app.climby.view.viewmodel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

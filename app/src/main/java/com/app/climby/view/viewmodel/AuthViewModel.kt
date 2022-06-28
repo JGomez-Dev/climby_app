@@ -6,11 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.data.model.user.UserModel
-import com.app.climby.domain.trip.GetTripsUser
 import com.app.climby.domain.user.Get
 import com.app.climby.domain.user.GetByEmail
 import com.app.climby.domain.user.Insert
-import com.app.climby.utils.Commons
+import com.app.climby.util.Commons
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.lang.Exception

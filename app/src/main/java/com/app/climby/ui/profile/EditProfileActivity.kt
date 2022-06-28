@@ -20,11 +20,10 @@ import com.app.climby.R
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ActivityEditProfileBinding
 import com.app.climby.ui.profile.viewmodel.EditProfileViewModel
-import com.app.climby.utils.Commons
-import com.app.climby.utils.UserExperience
+import com.app.climby.util.Commons
+import com.app.climby.util.UserExperience
 import com.app.climby.view.activity.AuthActivity
 import com.app.climby.view.activity.MainActivity
-import com.google.android.gms.common.internal.service.Common
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference

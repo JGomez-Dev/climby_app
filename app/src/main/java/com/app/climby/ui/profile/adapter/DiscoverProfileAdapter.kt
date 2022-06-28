@@ -9,26 +9,26 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.app.climby.R
 import com.app.climby.data.model.booking.BookingModel
-import com.app.climby.data.model.message.MessageModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.ui.discover.adapter.UserDiscoverAdapter
 import com.app.climby.ui.profile.RequestsActivity
-import com.app.climby.utils.Commons
-import com.app.climby.utils.ReservationStatus
+import com.app.climby.util.Commons
+import com.app.climby.util.ReservationStatus
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context) : RecyclerView.Adapter<DiscoverProfileAdapter.DataViewHolder>() {
+class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragmentActivity: FragmentActivity) : RecyclerView.Adapter<DiscoverProfileAdapter.DataViewHolder>() {
 
 
     private var tripsList: List<TripModel> = ArrayList()
@@ -37,10 +37,12 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context) : Recy
     private var userSession: UserModel = Commons.userSession!!
     private lateinit var userDiscoverAdapter: UserDiscoverAdapter
     private lateinit var mlistener: OnItemClickListener
+    private var fragmentActivity: FragmentActivity
 
     init {
         this.tripsList = tripData
         this.context = context
+        this.fragmentActivity = fragmentActivity
     }
 
     interface OnItemClickListener {
@@ -120,6 +122,7 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context) : Recy
                         putExtra("from", "profile")
                     }
                     context.startActivities(arrayOf(intent))
+                    fragmentActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 }
                 /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
                 trip.bookings?.forEach {
@@ -168,6 +171,7 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context) : Recy
                             putExtra("trip", trip)
                         }
                         context.startActivities(arrayOf(intent))
+                        fragmentActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     }
                     btRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
                     btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);

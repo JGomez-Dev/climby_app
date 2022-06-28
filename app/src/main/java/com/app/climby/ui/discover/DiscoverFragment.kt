@@ -1,6 +1,5 @@
 package com.app.climby.ui.discover
 
-import android.Manifest
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.animation.ObjectAnimator
@@ -12,12 +11,10 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -31,8 +28,9 @@ import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.FragmentDiscoverBinding
 import com.app.climby.ui.discover.adapter.DiscoverAdapter
+import com.app.climby.ui.discover.router.TripUsersRouter
 import com.app.climby.ui.discover.viewmodel.DiscoverViewModel
-import com.app.climby.utils.Commons
+import com.app.climby.util.Commons
 import com.app.climby.view.activity.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -44,6 +42,10 @@ import java.util.*
 
 @AndroidEntryPoint
 class DiscoverFragment : Fragment() {
+
+    companion object {
+        fun fragment() = DiscoverFragment()
+    }
 
     private lateinit var binding: FragmentDiscoverBinding
     private lateinit var discoverViewModel: DiscoverViewModel
@@ -83,32 +85,35 @@ class DiscoverFragment : Fragment() {
             getData()
             binding.CLNotConnection.isVisible = false
             binding.RVTrips.layoutManager = LinearLayoutManager(activity)
-            discoverViewModel.tripsModel.observe(viewLifecycleOwner) {
-                if (it.isNullOrEmpty()) {
+            discoverViewModel.tripsModel.observe(viewLifecycleOwner) { tripList ->
+                if (tripList.isNullOrEmpty()) {
                     binding.CLTripsEmpty.isVisible = true
                     binding.RVTrips.isVisible = false
                 } else {
                     binding.CLTripsEmpty.isVisible = false
                     binding.RVTrips.isVisible = true
-                    discoverAdapter = DiscoverAdapter(it, requireContext(), "discover")
-                    binding.RVTrips.adapter = discoverAdapter
-                    discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
-                        override fun onItemClick(position: Int) {
-                            loadTripUsers(it[position])
-                        }
+                    activity?.let {
+                        discoverAdapter = DiscoverAdapter(tripList, requireContext(), "discover", it)
+                        binding.RVTrips.adapter = discoverAdapter
+                        discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
+                            override fun onItemClick(position: Int) {
+                                loadTripUsers(tripList[position])
+                            }
 
-                        override fun onClickAddMe(position: Int) {
-                            saveBooking(it, position)
-                        }
+                            override fun onClickAddMe(position: Int) {
+                                saveBooking(tripList, position)
+                            }
 
-                        override fun onClickRemoveMe(_it: BookingModel, position: Int) {
-                            showDialog(view, _it, it, position)
-                        }
+                            override fun onClickRemoveMe(_it: BookingModel, position: Int) {
+                                showDialog(view, _it, tripList, position)
+                            }
 
-                        override fun onItemShowResume(position: Int) {
-                            //TODO algo
-                        }
-                    })
+                            override fun onItemShowResume(position: Int) {
+                                //TODO algo
+                            }
+                        })
+                    }
+
                 }
             }
 
@@ -296,13 +301,17 @@ class DiscoverFragment : Fragment() {
     }
 
     private fun loadTripUsers(trip: TripModel) {
+
+
         activity?.let {
-            val intent = Intent(it, TripUsersActivity::class.java).apply {
+            TripUsersRouter().launch(it, trip)
+            it.finish()
+            /*val intent = Intent(it, TripUsersActivity::class.java).apply {
                 putExtra("trip", trip)
                 putExtra("from", "discover")
             }
             startActivity(intent)
-            it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
         }
 
     }

@@ -9,7 +9,6 @@ import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ActivityRefuseTripBinding
 import com.app.climby.ui.profile.viewmodel.RefuseTripViewModel
-import com.app.climby.utils.Commons
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,20 +23,15 @@ class RefuseTripActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        refuseTripViewModel = ViewModelProvider(this).get(RefuseTripViewModel::class.java)
+        refuseTripViewModel = ViewModelProvider(this)[RefuseTripViewModel::class.java]
         binding = ActivityRefuseTripBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         getData()
 
         binding.IVBack.setOnClickListener {
-            /*onBackPressed()*/
-            val intent = Intent(this, RequestsActivity::class.java).apply {
-                putExtra("trip", trip)
-            }
-            startActivity(intent)
-            overridePendingTransition(0, R.anim.slide_in_down)
-            finish()
+            onBackPressed()
+
         }
 
         binding.BTRefuseTrip.setOnClickListener {
@@ -45,6 +39,20 @@ class RefuseTripActivity : AppCompatActivity() {
 
             /*deleteBooking(booking)*/
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        goRequestsActivity()
+    }
+
+    private fun goRequestsActivity(){
+        val intent = Intent(this, RequestsActivity::class.java).apply {
+            putExtra("trip", trip)
+        }
+        startActivity(intent)
+        overridePendingTransition(0, R.anim.slide_in_down)
+        finish()
     }
 
     private fun updateBooking(bookingModel: BookingModel) {

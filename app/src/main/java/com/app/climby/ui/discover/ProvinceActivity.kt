@@ -3,7 +3,6 @@ package com.app.climby.ui.discover
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,7 @@ import com.app.climby.R
 import com.app.climby.databinding.ActivityProvinceBinding
 import com.app.climby.ui.discover.adapter.ProvinceAdapter
 import com.app.climby.ui.discover.viewmodel.ProvinceViewModel
-import com.app.climby.utils.IOnBackPressed
+import com.app.climby.util.IOnBackPressed
 import com.app.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 

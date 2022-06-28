@@ -1,4 +1,4 @@
-package com.app.climby.utils
+package com.app.climby.util
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
@@ -7,7 +7,6 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
-import java.time.LocalDate
 import java.util.*
 
 class DatePickerFragment(val listener: (day: Int, month: Int, year: Int) -> Unit, private val selectedDate: String) : DialogFragment(), OnDateSetListener {

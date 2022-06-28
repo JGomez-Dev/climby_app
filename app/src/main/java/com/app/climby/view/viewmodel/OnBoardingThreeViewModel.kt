@@ -7,9 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.domain.booking.PutBooking
-import com.app.climby.domain.trip.PutTrip
 import com.app.climby.domain.user.Update
-import com.app.climby.utils.Commons
+import com.app.climby.util.Commons
 import com.app.climby.view.activity.OnBoardingThreeActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 

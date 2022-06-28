@@ -112,7 +112,7 @@
         </activity>
 
         <service
-            android:name=".utils.MyFirebaseMessagingService"
+            android:name=".util.MyFirebaseMessagingService"
             android:directBootAware="true"
             android:exported="true"
             tools:ignore="ExportedService"

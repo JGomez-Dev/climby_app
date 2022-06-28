@@ -20,7 +20,7 @@ import com.app.climby.databinding.FragmentComingOutingsBinding
 import com.app.climby.ui.discover.TripUsersActivity
 import com.app.climby.ui.discover.adapter.DiscoverAdapter
 import com.app.climby.ui.profile.viewmodel.ComingOutingsViewModel
-import com.app.climby.utils.Commons
+import com.app.climby.util.Commons
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,33 +40,35 @@ class ComingOutingsFragment : Fragment() {
         }else {
             binding.CLNotConnection.isVisible = false
             binding.RVTrips.layoutManager = LinearLayoutManager(activity)
-            comingOutingsViewModel.tripsModel.observe(viewLifecycleOwner) {
-                if (it.isNullOrEmpty()) {
+            comingOutingsViewModel.tripsModel.observe(viewLifecycleOwner) { tripList ->
+                if (tripList.isNullOrEmpty()) {
                     binding.CLTripsEmpty.isVisible = true
                     binding.RVTrips.isVisible = false
                     /*moveHand()*/
                 } else {
                     binding.CLTripsEmpty.isVisible = false
                     binding.RVTrips.isVisible = true
-                    discoverAdapter = DiscoverAdapter(it, requireContext(), "comingOutings")
-                    binding.RVTrips.adapter = discoverAdapter
-                    discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
-                        override fun onItemClick(position: Int) {
-                            loadTripUsers(it[position])
-                        }
+                    activity?.let {
+                        discoverAdapter = DiscoverAdapter(tripList, requireContext(), "comingOutings", it)
+                        binding.RVTrips.adapter = discoverAdapter
+                        discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
+                            override fun onItemClick(position: Int) {
+                                loadTripUsers(tripList[position])
+                            }
 
-                        override fun onClickAddMe(position: Int) {
+                            override fun onClickAddMe(position: Int) {
 
-                        }
+                            }
 
-                        override fun onClickRemoveMe(_it: BookingModel, position: Int) {
-                            showDialog(view, _it, it, position)
-                        }
+                            override fun onClickRemoveMe(_it: BookingModel, position: Int) {
+                                showDialog(view, _it, tripList, position)
+                            }
 
-                        override fun onItemShowResume(position: Int) {
-                            showResumeTripActivity(it[position])
-                        }
-                    })
+                            override fun onItemShowResume(position: Int) {
+                                showResumeTripActivity(tripList[position])
+                            }
+                        })
+                    }
                 }
             }
             comingOutingsViewModel.isLoading.observe(viewLifecycleOwner, Observer {

@@ -45,8 +45,7 @@ class WhatPlaceActivity : AppCompatActivity() {
 
         binding.IVBack.setOnClickListener {
             onBackPressed()
-            closeKeyboard()
-            overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
+
         }
 
         binding.ACSchool.addTextChangedListener(object : TextWatcher {
@@ -90,14 +89,20 @@ class WhatPlaceActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        closeKeyboard()
+        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
     private fun showEditTripActivity(tripModel: TripModel) {
         val intent = Intent(this, EditTripActivity::class.java).apply {
             putExtra("trip", tripModel)
             putExtra("schoolPublish", binding.ACSchool.text.toString())
-
         }
         startActivity(intent)
-        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
+        finish()
+        overridePendingTransition(0, R.anim.slide_in_down)
     }
 
     private fun replaceFragment() {

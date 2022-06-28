@@ -3,7 +3,6 @@ package com.app.climby.ui.discover
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,9 +18,8 @@ import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ActivityTripUsersBinding
 import com.app.climby.ui.discover.adapter.TripUsersAdapter
 import com.app.climby.ui.discover.viewmodel.TripUsersViewModel
-import com.app.climby.utils.Commons
-import com.app.climby.utils.IOnBackPressed
-import com.app.climby.utils.ReservationStatus
+import com.app.climby.util.Commons
+import com.app.climby.util.ReservationStatus
 import com.app.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -20,7 +19,7 @@ import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.FragmentMyOutingsBinding
 import com.app.climby.ui.profile.adapter.DiscoverProfileAdapter
 import com.app.climby.ui.profile.viewmodel.MyOutingsViewModel
-import com.app.climby.utils.Commons
+import com.app.climby.util.Commons
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,29 +39,31 @@ class MyOutingsFragment : Fragment() {
         }else {
             binding.CLNotConnection.isVisible = false
             binding.RVTrips.layoutManager = LinearLayoutManager(activity)
-            myOutingsViewModel.tripsModel.observe(viewLifecycleOwner) {
-                if (it.isNullOrEmpty()) {
+            myOutingsViewModel.tripsModel.observe(viewLifecycleOwner) {tripList ->
+                if (tripList.isNullOrEmpty()) {
                     binding.CLTripsEmpty.isVisible = true
                     binding.RVTrips.isVisible = false
                     moveHand()
                 } else {
                     /*binding.CLTripsEmpty.isVisible = false*/
                     binding.RVTrips.isVisible = true
-                    discoverAdapterProfile = DiscoverProfileAdapter(it, requireContext())
-                    binding.RVTrips.adapter = discoverAdapterProfile
-                    discoverAdapterProfile.setOnItemClickListener(object : DiscoverProfileAdapter.OnItemClickListener {
-                        override fun onItemClick(position: Int) {
-                            //loadActivity(it[position])
-                        }
+                    activity?.let {
+                        discoverAdapterProfile = DiscoverProfileAdapter(tripList, requireContext(), it)
+                        binding.RVTrips.adapter = discoverAdapterProfile
+                        discoverAdapterProfile.setOnItemClickListener(object : DiscoverProfileAdapter.OnItemClickListener {
+                            override fun onItemClick(position: Int) {
+                                //loadActivity(it[position])
+                            }
 
-                        override fun onItemEdit(position: Int) {
-                            showEditTripActivity(it[position])
-                        }
+                            override fun onItemEdit(position: Int) {
+                                showEditTripActivity(tripList[position])
+                            }
 
-                        override fun onItemShowResume(position: Int) {
-                            showResumeTripActivity(it[position])
-                        }
-                    })
+                            override fun onItemShowResume(position: Int) {
+                                showResumeTripActivity(tripList[position])
+                            }
+                        })
+                    }
                 }
             }
             myOutingsViewModel.isLoading.observe(viewLifecycleOwner, Observer {

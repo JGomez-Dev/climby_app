@@ -1,4 +1,4 @@
-package com.app.climby.utils
+package com.app.climby.util
 
 import android.app.Notification
 import android.app.NotificationChannel

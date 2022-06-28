@@ -1,4 +1,4 @@
-package com.app.climby.utils
+package com.app.climby.util
 
 import android.app.Activity
 import android.content.Context
@@ -10,7 +10,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import kotlin.Throws
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
-import com.app.climby.data.model.trip.TripModel
 import org.json.JSONException
 import java.util.HashMap
 
