@@ -28,6 +28,7 @@ import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.FragmentDiscoverBinding
 import com.app.climby.ui.discover.adapter.DiscoverAdapter
+import com.app.climby.ui.discover.router.ProvinceRouter
 import com.app.climby.ui.discover.router.TripUsersRouter
 import com.app.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.app.climby.util.Commons
@@ -292,12 +293,13 @@ class DiscoverFragment : Fragment() {
     }
 
     private fun loadProvinces() {
-        val intent = Intent(activity, ProvinceActivity::class.java).apply {
+        ProvinceRouter().launch(requireActivity(), binding.TVCommunity.text.toString())
+        /*val intent = Intent(activity, ProvinceActivity::class.java).apply {
             putExtra("province", binding.TVCommunity.text)
         }
 
         startActivity(intent)
-        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
+        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)*/
 
     }
 
