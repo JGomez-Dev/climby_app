@@ -1,4 +1,4 @@
-package com.app.climby.util;
+package com.app.climby.util.extension;
 
 import android.content.Context;
 import android.util.AttributeSet;

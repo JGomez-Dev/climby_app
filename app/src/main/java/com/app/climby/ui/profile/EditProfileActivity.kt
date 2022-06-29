@@ -86,7 +86,6 @@ class EditProfileActivity : AppCompatActivity() {
         }
         binding.IVBack.setOnClickListener {
             onBackPressed()
-            overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
         }
 
         binding.BTLogout.setOnClickListener {
@@ -114,6 +113,11 @@ class EditProfileActivity : AppCompatActivity() {
               showMainActivity()
           })*/
         init()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
     private fun authActivity() {

@@ -21,7 +21,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(p0: RemoteMessage) {
 
-
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val NOTIFICATION_CHANNEL_ID = "Nilesh_channel"
 
@@ -53,7 +52,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setWhen(System.currentTimeMillis())
             .setSmallIcon(R.drawable.icon_app)
             .setAutoCancel(true)
-
 
         notificationManager.notify(1000, notificationBuilder.build())
 

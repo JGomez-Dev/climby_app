@@ -1,6 +1,9 @@
 package com.app.climby.util
 
 object UIConstants {
+
+    const val ANIMATE: Long = 1000
+
 }
 
 enum class UserExperience(val status: String){

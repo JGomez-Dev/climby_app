@@ -19,6 +19,7 @@ import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.FragmentComingOutingsBinding
 import com.app.climby.ui.discover.adapter.DiscoverAdapter
 import com.app.climby.ui.discover.router.TripUsersRouter
+import com.app.climby.ui.profile.router.ResumeTripRouter
 import com.app.climby.ui.profile.viewmodel.ComingOutingsViewModel
 import com.app.climby.util.Commons
 import com.app.climby.util.From
@@ -66,7 +67,7 @@ class ComingOutingsFragment : Fragment() {
                             }
 
                             override fun onItemShowResume(position: Int) {
-                                showResumeTripActivity(tripList[position])
+                                goToResumeTripActivity(tripList[position])
                             }
                         })
                     }
@@ -86,15 +87,15 @@ class ComingOutingsFragment : Fragment() {
         return view
     }
 
-    private fun showResumeTripActivity(tripModel: TripModel) {
-        activity?.let {
+    private fun goToResumeTripActivity(trip: TripModel) {
+        ResumeTripRouter().launch(requireActivity(), trip)
+        /*activity?.let {
             val intent = Intent(activity, ResumeTripActivity::class.java).apply {
                 putExtra("trip", tripModel)
-                putExtra("from", "ComingOutings")
             }
             it.startActivity(intent)
             it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+        }*/
     }
 
     @SuppressLint("NotifyDataSetChanged")

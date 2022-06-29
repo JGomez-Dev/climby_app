@@ -1,13 +1,9 @@
 package com.app.climby.ui.profile
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,9 +15,11 @@ import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.FragmentMyOutingsBinding
 import com.app.climby.ui.profile.adapter.DiscoverProfileAdapter
 import com.app.climby.ui.profile.router.EditTripRouter
+import com.app.climby.ui.profile.router.ResumeTripRouter
 import com.app.climby.ui.profile.viewmodel.MyOutingsViewModel
 import com.app.climby.util.Commons
 import com.app.climby.util.From
+import com.app.climby.util.UIUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,7 +43,8 @@ class MyOutingsFragment : Fragment() {
                 if (tripList.isNullOrEmpty()) {
                     binding.CLTripsEmpty.isVisible = true
                     binding.RVTrips.isVisible = false
-                    moveHand()
+                    //moveHand()
+                    UIUtil.animateHand(binding.IVHandEmpty)
                 } else {
                     /*binding.CLTripsEmpty.isVisible = false*/
                     binding.RVTrips.isVisible = true
@@ -82,18 +81,17 @@ class MyOutingsFragment : Fragment() {
 
         }
 
-
         return view
     }
 
-    private fun goToResumeTripActivity(tripModel: TripModel) {
-        activity?.let {
-            val intent = Intent(activity, ResumeTripActivity::class.java).apply {
-                putExtra("trip", tripModel)
-            }
-            it.startActivity(intent)
-            it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    private fun goToResumeTripActivity(trip: TripModel) {
+        ResumeTripRouter().launch(requireActivity(), trip)
+        /*val intent = Intent(activity, ResumeTripActivity::class.java).apply {
+            putExtra("trip", tripModel)
         }
+        it.startActivity(intent)
+        it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
+
     }
 
     private fun goToEditTripActivity(trip: TripModel) {
@@ -106,12 +104,12 @@ class MyOutingsFragment : Fragment() {
         activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)*/
     }
 
-    private fun moveHand(){
+    /*private fun moveHand(){
         val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)
         anim.duration = 1000
         anim.repeatCount = Animation.INFINITE;
         anim.repeatMode = ValueAnimator.REVERSE;
 
         anim.start()
-    }
+    }*/
 }

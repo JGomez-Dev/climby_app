@@ -26,7 +26,6 @@ class ResumeTripActivity : AppCompatActivity() {
     private lateinit var resumeTripAdapter: ResumeTripAdapter
 
     private var trip: TripModel? = null
-    private var from: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,14 +36,8 @@ class ResumeTripActivity : AppCompatActivity() {
 
         getData()
 
-        /*binding.IVBack.setOnClickListener {
-            showMainActivity()
-        }*/
-
-
-
         binding.IVBack.setOnClickListener {
-            showMainActivity()
+            goToMainActivity()
         }
 
         resumeTripViewModel.tripModel.observe(this, Observer {
@@ -57,7 +50,7 @@ class ResumeTripActivity : AppCompatActivity() {
         resumeTripViewModel.markMessagesAsRead(trip)
     }
 
-    private fun showMainActivity() {
+    private fun goToMainActivity() {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("from", "profile")
         }
@@ -70,7 +63,6 @@ class ResumeTripActivity : AppCompatActivity() {
         val bundle = intent.extras
         if (bundle != null) {
             trip = bundle.getParcelable("trip")
-            from = bundle.getString("from")
             val idTrip = bundle.getInt("idTrip")
             if (idTrip != 0) {
                 resumeTripViewModel.getTripById(idTrip)

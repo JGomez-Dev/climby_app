@@ -2,8 +2,6 @@ package com.app.climby.ui.discover
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,7 +12,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -33,6 +30,7 @@ import com.app.climby.ui.discover.router.TripUsersRouter
 import com.app.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.app.climby.util.Commons
 import com.app.climby.util.From
+import com.app.climby.util.UIUtil
 import com.app.climby.view.activity.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -78,7 +76,8 @@ class DiscoverFragment : Fragment() {
 
         if(!Commons.isInternetAvailable(requireContext().applicationContext)){
             binding.CLNotConnection.isVisible = true
-            animateConnection()
+            //animateConnection()
+            UIUtil.animateConnection(binding.TVDontService)
             binding.TVRetryConexion.setOnClickListener {
                 reloadFragment()
             }
@@ -147,8 +146,8 @@ class DiscoverFragment : Fragment() {
                 getData()
                 binding.pullToRefresh.isRefreshing = false
             }
-
-            animateHand()
+            UIUtil.animateHand(binding.IVHandEmpty)
+            //animateHand()
         }
         return view
     }
@@ -162,21 +161,21 @@ class DiscoverFragment : Fragment() {
         }
     }
 
-    private fun animateConnection() {
+   /* private fun animateConnection() {
         val anim = ObjectAnimator.ofFloat(binding.TVDontService, "translationY", 50f, 0f)
         anim.duration = 1000
         anim.repeatCount = Animation.ABSOLUTE
         anim.start()
-    }
+    }*/
 
-    private fun animateHand() {
+    /*private fun animateHand() {
         val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)
         anim.duration = 1000
         anim.repeatCount = Animation.INFINITE
         anim.repeatMode = ValueAnimator.REVERSE
 
         anim.start()
-    }
+    }*/
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showDialog(view: View, booking: BookingModel, it: List<TripModel>, position: Int) {

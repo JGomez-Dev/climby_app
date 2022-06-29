@@ -19,6 +19,7 @@ import com.app.climby.ui.discover.router.TripUsersRouter
 import com.app.climby.ui.profile.RequestsActivity
 import com.app.climby.ui.profile.ResumeTripActivity
 import com.app.climby.ui.profile.router.RequestsRouter
+import com.app.climby.ui.profile.router.ResumeTripRouter
 import com.app.climby.util.Commons
 import com.app.climby.util.From
 import com.app.climby.view.viewmodel.AuthViewModel
@@ -152,13 +153,18 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToResumeTrip(idTrip: String?) {
-        val intent = Intent(applicationContext.applicationContext, ResumeTripActivity::class.java).apply {
+    private fun goToResumeTrip(tripId: String?) {
+        authViewModel.getTripById(tripId!!.toInt())
+        authViewModel.tripModel.observe(this, Observer {
+            ResumeTripRouter().launch(this, it)
+            finish()
+        })
+        /*val intent = Intent(applicationContext.applicationContext, ResumeTripActivity::class.java).apply {
             putExtra("from", "profile")
             putExtra("idTrip", idTrip?.toInt())
         }
         startActivity(intent)
-        finish()
+        finish()*/
     }
 
     private fun goToProfile() {
