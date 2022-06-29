@@ -1,7 +1,6 @@
 package com.app.climby.ui.profile
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -51,7 +50,7 @@ class ComingOutingsFragment : Fragment() {
                     binding.CLTripsEmpty.isVisible = false
                     binding.RVTrips.isVisible = true
                     activity?.let {
-                        discoverAdapter = DiscoverAdapter(tripList, requireContext(), From.COMINGOUTINGS, it)
+                        discoverAdapter = DiscoverAdapter(tripList, requireContext(), From.COMING_OUTINGS, it)
                         binding.RVTrips.adapter = discoverAdapter
                         discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                             override fun onItemClick(position: Int) {
@@ -139,7 +138,7 @@ class ComingOutingsFragment : Fragment() {
     }*/
 
     private fun loadTripUsers(trip: TripModel) {
-        TripUsersRouter().launch(requireActivity(), trip, From.COMINGOUTINGS)
+        TripUsersRouter().launch(requireActivity(), trip, From.COMING_OUTINGS)
         /*activity?.let {
             val intent = Intent(activity, TripUsersActivity::class.java).apply {
                 putExtra("trip", trip)

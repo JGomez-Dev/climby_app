@@ -21,6 +21,7 @@ import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ActivityEditProfileBinding
 import com.app.climby.ui.profile.viewmodel.EditProfileViewModel
 import com.app.climby.util.Commons
+import com.app.climby.util.From
 import com.app.climby.util.UserExperience
 import com.app.climby.view.activity.AuthActivity
 import com.app.climby.view.activity.MainActivity
@@ -94,11 +95,11 @@ class EditProfileActivity : AppCompatActivity() {
         binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(PhoneNumberFormattingTextWatcher("ES"))
         binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                //TODO algo despues del cambio del texto
+                TODO("")
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //TODO algo despues del cambio del texto
+                TODO("")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -138,11 +139,13 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun showMainActivity() {
+        TODO("Meter Router de Main Activity" )
         val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
-            putExtra("exprienceProfile", userExperience)
+            putExtra("from", From.PROFILE.status)
         }
         startActivity(intent)
         overridePendingTransition(0, R.anim.slide_in_down)
+        finish()
     }
 
     private fun updateUser(data: Uri?) {

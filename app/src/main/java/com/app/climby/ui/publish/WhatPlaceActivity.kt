@@ -15,6 +15,7 @@ import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ActivityWhatPlaceBinding
 import com.app.climby.ui.profile.router.EditTripRouter
 import com.app.climby.ui.publish.viewmodel.WhatPlaceViewModel
+import com.app.climby.util.From
 import com.app.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -74,7 +75,7 @@ class WhatPlaceActivity : AppCompatActivity() {
 
         binding.BTSave.setOnClickListener {
             if(from == "publish") {
-                replaceFragment()
+                goToMainActivity()
                 closeKeyboard()
             }
             else if(from == "editTrip"){
@@ -92,9 +93,7 @@ class WhatPlaceActivity : AppCompatActivity() {
     }
 
     private fun goToEditTripActivity(trip: TripModel, school: String) {
-
         EditTripRouter().launch(this, trip, school)
-
        /* val intent = Intent(this, EditTripActivity::class.java).apply {
             putExtra("trip", trip)
             putExtra("schoolPublish", binding.ACSchool.text.toString())
@@ -104,7 +103,7 @@ class WhatPlaceActivity : AppCompatActivity() {
         overridePendingTransition(0, R.anim.slide_in_down)*/
     }
 
-    private fun replaceFragment() {
+    private fun goToMainActivity() {
         val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
             putExtra("schoolPublish", binding.ACSchool.text.toString())
             putExtra("provincePublish", intent.extras?.getInt("provincePublish", 0))
@@ -112,6 +111,7 @@ class WhatPlaceActivity : AppCompatActivity() {
             putExtra("datePublish", intent.extras?.getString("datePublish", ""))
             putExtra("datePublishWithOutFormat", intent.extras?.getString("datePublishWithOutFormat", ""))
             putExtra("placePublish", intent.extras?.getInt("placePublish", 0))
+            putExtra("from", From.PUBLISH.status)
         }
         startActivity(intent)
         finish()
@@ -130,7 +130,7 @@ class WhatPlaceActivity : AppCompatActivity() {
         inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
     }
 
-    fun checkControls() {
+    private fun checkControls() {
         if (binding.ACSchool.text.toString().isNotEmpty()) {
             binding.BTSave.isEnabled = true
             binding.BTSave.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.primary))
@@ -143,7 +143,7 @@ class WhatPlaceActivity : AppCompatActivity() {
     private fun getData() {
         val bundle = intent.extras
         if (bundle != null) {
-            school = bundle.getString("schoolPublish", "")
+            school = bundle.getString("school", "")
             from = bundle.getString("from", "")
             trip = bundle.getParcelable("trip")
         }

@@ -93,13 +93,13 @@ class MainActivity : AppCompatActivity() {
                     fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
                 }
             }*/
-            if (from == "comingOutings") {
+            /*if (from == "comingOutings") {
                 bundle.getInt("viewPager", 1)
                 val f = ProfileFragment()
                 f.arguments = bundle
                 val fm = supportFragmentManager
                 fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
-            }
+            }*/
             if (from == "profile") {
                 /*if(notification == null){*/
                     navView.selectedItemId = R.id.navigation_profile
@@ -111,18 +111,24 @@ class MainActivity : AppCompatActivity() {
                     fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
                 }*/
             }
-            if (school != "") {
+            if (from == "publish") {
                 val f = PublishFragment()
                 f.arguments = bundle
                 val fm = supportFragmentManager
                 fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
-            } else if (!exprience.isNullOrEmpty()) {
+            }
+            /*if (school != "") {
+                val f = PublishFragment()
+                f.arguments = bundle
+                val fm = supportFragmentManager
+                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
+            }*/ /*else if (!exprience.isNullOrEmpty()) {
                 navView.selectedItemId = R.id.navigation_profile
-                /* val f = ProfileFragment()
+                *//* val f = ProfileFragment()
                  f.arguments = bundle
                  val fm = supportFragmentManager
-                 fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()*/
-            }
+                 fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()*//*
+            }*/
         }
 
     }

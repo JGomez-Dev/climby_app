@@ -20,6 +20,8 @@ enum class ReservationStatus(val status: Boolean?) {
 
 enum class From(val status: String) {
     DISCOVER("discover"),
-    COMINGOUTINGS("comingOutings"),
+    COMING_OUTINGS("comingOutings"),
     PROFILE("profile"),
+    PUBLISH("publish"),
+    EDIT_TRIP("editTrip")
 }

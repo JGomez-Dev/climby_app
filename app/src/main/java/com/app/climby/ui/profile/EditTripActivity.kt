@@ -21,8 +21,10 @@ import com.app.climby.data.model.types.TypesModel
 import com.app.climby.databinding.ActivityEditTripBinding
 import com.app.climby.ui.profile.viewmodel.EditTripViewModel
 import com.app.climby.ui.publish.WhatPlaceActivity
+import com.app.climby.ui.publish.router.WhatPlaceRouter
 import com.app.climby.util.Commons
 import com.app.climby.util.DatePickerFragment
+import com.app.climby.util.From
 import com.app.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,7 +62,7 @@ class EditTripActivity : AppCompatActivity() {
         }
 
         binding.ETSite.setOnClickListener {
-            loadFragment()
+            goToWhatPlaceActivity()
         }
 
         binding.IVBack.setOnClickListener {
@@ -107,19 +109,21 @@ class EditTripActivity : AppCompatActivity() {
         overridePendingTransition(0, R.anim.slide_in_down)
     }
 
-    private fun loadFragment() {
-        val intent = Intent(this, WhatPlaceActivity::class.java).apply {
-            putExtra("schoolPublish", binding.ETSite.text)
-            putExtra("provincePublish", binding.SPCommunity.selectedItemId.toInt())
+    private fun goToWhatPlaceActivity() {
+        WhatPlaceRouter().launch(this, binding.ETSite.text.toString(), From.EDIT_TRIP, trip)
+        /*val intent = Intent(this, WhatPlaceActivity::class.java).apply {
+            putExtra("school", binding.ETSite.text)
+            putExtra("from", From.EDIT_TRIP)
+            putExtra("trip", trip)
+            *//*putExtra("provincePublish", binding.SPCommunity.selectedItemId.toInt())
             putExtra("typePublish", binding.SPType.selectedItemId.toInt())
             putExtra("datePublish", binding.ETDate.text.toString())
             putExtra("datePublishWithOutFormat", dateFormat)
-            putExtra("placePublish", binding.SPPlacesAvailable.selectedItemId.toInt())
-            putExtra("trip", trip)
-            putExtra("from", "editTrip")
+            putExtra("placePublish", binding.SPPlacesAvailable.selectedItemId.toInt())*//*
+
         }
         startActivity(intent)
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
     }
 
     private fun showDialog() {
