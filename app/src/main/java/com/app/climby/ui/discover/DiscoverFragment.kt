@@ -99,7 +99,7 @@ class DiscoverFragment : Fragment() {
                         binding.RVTrips.adapter = discoverAdapter
                         discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                             override fun onItemClick(position: Int) {
-                                loadTripUsers(tripList[position])
+                                goToTripUsers(tripList[position])
                             }
 
                             override fun onClickAddMe(position: Int) {
@@ -120,7 +120,7 @@ class DiscoverFragment : Fragment() {
             }
 
             binding.LYIDiscoverOutputs.setOnClickListener {
-                loadProvinces()
+                goToProvinces()
             }
 
             discoverViewModel.isBadResponse.observe(viewLifecycleOwner) {
@@ -292,7 +292,7 @@ class DiscoverFragment : Fragment() {
         return addresses[0].subAdminArea
     }
 
-    private fun loadProvinces() {
+    private fun goToProvinces() {
         ProvinceRouter().launch(requireActivity(), binding.TVCommunity.text.toString())
         /*val intent = Intent(activity, ProvinceActivity::class.java).apply {
             putExtra("province", binding.TVCommunity.text)
@@ -303,7 +303,7 @@ class DiscoverFragment : Fragment() {
 
     }
 
-    private fun loadTripUsers(trip: TripModel) {
+    private fun goToTripUsers(trip: TripModel) {
             TripUsersRouter().launch(requireActivity(), trip, From.DISCOVER)
             /*val intent = Intent(it, TripUsersActivity::class.java).apply {
                 putExtra("trip", trip)

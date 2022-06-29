@@ -5,17 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.app.climby.R
-import com.app.climby.data.model.school.SchoolModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ActivityWhatPlaceBinding
-import com.app.climby.ui.profile.EditTripActivity
+import com.app.climby.ui.profile.router.EditTripRouter
 import com.app.climby.ui.publish.viewmodel.WhatPlaceViewModel
 import com.app.climby.view.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,13 +78,11 @@ class WhatPlaceActivity : AppCompatActivity() {
                 closeKeyboard()
             }
             else if(from == "editTrip"){
-                showEditTripActivity(trip!!)
+                goToEditTripActivity(trip!!, binding.ACSchool.text.toString())
                 closeKeyboard()
             }
         }
         whatPlaceViewModel.getAllSchools()
-
-
     }
 
     override fun onBackPressed() {
@@ -95,14 +91,17 @@ class WhatPlaceActivity : AppCompatActivity() {
         overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
-    private fun showEditTripActivity(tripModel: TripModel) {
-        val intent = Intent(this, EditTripActivity::class.java).apply {
-            putExtra("trip", tripModel)
+    private fun goToEditTripActivity(trip: TripModel, school: String) {
+
+        EditTripRouter().launch(this, trip, school)
+
+       /* val intent = Intent(this, EditTripActivity::class.java).apply {
+            putExtra("trip", trip)
             putExtra("schoolPublish", binding.ACSchool.text.toString())
         }
         startActivity(intent)
         finish()
-        overridePendingTransition(0, R.anim.slide_in_down)
+        overridePendingTransition(0, R.anim.slide_in_down)*/
     }
 
     private fun replaceFragment() {

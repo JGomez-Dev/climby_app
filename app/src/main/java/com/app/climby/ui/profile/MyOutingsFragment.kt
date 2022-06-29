@@ -18,6 +18,7 @@ import com.app.climby.R
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.FragmentMyOutingsBinding
 import com.app.climby.ui.profile.adapter.DiscoverProfileAdapter
+import com.app.climby.ui.profile.router.EditTripRouter
 import com.app.climby.ui.profile.viewmodel.MyOutingsViewModel
 import com.app.climby.util.Commons
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +57,7 @@ class MyOutingsFragment : Fragment() {
                             }
 
                             override fun onItemEdit(position: Int) {
-                                showEditTripActivity(tripList[position])
+                                goToEditTripActivity(tripList[position])
                             }
 
                             override fun onItemShowResume(position: Int) {
@@ -94,12 +95,14 @@ class MyOutingsFragment : Fragment() {
         }
     }
 
-    private fun showEditTripActivity(tripModel: TripModel) {
-        val intent = Intent(activity, EditTripActivity::class.java).apply {
-            putExtra("trip", tripModel)
+    private fun goToEditTripActivity(trip: TripModel) {
+        EditTripRouter().launch(requireActivity(), trip, null)
+
+        /*val intent = Intent(activity, EditTripActivity::class.java).apply {
+            putExtra("trip", trip)
         }
         startActivity(intent)
-        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
+        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)*/
     }
 
     private fun moveHand(){

@@ -30,6 +30,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PublishFragment : Fragment()/*, IOnBackPressed*/ {
 
+    companion object {
+        fun fragment() = PublishFragment()
+    }
+
     private lateinit var publishViewModel: PublishViewModel
     private lateinit var binding: FragmentPublishBinding
 

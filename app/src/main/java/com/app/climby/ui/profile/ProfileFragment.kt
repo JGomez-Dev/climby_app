@@ -15,7 +15,9 @@ import com.bumptech.glide.Glide
 import com.app.climby.R
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.FragmentProfileBinding
+import com.app.climby.ui.discover.router.ProvinceRouter
 import com.app.climby.ui.profile.adapter.ViewPagerAdapter
+import com.app.climby.ui.profile.router.EditProfileRouter
 import com.app.climby.ui.profile.viewmodel.ProfileViewModel
 import com.app.climby.util.Commons
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -67,7 +69,7 @@ class ProfileFragment: Fragment() {
 
         if(Commons.isInternetAvailable(requireContext().applicationContext)){
             binding.ETEditProfile.setOnClickListener {
-                loadActivity()
+                goToEditProfileActivity()
             }
         }
 
@@ -85,12 +87,13 @@ class ProfileFragment: Fragment() {
         setStart()
     }
 
-    private fun loadActivity(){
-        activity?.let {
+    private fun goToEditProfileActivity(){
+        EditProfileRouter().launch(requireActivity())
+       /* activity?.let {
             val intent = Intent(activity, EditProfileActivity::class.java)
             it.startActivity(intent)
             it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+        }*/
     }
 
     private fun getData() {

@@ -170,8 +170,7 @@ class EditTripActivity : AppCompatActivity() {
         val bundle = intent.extras
         if (bundle != null) {
             trip = bundle.getParcelable("trip")
-            school = bundle.getString("schoolPublish")
-
+            school = bundle.getString("school")
         }
     }
 
