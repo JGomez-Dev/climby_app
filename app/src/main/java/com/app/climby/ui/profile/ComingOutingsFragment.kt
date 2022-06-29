@@ -54,7 +54,7 @@ class ComingOutingsFragment : Fragment() {
                         binding.RVTrips.adapter = discoverAdapter
                         discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                             override fun onItemClick(position: Int) {
-                                loadTripUsers(tripList[position])
+                                goToTripUsersActivity(tripList[position])
                             }
 
                             override fun onClickAddMe(position: Int) {
@@ -137,7 +137,7 @@ class ComingOutingsFragment : Fragment() {
         anim.start()
     }*/
 
-    private fun loadTripUsers(trip: TripModel) {
+    private fun goToTripUsersActivity(trip: TripModel) {
         TripUsersRouter().launch(requireActivity(), trip, From.COMING_OUTINGS)
         /*activity?.let {
             val intent = Intent(activity, TripUsersActivity::class.java).apply {

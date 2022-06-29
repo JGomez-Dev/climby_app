@@ -63,7 +63,7 @@ class PublishFragment : Fragment()/*, IOnBackPressed*/ {
             binding.CLNotConnection.isVisible = false
 
             binding.ETSite.setOnClickListener {
-                loadActivity()
+                goToWhatPlaceActivity()
             }
 
             publishViewModel.provincesModel.observe(viewLifecycleOwner) {
@@ -110,12 +110,12 @@ class PublishFragment : Fragment()/*, IOnBackPressed*/ {
             publishViewModel.getTypes()
 
             if (arguments != null) {
-                school = arguments?.getString("schoolPublish", "")
-                province = arguments?.getInt("provincePublish", 0)!!
-                type = arguments?.getInt("typePublish", 0)!!
-                date = arguments?.getString("datePublish", "")!!
-                dateFormat = arguments?.getString("datePublishWithOutFormat", "")!!
-                places = arguments?.getInt("placePublish", 0)!!
+                school = arguments?.getString("school", "")
+                province = arguments?.getInt("province", 0)!!
+                type = arguments?.getInt("type", 0)!!
+                date = arguments?.getString("date", "")!!
+                dateFormat = arguments?.getString("dateWithoutFormat", "")!!
+                places = arguments?.getInt("place", 0)!!
 
                 binding.ETSite.text = school
                 binding.ETSite.setTextColor(ContextCompat.getColor(requireContext().applicationContext, R.color.black))
@@ -299,15 +299,15 @@ class PublishFragment : Fragment()/*, IOnBackPressed*/ {
         checkControls()
     }
 
-    private fun loadActivity() {
+    private fun goToWhatPlaceActivity() {
         activity?.let {
             val intent = Intent(it, WhatPlaceActivity::class.java).apply {
-                putExtra("schoolPublish", binding.ETSite.text)
-                putExtra("provincePublish", binding.SPCommunity.selectedItemId.toInt())
-                putExtra("typePublish", binding.SPType.selectedItemId.toInt())
-                putExtra("datePublish", binding.ETDate.text.toString())
-                putExtra("datePublishWithOutFormat", dateFormat)
-                putExtra("placePublish", binding.SPPlacesAvailable.selectedItemId.toInt())
+                putExtra("school", binding.ETSite.text)
+                putExtra("province", binding.SPCommunity.selectedItemId.toInt())
+                putExtra("type", binding.SPType.selectedItemId.toInt())
+                putExtra("date", binding.ETDate.text.toString())
+                putExtra("dateWithoutFormat", dateFormat)
+                putExtra("place", binding.SPPlacesAvailable.selectedItemId.toInt())
                 putExtra("from", "publish")
             }
             it.startActivity(intent)

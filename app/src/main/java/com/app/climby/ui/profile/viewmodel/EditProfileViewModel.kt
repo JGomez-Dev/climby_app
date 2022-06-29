@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.domain.user.Update
+import com.app.climby.util.Commons
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.annotation.Nullable
@@ -33,6 +34,7 @@ class EditProfileViewModel @Inject constructor(private val update: Update, @Null
                 editor.putString("phone", userModel.phone)
                 editor.putString("photoUrl", userModel.photo)
                 editor.apply()
+                Commons.userSession = result
                /* Commons.userSession?.photo = result?.photo
                 Commons.userSession?.phone = result?.phone
                 Commons.userSession?.experience = result?.experience*/

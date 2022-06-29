@@ -11,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.app.climby.R
+import com.app.climby.data.model.province.ProvinceModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ActivityWhatPlaceBinding
 import com.app.climby.ui.profile.router.EditTripRouter
 import com.app.climby.ui.publish.viewmodel.WhatPlaceViewModel
 import com.app.climby.util.From
 import com.app.climby.view.activity.MainActivity
+import com.app.climby.view.router.MainRouter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -103,19 +105,31 @@ class WhatPlaceActivity : AppCompatActivity() {
         overridePendingTransition(0, R.anim.slide_in_down)*/
     }
 
+
     private fun goToMainActivity() {
-        val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
+        MainRouter().launch(this,
+            binding.ACSchool.text.toString(),
+            intent.extras?.getInt("province", 0),
+            intent.extras?.getInt("type", 0),
+            intent.extras?.getString("date", ""),
+            intent.extras?.getString("dateWithoutFormat", ""),
+            intent.extras?.getInt("place", 0),
+            From.PUBLISH
+        )
+        finish()
+
+        /*val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
             putExtra("schoolPublish", binding.ACSchool.text.toString())
             putExtra("provincePublish", intent.extras?.getInt("provincePublish", 0))
             putExtra("typePublish", intent.extras?.getInt("typePublish", 0))
             putExtra("datePublish", intent.extras?.getString("datePublish", ""))
             putExtra("datePublishWithOutFormat", intent.extras?.getString("datePublishWithOutFormat", ""))
             putExtra("placePublish", intent.extras?.getInt("placePublish", 0))
-            putExtra("from", From.PUBLISH.status)
+            putExtra("from", from.status)
         }
         startActivity(intent)
         finish()
-        overridePendingTransition(0, R.anim.slide_in_down)
+        overridePendingTransition(0, R.anim.slide_in_down)*/
 
     }
 

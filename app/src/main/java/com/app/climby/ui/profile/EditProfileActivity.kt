@@ -95,11 +95,11 @@ class EditProfileActivity : AppCompatActivity() {
         binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(PhoneNumberFormattingTextWatcher("ES"))
         binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                TODO("")
+                /*TODO("")*/
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                TODO("")
+                /*TODO("")*/
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -139,7 +139,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun showMainActivity() {
-        TODO("Meter Router de Main Activity" )
+        //TODO("Meter Router de Main Activity" )
         val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
             putExtra("from", From.PROFILE.status)
         }
@@ -180,8 +180,10 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun init() {
         binding.ETName.setText(userSession.name)
-        binding.ETPhone.setText(getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)?.getString("phone", "..."))
-        Glide.with(this).load(getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)?.getString("photoUrl", "...")).error(R.mipmap.user).into(binding.CIPhotoUser)
+        //binding.ETPhone.setText(getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)?.getString("phone", "..."))
+        binding.ETPhone.setText(userSession.phone)
+        //Glide.with(this).load(getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)?.getString("photoUrl", "...")).error(R.mipmap.user).into(binding.CIPhotoUser)
+        Glide.with(this).load(userSession.photo).error(R.mipmap.user).into(binding.CIPhotoUser)
         checkExperience()
     }
 

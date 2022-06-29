@@ -71,21 +71,20 @@ class MainActivity : AppCompatActivity() {
 
         val bundle = intent.extras
         if (bundle != null) {
-            val school = bundle.getString("schoolPublish", "")
+            /*val school = bundle.getString("school", "")
             val exprience = bundle.getString("exprienceProfile", null)
-            val province = bundle.getInt("provincePublish", 0)
-            val type = bundle.getInt("typePublish", 0)
-            val date = bundle.getString("datePublish", "")
-            val dateFormat = bundle.getString("datePublishWithOutFormat", "")
-            val places = bundle.getInt("placePublish", 0)
+            val province = bundle.getInt("province", 0)
+            val type = bundle.getInt("type", 0)
+            val date = bundle.getString("date", "")
+            val dateFormat = bundle.getString("dateWithoutFormat", "")
+            val places = bundle.getInt("place", 0)*/
             /*val to = bundle.getString("to", "")*/
 
 
             val from = bundle.getString("from", null)
-            val notification = bundle.getString("notification", null)
+           /* val notification = bundle.getString("notification", null)*/
 
             /*if (to != "") {
-                *//*TODO tengo que meter en los extras cuando venga del dialog que se tiene que marcar la navvar*//*
                 if (to == "myOutigsFragment") {
                     val f = ProfileFragment()
                     f.arguments = bundle

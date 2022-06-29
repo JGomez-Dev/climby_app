@@ -30,6 +30,7 @@ import com.app.climby.ui.discover.router.TripUsersRouter
 import com.app.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.app.climby.util.Commons
 import com.app.climby.util.From
+import com.app.climby.util.IOnBackPressed
 import com.app.climby.util.UIUtil
 import com.app.climby.view.activity.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -41,7 +42,7 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class DiscoverFragment : Fragment() {
+class DiscoverFragment : Fragment(){
 
     companion object {
         fun fragment() = DiscoverFragment()
@@ -61,7 +62,7 @@ class DiscoverFragment : Fragment() {
             if (result) {
                 getLocation()// permission is granted
             } else {
-               //TODO para recibir una hubiocacion exacta deberás aceptar los permisos de hubicacion, tambien puedes buscar
+                //TODO("para recibir una hubiocacion exacta deberás aceptar los permisos de hubicacion, tambien puedes buscar")
                 binding.CLTripsEmpty.isVisible = true
             }
         }
@@ -110,7 +111,7 @@ class DiscoverFragment : Fragment() {
                             }
 
                             override fun onItemShowResume(position: Int) {
-                                //TODO algo
+                                //TODO("")
                             }
                         })
                     }
@@ -326,4 +327,5 @@ class DiscoverFragment : Fragment() {
             }
         }
     }
+
 }

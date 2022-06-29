@@ -8,4 +8,5 @@ class DiscoverRouter : BaseFragmentRouter {
     override fun fragment(): Fragment {
         TODO("Not yet implemented")
     }
+
 }

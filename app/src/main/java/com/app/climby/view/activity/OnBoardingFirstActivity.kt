@@ -65,11 +65,11 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         binding.ETPhone.addTextChangedListener(PhoneNumberFormattingTextWatcher("ES"))
         binding.ETPhone.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                TODO("")
+                //TODO("")
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                TODO("")
+                //TODO("")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {

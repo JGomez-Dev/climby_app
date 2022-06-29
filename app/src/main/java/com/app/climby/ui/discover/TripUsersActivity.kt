@@ -44,9 +44,10 @@ class TripUsersActivity : AppCompatActivity() {
         init()
 
         binding.IVBack.setOnClickListener {
-            when (from) {
+            onBackPressed()
+           /* when (from) {
                 "profile" -> {
-                    showMainActivity("profile")
+                    goToMainActivity("profile")
                 }
                 "discover" -> {
                     onBackPressed()
@@ -54,7 +55,7 @@ class TripUsersActivity : AppCompatActivity() {
                 else -> {
                     onBackPressed()
                 }
-            }
+            }*/
         }
 
         tripUsersViewModel.tripModel.observe(this, Observer {
@@ -74,7 +75,7 @@ class TripUsersActivity : AppCompatActivity() {
         overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
-    private fun showMainActivity(from: String) {
+    private fun goToMainActivity(from: String) {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("from", from)
             putExtra("viewPager", 1)
