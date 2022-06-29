@@ -95,7 +95,7 @@ class DiscoverFragment : Fragment() {
                     binding.CLTripsEmpty.isVisible = false
                     binding.RVTrips.isVisible = true
                     activity?.let {
-                        discoverAdapter = DiscoverAdapter(tripList, requireContext(), "discover", it)
+                        discoverAdapter = DiscoverAdapter(tripList, requireContext(), From.DISCOVER, it)
                         binding.RVTrips.adapter = discoverAdapter
                         discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                             override fun onItemClick(position: Int) {

@@ -19,20 +19,22 @@ import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ItemDiscoverBinding
 import com.app.climby.ui.profile.RequestsActivity
+import com.app.climby.ui.profile.router.RequestsRouter
 import com.app.climby.util.Commons
+import com.app.climby.util.From
 import com.app.climby.util.ReservationStatus
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: String, fragmentActivity: FragmentActivity) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
+class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, fragmentActivity: FragmentActivity) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
 
     private var tripsList: List<TripModel> = ArrayList()
     private var context: Context
     private lateinit var userDiscoverAdapter: UserDiscoverAdapter
     private lateinit var mlistener: OnItemClickListener
-    private var from: String
+    private var from: From
     private var fragmentActivity: FragmentActivity
 
     init {
@@ -113,14 +115,15 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: String,
 
                     binding.TVNumberMessage.text = unreadMessages.toString()
                     BTRequest.setOnClickListener {
-                        context.applicationContext.let {
+                        RequestsRouter().launch(fragmentActivity, trip, from)
+                        /*context.applicationContext.let {
                             val intent = Intent(context, RequestsActivity::class.java).apply {
                                 putExtra("trip", trip)
                                 putExtra("from", from)
                             }
                             context.startActivities(arrayOf(intent))
                             fragmentActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-                        }
+                        }*/
 
                     }
                 }

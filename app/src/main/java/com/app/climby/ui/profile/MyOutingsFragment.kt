@@ -21,6 +21,7 @@ import com.app.climby.ui.profile.adapter.DiscoverProfileAdapter
 import com.app.climby.ui.profile.router.EditTripRouter
 import com.app.climby.ui.profile.viewmodel.MyOutingsViewModel
 import com.app.climby.util.Commons
+import com.app.climby.util.From
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,7 +50,7 @@ class MyOutingsFragment : Fragment() {
                     /*binding.CLTripsEmpty.isVisible = false*/
                     binding.RVTrips.isVisible = true
                     activity?.let {
-                        discoverAdapterProfile = DiscoverProfileAdapter(tripList, requireContext(), it)
+                        discoverAdapterProfile = DiscoverProfileAdapter(tripList, requireContext(), it, From.PROFILE)
                         binding.RVTrips.adapter = discoverAdapterProfile
                         discoverAdapterProfile.setOnItemClickListener(object : DiscoverProfileAdapter.OnItemClickListener {
                             override fun onItemClick(position: Int) {
@@ -61,7 +62,7 @@ class MyOutingsFragment : Fragment() {
                             }
 
                             override fun onItemShowResume(position: Int) {
-                                showResumeTripActivity(tripList[position])
+                                goToResumeTripActivity(tripList[position])
                             }
                         })
                     }
@@ -85,7 +86,7 @@ class MyOutingsFragment : Fragment() {
         return view
     }
 
-    private fun showResumeTripActivity(tripModel: TripModel) {
+    private fun goToResumeTripActivity(tripModel: TripModel) {
         activity?.let {
             val intent = Intent(activity, ResumeTripActivity::class.java).apply {
                 putExtra("trip", tripModel)

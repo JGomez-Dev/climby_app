@@ -50,7 +50,7 @@ class ComingOutingsFragment : Fragment() {
                     binding.CLTripsEmpty.isVisible = false
                     binding.RVTrips.isVisible = true
                     activity?.let {
-                        discoverAdapter = DiscoverAdapter(tripList, requireContext(), "comingOutings", it)
+                        discoverAdapter = DiscoverAdapter(tripList, requireContext(), From.COMINGOUTINGS, it)
                         binding.RVTrips.adapter = discoverAdapter
                         discoverAdapter.setOnItemClickListener(object : DiscoverAdapter.OnItemClickListener {
                             override fun onItemClick(position: Int) {
@@ -138,7 +138,7 @@ class ComingOutingsFragment : Fragment() {
     }*/
 
     private fun loadTripUsers(trip: TripModel) {
-        TripUsersRouter().launch(requireActivity(), trip,From.COMINGOUTINGS)
+        TripUsersRouter().launch(requireActivity(), trip, From.COMINGOUTINGS)
         /*activity?.let {
             val intent = Intent(activity, TripUsersActivity::class.java).apply {
                 putExtra("trip", trip)

@@ -4,10 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.app.climby.R
 import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ActivityRefuseTripBinding
+import com.app.climby.ui.profile.router.RequestsRouter
 import com.app.climby.ui.profile.viewmodel.RefuseTripViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +18,7 @@ class RefuseTripActivity : AppCompatActivity() {
     private lateinit var refuseTripViewModel: RefuseTripViewModel
 
     private var booking: BookingModel? = null
-    private var trip: TripModel? = null
+    private lateinit var trip: TripModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class RefuseTripActivity : AppCompatActivity() {
         }
 
         binding.BTRefuseTrip.setOnClickListener {
-            updateBooking(BookingModel(booking?.id!!, booking?.passenger , trip?.id!!, null, booking?.valuationStatus, booking?.date, booking?.message ))
+            updateBooking(BookingModel(booking?.id!!, booking?.passenger , trip.id, null, booking?.valuationStatus, booking?.date, booking?.message ))
 
             /*deleteBooking(booking)*/
         }
@@ -43,16 +43,18 @@ class RefuseTripActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        goRequestsActivity()
+        goRequestsActivity(trip)
     }
 
-    private fun goRequestsActivity(){
-        val intent = Intent(this, RequestsActivity::class.java).apply {
+    private fun goRequestsActivity(trip: TripModel) {
+        RequestsRouter().launch(this, trip, null)
+        finish()
+        /*val intent = Intent(this, RequestsActivity::class.java).apply {
             putExtra("trip", trip)
         }
         startActivity(intent)
-        overridePendingTransition(0, R.anim.slide_in_down)
-        finish()
+        overridePendingTransition(0, R.anim.slide_in_down)*/
+
     }
 
     private fun updateBooking(bookingModel: BookingModel) {
@@ -76,6 +78,6 @@ class RefuseTripActivity : AppCompatActivity() {
     private fun getData() {
         val bundle = intent.extras
         booking = bundle?.getParcelable("booking")
-        trip = bundle?.getParcelable("trip")
+        trip = bundle?.getParcelable("trip")!!
     }
 }

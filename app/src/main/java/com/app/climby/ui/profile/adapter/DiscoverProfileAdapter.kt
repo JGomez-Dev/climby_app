@@ -20,7 +20,9 @@ import com.app.climby.data.model.trip.TripModel
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.ui.discover.adapter.UserDiscoverAdapter
 import com.app.climby.ui.profile.RequestsActivity
+import com.app.climby.ui.profile.router.RequestsRouter
 import com.app.climby.util.Commons
+import com.app.climby.util.From
 import com.app.climby.util.ReservationStatus
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
@@ -28,7 +30,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragmentActivity: FragmentActivity) : RecyclerView.Adapter<DiscoverProfileAdapter.DataViewHolder>() {
+class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragmentActivity: FragmentActivity, from: From) : RecyclerView.Adapter<DiscoverProfileAdapter.DataViewHolder>() {
 
 
     private var tripsList: List<TripModel> = ArrayList()
@@ -38,11 +40,13 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
     private lateinit var userDiscoverAdapter: UserDiscoverAdapter
     private lateinit var mlistener: OnItemClickListener
     private var fragmentActivity: FragmentActivity
+    private var from: From
 
     init {
         this.tripsList = tripData
         this.context = context
         this.fragmentActivity = fragmentActivity
+        this.from = from
     }
 
     interface OnItemClickListener {
@@ -117,12 +121,13 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
                 }
 
                 btRequest.setOnClickListener {
-                    val intent = Intent(context, RequestsActivity::class.java).apply {
+                    RequestsRouter().launch(fragmentActivity, trip, from)
+                    /*val intent = Intent(context, RequestsActivity::class.java).apply {
                         putExtra("trip", trip)
                         putExtra("from", "profile")
                     }
                     context.startActivities(arrayOf(intent))
-                    fragmentActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                    fragmentActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
                 }
                 /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
                 trip.bookings?.forEach {
@@ -167,11 +172,12 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
 
                 if (accepted == trip.availablePlaces) {
                     btRequest.setOnClickListener {
-                        val intent = Intent(context, RequestsActivity::class.java).apply {
+                        RequestsRouter().launch(fragmentActivity, trip, null)
+                        /*val intent = Intent(context, RequestsActivity::class.java).apply {
                             putExtra("trip", trip)
                         }
                         context.startActivities(arrayOf(intent))
-                        fragmentActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                        fragmentActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
                     }
                     btRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
                     btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
