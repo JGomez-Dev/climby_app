@@ -15,7 +15,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.app.climby.R
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ActivityEditProfileBinding
@@ -23,8 +22,9 @@ import com.app.climby.ui.profile.viewmodel.EditProfileViewModel
 import com.app.climby.util.Commons
 import com.app.climby.util.From
 import com.app.climby.util.UserExperience
-import com.app.climby.view.activity.AuthActivity
-import com.app.climby.view.activity.MainActivity
+import com.app.climby.view.router.AuthRouter
+import com.app.climby.view.router.MainRouter
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
@@ -38,10 +38,9 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var editProfileViewModel: EditProfileViewModel
     private var photoUrl: String? = null
-    private var userExperience: String = "Principiante"
+    private lateinit var userExperience: String
     private var userSession: UserModel = Commons.userSession!!
 
-    /*private var storage = Firebase.storage*/
     private var uriPhoto: Uri? = null
     private val storage = Firebase.storage
     private val storageRef = storage.reference
@@ -58,14 +57,13 @@ class EditProfileActivity : AppCompatActivity() {
                 prefs.putString("photoUrl", photoUrl)
                 prefs.apply()
                 userSession.photo = photoUrl
-                editProfileViewModel.updateUser(UserModel(userSession.id, userSession.name, getExperince(userExperience), binding.ETPhone.text.toString().replace(" ", ""), userSession.email, userSession.score, userSession.ratings, userSession.outings, photoUrl, userSession.token))
+                //editProfileViewModel.updateUser(UserModel(userSession.id, userSession.name, getExperince(userExperience), binding.ETPhone.text.toString().replace(" ", ""), userSession.email, userSession.score, userSession.ratings, userSession.outings, photoUrl, userSession.token))
             }
         }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        editProfileViewModel = ViewModelProvider(this).get(EditProfileViewModel::class.java)
+        editProfileViewModel = ViewModelProvider(this)[EditProfileViewModel::class.java]
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -82,15 +80,15 @@ class EditProfileActivity : AppCompatActivity() {
             selectedExperienced()
         }
         binding.BTSave.setOnClickListener {
-            updateUser(uriPhoto)
-            showMainActivity()
+            uploadImage(uriPhoto)
         }
         binding.IVBack.setOnClickListener {
             onBackPressed()
         }
 
         binding.BTLogout.setOnClickListener {
-            authActivity()
+            clearSharedPreference()
+            goToAuthActivity()
         }
         binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(PhoneNumberFormattingTextWatcher("ES"))
         binding.root.findViewById<EditText>(R.id.ETPhone).addTextChangedListener(object : TextWatcher {
@@ -107,7 +105,7 @@ class EditProfileActivity : AppCompatActivity() {
             }
         })
         editProfileViewModel.textLD.observe(this) {
-            binding.root.findViewById<Button>(R.id.BTSave).isEnabled = it
+            binding.BTSave.isEnabled = it
         }
 
         /*  editProfileViewModel.isComplete.observe(this, Observer {
@@ -121,34 +119,33 @@ class EditProfileActivity : AppCompatActivity() {
         overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
-    private fun authActivity() {
+    private fun clearSharedPreference() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE).edit()
         prefs.clear()
         prefs.putString("email", userSession.email)
         prefs.putInt("id", userSession.id)
         prefs.apply()
         FirebaseAuth.getInstance().signOut()
-        showResumeTripActivity()
-
     }
 
-    private fun showResumeTripActivity() {
-        val intent = Intent(this, AuthActivity::class.java)
-        startActivity(intent)
+    private fun goToAuthActivity() {
+        AuthRouter().launch(this)
         finish()
+        /*val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)*/
     }
 
-    private fun showMainActivity() {
-        //TODO("Meter Router de Main Activity" )
-        val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
+    private fun goToMainActivity() {
+        MainRouter().launch(this, null, From.PROFILE, isEdit = false)
+        finish()
+        /*val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
             putExtra("from", From.PROFILE.status)
         }
         startActivity(intent)
-        overridePendingTransition(0, R.anim.slide_in_down)
-        finish()
+        overridePendingTransition(0, R.anim.slide_in_down)*/
     }
 
-    private fun updateUser(data: Uri?) {
+    private fun uploadImage(data: Uri?) {
         if (data != null) {
             val filePath: StorageReference = storageRef.child("users/" + Commons.userSession?.phone)
             val uploadTask = filePath.putFile(data)
@@ -161,8 +158,9 @@ class EditProfileActivity : AppCompatActivity() {
                 filePath.downloadUrl
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val downloadUri = task.result.toString()
+                    val downloadUri: String = task.result.toString()
                     editProfileViewModel.updateUser(UserModel(userSession.id, userSession.name, getExperince(userExperience), binding.ETPhone.text.toString().replace(" ", ""), userSession.email, userSession.score, userSession.ratings, userSession.outings, downloadUri, userSession.token))
+                    goToMainActivity()
                 } else {
                     Toast.makeText(applicationContext, R.string.problem_with_image, Toast.LENGTH_LONG).show()
                 }
@@ -170,37 +168,40 @@ class EditProfileActivity : AppCompatActivity() {
         }else{
             val re = Regex("[^0-9]")
             val tlf = re.replace( binding.ETPhone.text.toString(), "")// works
-            if(tlf.length != 9)
+            if (tlf.length != 9)
                 Toast.makeText(applicationContext, R.string.dont_valid, Toast.LENGTH_LONG).show()
-            else
+            else {
                 editProfileViewModel.updateUser(UserModel(userSession.id, userSession.name, getExperince(userExperience), tlf.toString(), userSession.email, userSession.score, userSession.ratings, userSession.outings, userSession.photo, userSession.token))
+                goToMainActivity()
+            }
         }
         Commons.userSession?.experience = getExperince(userExperience)
     }
 
     private fun init() {
         binding.ETName.setText(userSession.name)
-        //binding.ETPhone.setText(getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)?.getString("phone", "..."))
         binding.ETPhone.setText(userSession.phone)
-        //Glide.with(this).load(getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)?.getString("photoUrl", "...")).error(R.mipmap.user).into(binding.CIPhotoUser)
         Glide.with(this).load(userSession.photo).error(R.mipmap.user).into(binding.CIPhotoUser)
         checkExperience()
+        userExperience = getString(R.string.edit_profile_beginner)
+        //binding.ETPhone.setText(getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)?.getString("phone", "..."))
+        //Glide.with(this).load(getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)?.getString("photoUrl", "...")).error(R.mipmap.user).into(binding.CIPhotoUser)
     }
 
     private fun getExperince(userExperience: String): String {
         when (userExperience) {
-            UserExperience.BEGINNER.status -> return "Principiante"
-            UserExperience.MEDIUM.status -> return "Intermedio"
-            UserExperience.ADVANCED.status -> return "Experimentado"
+            UserExperience.BEGINNER.status -> return getString(R.string.edit_profile_beginner)
+            UserExperience.MEDIUM.status -> return getString(R.string.edit_profile_intermediate)
+            UserExperience.ADVANCED.status -> return getString(R.string.edit_profile_experienced)
         }
-        return "Principiante"
+        return getString(R.string.edit_profile_beginner)
     }
 
     private fun checkExperience() {
         when (getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)?.getString("experience", "...")) {
-            "Principiante" -> selectedBeginner()
-            "Intermedio" -> selectedIntermediate()
-            "Experimentado" -> selectedExperienced()
+            getString(R.string.edit_profile_beginner) -> selectedBeginner()
+            getString(R.string.edit_profile_intermediate) -> selectedIntermediate()
+            getString(R.string.edit_profile_experienced) -> selectedExperienced()
         }
     }
 

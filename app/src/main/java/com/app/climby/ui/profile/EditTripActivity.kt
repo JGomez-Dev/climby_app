@@ -26,6 +26,7 @@ import com.app.climby.util.Commons
 import com.app.climby.util.DatePickerFragment
 import com.app.climby.util.From
 import com.app.climby.view.activity.MainActivity
+import com.app.climby.view.router.MainRouter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -66,7 +67,7 @@ class EditTripActivity : AppCompatActivity() {
         }
 
         binding.IVBack.setOnClickListener {
-           onBackPressed()
+            goToMainActivity()
         }
 
         binding.BTDeleteExit.setOnClickListener {
@@ -88,26 +89,38 @@ class EditTripActivity : AppCompatActivity() {
         binding.BTNewExit.setOnClickListener {
             val tripModel = TripModel(trip!!.id, SchoolModel(binding.ETSite.text.toString()), TypesModel(binding.SPType.selectedItem.toString()), places + 1, dateFormat, ProvinceModel(binding.SPCommunity.selectedItem.toString(), 0), Commons.userSession, arrayListOf())
             editTripViewModel.updateTrip(tripModel)
-            showMainActivity()
+            goToMainActivity()
         }
     }
 
-    override fun onBackPressed() {
+    private fun goToMainActivity() {
+        MainRouter().launch(this, null, From.PROFILE, isEdit = true)
+        finish()
+        /* val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
+                        putExtra("province", it[position].name)
+                    }
+
+                    startActivity(intent)
+                    overridePendingTransition(0, R.anim.slide_in_down);*/
+    }
+
+    /*override fun onBackPressed() {
         super.onBackPressed()
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("from", "profile")
         }
         startActivity(intent)
         overridePendingTransition(0, R.anim.slide_in_down)
-    }
+        finish()
+    }*/
 
-    private fun showMainActivity() {
+    /*private fun showMainActivity() {
         val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
             putExtra("from", "profile")
         }
         startActivity(intent)
         overridePendingTransition(0, R.anim.slide_in_down)
-    }
+    }*/
 
     private fun goToWhatPlaceActivity() {
         WhatPlaceRouter().launch(this, binding.ETSite.text.toString(), From.EDIT_TRIP, trip)
@@ -135,6 +148,7 @@ class EditTripActivity : AppCompatActivity() {
             }
             .setPositiveButton(R.string.text_delete) { view, _ ->
                 deleteTrip()
+                goToMainActivity()
                 view.dismiss()
             }
             .setCancelable(false)
@@ -167,7 +181,6 @@ class EditTripActivity : AppCompatActivity() {
                 )
             }
         }
-        showMainActivity()
     }
 
     private fun getData() {

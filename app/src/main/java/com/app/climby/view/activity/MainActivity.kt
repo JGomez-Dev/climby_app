@@ -1,12 +1,7 @@
 package com.app.climby.view.activity
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
-import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -15,14 +10,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.app.climby.R
 import com.app.climby.data.model.user.UserModel
-import com.app.climby.ui.profile.ProfileFragment
 import com.app.climby.ui.publish.PublishFragment
 import com.app.climby.util.Commons
+import com.app.climby.util.UIUtil
 import com.app.climby.view.viewmodel.MainViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         navView.itemIconTintList = null;
-        changeItemWiseTextProperties(navView.menu)
+        UIUtil.changeItemWiseTextProperties(navView.menu, this)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
@@ -71,44 +62,9 @@ class MainActivity : AppCompatActivity() {
 
         val bundle = intent.extras
         if (bundle != null) {
-            /*val school = bundle.getString("school", "")
-            val exprience = bundle.getString("exprienceProfile", null)
-            val province = bundle.getInt("province", 0)
-            val type = bundle.getInt("type", 0)
-            val date = bundle.getString("date", "")
-            val dateFormat = bundle.getString("dateWithoutFormat", "")
-            val places = bundle.getInt("place", 0)*/
-            /*val to = bundle.getString("to", "")*/
-
-
             val from = bundle.getString("from", null)
-           /* val notification = bundle.getString("notification", null)*/
-
-            /*if (to != "") {
-                if (to == "myOutigsFragment") {
-                    val f = ProfileFragment()
-                    f.arguments = bundle
-                    val fm = supportFragmentManager
-                    fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
-                }
-            }*/
-            /*if (from == "comingOutings") {
-                bundle.getInt("viewPager", 1)
-                val f = ProfileFragment()
-                f.arguments = bundle
-                val fm = supportFragmentManager
-                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
-            }*/
             if (from == "profile") {
-                /*if(notification == null){*/
                     navView.selectedItemId = R.id.navigation_profile
-                /*}else{
-                    bundle.getInt("viewPager", 0)
-                    val f = ProfileFragment()
-                    f.arguments = bundle
-                    val fm = supportFragmentManager
-                    fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
-                }*/
             }
             if (from == "publish") {
                 val f = PublishFragment()
@@ -116,43 +72,6 @@ class MainActivity : AppCompatActivity() {
                 val fm = supportFragmentManager
                 fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
             }
-            /*if (school != "") {
-                val f = PublishFragment()
-                f.arguments = bundle
-                val fm = supportFragmentManager
-                fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()
-            }*/ /*else if (!exprience.isNullOrEmpty()) {
-                navView.selectedItemId = R.id.navigation_profile
-                *//* val f = ProfileFragment()
-                 f.arguments = bundle
-                 val fm = supportFragmentManager
-                 fm.beginTransaction().replace(R.id.nav_host_fragment, f).addToBackStack(null).commit()*//*
-            }*/
         }
-
     }
-
-    private fun changeItemWiseTextProperties(menu: Menu) {
-        Glide.with(this)
-            .asBitmap()
-            .circleCrop()
-            .load(userSession.photo)
-            .error(R.drawable.ic_baseline_person_24)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(object : CustomTarget<Bitmap>(100, 100) {
-                override fun onLoadCleared(@Nullable placeholder: Drawable?) {}
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap?>?) {
-                    menu.getItem(2).icon = BitmapDrawable(resources, resource)
-                }
-            })
-    }
-
-    /*private fun goToDetalleRequest(idTrip: Int, siteTrip: String) {
-        val intent = Intent(applicationContext.applicationContext, RequestsActivity::class.java).apply {
-            putExtra("from", "profile")
-            putExtra("idTrip", idTrip)
-            putExtra("siteTrip", siteTrip)
-        }
-        startActivity(intent)
-    }*/
 }

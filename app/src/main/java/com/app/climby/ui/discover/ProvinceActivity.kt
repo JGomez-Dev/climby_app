@@ -66,7 +66,7 @@ class ProvinceActivity : AppCompatActivity(), IOnBackPressed {
     }
 
     private fun goToMainActivity(province: ProvinceModel) {
-        MainRouter().launch(this, province)
+        MainRouter().launch(this, province, null, isEdit = false)
         finish()
         /* val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
                         putExtra("province", it[position].name)

@@ -22,7 +22,9 @@ import com.app.climby.databinding.FragmentPublishBinding
 import com.app.climby.ui.publish.viewmodel.PublishViewModel
 import com.app.climby.util.Commons
 import com.app.climby.util.DatePickerFragment
+import com.app.climby.util.From
 import com.app.climby.view.activity.MainActivity
+import com.app.climby.view.router.MainRouter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -89,7 +91,7 @@ class PublishFragment : Fragment()/*, IOnBackPressed*/ {
             }
 
             publishViewModel.tripCreated.observe(viewLifecycleOwner) {
-                showMainActivity()
+                goToMainActivity()
             }
 
             binding.SPPlacesAvailable.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -136,14 +138,14 @@ class PublishFragment : Fragment()/*, IOnBackPressed*/ {
         return view
     }
 
-    private fun showMainActivity() {
-       /* val intent = Intent(context, MainActivity::class.java)
-        startActivity(intent)*/
-        val intent = Intent(context, MainActivity::class.java).apply {
+    private fun goToMainActivity() {
+        MainRouter().launch(requireActivity(), null, From.PROFILE, isEdit = true)
+        requireActivity().finish()
+        /*val intent = Intent(context, MainActivity::class.java).apply {
             putExtra("from", "profile")
         }
         startActivity(intent)
-        activity?.overridePendingTransition(0, R.anim.slide_in_down )
+        activity?.overridePendingTransition(0, R.anim.slide_in_down )*/
     }
 
 

@@ -39,6 +39,10 @@
     <string name="onboarding.page2.body.qualify">Cuenta cómo te sentiste escalando con el grupo o ayuda a Javier a mejorar para la próxima vez…</string>
     <string name="onboarding.page2.button.send">Enviar mi valoración</string>
 
+    <!-- EditProfileActivity -->
+    <string name="edit_profile.beginner">Principiante</string>
+    <string name="edit_profile.intermediate">Intermedio</string>
+    <string name="edit_profile.experienced">Experimentado</string>
 
     <string name="text_rocodromo">Rocódromo</string>
     <string name="text_clasica">Clásica</string>

@@ -14,10 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.app.climby.R
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ActivityAuthBinding
-import com.app.climby.ui.discover.TripUsersActivity
 import com.app.climby.ui.discover.router.TripUsersRouter
-import com.app.climby.ui.profile.RequestsActivity
-import com.app.climby.ui.profile.ResumeTripActivity
 import com.app.climby.ui.profile.router.RequestsRouter
 import com.app.climby.ui.profile.router.ResumeTripRouter
 import com.app.climby.util.Commons
@@ -50,14 +47,14 @@ class AuthActivity : AppCompatActivity() {
                         FirebaseAuth.getInstance().signInWithCredential(credential)
                             .addOnCompleteListener {
                                 if (it.isSuccessful) {
-                                    //val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-                                    //val email = prefs.getString("email", null)
                                     authViewModel.getUserByEmail(account.email ?: "")
                                     authViewModel.exists.observe(this, Observer { it ->
                                         if (it)
-                                            showMainActivity()
-                                        else
-                                            showOnBoardingFirst(account.email ?: "", account.photoUrl?.toString(), account.displayName)
+                                            goToMainActivity()
+                                        else {
+                                            binding.CLLoading.isVisible = false
+                                            goToOnBoardingFirst(account.email ?: "", account.photoUrl?.toString(), account.displayName)
+                                        }
                                     })
                                 } else {
                                     showAlert()
@@ -84,12 +81,6 @@ class AuthActivity : AppCompatActivity() {
             val signInIntent = googleClient.signInIntent
             googleSignIn.launch(signInIntent)
         }
-
-        /*authViewModel.isCharget.observe(this , {
-            if(it){
-                showMainActivity()
-            }
-        })*/
     }
 
     override fun onStart() {
@@ -99,15 +90,12 @@ class AuthActivity : AppCompatActivity() {
 
     private fun session() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-        /*prefs.edit().clear().apply()*/
         val email = prefs.getString("email", null)
         val id = prefs.getInt("id", 0)
-        //val provider = prefs.getString("provider", null)
         val photoUrl = prefs.getString("photoUrl", null)
         val displayName = prefs.getString("displayName", null)
         val phone = prefs.getString("phone", null)
         val experience = prefs.getString("experience", null)
-
         val outings = prefs.getInt("outputs", 0)
         val score = prefs.getFloat("score", 0f)
         val ratings = prefs.getInt("ratings", 0)
@@ -129,26 +117,30 @@ class AuthActivity : AppCompatActivity() {
                             val id = extras.getString("id")
                             when (to) {
                                 "RequestsActivity" -> goToDetalleRequest(id)
-                                "TripUsersActivity" -> loadTripUsers(id)
+                                "TripUsersActivity" -> goToTripUser(id)
                                 "ProfileFragment" -> goToProfile()
                                 "ResumeTripActivity" -> goToResumeTrip(id)
                                 else -> {
-                                    showMainActivity()
+                                    binding.CLLoading.isVisible = false
+                                    goToMainActivity()
                                 }
                             }
                         }
                     } else {
-                        showMainActivity()
+                        binding.CLLoading.isVisible = false
+                        goToMainActivity()
                     }
                 } else {
-                    showMainActivity()
+                    binding.CLLoading.isVisible = false
+                    goToMainActivity()
                 }
             } else if (!phone.isNullOrEmpty()) {
                 binding.CLAuthentication.visibility = View.INVISIBLE
-                showOnBoardingSecond(email, photoUrl, displayName, phone)
+                goToOnBoardingSecond(email, photoUrl, displayName, phone)
             } else {
                 binding.CLAuthentication.visibility = View.INVISIBLE
-                showOnBoardingFirst(email, photoUrl, displayName)
+                binding.CLLoading.isVisible = false
+                goToOnBoardingFirst(email, photoUrl, displayName)
             }
         }
     }
@@ -159,12 +151,6 @@ class AuthActivity : AppCompatActivity() {
             ResumeTripRouter().launch(this, it)
             finish()
         })
-        /*val intent = Intent(applicationContext.applicationContext, ResumeTripActivity::class.java).apply {
-            putExtra("from", "profile")
-            putExtra("idTrip", idTrip?.toInt())
-        }
-        startActivity(intent)
-        finish()*/
     }
 
     private fun goToProfile() {
@@ -183,49 +169,30 @@ class AuthActivity : AppCompatActivity() {
             RequestsRouter().launch(this, it, From.PROFILE)
             finish()
         })
-       /* val intent = Intent(applicationContext.applicationContext, RequestsActivity::class.java).apply {
-            putExtra("from", "profile")
-            putExtra("idTrip", idTrip?.toInt())
-        }
-        startActivity(intent)
-        finish()*/
     }
 
-    private fun loadTripUsers(tripId: String?) {
+    private fun goToTripUser(tripId: String?) {
         authViewModel.getTripById(tripId!!.toInt())
         authViewModel.tripModel.observe(this, Observer {
             TripUsersRouter().launch(this, it, From.PROFILE)
             finish()
         })
-       /* val intent = Intent(applicationContext.applicationContext, TripUsersActivity::class.java).apply {
-            putExtra("from", "profile")
-            putExtra("idTrip", idTrip?.toInt())
-        }
-        startActivity(intent)
-        finish()*/
     }
 
-    /*private fun getData(email: String){
-        return authViewModel.getUserByEmail(email)
-    }*/
-
-    private fun showOnBoardingFirst(email: String, photoUrl: String?, displayName: String?) {
+    private fun goToOnBoardingFirst(email: String, photoUrl: String?, displayName: String?) {
         val intent = Intent(this, OnBoardingFirstActivity::class.java).apply {
             putExtra("email", email)
             putExtra("photoUrl", photoUrl)
-            //putExtra("provider", provider.name)
             putExtra("displayName", displayName)
         }
-        binding.CLLoading.isVisible = false
         startActivity(intent)
         finish()
     }
 
-    private fun showOnBoardingSecond(email: String, photoUrl: String?, displayName: String?, phone: String?) {
+    private fun goToOnBoardingSecond(email: String, photoUrl: String?, displayName: String?, phone: String?) {
         val intent = Intent(this, OnBoardingSecondActivity::class.java).apply {
             putExtra("email", email)
             putExtra("photoUrl", photoUrl)
-            //putExtra("provider", provider.name)
             putExtra("displayName", displayName)
             putExtra("phone", phone)
         }
@@ -233,9 +200,8 @@ class AuthActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun showMainActivity(/*email: String, photoUrl: String?, displayName: String?, provider: ProviderType, phone: String?, experience: String?*/) {
+    private fun goToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
-        binding.CLLoading.isVisible = false
         startActivity(intent)
         finish()
     }

@@ -19,7 +19,7 @@ class EditProfileViewModel @Inject constructor(private val update: Update, @Null
     private val _textMLD = MutableLiveData<Boolean>()
     val textLD: LiveData<Boolean> = _textMLD
     var result: UserModel? = null
-    val isComplete = MutableLiveData<Boolean>()
+    private val isComplete = MutableLiveData<Boolean>()
 
     fun onUsernameTextChanged(text: CharSequence?) {
         _textMLD.value = text.toString().length == 12
@@ -28,16 +28,16 @@ class EditProfileViewModel @Inject constructor(private val update: Update, @Null
     fun updateUser(userModel: UserModel) {
         viewModelScope.launch {
             result = update(userModel)
-            if(result!=null){
+            if (result != null) {
                 val editor = sharedPref.edit()
                 editor.putString("experience", userModel.experience)
                 editor.putString("phone", userModel.phone)
                 editor.putString("photoUrl", userModel.photo)
                 editor.apply()
                 Commons.userSession = result
-               /* Commons.userSession?.photo = result?.photo
-                Commons.userSession?.phone = result?.phone
-                Commons.userSession?.experience = result?.experience*/
+                /* Commons.userSession?.photo = result?.photo
+                 Commons.userSession?.phone = result?.phone
+                 Commons.userSession?.experience = result?.experience*/
             }
             isComplete.postValue(true)
         }

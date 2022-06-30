@@ -1,7 +1,6 @@
 package com.app.climby.view.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -9,7 +8,6 @@ import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -17,10 +15,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.app.climby.R
 import com.app.climby.databinding.ActivityOnboardingFirstBinding
+import com.app.climby.util.UIUtil
 import com.app.climby.view.viewmodel.OnBoardingFirstViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
-import de.hdodenhof.circleimageview.CircleImageView
 
 
 @AndroidEntryPoint
@@ -28,11 +26,11 @@ class OnBoardingFirstActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnboardingFirstBinding
     private lateinit var onBoardingFirstViewModel: OnBoardingFirstViewModel
-    private var email: String? = null
-    private var provider: String? = null
-    private var photoUrl: String? = null
-    private var displayName: String? = null
-    private var phone: String? = null
+    private lateinit var email: String
+    private lateinit var provider: String
+    private lateinit var photoUrl: String
+    private lateinit var displayName: String
+    private lateinit var phone: String
 
     private lateinit var prefs: SharedPreferences.Editor
 
@@ -45,7 +43,6 @@ class OnBoardingFirstActivity : AppCompatActivity() {
             }
         }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onBoardingFirstViewModel = ViewModelProvider(this)[OnBoardingFirstViewModel::class.java]
@@ -54,9 +51,10 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         
         getData()
         setPreferences()
-        showKeyboard()
+        UIUtil.showKeyboard(this)
+        binding.ETPhone.requestFocus()
 
-        Glide.with(this).load(photoUrl).error(R.mipmap.user).into(binding.root.findViewById<CircleImageView>(R.id.CIPhotoUser))
+        Glide.with(this).load(photoUrl).error(R.mipmap.user).into(binding.CIPhotoUser)
         binding.ETName.setText(displayName.toString())
 
         binding.BTSelectPhoto.setOnClickListener {
@@ -65,11 +63,11 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         binding.ETPhone.addTextChangedListener(PhoneNumberFormattingTextWatcher("ES"))
         binding.ETPhone.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                //TODO("")
+                //TODO
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //TODO("")
+                //TODO
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -79,8 +77,9 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         binding.ETPhone.setText(phone)
         binding.ETPhone.text?.let { binding.ETPhone.setSelection(it.length) }
         binding.IVBack.setOnClickListener {
-
-            onBackPressed()
+            clearSharedPreference()
+            UIUtil.hideKeyboard(this)
+            goToAuthActivity()
         }
 
         onBoardingFirstViewModel.textLD.observe(this) {
@@ -94,37 +93,18 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         binding.BTContinue.setOnClickListener {
             prefs.putString("phone", binding.ETPhone.text.toString().replace(" ", ""))
             prefs.apply()
-            showOnBoardingSecond()
+            UIUtil.hideKeyboard(this)
+            goToOnBoardingSecond()
         }
-
-
-
     }
-
-    private fun showKeyboard() {
-        binding.ETPhone.requestFocus()
-        val inputMethodManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
-    }
-
-    private fun closeKeyboard() {
-        val inputMethodManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
-    }
-
-    /*private fun checkPermissionSms() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), 1000)
-        }
-    }*/
 
     private fun getData() {
         val bundle = intent.extras
-        email = bundle?.getString("email")
-        provider = bundle?.getString("provider")
-        photoUrl = bundle?.getString("photoUrl")
-        displayName = bundle?.getString("displayName")
-        phone = bundle?.getString("phone")
+        email = bundle?.getString("email").toString()
+        provider = bundle?.getString("provider").toString()
+        photoUrl = bundle?.getString("photoUrl").toString()
+        displayName = bundle?.getString("displayName").toString()
+        phone = bundle?.getString("phone").toString()
     }
 
     private fun setPreferences() {
@@ -136,7 +116,7 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         prefs.apply()
     }
 
-    private fun showOnBoardingSecond() {
+    private fun goToOnBoardingSecond() {
         val intent = Intent(this, OnBoardingSecondActivity::class.java).apply {
             putExtra("email", email)
             putExtra("photoUrl", photoUrl)
@@ -144,24 +124,21 @@ class OnBoardingFirstActivity : AppCompatActivity() {
             putExtra("displayName", displayName)
             putExtra("phone", binding.ETPhone.text.toString().replace(" ", ""))
         }
-        closeKeyboard()
         startActivity(intent)
     }
 
-    private fun showResumeTripActivity() {
+    private fun goToAuthActivity() {
         val intent = Intent(this, AuthActivity::class.java)
-        closeKeyboard()
         startActivity(intent)
         overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
         finish()
     }
 
-    override fun onBackPressed() {
+    private fun clearSharedPreference(){
         val prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE).edit()
         prefs.clear()
         prefs.apply()
         FirebaseAuth.getInstance().signOut()
-        showResumeTripActivity()
         finish()
     }
 

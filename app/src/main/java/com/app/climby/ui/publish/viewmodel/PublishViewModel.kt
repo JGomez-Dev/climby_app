@@ -31,9 +31,9 @@ class PublishViewModel @Inject constructor(private val getAllProvinces: GetAllPr
         }
     }
 
-    fun saveTrip(tripModel: TripModel) {
+    fun saveTrip(trip: TripModel) {
         viewModelScope.launch {
-            val result: TripModel = insert(tripModel)
+            val result: TripModel = insert(trip)
             tripCreated.postValue(true)
             /* saveTripOnFireBase(result)*/
         }

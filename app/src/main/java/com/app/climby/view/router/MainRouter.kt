@@ -13,10 +13,12 @@ class MainRouter  : BaseActivityRouter {
 
     override fun intent(activity: Context): Intent = Intent(activity, MainActivity::class.java)
 
-    fun intent(activity: Context, province: String?): Intent {
+    fun intent(activity: Context, province: String?, from: String?): Intent {
         val intent = intent(activity)
         if (!province.isNullOrEmpty())
             intent.putExtra("province", province)
+        if (!from.isNullOrEmpty())
+            intent.putExtra("from", from)
         return intent
     }
 
@@ -32,9 +34,14 @@ class MainRouter  : BaseActivityRouter {
         return intent
     }
 
-    fun launch(activity: Context, province: ProvinceModel) {
-        activity.startActivity(intent(activity, province.name))
-        (activity as Activity).overridePendingTransition(0, R.anim.slide_in_down)
+    fun launch(activity: Context, province: ProvinceModel?, from: From?, isEdit: Boolean?) {
+        activity.startActivity(intent(activity, province?.name, from?.status))
+        if (from == From.PROFILE && isEdit == false)
+            (activity as Activity).overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        else if (isEdit == true) {
+            (activity as Activity).overridePendingTransition(0, R.anim.slide_in_down)
+        } else
+            (activity as Activity).overridePendingTransition(0, R.anim.slide_in_down)
     }
 
     fun launch(activity: Context, school: String, province: Int?, type: Int?, date: String?, dateWithoutFormat: String?, place: Int?, from: From) {

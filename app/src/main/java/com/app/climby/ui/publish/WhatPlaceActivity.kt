@@ -1,23 +1,19 @@
 package com.app.climby.ui.publish
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.app.climby.R
-import com.app.climby.data.model.province.ProvinceModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ActivityWhatPlaceBinding
 import com.app.climby.ui.profile.router.EditTripRouter
 import com.app.climby.ui.publish.viewmodel.WhatPlaceViewModel
 import com.app.climby.util.From
-import com.app.climby.view.activity.MainActivity
+import com.app.climby.util.UIUtil
 import com.app.climby.view.router.MainRouter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,13 +37,8 @@ class WhatPlaceActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-
         getData()
 
-        binding.IVBack.setOnClickListener {
-            onBackPressed()
-
-        }
 
         binding.ACSchool.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
@@ -66,23 +57,29 @@ class WhatPlaceActivity : AppCompatActivity() {
         whatPlaceViewModel.schoolsModel.observe(this) {
             val adapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, it)
             binding.ACSchool.setAdapter(adapter)
-            showKeyboard()
+            binding.ACSchool.requestFocus()
+            UIUtil.showKeyboard(this)
         }
 
         binding.ACSchool.setOnItemClickListener { parent, _, position, _ ->
             school = parent.getItemAtPosition(position) as String
             binding.ACSchool.clearFocus();
-            closeKeyboard()
+            UIUtil.hideKeyboard(this)
+        }
+
+        binding.IVBack.setOnClickListener {
+            UIUtil.hideKeyboard(this)
+            onBackPressed()
         }
 
         binding.BTSave.setOnClickListener {
             if(from == "publish") {
                 goToMainActivity()
-                closeKeyboard()
+                UIUtil.hideKeyboard(this)
             }
             else if(from == "editTrip"){
                 goToEditTripActivity(trip!!, binding.ACSchool.text.toString())
-                closeKeyboard()
+                UIUtil.hideKeyboard(this)
             }
         }
         whatPlaceViewModel.getAllSchools()
@@ -90,21 +87,12 @@ class WhatPlaceActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        closeKeyboard()
         overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
     private fun goToEditTripActivity(trip: TripModel, school: String) {
         EditTripRouter().launch(this, trip, school)
-       /* val intent = Intent(this, EditTripActivity::class.java).apply {
-            putExtra("trip", trip)
-            putExtra("schoolPublish", binding.ACSchool.text.toString())
-        }
-        startActivity(intent)
-        finish()
-        overridePendingTransition(0, R.anim.slide_in_down)*/
     }
-
 
     private fun goToMainActivity() {
         MainRouter().launch(this,
@@ -117,31 +105,6 @@ class WhatPlaceActivity : AppCompatActivity() {
             From.PUBLISH
         )
         finish()
-
-        /*val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
-            putExtra("schoolPublish", binding.ACSchool.text.toString())
-            putExtra("provincePublish", intent.extras?.getInt("provincePublish", 0))
-            putExtra("typePublish", intent.extras?.getInt("typePublish", 0))
-            putExtra("datePublish", intent.extras?.getString("datePublish", ""))
-            putExtra("datePublishWithOutFormat", intent.extras?.getString("datePublishWithOutFormat", ""))
-            putExtra("placePublish", intent.extras?.getInt("placePublish", 0))
-            putExtra("from", from.status)
-        }
-        startActivity(intent)
-        finish()
-        overridePendingTransition(0, R.anim.slide_in_down)*/
-
-    }
-
-    private fun showKeyboard() {
-        binding.ACSchool.requestFocus()
-        val inputMethodManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
-    }
-
-    private fun closeKeyboard() {
-        val inputMethodManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
     }
 
     private fun checkControls() {

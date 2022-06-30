@@ -18,8 +18,9 @@ import com.app.climby.databinding.ActivityRequestsBinding
 import com.app.climby.ui.profile.adapter.RequestAdapter
 import com.app.climby.ui.profile.viewmodel.RequestsViewModel
 import com.app.climby.util.Commons
+import com.app.climby.util.From
 import com.app.climby.util.ReservationStatus
-import com.app.climby.view.activity.MainActivity
+import com.app.climby.view.router.MainRouter
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,7 +46,7 @@ class RequestsActivity : AppCompatActivity() {
         binding.IVBack.setOnClickListener {
             when (from) {
                 "profile" -> {
-                    showMainActivity("profile")
+                    goToMainActivity()
                 }
                 "discover","comingOutings" -> {
                     onBackPressed()
@@ -73,13 +74,14 @@ class RequestsActivity : AppCompatActivity() {
         overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
-    private fun showMainActivity(from: String) {
-        val intent = Intent(this, MainActivity::class.java).apply {
+    private fun goToMainActivity() {
+        MainRouter().launch(this, null, From.PROFILE, isEdit = false)
+        finish()
+       /* val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("from", from)
         }
         startActivity(intent)
-        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
-        finish()
+        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)*/
     }
 
     private fun getData() {

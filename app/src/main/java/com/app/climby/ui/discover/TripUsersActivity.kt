@@ -75,7 +75,7 @@ class TripUsersActivity : AppCompatActivity() {
         overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
-    private fun goToMainActivity(from: String) {
+    /*private fun goToMainActivity(from: String) {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("from", from)
             putExtra("viewPager", 1)
@@ -83,7 +83,7 @@ class TripUsersActivity : AppCompatActivity() {
         startActivity(intent)
         overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
         finish()
-    }
+    }*/
 
     @SuppressLint("SetTextI18n")
     private fun init() {
