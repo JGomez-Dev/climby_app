@@ -20,6 +20,7 @@ import com.app.climby.ui.profile.viewmodel.RequestsViewModel
 import com.app.climby.util.Commons
 import com.app.climby.util.From
 import com.app.climby.util.ReservationStatus
+import com.app.climby.util.UIUtil
 import com.app.climby.view.router.MainRouter
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -77,11 +78,6 @@ class RequestsActivity : AppCompatActivity() {
     private fun goToMainActivity() {
         MainRouter().launch(this, null, From.PROFILE, isEdit = false)
         finish()
-       /* val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("from", from)
-        }
-        startActivity(intent)
-        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)*/
     }
 
     private fun getData() {
@@ -100,7 +96,7 @@ class RequestsActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun init() {
-        trip?.type?.name?.let { setPhotoTrip(it) }
+        trip?.type?.name?.let { UIUtil.setPhotoTrip(it, this, binding.IVPlace ) }
         binding.TVType.text = trip?.type?.name + " en"
         binding.TVPlaceDate.text = trip?.site?.name + ", \n" + (trip?.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip?.departure?.let { Commons.getDate(it) }
         binding.RVRequest.layoutManager = LinearLayoutManager(this)
@@ -164,25 +160,5 @@ class RequestsActivity : AppCompatActivity() {
 
     private fun updateBooking(bookingModel: BookingModel, request: String, trip: TripModel) {
         requestsViewModel.updateBooking(bookingModel, request, trip, this.applicationContext, this)
-    }
-
-    private fun setPhotoTrip(type: String) {
-        when (type) {
-            "Boulder" -> {
-                Glide.with(this).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(binding.IVPlace)
-            }
-            "Deportiva" -> {
-                Glide.with(this).load(R.mipmap.lead).error(R.mipmap.default_picture).into(binding.IVPlace)
-            }
-            "Rocódromo" -> {
-                Glide.with(this).load(R.mipmap.gym).error(R.mipmap.default_picture).into(binding.IVPlace)
-            }
-            "Clásica" -> {
-                Glide.with(this).load(R.mipmap.trad).error(R.mipmap.default_picture).into(binding.IVPlace)
-            }
-            else -> {
-                Glide.with(this).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(binding.IVPlace)
-            }
-        }
     }
 }

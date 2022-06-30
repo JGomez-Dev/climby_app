@@ -20,7 +20,6 @@ import com.app.climby.view.viewmodel.OnBoardingFirstViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class OnBoardingFirstActivity : AppCompatActivity() {
 
@@ -55,8 +54,7 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         binding.ETPhone.requestFocus()
 
         Glide.with(this).load(photoUrl).error(R.mipmap.user).into(binding.CIPhotoUser)
-        binding.ETName.setText(displayName.toString())
-
+        binding.ETName.setText(displayName)
         binding.BTSelectPhoto.setOnClickListener {
             openGallery()
         }

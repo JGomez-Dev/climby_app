@@ -10,7 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.app.climby.R
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ActivityOnboardingSecondBinding
+import com.app.climby.util.UIUtil
 import com.app.climby.util.UserExperience
+import com.app.climby.view.router.MainRouter
 import com.app.climby.view.viewmodel.OnBoardingSecondViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -136,21 +138,12 @@ class OnBoardingSecondActivity : AppCompatActivity() {
     }
 
     private fun showMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        MainRouter().launch(this)
         finish()
     }
 
     private fun insertUser(token: String) {
-        onBoardingSecondViewModel.saveUser(UserModel(0, displayName.toString(), getExperience(userExperience), phone.toString(), email.toString(), 0.0, 0, 0, photoUrl.toString(), token))
-    }
-
-    private fun getExperience(userExperience: String): String {
-        when (userExperience) {
-            UserExperience.BEGINNER.status -> return "Principiante"
-            UserExperience.MEDIUM.status -> return "Intermedio"
-            UserExperience.ADVANCED.status -> return "Experimentado"
-        }
-        return "Principiante"
+        val newUser = UserModel(0, displayName.toString(), UIUtil.getExperience(userExperience, this), phone.toString(), email.toString(), 0.0, 0, 0, photoUrl.toString(), token)
+        onBoardingSecondViewModel.saveUser(newUser)
     }
 }

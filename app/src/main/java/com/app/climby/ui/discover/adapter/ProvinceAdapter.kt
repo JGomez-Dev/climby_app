@@ -4,13 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.climby.R
 import com.app.climby.data.model.province.ProvinceModel
 import com.app.climby.databinding.CustomSpinnerItemBinding
-import com.app.climby.databinding.ItemDiscoverBinding
 
 
 class ProvinceAdapter(tripData: List<ProvinceModel>, province: String?, context: Context) : RecyclerView.Adapter<ProvinceAdapter.DataViewHolder>() {
@@ -62,7 +60,7 @@ class ProvinceAdapter(tripData: List<ProvinceModel>, province: String?, context:
                 TVNumberSP.setTextColor(ContextCompat.getColorStateList(context, R.color.grey))
             }
             TVCommunitySP.text = province.name
-            TVNumberSP.text = province.number_travels.toString()
+            TVNumberSP.text = if (province.number_travels.toString() == "0") "" else province.number_travels.toString()
         }
     }
 }

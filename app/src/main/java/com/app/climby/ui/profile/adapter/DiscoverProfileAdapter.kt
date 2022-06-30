@@ -24,6 +24,7 @@ import com.app.climby.ui.profile.router.RequestsRouter
 import com.app.climby.util.Commons
 import com.app.climby.util.From
 import com.app.climby.util.ReservationStatus
+import com.app.climby.util.UIUtil
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -86,7 +87,7 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
 
             tvType.text = trip.type?.name + " en"
             tvPlaceDate.text = trip.site?.name + ", \n" + (trip.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip.departure?.let { Commons.getDate(it) }
-            trip.type?.name?.let { setPhotoTrip(it, ivPlace, context) }
+            trip.type?.name?.let { UIUtil.setPhotoTrip(it, context, ivPlace)  }
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(trip.driver?.photo).into(cvDriver)
             Commons.setTextButton(btRequest, trip)
             var contRefuse = 0
@@ -122,14 +123,7 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
 
                 btRequest.setOnClickListener {
                     RequestsRouter().launch(fragmentActivity, trip, from)
-                    /*val intent = Intent(context, RequestsActivity::class.java).apply {
-                        putExtra("trip", trip)
-                        putExtra("from", "profile")
-                    }
-                    context.startActivities(arrayOf(intent))
-                    fragmentActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
                 }
-                /*comprobarEstadoReservas(holder, nuevoViaje, reservaList, reservaListFiltradas)*/
                 trip.bookings?.forEach {
                     if (it.passenger?.id ?: 0 == userSession.id) {
                         when (it.status) {
@@ -137,7 +131,6 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
                                 btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                                 btRequest.text = "Te has unido\r\nLiberar plaza"
                                 acceptedBookingList.add(it)
-                                //El viaje es de una semana atrás
                             }
                             ReservationStatus.UNANSWERED.status -> {
                                 btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
@@ -161,11 +154,6 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
                                 request++
                                 acceptedBookingList.add(it)
                             }
-                            /*ReservationStatus.REFUSE.status -> {
-                                *//*accepted++*//*
-                                *//*request++*//*
-                                acceptedBookingList.add(it)
-                            }*/
                         }
                     }
                 }
@@ -173,11 +161,6 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
                 if (accepted == trip.availablePlaces) {
                     btRequest.setOnClickListener {
                         RequestsRouter().launch(fragmentActivity, trip, null)
-                        /*val intent = Intent(context, RequestsActivity::class.java).apply {
-                            putExtra("trip", trip)
-                        }
-                        context.startActivities(arrayOf(intent))
-                        fragmentActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
                     }
                     btRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
                     btRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
@@ -245,24 +228,4 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
     }
 
     override fun getItemCount(): Int = tripsList.size
-
-    fun setPhotoTrip(type: String, ivPlace: ImageView, context: Context) {
-        when (type) {
-            "Boulder" -> {
-                Glide.with(context).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(ivPlace)
-            }
-            "Deportiva" -> {
-                Glide.with(context).load(R.mipmap.lead).error(R.mipmap.default_picture).into(ivPlace)
-            }
-            "Rocódromo" -> {
-                Glide.with(context).load(R.mipmap.gym).error(R.mipmap.default_picture).into(ivPlace)
-            }
-            "Clásica" -> {
-                Glide.with(context).load(R.mipmap.trad).error(R.mipmap.default_picture).into(ivPlace)
-            }
-            else -> {
-                Glide.with(context).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(ivPlace)
-            }
-        }
-    }
 }

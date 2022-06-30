@@ -10,12 +10,11 @@ import com.app.climby.data.model.province.ProvinceModel
 import com.app.climby.databinding.ActivityProvinceBinding
 import com.app.climby.ui.discover.adapter.ProvinceAdapter
 import com.app.climby.ui.discover.viewmodel.ProvinceViewModel
-import com.app.climby.util.IOnBackPressed
 import com.app.climby.view.router.MainRouter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProvinceActivity : AppCompatActivity(), IOnBackPressed {
+class ProvinceActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProvinceBinding
     private lateinit var provinceViewModel: ProvinceViewModel
@@ -68,12 +67,6 @@ class ProvinceActivity : AppCompatActivity(), IOnBackPressed {
     private fun goToMainActivity(province: ProvinceModel) {
         MainRouter().launch(this, province, null, isEdit = false)
         finish()
-        /* val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
-                        putExtra("province", it[position].name)
-                    }
-
-                    startActivity(intent)
-                    overridePendingTransition(0, R.anim.slide_in_down);*/
     }
 
     private fun getData() {

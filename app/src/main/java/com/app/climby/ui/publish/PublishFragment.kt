@@ -141,11 +141,6 @@ class PublishFragment : Fragment()/*, IOnBackPressed*/ {
     private fun goToMainActivity() {
         MainRouter().launch(requireActivity(), null, From.PROFILE, isEdit = true)
         requireActivity().finish()
-        /*val intent = Intent(context, MainActivity::class.java).apply {
-            putExtra("from", "profile")
-        }
-        startActivity(intent)
-        activity?.overridePendingTransition(0, R.anim.slide_in_down )*/
     }
 
 
@@ -318,12 +313,4 @@ class PublishFragment : Fragment()/*, IOnBackPressed*/ {
 
     }
 
-    /*override fun onBackPressed() {
-        activity?.let {
-            val intent = Intent(requireContext().applicationContext, MainActivity::class.java)
-            it.startActivity(intent)
-            it.overridePendingTransition(0, 0)
-            it.finish()
-        }
-    }*/
 }

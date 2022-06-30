@@ -1,11 +1,14 @@
 package com.app.climby.view.viewmodel
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.*
+import com.app.climby.R
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.domain.user.Insert
 import com.app.climby.util.Commons
+import com.app.climby.util.UserExperience
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel

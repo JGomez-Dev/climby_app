@@ -3,7 +3,6 @@ package com.app.climby.ui.discover
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -30,9 +29,8 @@ import com.app.climby.ui.discover.router.TripUsersRouter
 import com.app.climby.ui.discover.viewmodel.DiscoverViewModel
 import com.app.climby.util.Commons
 import com.app.climby.util.From
-import com.app.climby.util.IOnBackPressed
 import com.app.climby.util.UIUtil
-import com.app.climby.view.activity.MainActivity
+import com.app.climby.view.router.MainRouter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -62,7 +60,6 @@ class DiscoverFragment : Fragment(){
             if (result) {
                 getLocation()// permission is granted
             } else {
-                //TODO("para recibir una hubiocacion exacta deberás aceptar los permisos de hubicacion, tambien puedes buscar")
                 binding.CLTripsEmpty.isVisible = true
             }
         }
@@ -77,10 +74,9 @@ class DiscoverFragment : Fragment(){
 
         if(!Commons.isInternetAvailable(requireContext().applicationContext)){
             binding.CLNotConnection.isVisible = true
-            //animateConnection()
             UIUtil.animateConnection(binding.TVDontService)
             binding.TVRetryConexion.setOnClickListener {
-                reloadFragment()
+                goToMainActivity()
             }
         }
         else {
@@ -115,7 +111,6 @@ class DiscoverFragment : Fragment(){
                             }
                         })
                     }
-
                 }
             }
 
@@ -138,45 +133,18 @@ class DiscoverFragment : Fragment(){
 
             binding.TBSeach.addOnButtonCheckedListener { _, checkedId, isChecked ->
                 getFilterAndSendQuery(isChecked, checkedId)
-
             }
 
             binding.pullToRefresh.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.primary))
-
             binding.pullToRefresh.setOnRefreshListener {
                 getData()
                 binding.pullToRefresh.isRefreshing = false
             }
             UIUtil.animateHand(binding.IVHandEmpty)
-            //animateHand()
         }
         return view
     }
 
-    private fun reloadFragment() {
-        activity?.let {
-            val intent = Intent(requireContext().applicationContext, MainActivity::class.java)
-            it.startActivity(intent)
-            it.overridePendingTransition(0, 0)
-            it.finish()
-        }
-    }
-
-   /* private fun animateConnection() {
-        val anim = ObjectAnimator.ofFloat(binding.TVDontService, "translationY", 50f, 0f)
-        anim.duration = 1000
-        anim.repeatCount = Animation.ABSOLUTE
-        anim.start()
-    }*/
-
-    /*private fun animateHand() {
-        val anim = ObjectAnimator.ofFloat(binding.IVHandEmpty, "translationY", 0f, 50f)
-        anim.duration = 1000
-        anim.repeatCount = Animation.INFINITE
-        anim.repeatMode = ValueAnimator.REVERSE
-
-        anim.start()
-    }*/
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showDialog(view: View, booking: BookingModel, it: List<TripModel>, position: Int) {
@@ -251,8 +219,6 @@ class DiscoverFragment : Fragment(){
     private fun getLocation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         if (ActivityCompat.checkSelfPermission(requireContext().applicationContext, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext().applicationContext, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-           //ActivityCompat.requestPermissions(requireActivity(), arrayOf(ACCESS_COARSE_LOCATION), 1000)
-            /*requestPermission.launch(ACCESS_FINE_LOCATION)*/
             requestPermission.launch(ACCESS_FINE_LOCATION)
         }else{
             try {
@@ -268,9 +234,6 @@ class DiscoverFragment : Fragment(){
                     }
                     .addOnFailureListener {
                         binding.CLTripsEmpty.isVisible = true
-                        //discoverViewModel.getTrips(requireContext().applicationContext, "")
-                        /* binding.TVCommunity.text = "Madrid"
-                         discoverViewModel.getTrips(requireContext().applicationContext, "Madrid")*/
                     }
             } catch (e: Exception) {
                 binding.CLTripsEmpty.isVisible = true
@@ -281,44 +244,33 @@ class DiscoverFragment : Fragment(){
     private fun getProvinceByLatLong(location: Location): String {
         val geocode = Geocoder(context, Locale.getDefault())
         val addresses: List<Address> = geocode.getFromLocation(location.latitude, location.longitude, 1)
-
         /*val direction = addresses[0].getAddressLine(0)
-        val city = addresses[0].locality*/
-        /*val province = addresses[0].subAdminArea*/
-        /*val community = addresses[0].adminArea
+        val city = addresses[0].locality
+        val province = addresses[0].subAdminArea
+        val community = addresses[0].adminArea
         val country = addresses[0].countryName
         val postalCode = addresses[0].postalCode
         val knownName = addresses[0].featureName*/
         return addresses[0].subAdminArea
     }
 
+    private fun goToMainActivity() {
+        MainRouter().launch(requireActivity())
+        requireActivity().finish()
+    }
+
     private fun goToProvinces() {
         ProvinceRouter().launch(requireActivity(), binding.TVCommunity.text.toString())
-        /*val intent = Intent(activity, ProvinceActivity::class.java).apply {
-            putExtra("province", binding.TVCommunity.text)
-        }
-
-        startActivity(intent)
-        activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)*/
-
     }
 
     private fun goToTripUsers(trip: TripModel) {
-            TripUsersRouter().launch(requireActivity(), trip, From.DISCOVER)
-            /*val intent = Intent(it, TripUsersActivity::class.java).apply {
-                putExtra("trip", trip)
-                putExtra("from", "discover")
-            }
-            startActivity(intent)
-            it.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
+        TripUsersRouter().launch(requireActivity(), trip, From.DISCOVER)
     }
 
     private fun getFilterAndSendQuery(isChecked: Boolean, checkedId: Int) {
         if (isChecked) {
             when (checkedId) {
-                R.id.BTAll -> {
-                    discoverViewModel.getTrips(requireContext().applicationContext, province)
-                }
+                R.id.BTAll -> discoverViewModel.getTrips(requireContext().applicationContext, province)
                 R.id.BTNextWeekend -> discoverViewModel.getTripsType("NextWeekend", province.split(" ")[0])
                 R.id.BTBoulder -> discoverViewModel.getTripsType("Boulder", province.split(" ")[0])
                 R.id.BTLead -> discoverViewModel.getTripsType("Deportiva", province.split(" ")[0])

@@ -1,7 +1,6 @@
 package com.app.climby.ui.discover
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.app.climby.R
 import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
@@ -20,7 +18,7 @@ import com.app.climby.ui.discover.adapter.TripUsersAdapter
 import com.app.climby.ui.discover.viewmodel.TripUsersViewModel
 import com.app.climby.util.Commons
 import com.app.climby.util.ReservationStatus
-import com.app.climby.view.activity.MainActivity
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,17 +43,6 @@ class TripUsersActivity : AppCompatActivity() {
 
         binding.IVBack.setOnClickListener {
             onBackPressed()
-           /* when (from) {
-                "profile" -> {
-                    goToMainActivity("profile")
-                }
-                "discover" -> {
-                    onBackPressed()
-                }
-                else -> {
-                    onBackPressed()
-                }
-            }*/
         }
 
         tripUsersViewModel.tripModel.observe(this, Observer {
@@ -74,16 +61,6 @@ class TripUsersActivity : AppCompatActivity() {
         super.onBackPressed()
         overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
     }
-
-    /*private fun goToMainActivity(from: String) {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("from", from)
-            putExtra("viewPager", 1)
-        }
-        startActivity(intent)
-        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
-        finish()
-    }*/
 
     @SuppressLint("SetTextI18n")
     private fun init() {

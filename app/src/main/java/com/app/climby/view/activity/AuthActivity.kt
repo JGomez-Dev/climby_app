@@ -19,6 +19,7 @@ import com.app.climby.ui.profile.router.RequestsRouter
 import com.app.climby.ui.profile.router.ResumeTripRouter
 import com.app.climby.util.Commons
 import com.app.climby.util.From
+import com.app.climby.view.router.MainRouter
 import com.app.climby.view.viewmodel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -154,12 +155,7 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun goToProfile() {
-        val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
-            putExtra("from", "profile")
-            putExtra("to", "notification")
-            putExtra("viewPager", 1)
-        }
-        startActivity(intent)
+        MainRouter().launch(this, null, From.PROFILE, isEdit = false)
         finish()
     }
 
@@ -201,8 +197,7 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun goToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        MainRouter().launch(this)
         finish()
     }
 

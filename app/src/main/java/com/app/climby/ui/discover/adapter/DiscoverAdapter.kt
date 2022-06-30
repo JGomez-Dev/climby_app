@@ -2,7 +2,6 @@ package com.app.climby.ui.discover.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,20 +11,19 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.app.climby.R
 import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ItemDiscoverBinding
-import com.app.climby.ui.profile.RequestsActivity
 import com.app.climby.ui.profile.router.RequestsRouter
 import com.app.climby.util.Commons
 import com.app.climby.util.From
 import com.app.climby.util.ReservationStatus
+import com.app.climby.util.UIUtil
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, fragmentActivity: FragmentActivity) : RecyclerView.Adapter<DiscoverAdapter.DataViewHolder>() {
@@ -71,7 +69,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, f
             val acceptedBookingList: MutableList<BookingModel> = arrayListOf()
             TVType.text = trip.type?.name + " en"
             TVPlaceDate.text = trip.site?.name + ", \n" + (trip.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip.departure?.let { Commons.getDate(it) }
-            trip.type?.name?.let { setPhotoTrip(it, IVPlace,  context) }
+            trip.type?.name?.let { UIUtil.setPhotoTrip(it, context, IVPlace) }
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(trip.driver?.photo).into(CVDriver)
             Commons.setTextButton(BTRequest, trip)
             var contRefuse = 0
@@ -249,23 +247,4 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, f
 
     override fun getItemCount(): Int = tripsList.size
 
-    private fun setPhotoTrip(type: String, ivPlace: ImageView, context: Context) {
-        when (type) {
-            "Boulder" -> {
-                Glide.with(context).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(ivPlace)
-            }
-            "Deportiva" -> {
-                Glide.with(context).load(R.mipmap.lead).error(R.mipmap.default_picture).into(ivPlace)
-            }
-            "Rocódromo" -> {
-                Glide.with(context).load(R.mipmap.gym).error(R.mipmap.default_picture).into(ivPlace)
-            }
-            "Clásica" -> {
-                Glide.with(context).load(R.mipmap.trad).error(R.mipmap.default_picture).into(ivPlace)
-            }
-            else -> {
-                Glide.with(context).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(ivPlace)
-            }
-        }
-    }
 }

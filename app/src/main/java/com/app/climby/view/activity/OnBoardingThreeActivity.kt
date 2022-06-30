@@ -16,7 +16,10 @@ import com.app.climby.data.model.trip.TripModel
 import com.app.climby.data.model.user.UserModel
 import com.app.climby.databinding.ActivityOnboardingThreeBinding
 import com.app.climby.util.Commons
+import com.app.climby.util.From
+import com.app.climby.util.UIUtil
 import com.app.climby.view.adapter.OnBoardingThreeAdapter
+import com.app.climby.view.router.MainRouter
 import com.app.climby.view.viewmodel.OnBoardingThreeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,7 +65,7 @@ class OnBoardingThreeActivity : AppCompatActivity() {
 
         onBoardingThreeViewModel.isComplete.observe(this, Observer { it ->
             if(it){
-                showMainActivity()
+                goToMainActivity()
             }
         })
     }
@@ -113,15 +116,14 @@ class OnBoardingThreeActivity : AppCompatActivity() {
         }
     }
 
-    private fun showMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+    private fun goToMainActivity() {
+        MainRouter().launch(this)
         finish()
     }
 
     @SuppressLint("SetTextI18n")
     private fun init() {
-        setPhotoTrip(trip?.type?.name.toString())
+        UIUtil.setPhotoTrip(trip?.type?.name.toString(), this, binding.IVSiteQualifyAttendees)
         binding.ETSendMenssage.hint = "Cuenta cómo te sentiste escalando con el grupo o ayuda a " + (trip?.driver?.name?.split(" ")?.get(0) ?: "conductor") + " a mejorar para la próxima vez…"
         binding.TVTypeQualifyAttendees.text = trip?.type?.name + " en"
         binding.TVSiteQualifyAttendees.text = trip?.site?.name + ", " + (trip?.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip?.departure?.let { Commons.getDate(it) }
@@ -172,25 +174,6 @@ class OnBoardingThreeActivity : AppCompatActivity() {
         }
     }
 
-    private fun setPhotoTrip(type: String) {
-        when (type) {
-            "Boulder" -> {
-                Glide.with(this).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(binding.IVSiteQualifyAttendees)
-            }
-            "Deportiva" -> {
-                Glide.with(this).load(R.mipmap.lead).error(R.mipmap.default_picture).into(binding.IVSiteQualifyAttendees)
-            }
-            "Rocódromo" -> {
-                Glide.with(this).load(R.mipmap.gym).error(R.mipmap.default_picture).into(binding.IVSiteQualifyAttendees)
-            }
-            "Clásica" -> {
-                Glide.with(this).load(R.mipmap.trad).error(R.mipmap.default_picture).into(binding.IVSiteQualifyAttendees)
-            }
-            else -> {
-                Glide.with(this).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(binding.IVSiteQualifyAttendees)
-            }
-        }
-    }
     private fun setStart(contStart: Double) {
         when {
             contStart.equals(0.0)!! -> {

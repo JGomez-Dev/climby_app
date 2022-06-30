@@ -96,47 +96,10 @@ class EditTripActivity : AppCompatActivity() {
     private fun goToMainActivity() {
         MainRouter().launch(this, null, From.PROFILE, isEdit = true)
         finish()
-        /* val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
-                        putExtra("province", it[position].name)
-                    }
-
-                    startActivity(intent)
-                    overridePendingTransition(0, R.anim.slide_in_down);*/
     }
-
-    /*override fun onBackPressed() {
-        super.onBackPressed()
-        val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("from", "profile")
-        }
-        startActivity(intent)
-        overridePendingTransition(0, R.anim.slide_in_down)
-        finish()
-    }*/
-
-    /*private fun showMainActivity() {
-        val intent = Intent(applicationContext.applicationContext, MainActivity::class.java).apply {
-            putExtra("from", "profile")
-        }
-        startActivity(intent)
-        overridePendingTransition(0, R.anim.slide_in_down)
-    }*/
 
     private fun goToWhatPlaceActivity() {
         WhatPlaceRouter().launch(this, binding.ETSite.text.toString(), From.EDIT_TRIP, trip)
-        /*val intent = Intent(this, WhatPlaceActivity::class.java).apply {
-            putExtra("school", binding.ETSite.text)
-            putExtra("from", From.EDIT_TRIP)
-            putExtra("trip", trip)
-            *//*putExtra("provincePublish", binding.SPCommunity.selectedItemId.toInt())
-            putExtra("typePublish", binding.SPType.selectedItemId.toInt())
-            putExtra("datePublish", binding.ETDate.text.toString())
-            putExtra("datePublishWithOutFormat", dateFormat)
-            putExtra("placePublish", binding.SPPlacesAvailable.selectedItemId.toInt())*//*
-
-        }
-        startActivity(intent)
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
     }
 
     private fun showDialog() {
@@ -154,16 +117,6 @@ class EditTripActivity : AppCompatActivity() {
             .setCancelable(false)
             .create().show()
     }
-
-    /*private fun checkControls() {
-        if (binding.ETDate.text.toString() != "DD/MM" && binding.SPCommunity.selectedItem != "Elige tu provincia" && binding.SPType.selectedItem != "Selecciona el tipo de Escalada" && binding.ETSite.text != "Elige una escuela o rocódromo…" && binding.SPPlacesAvailable.selectedItem != "0") {
-            binding.BTNewExit.isEnabled = true
-            binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.primary))
-        } else {
-            binding.BTNewExit.isEnabled = false
-            binding.BTNewExit.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.disable))
-        }
-    }*/
 
     private fun deleteTrip() {
         editTripViewModel.deleteTrip(trip!!)

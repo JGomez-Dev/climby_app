@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.app.climby.R
-import com.app.climby.data.model.user.UserModel
 import com.app.climby.ui.publish.PublishFragment
 import com.app.climby.util.Commons
 import com.app.climby.util.UIUtil
@@ -21,7 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navView: BottomNavigationView
-    private var userSession: UserModel = Commons.userSession!!
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,15 +29,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         navView = findViewById(R.id.nav_view)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-
         val navController = navHostFragment.navController
         navView.setupWithNavController(navController)
-
         navView.itemIconTintList = null;
         UIUtil.changeItemWiseTextProperties(navView.menu, this)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-
             if (destination.id == R.id.navigation_publish) {
                 navView.visibility = View.GONE
             } else {

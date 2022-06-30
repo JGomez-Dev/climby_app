@@ -60,12 +60,41 @@ object UIUtil {
         val inputMethodManager: InputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
+    
     fun hideKeyboard(context: Context) {
         val inputMethodManager: InputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
     }
 
-    fun showAlert(context: Context, title: String, message: String, positive: String, positiveAction: (() -> Unit)? = null, negative: String? = null, destroy: Boolean = false) {
+    fun getExperience(userExperience: String, context: Context): String {
+        when (userExperience) {
+            UserExperience.BEGINNER.status -> return context.getString(R.string.edit_profile_beginner)
+            UserExperience.MEDIUM.status -> return context.getString(R.string.edit_profile_intermediate)
+            UserExperience.ADVANCED.status -> return context.getString(R.string.edit_profile_experienced)
+        }
+        return context.getString(R.string.edit_profile_beginner)
+    }
+
+    fun setPhotoTrip(type: String, context: Context, image: ImageView) {
+        when (type) {
+            Types.BOULDER.status -> {
+                Glide.with(context).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(image)
+            }
+            Types.LEAD.status -> {
+                Glide.with(context).load(R.mipmap.lead).error(R.mipmap.default_picture).into(image)
+            }
+            Types.ROCODROMO.status -> {
+                Glide.with(context).load(R.mipmap.gym).error(R.mipmap.default_picture).into(image)
+            }
+            Types.CLASSIC.status -> {
+                Glide.with(context).load(R.mipmap.trad).error(R.mipmap.default_picture).into(image)
+            }
+            else -> {
+                Glide.with(context).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(image)
+            }
+        }
+    }
+    /*fun showAlert(context: Context, title: String, message: String, positive: String, positiveAction: (() -> Unit)? = null, negative: String? = null, destroy: Boolean = false) {
 
         val builder = AlertDialog.Builder(context)
         builder.setTitle(title)
@@ -85,5 +114,5 @@ object UIUtil {
         dialog.show()
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, if (destroy) R.color.red_delete else R.color.white))
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context, R.color.black))
-    }
+    }*/
 }

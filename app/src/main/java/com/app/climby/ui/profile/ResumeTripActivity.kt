@@ -1,21 +1,20 @@
 package com.app.climby.ui.profile
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.app.climby.R
 import com.app.climby.data.model.booking.BookingModel
 import com.app.climby.data.model.trip.TripModel
 import com.app.climby.databinding.ActivityResumeTripBinding
 import com.app.climby.ui.profile.adapter.ResumeTripAdapter
 import com.app.climby.ui.profile.viewmodel.ResumeTripViewModel
 import com.app.climby.util.Commons
-import com.app.climby.view.activity.MainActivity
+import com.app.climby.util.From
+import com.app.climby.util.UIUtil
+import com.app.climby.view.router.MainRouter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +31,6 @@ class ResumeTripActivity : AppCompatActivity() {
         resumeTripViewModel = ViewModelProvider(this)[ResumeTripViewModel::class.java]
         binding = ActivityResumeTripBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         getData()
 
@@ -51,13 +49,9 @@ class ResumeTripActivity : AppCompatActivity() {
     }
 
     private fun goToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("from", "profile")
-        }
-        startActivity(intent)
-        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
+        MainRouter().launch(this, null, From.PROFILE, isEdit = false)
+        finish()
     }
-
 
     private fun getData() {
         val bundle = intent.extras
@@ -74,7 +68,7 @@ class ResumeTripActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun init() {
-        trip?.type?.name?.let { setPhotoTrip(it) }
+        trip?.type?.name?.let { UIUtil.setPhotoTrip(it, this, binding.IVSiteQualifyAttendees) }
         binding.TVTypeQualifyAttendees.text = trip?.type?.name + " en"
         binding.TVSiteQualifyAttendees.text = trip?.site?.name + ", \n" + (trip?.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip?.departure?.let { Commons.getDate(it) }
         binding.RVResumenTrip.layoutManager = LinearLayoutManager(this)
@@ -89,25 +83,5 @@ class ResumeTripActivity : AppCompatActivity() {
             binding.RVResumenTrip.adapter = resumeTripAdapter
         }
         markMessagesAsRead(trip)
-    }
-
-    private fun setPhotoTrip(type: String) {
-        when (type) {
-            "Boulder" -> {
-                Glide.with(this).load(R.mipmap.boulder).error(R.mipmap.default_picture).into(binding.IVSiteQualifyAttendees)
-            }
-            "Deportiva" -> {
-                Glide.with(this).load(R.mipmap.lead).error(R.mipmap.default_picture).into(binding.IVSiteQualifyAttendees)
-            }
-            "Rocódromo" -> {
-                Glide.with(this).load(R.mipmap.gym).error(R.mipmap.default_picture).into(binding.IVSiteQualifyAttendees)
-            }
-            "Clásica" -> {
-                Glide.with(this).load(R.mipmap.trad).error(R.mipmap.default_picture).into(binding.IVSiteQualifyAttendees)
-            }
-            else -> {
-                Glide.with(this).load(R.mipmap.default_picture).error(R.mipmap.default_picture).into(binding.IVSiteQualifyAttendees)
-            }
-        }
     }
 }
