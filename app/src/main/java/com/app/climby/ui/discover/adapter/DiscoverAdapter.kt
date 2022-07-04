@@ -114,22 +114,13 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, f
                     binding.TVNumberMessage.text = unreadMessages.toString()
                     BTRequest.setOnClickListener {
                         RequestsRouter().launch(fragmentActivity, trip, from)
-                        /*context.applicationContext.let {
-                            val intent = Intent(context, RequestsActivity::class.java).apply {
-                                putExtra("trip", trip)
-                                putExtra("from", from)
-                            }
-                            context.startActivities(arrayOf(intent))
-                            fragmentActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-                        }*/
-
                     }
                 }
                 if (accepted > 0)
                     TVUsers.text = "Tú y $accepted más "
                 else
                     TVUsers.text = "Tú"
-            } else { //El viaje no pertenece al usuario logueado
+            } else {
                 var userPassager = false
                 var userPassagerAccepted = false
 
@@ -164,7 +155,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, f
                                 BTRequest.isEnabled = false
                             }
                         }
-                    } else { //El usuario no está como pasajero en este viaje
+                    } else {
                         if (_it.status == ReservationStatus.ACCEPTED.status) {
                             accepted++
                         }
@@ -221,7 +212,6 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, f
                         BTRequest.text = "Terminado\r\nVer resumen"
                     }
                 }
-
                 if (accepted > 0)
                     TVUsers.text = (trip.driver?.name?.split(" ")?.get(0) ?: "") + " y " + accepted + " más "
                 else

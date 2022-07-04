@@ -76,11 +76,13 @@ class EditProfileActivity : AppCompatActivity() {
                 editProfileViewModel.uploadImage(uriPhoto)
             else {
                 val re = Regex("[^0-9]")
-                val tlf = re.replace( binding.ETPhone.text.toString(), "")
+                val tlf = re.replace(binding.ETPhone.text.toString(), "")
                 if (tlf.length != 9)
                     Toast.makeText(applicationContext, R.string.dont_valid, Toast.LENGTH_LONG).show()
-                else
-                    editProfileViewModel.updateUser(UserModel(userSession.id, userSession.name, UIUtil.getExperience(userExperience, this), tlf, userSession.email, userSession.score, userSession.ratings, userSession.outings, userSession.photo, userSession.token))
+                else {
+                    updateUser()
+                }
+
             }
 
         }
@@ -109,23 +111,27 @@ class EditProfileActivity : AppCompatActivity() {
             binding.BTSave.isEnabled = it
         }
         editProfileViewModel.isUploadImage.observe(this) {
-            if(it){
-                val user = UserModel(userSession.id, userSession.name, UIUtil.getExperience(userExperience, this), binding.ETPhone.text.toString().replace(" ", ""), userSession.email, userSession.score, userSession.ratings, userSession.outings, editProfileViewModel.uriImage.value, userSession.token)
-                editProfileViewModel.updateUser(user)
+            if (it) {
+                updateUser()
             } else
                 Toast.makeText(applicationContext, R.string.problem_with_image, Toast.LENGTH_LONG).show()
         }
-        editProfileViewModel.isComplete.observe(this ) {
-            if(it)
+        editProfileViewModel.isComplete.observe(this) {
+            if (it)
                 goToMainActivity()
         }
 
         init()
     }
 
+    private fun updateUser() {
+        val user = UserModel(userSession.id, binding.ETName.text.toString(), UIUtil.getExperience(userExperience, this), binding.ETPhone.text.toString().replace(" ", ""), userSession.email, userSession.score, userSession.ratings, userSession.outings, if (editProfileViewModel.uriImage.value != null) editProfileViewModel.uriImage.value else userSession.photo, userSession.token)
+        editProfileViewModel.updateUser(user)
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
-        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
     private fun clearSharedPreference() {

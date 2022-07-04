@@ -24,7 +24,7 @@ class ProvinceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        provinceViewModel = ViewModelProvider(this).get(ProvinceViewModel::class.java)
+        provinceViewModel = ViewModelProvider(this)[ProvinceViewModel::class.java]
         binding = ActivityProvinceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -48,6 +48,7 @@ class ProvinceActivity : AppCompatActivity() {
             provinceAdapter = ProvinceAdapter(provinceList, province, this)
             binding.RVProvince.adapter = provinceAdapter
             var position = 0
+
             provinceList.forEach { p ->
                 if (p.name == province) {
                     binding.RVProvince.scrollToPosition(position - 5)
@@ -57,8 +58,6 @@ class ProvinceActivity : AppCompatActivity() {
             provinceAdapter.setOnItemClickListener(object : ProvinceAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
                     goToMainActivity(provinceList[position])
-
-
                 }
             })
         })

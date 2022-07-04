@@ -103,7 +103,6 @@
                 android:background="@color/white"
                 android:elevation="1dp"
                 android:ems="10"
-                android:focusable="false"
                 android:hint="@string/onboarding.page0.hint.empty"
                 android:inputType="textCapWords"
                 android:padding="16dp"

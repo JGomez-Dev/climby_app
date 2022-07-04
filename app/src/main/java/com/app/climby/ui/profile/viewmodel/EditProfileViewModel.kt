@@ -42,6 +42,7 @@ class EditProfileViewModel @Inject constructor(private val update: Update, @Null
                 editor.putString("experience", userModel.experience)
                 editor.putString("phone", userModel.phone)
                 editor.putString("photoUrl", userModel.photo)
+                editor.putString("displayName", userModel.name)
                 editor.apply()
                 Commons.userSession = result
             }

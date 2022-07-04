@@ -67,10 +67,10 @@ class OnBoardingSecondActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        showOnBoardingFirst(email, photoUrl, displayName)
+        showOnBoardingFirst(email, photoUrl, displayName, phone)
     }
 
-    private fun showOnBoardingFirst(email: String?, photoUrl: String?, displayName: String?) {
+    private fun showOnBoardingFirst(email: String?, photoUrl: String?, displayName: String?, phone: String?) {
         val intent = Intent(this, OnBoardingFirstActivity::class.java).apply {
             putExtra("email", email)
             putExtra("photoUrl", photoUrl)

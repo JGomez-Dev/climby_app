@@ -49,7 +49,7 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         setContentView(binding.root)
         
         getData()
-        setPreferences()
+
         UIUtil.showKeyboard(this)
         binding.ETPhone.requestFocus()
 
@@ -89,9 +89,8 @@ class OnBoardingFirstActivity : AppCompatActivity() {
             }
         }
         binding.BTContinue.setOnClickListener {
-            prefs.putString("phone", binding.ETPhone.text.toString().replace(" ", ""))
-            prefs.apply()
             UIUtil.hideKeyboard(this)
+            setPreferences()
             goToOnBoardingSecond()
         }
     }
@@ -102,7 +101,10 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         provider = bundle?.getString("provider").toString()
         photoUrl = bundle?.getString("photoUrl").toString()
         displayName = bundle?.getString("displayName").toString()
-        phone = bundle?.getString("phone").toString()
+        phone = if(bundle?.getString("phone") != null)
+            bundle.getString("phone").toString()
+        else
+            ""
     }
 
     private fun setPreferences() {
@@ -110,7 +112,8 @@ class OnBoardingFirstActivity : AppCompatActivity() {
         prefs.putString("email", email)
         prefs.putString("provider", provider)
         prefs.putString("photoUrl", photoUrl)
-        prefs.putString("displayName", displayName)
+        prefs.putString("displayName", binding.ETName.text.toString())
+        prefs.putString("phone", binding.ETPhone.text.toString().replace(" ", ""))
         prefs.apply()
     }
 
@@ -119,7 +122,7 @@ class OnBoardingFirstActivity : AppCompatActivity() {
             putExtra("email", email)
             putExtra("photoUrl", photoUrl)
             putExtra("provider", provider)
-            putExtra("displayName", displayName)
+            putExtra("displayName", binding.ETName.text.toString())
             putExtra("phone", binding.ETPhone.text.toString().replace(" ", ""))
         }
         startActivity(intent)
