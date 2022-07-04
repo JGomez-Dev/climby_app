@@ -1,6 +1,5 @@
 package com.app.climby.view.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +12,7 @@ import com.app.climby.databinding.ActivityOnboardingSecondBinding
 import com.app.climby.util.UIUtil
 import com.app.climby.util.UserExperience
 import com.app.climby.view.router.MainRouter
+import com.app.climby.view.router.OnBoardingFirstRouter
 import com.app.climby.view.viewmodel.OnBoardingSecondViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +22,6 @@ class OnBoardingSecondActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnboardingSecondBinding
     private lateinit var onBoardingSecondViewModel: OnBoardingSecondViewModel
     private var email: String? = null
-    private var provider: String? = null
     private var photoUrl: String? = null
     private var displayName: String? = null
     private var phone: String? = null
@@ -30,13 +29,11 @@ class OnBoardingSecondActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        onBoardingSecondViewModel = ViewModelProvider(this).get(OnBoardingSecondViewModel::class.java)
+        onBoardingSecondViewModel = ViewModelProvider(this)[OnBoardingSecondViewModel::class.java]
         binding = ActivityOnboardingSecondBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         getData()
-
-        //checkPermissionSms()
 
         binding.CVBeginner.setOnClickListener {
             selectedBeginner()
@@ -55,7 +52,7 @@ class OnBoardingSecondActivity : AppCompatActivity() {
         }
         onBoardingSecondViewModel.okSaveUser.observe(this, Observer { it ->
             if (it)
-                showMainActivity()
+                goToMainActivity()
             else
                 Toast.makeText(this, "Problema en el servidor", Toast.LENGTH_SHORT).show()
         })
@@ -67,21 +64,18 @@ class OnBoardingSecondActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        showOnBoardingFirst(email, photoUrl, displayName, phone)
+        goToOnBoardingFirst(email, photoUrl, displayName, phone)
     }
 
-    private fun showOnBoardingFirst(email: String?, photoUrl: String?, displayName: String?, phone: String?) {
-        val intent = Intent(this, OnBoardingFirstActivity::class.java).apply {
-            putExtra("email", email)
-            putExtra("photoUrl", photoUrl)
-            putExtra("displayName", displayName)
-            putExtra("phone", phone)
-        }
-        startActivity(intent)
-        overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
+    private fun goToOnBoardingFirst(email: String?, photoUrl: String?, displayName: String?, phone: String?) {
+        OnBoardingFirstRouter().launch(this, email, photoUrl, displayName, phone)
         finish()
     }
 
+    private fun goToMainActivity() {
+        MainRouter().launch(this)
+        finish()
+    }
 
     private fun selectedExperienced() {
         binding.RBExperienced.isChecked = true
@@ -131,15 +125,9 @@ class OnBoardingSecondActivity : AppCompatActivity() {
     private fun getData() {
         val bundle = intent.extras
         email = bundle?.getString("email")
-        provider = bundle?.getString("provider")
         photoUrl = bundle?.getString("photoUrl")
         displayName = bundle?.getString("displayName")
         phone = bundle?.getString("phone")
-    }
-
-    private fun showMainActivity() {
-        MainRouter().launch(this)
-        finish()
     }
 
     private fun insertUser(token: String) {

@@ -43,7 +43,7 @@ class OnBoardingThreeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        onBoardingThreeViewModel = ViewModelProvider(this).get(OnBoardingThreeViewModel::class.java)
+        onBoardingThreeViewModel = ViewModelProvider(this)[OnBoardingThreeViewModel::class.java]
         binding = ActivityOnboardingThreeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

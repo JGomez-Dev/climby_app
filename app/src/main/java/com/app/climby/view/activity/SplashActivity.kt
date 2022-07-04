@@ -32,6 +32,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun goToAuthActivity() {
         AuthRouter().launch(this)
+        overridePendingTransition(0, 0)
         finish()
     }
 }

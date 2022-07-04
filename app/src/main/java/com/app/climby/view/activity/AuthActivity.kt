@@ -20,6 +20,8 @@ import com.app.climby.ui.profile.router.ResumeTripRouter
 import com.app.climby.util.Commons
 import com.app.climby.util.From
 import com.app.climby.view.router.MainRouter
+import com.app.climby.view.router.OnBoardingFirstRouter
+import com.app.climby.view.router.OnBoardingSecondRouter
 import com.app.climby.view.viewmodel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -109,27 +111,19 @@ class AuthActivity : AppCompatActivity() {
 
                 val i = intent
                 val extras = i.extras
-
-                if (extras != null) {
-                    val push = extras.getString("push")
-                    if (push != null) {
-                        val to = extras.getString("to")
-                        if (to != null) {
-                            val id = extras.getString("id")
-                            when (to) {
-                                "RequestsActivity" -> goToDetalleRequest(id)
-                                "TripUsersActivity" -> goToTripUser(id)
-                                "ProfileFragment" -> goToProfile()
-                                "ResumeTripActivity" -> goToResumeTrip(id)
-                                else -> {
-                                    binding.CLLoading.isVisible = false
-                                    goToMainActivity()
-                                }
-                            }
+                val push = extras?.getString("push")
+                val to = extras?.getString("to")
+                val id = extras?.getString("id")
+                if (extras != null && push != null && to != null) {
+                    when (to) {
+                        "RequestsActivity" -> goToDetalleRequest(id)
+                        "TripUsersActivity" -> goToTripUser(id)
+                        "ProfileFragment" -> goToProfile()
+                        "ResumeTripActivity" -> goToResumeTrip(id)
+                        else -> {
+                            binding.CLLoading.isVisible = false
+                            goToMainActivity()
                         }
-                    } else {
-                        binding.CLLoading.isVisible = false
-                        goToMainActivity()
                     }
                 } else {
                     binding.CLLoading.isVisible = false
@@ -175,24 +169,13 @@ class AuthActivity : AppCompatActivity() {
         })
     }
 
-    private fun goToOnBoardingFirst(email: String, photoUrl: String?, displayName: String?) {
-        val intent = Intent(this, OnBoardingFirstActivity::class.java).apply {
-            putExtra("email", email)
-            putExtra("photoUrl", photoUrl)
-            putExtra("displayName", displayName)
-        }
-        startActivity(intent)
+    private fun goToOnBoardingFirst(email: String?, photoUrl: String?, displayName: String?) {
+        OnBoardingFirstRouter().launch(this, email, photoUrl, displayName, null)
         finish()
     }
 
     private fun goToOnBoardingSecond(email: String, photoUrl: String?, displayName: String?, phone: String?) {
-        val intent = Intent(this, OnBoardingSecondActivity::class.java).apply {
-            putExtra("email", email)
-            putExtra("photoUrl", photoUrl)
-            putExtra("displayName", displayName)
-            putExtra("phone", phone)
-        }
-        startActivity(intent)
+        OnBoardingSecondRouter().launch(this, email, photoUrl, displayName, phone, true)
         finish()
     }
 

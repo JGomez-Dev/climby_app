@@ -12,11 +12,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.app.climby.R
 import com.app.climby.databinding.ActivityOnboardingFirstBinding
 import com.app.climby.util.UIUtil
+import com.app.climby.view.router.AuthRouter
+import com.app.climby.view.router.OnBoardingSecondRouter
 import com.app.climby.view.viewmodel.OnBoardingFirstViewModel
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +28,6 @@ class OnBoardingFirstActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnboardingFirstBinding
     private lateinit var onBoardingFirstViewModel: OnBoardingFirstViewModel
     private lateinit var email: String
-    private lateinit var provider: String
     private lateinit var photoUrl: String
     private lateinit var displayName: String
     private lateinit var phone: String
@@ -98,7 +99,6 @@ class OnBoardingFirstActivity : AppCompatActivity() {
     private fun getData() {
         val bundle = intent.extras
         email = bundle?.getString("email").toString()
-        provider = bundle?.getString("provider").toString()
         photoUrl = bundle?.getString("photoUrl").toString()
         displayName = bundle?.getString("displayName").toString()
         phone = if(bundle?.getString("phone") != null)
@@ -110,7 +110,6 @@ class OnBoardingFirstActivity : AppCompatActivity() {
     private fun setPreferences() {
         prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE).edit()
         prefs.putString("email", email)
-        prefs.putString("provider", provider)
         prefs.putString("photoUrl", photoUrl)
         prefs.putString("displayName", binding.ETName.text.toString())
         prefs.putString("phone", binding.ETPhone.text.toString().replace(" ", ""))
@@ -118,19 +117,11 @@ class OnBoardingFirstActivity : AppCompatActivity() {
     }
 
     private fun goToOnBoardingSecond() {
-        val intent = Intent(this, OnBoardingSecondActivity::class.java).apply {
-            putExtra("email", email)
-            putExtra("photoUrl", photoUrl)
-            putExtra("provider", provider)
-            putExtra("displayName", binding.ETName.text.toString())
-            putExtra("phone", binding.ETPhone.text.toString().replace(" ", ""))
-        }
-        startActivity(intent)
+        OnBoardingSecondRouter().launch(this, email, photoUrl, displayName, binding.ETPhone.text.toString().replace(" ", ""), false)
     }
 
     private fun goToAuthActivity() {
-        val intent = Intent(this, AuthActivity::class.java)
-        startActivity(intent)
+        AuthRouter().launch(this)
         overridePendingTransition( R.anim.slide_in_left, R.anim.slide_out_right)
         finish()
     }
