@@ -23,24 +23,24 @@
         android:id="@+id/fading_edge_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:padding="40dp"
         app:fel_edge="top|bottom"
         app:fel_size_bottom="250dp"
         app:fel_size_top="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/IVBack">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RVProvince"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/IVBack" />
 
     </com.bosphere.fadingedgelayout.FadingEdgeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,7 +51,7 @@ class AuthActivity : AppCompatActivity() {
                             .addOnCompleteListener {
                                 if (it.isSuccessful) {
                                     authViewModel.getUserByEmail(account.email ?: "")
-                                    authViewModel.exists.observe(this, Observer { it ->
+                                    authViewModel.exists.observe(this, Observer {
                                         if (it)
                                             goToMainActivity()
                                         else {
@@ -113,13 +113,13 @@ class AuthActivity : AppCompatActivity() {
                 val extras = i.extras
                 val push = extras?.getString("push")
                 val to = extras?.getString("to")
-                val id = extras?.getString("id")
+                val tripId = extras?.getString("id")
                 if (extras != null && push != null && to != null) {
                     when (to) {
-                        "RequestsActivity" -> goToDetalleRequest(id)
-                        "TripUsersActivity" -> goToTripUser(id)
+                        "RequestsActivity" -> goToDetalleRequest(tripId)
+                        "TripUsersActivity" -> goToTripUser(tripId)
                         "ProfileFragment" -> goToProfile()
-                        "ResumeTripActivity" -> goToResumeTrip(id)
+                        "ResumeTripActivity" -> goToResumeTrip(tripId)
                         else -> {
                             binding.CLLoading.isVisible = false
                             goToMainActivity()

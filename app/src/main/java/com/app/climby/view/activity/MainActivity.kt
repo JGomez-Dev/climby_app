@@ -9,48 +9,47 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.app.climby.R
+import com.app.climby.databinding.ActivityMainBinding
 import com.app.climby.ui.publish.PublishFragment
 import com.app.climby.util.Commons
 import com.app.climby.util.UIUtil
 import com.app.climby.view.viewmodel.MainViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navView: BottomNavigationView
+    private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-
-        setContentView(R.layout.activity_main)
-        navView = findViewById(R.id.nav_view)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        navView.setupWithNavController(navController)
-        navView.itemIconTintList = null;
-        UIUtil.changeItemWiseTextProperties(navView.menu, this)
+        binding.navView.setupWithNavController(navController)
+        binding.navView.itemIconTintList = null;
+        UIUtil.changeItemWiseTextProperties(binding.navView.menu, this)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.navigation_publish) {
-                navView.visibility = View.GONE
+                binding.navView.visibility = View.GONE
             } else {
-                navView.visibility = View.VISIBLE
+                binding.navView.visibility = View.VISIBLE
             }
             mainViewModel.getNotification(Commons.userSession?.id!!)
         }
 
         mainViewModel.exitsNotification.observe(this, Observer {
             if (it != 0) {
-                navView.getOrCreateBadge(R.id.navigation_profile).apply {
+                binding.navView.getOrCreateBadge(R.id.navigation_profile).apply {
                     isVisible = true
                     backgroundColor = (ContextCompat.getColor(applicationContext, R.color.primary))
                 }
             }else
-                navView.getOrCreateBadge(R.id.navigation_profile).apply {
+                binding.navView.getOrCreateBadge(R.id.navigation_profile).apply {
                     isVisible = false
                 }
         })
@@ -59,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         if (bundle != null) {
             val from = bundle.getString("from", null)
             if (from == "profile") {
-                    navView.selectedItemId = R.id.navigation_profile
+                binding.navView.selectedItemId = R.id.navigation_profile
             }
             if (from == "publish") {
                 val f = PublishFragment()

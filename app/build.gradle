@@ -26,7 +26,7 @@ android {
         applicationId "com.app.climby"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 14
+        versionCode 15
         versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

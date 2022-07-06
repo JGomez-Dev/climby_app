@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.app.climby.R
 import com.app.climby.data.model.user.UserModel
@@ -46,16 +45,16 @@ class OnBoardingSecondActivity : AppCompatActivity() {
         }
         binding.BTNext.setOnClickListener {
             onBoardingSecondViewModel.generateToken()
-            onBoardingSecondViewModel.token.observe(this, Observer { token ->
+            onBoardingSecondViewModel.token.observe(this) { token ->
                 insertUser(token)
-            })
+            }
         }
-        onBoardingSecondViewModel.okSaveUser.observe(this, Observer { it ->
+        onBoardingSecondViewModel.okSaveUser.observe(this) {
             if (it)
                 goToMainActivity()
             else
                 Toast.makeText(this, "Problema en el servidor", Toast.LENGTH_SHORT).show()
-        })
+        }
 
         binding.IVBack.setOnClickListener {
             onBackPressed()

@@ -43,7 +43,7 @@ class OnBoardingThreeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        onBoardingThreeViewModel = ViewModelProvider(this)[OnBoardingThreeViewModel::class.java]
+        onBoardingThreeViewModel = ViewModelProvider(this).get(OnBoardingThreeViewModel::class.java)
         binding = ActivityOnboardingThreeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -176,7 +176,7 @@ class OnBoardingThreeActivity : AppCompatActivity() {
 
     private fun setStart(contStart: Double) {
         when {
-            contStart.equals(0.0)!! -> {
+            contStart.equals(0.0) -> {
                 binding.IVStart1Organizer.setImageResource(R.mipmap.withoutstart)
                 binding.IVStart2Organizer.setImageResource(R.mipmap.withoutstart)
                 binding.IVStart3Organizer.setImageResource(R.mipmap.withoutstart)
