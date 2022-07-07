@@ -12,7 +12,7 @@
         android:layout_height="32dp"
         android:layout_gravity="center"
         android:src="@mipmap/user"
-        app:civ_border_color="#ffffff"
+        app:civ_border_color="@color/primary_light_light"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

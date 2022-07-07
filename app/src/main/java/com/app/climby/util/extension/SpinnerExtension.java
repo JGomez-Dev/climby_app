@@ -1,5 +1,6 @@
 package com.app.climby.util.extension;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ListPopupWindow;
@@ -11,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import java.lang.reflect.Field;
 
+@SuppressLint("AppCompatCustomView")
 public class SpinnerExtension extends Spinner {
 
     public SpinnerExtension(@NonNull Context context) {

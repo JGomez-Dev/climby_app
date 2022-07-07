@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
-
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="16dp"
-    android:background="@color/white"
-    android:elevation="2dp">
+    android:background="@drawable/rounded_corner"
+    android:elevation="5dp">
 
     <TextView
         android:id="@+id/TVType"
@@ -17,7 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/onboarding.page2.lead"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,9 +32,9 @@
         android:scrollHorizontally="true"
         android:text="@string/onboarding.page2.date"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/IVPlace"
+        app:layout_constraintEnd_toStartOf="@+id/FLPlace"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/TVType"
         app:layout_constraintTop_toBottomOf="@+id/TVType" />
@@ -57,11 +56,11 @@
           app:layout_constraintVertical_bias="0.0" />-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:background="@drawable/shape_capsule"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/BTRequest"
-        app:layout_constraintEnd_toStartOf="@+id/BTRequest"
         app:layout_constraintStart_toStartOf="@+id/TVPlaceDate"
         app:layout_constraintTop_toTopOf="@+id/BTRequest">
 
@@ -69,8 +68,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RVUsers"
             android:layout_width="wrap_content"
-            android:layout_height="34dp"
-            android:layout_marginStart="35dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/CVDriver"
             app:layout_constraintTop_toTopOf="parent">
@@ -79,10 +78,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/CVDriver"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@mipmap/user"
-            app:civ_border_color="@color/white"
+            app:civ_border_color="@color/primary_light_light"
             app:civ_border_width="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/RVUsers"
             app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +97,7 @@
             android:maxLines="1"
             android:scrollHorizontally="true"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/RVUsers"
@@ -106,17 +105,29 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <ImageView
-        android:id="@+id/IVPlace"
-        android:layout_width="111dp"
-        android:layout_height="111dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="@string/onboarding.page0.hint.empty"
+    <FrameLayout
+        android:id="@+id/FLPlace"
+        android:layout_width="132dp"
+        android:layout_height="103dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@mipmap/boulder" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/IVPlace"
+            android:layout_width="132dp"
+            android:layout_height="103dp"
+            android:scaleType="matrix"
+            app:sriv_right_top_corner_radius="8dp"/>
+
+        <com.app.climby.ui.discover.CanvasView
+            android:layout_width="132dp"
+            android:layout_height="103dp"
+            app:layout_constraintBottom_toBottomOf="@+id/IVPlace"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/IVPlace"
+            app:layout_constraintTop_toTopOf="@+id/IVPlace" />
+
+    </FrameLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/BTRequest"
@@ -135,11 +146,12 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="14sp"
-        app:cornerRadius="0dp"
+        app:cornerRadius="100dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/IVPlace"
-        app:layout_constraintStart_toStartOf="@+id/IVPlace"
-        app:layout_constraintTop_toBottomOf="@+id/IVPlace" />
+        app:layout_constraintEnd_toEndOf="@+id/FLPlace"
+        app:layout_constraintStart_toStartOf="@+id/FLPlace"
+        app:layout_constraintTop_toBottomOf="@+id/FLPlace" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/CVNumberMessage"
