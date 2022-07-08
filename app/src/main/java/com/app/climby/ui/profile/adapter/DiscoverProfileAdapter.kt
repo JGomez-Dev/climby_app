@@ -149,7 +149,12 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
                 }
             }
 
-            TVUsers.text =   if (accepted > 0) "Tú y $request más " else "Tú"
+            if(accepted < 3)
+                TVUsers.isVisible = false
+            else{
+                TVUsers.isVisible = true
+                TVUsers.text = "+ " + (accepted-2)
+            }
 
             RVUsers.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
             TVEdit.setOnClickListener {
@@ -157,7 +162,7 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
             }
 
             if (!acceptedBookingList.isNullOrEmpty()) {
-                userDiscoverAdapter = trip.bookings?.let { UserDiscoverAdapter(acceptedBookingList, context) }!!
+                userDiscoverAdapter = trip.bookings?.let { UserDiscoverAdapter(acceptedBookingList.take(2), context) }!!
                 RVUsers.adapter = userDiscoverAdapter
             }
         }

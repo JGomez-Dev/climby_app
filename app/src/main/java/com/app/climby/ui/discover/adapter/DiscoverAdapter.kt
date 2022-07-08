@@ -68,7 +68,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, f
             var accepted = 0
             val acceptedBookingList: MutableList<BookingModel> = arrayListOf()
             TVType.text = trip.type?.name + " en"
-            TVPlaceDate.text = trip.site?.name + ", \n" + (trip.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip.departure?.let { Commons.getDate(it) }
+            TVPlaceDate.text = trip.site?.name + ", " + (trip.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip.departure?.let { Commons.getDate(it) }
             trip.type?.name?.let { UIUtil.setPhotoTrip(it, context, IVPlace) }
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(trip.driver?.photo).into(CVDriver)
             Commons.setTextButton(BTRequest, trip)
@@ -116,10 +116,12 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, f
                         RequestsRouter().launch(fragmentActivity, trip, from)
                     }
                 }
-                if (accepted > 0)
-                    TVUsers.text = "Tú y $accepted más "
-                else
-                    TVUsers.text = "Tú"
+                if(accepted < 3)
+                    TVUsers.isVisible = false
+                else{
+                    TVUsers.isVisible = true
+                    TVUsers.text = "+ " + (accepted-2)
+                }
             } else {
                 var userPassager = false
                 var userPassagerAccepted = false
@@ -212,16 +214,23 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, f
                         BTRequest.text = "Terminado\r\nVer resumen"
                     }
                 }
-                if (accepted > 0)
-                    TVUsers.text = (trip.driver?.name?.split(" ")?.get(0) ?: "") + " y " + accepted + " más "
+                if(accepted < 3)
+                    TVUsers.isVisible = false
+                else{
+                    TVUsers.isVisible = true
+                    TVUsers.text = "+ " + (accepted-2)
+                }
+
+                /*if (accepted > 3)
+                    TVUsers.text = "+ $accepted"
                 else
-                    TVUsers.text = trip.driver?.name?.split(" ")?.get(0) ?: ""
+                    TVUsers.text = trip.driver?.name?.split(" ")?.get(0) ?: ""*/
             }
 
             RVUsers.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
 
             if (!acceptedBookingList.isNullOrEmpty()) {
-                userDiscoverAdapter = UserDiscoverAdapter(acceptedBookingList, context)
+                userDiscoverAdapter = UserDiscoverAdapter(acceptedBookingList.take(2), context)
                 RVUsers.adapter = userDiscoverAdapter
             }
         }

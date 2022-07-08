@@ -18,7 +18,7 @@
         android:scrollHorizontally="true"
         android:text="@string/text_travel"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/IVBack"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/text_admin"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/CVAdmin"
         app:layout_constraintTop_toBottomOf="@+id/TVSite" />
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/text_passenger"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/TVAdmin"
         app:layout_constraintTop_toBottomOf="@+id/CVAdmin" />
@@ -53,6 +53,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        app:cardCornerRadius="8dp"
+        android:elevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TVAdmin">
@@ -63,8 +65,8 @@
 
             <ImageView
                 android:id="@+id/IVStart1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/IVStart2"
@@ -74,8 +76,8 @@
 
             <ImageView
                 android:id="@+id/IVStart2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/IVStart3"
@@ -85,8 +87,8 @@
 
             <ImageView
                 android:id="@+id/IVStart3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_marginEnd="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +103,7 @@
                 android:includeFontPadding="false"
                 android:text="@string/onboarding.page1.experienced"
                 android:textColor="@color/grey"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/TVVAdmin"
                 app:layout_constraintTop_toBottomOf="@+id/TVVAdmin" />
@@ -114,7 +116,7 @@
                 android:includeFontPadding="false"
                 android:text="@string/text_exits"
                 android:textColor="@color/grey"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/TVExperience"
                 app:layout_constraintTop_toBottomOf="@+id/TVVAdmin" />
@@ -127,7 +129,7 @@
                 android:includeFontPadding="false"
                 android:text="@string/onboarding.page0.name"
                 android:textColor="@color/design_default_color_on_secondary"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/CIVAdmin"
                 app:layout_constraintStart_toEndOf="@+id/CIVAdmin"
@@ -135,8 +137,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/CIVAdmin"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
                 android:src="@mipmap/user"

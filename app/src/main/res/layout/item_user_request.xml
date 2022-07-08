@@ -7,13 +7,13 @@
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="16dp"
-    android:background="#FFFFFF"
-    android:elevation="2dp">
+    android:background="@drawable/rounded_corner"
+    android:elevation="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/CIPhotoUser"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -35,8 +35,8 @@
 
         <ImageView
             android:id="@+id/IVStart1"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_marginStart="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/TVUserNameRequest"
             app:layout_constraintStart_toEndOf="@+id/TVUserNameRequest"
@@ -46,8 +46,8 @@
 
         <ImageView
             android:id="@+id/IVStart2"
-            android:layout_width="20dp"
-            android:layout_height="15dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/IVStart1"
             app:layout_constraintStart_toEndOf="@+id/IVStart1"
             app:layout_constraintTop_toTopOf="@+id/IVStart1"
@@ -56,8 +56,8 @@
 
         <ImageView
             android:id="@+id/IVStart3"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/TVUserNameRequest"
             app:layout_constraintStart_toEndOf="@+id/IVStart2"
             app:layout_constraintTop_toTopOf="@+id/TVUserNameRequest"
@@ -71,7 +71,7 @@
             android:includeFontPadding="false"
             android:text="@string/onboarding.page1.experienced"
             android:textColor="@color/grey"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TVUserNameRequest" />
@@ -84,7 +84,7 @@
             android:includeFontPadding="false"
             android:text="@string/text_exits"
             android:textColor="@color/grey"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/TVUserExperience"
             app:layout_constraintStart_toEndOf="@+id/TVUserExperience"
@@ -97,7 +97,7 @@
             android:includeFontPadding="false"
             android:text="@string/onboarding.page0.name"
             android:textColor="@color/design_default_color_on_secondary"
-            android:textSize="28sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -115,7 +115,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/BTRefuseRquest"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -131,10 +131,10 @@
             android:text="@string/text_refuse"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            app:cornerRadius="0dp"
+            app:cornerRadius="50dp"
             tools:ignore="ButtonStyle" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/BTAceptRquest"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -150,7 +150,7 @@
             android:text="@string/text_accept"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            app:cornerRadius="0dp"
+            app:cornerRadius="50dp"
             tools:ignore="ButtonStyle" />
 
     </LinearLayout>
@@ -172,7 +172,7 @@
         android:textStyle="bold"
         android:visibility="gone"
         app:backgroundTint="@color/gree_whatsapp"
-        app:cornerRadius="0dp"
+        app:cornerRadius="50dp"
         app:icon="@drawable/ic_walogo"
         app:iconSize="?attr/dialogPreferredPadding"
         app:layout_constraintBottom_toBottomOf="@+id/LLButton"

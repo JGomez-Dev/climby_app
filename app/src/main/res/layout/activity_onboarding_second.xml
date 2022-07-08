@@ -23,7 +23,7 @@
         android:layout_marginTop="12dp"
         android:text="@string/onboarding.page1.title"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/onboarding.page1.beginner"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -85,7 +85,7 @@
                     android:alpha="0.7"
                     android:text="@string/onboarding.page1.beginner.body"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/onboarding.page1.intermediate"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -147,7 +147,7 @@
                     android:alpha="0.7"
                     android:text="@string/onboarding.page1.intermediate.body"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -198,7 +198,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/onboarding.page1.experienced"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -208,7 +208,7 @@
                     android:alpha="0.7"
                     android:text="@string/onboarding.page1.experienced.body"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -216,7 +216,7 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/BTNext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -232,7 +232,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:cornerRadius="0dp"
+        app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

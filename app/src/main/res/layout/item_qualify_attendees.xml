@@ -5,11 +5,12 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="2dp"
+    android:elevation="5dp"
     android:layout_marginBottom="16dp"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="8dp"
+    android:background="@drawable/rounded_corner"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/TVViaje2">
@@ -20,8 +21,8 @@
 
         <ImageView
             android:id="@+id/IVStart1"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_marginEnd="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/IVStart2"
@@ -31,8 +32,8 @@
 
         <ImageView
             android:id="@+id/IVStart2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_marginEnd="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/IVStart3"
@@ -42,8 +43,8 @@
 
         <ImageView
             android:id="@+id/IVStart3"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/IVAddStart"
@@ -66,8 +67,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/CVAttendees"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_margin="16dp"
             android:src="@mipmap/user"
@@ -79,8 +80,8 @@
 
         <ImageView
             android:id="@+id/IVAddStart"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="16dp"
             android:background="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/IVStart1"
@@ -91,8 +92,8 @@
 
         <ImageView
             android:id="@+id/IVRemoveStart"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="10dp"
             android:background="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/IVStart1"

@@ -9,8 +9,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/CVImageProfile"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_gravity="center"
         android:layout_marginStart="25dp"
         android:layout_marginTop="35dp"
@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/IVStartProfile1"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_marginStart="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/TVUserName"
             app:layout_constraintStart_toEndOf="@+id/TVUserName"
@@ -41,8 +41,8 @@
 
         <ImageView
             android:id="@+id/IVStartProfile2"
-            android:layout_width="20dp"
-            android:layout_height="15dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/IVStartProfile1"
             app:layout_constraintStart_toEndOf="@+id/IVStartProfile1"
             app:layout_constraintTop_toTopOf="@+id/IVStartProfile1"
@@ -51,8 +51,8 @@
 
         <ImageView
             android:id="@+id/IVStartProfile3"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/TVUserName"
             app:layout_constraintStart_toEndOf="@+id/IVStartProfile2"
             app:layout_constraintTop_toTopOf="@+id/TVUserName"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="@string/onboarding.page1.experienced"
             android:textColor="@color/grey"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TVUserName" />
@@ -77,7 +77,7 @@
             android:layout_marginStart="12dp"
             android:text="@string/text_my_outings"
             android:textColor="@color/grey"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/TVUserExperience"
             app:layout_constraintStart_toEndOf="@+id/TVUserExperience"
@@ -90,7 +90,7 @@
             android:includeFontPadding="false"
             android:text="@string/text_user_name"
             android:textColor="@color/black"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -111,7 +111,7 @@
         android:text="@string/text_edit"
         android:textAllCaps="false"
         android:textColor="@color/primary"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

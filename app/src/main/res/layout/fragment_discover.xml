@@ -25,7 +25,7 @@
             android:gravity="center"
             android:text="@string/text_exit_from"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -60,7 +60,7 @@
                 android:layout_marginStart="2dp"
                 android:text="@string/text_select"
                 android:textColor="@color/primary"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -88,119 +88,126 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LYDiscover_outputs">
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
+        <LinearLayout
             android:id="@+id/TBSeach"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:paddingEnd="30dp"
-            app:checkedButton="@+id/BTAll"
-            app:selectionRequired="true"
-            app:singleSelection="true"
-            tools:ignore="RtlSymmetry">
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/BTAll"
-                style="@style/toggle_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetTop="0dp"
-                android:insetRight="5dp"
+                android:checkable="true"
+                android:insetRight="4dp"
                 android:insetBottom="0dp"
                 android:letterSpacing="0"
+
                 android:maxLines="1"
+                android:textSize="14sp"
                 android:stateListAnimator="@null"
                 android:text="@string/text_todas"
                 android:textAllCaps="false"
-                android:textSize="16sp"
                 android:textStyle="bold"
-                app:shapeAppearance="@style/Cut" />
+                app:cornerRadius="50dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/BTNextWeekend"
-                style="@style/toggle_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:insetLeft="5dp"
+                android:insetLeft="4dp"
                 android:insetTop="0dp"
-                android:insetRight="5dp"
+                android:insetRight="4dp"
+                android:textColor="@color/black"
                 android:insetBottom="0dp"
+                android:textSize="14sp"
+                app:backgroundTint="@color/primary_light"
                 android:letterSpacing="0"
                 android:maxLines="1"
                 android:stateListAnimator="@null"
                 android:text="@string/text_next_weekend"
                 android:textAllCaps="false"
-                android:textSize="16sp"
+                app:cornerRadius="50dp"
                 android:textStyle="bold" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/BTBoulder"
-                style="@style/toggle_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:insetLeft="5dp"
+                android:insetLeft="4dp"
                 android:insetTop="0dp"
-                android:insetRight="5dp"
+                android:insetRight="4dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
                 android:insetBottom="0dp"
+                app:backgroundTint="@color/primary_light"
                 android:letterSpacing="0"
                 android:maxLines="1"
                 android:stateListAnimator="@null"
                 android:text="@string/text_boulder"
                 android:textAllCaps="false"
-                android:textSize="16sp"
+                app:cornerRadius="50dp"
                 android:textStyle="bold" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/BTLead"
-                style="@style/toggle_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:insetLeft="5dp"
+                android:insetLeft="4dp"
                 android:insetTop="0dp"
-                android:insetRight="5dp"
+                android:insetRight="4dp"
                 android:insetBottom="0dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:backgroundTint="@color/primary_light"
                 android:letterSpacing="0"
                 android:maxLines="1"
                 android:stateListAnimator="@null"
                 android:text="@string/text_deportiva"
                 android:textAllCaps="false"
-                android:textSize="16sp"
+                app:cornerRadius="50dp"
                 android:textStyle="bold" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/BTRocodromo"
-                style="@style/toggle_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:insetLeft="5dp"
+                android:insetLeft="4dp"
                 android:insetTop="0dp"
-                android:insetRight="5dp"
+                android:insetRight="4dp"
                 android:insetBottom="0dp"
+                android:textColor="@color/black"
                 android:letterSpacing="0"
+                android:textSize="14sp"
+                app:backgroundTint="@color/primary_light"
                 android:maxLines="1"
                 android:stateListAnimator="@null"
                 android:text="@string/text_rocodromo"
                 android:textAllCaps="false"
-                android:textSize="16sp"
+                app:cornerRadius="50dp"
                 android:textStyle="bold" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/BTClassic"
-                style="@style/toggle_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:insetLeft="5dp"
+                android:insetLeft="4dp"
                 android:insetTop="0dp"
-                android:insetBottom="0dp"
+                android:insetBottom="4dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:backgroundTint="@color/primary_light"
                 android:letterSpacing="0"
                 android:maxLines="1"
                 android:stateListAnimator="@null"
                 android:text="@string/text_clasica"
                 android:textAllCaps="false"
-                android:textSize="16sp"
                 android:textStyle="bold"
-                app:shapeAppearance="@style/Cut" />
-        </com.google.android.material.button.MaterialButtonToggleGroup>
+                app:cornerRadius="50dp" />
+        </LinearLayout>
 
     </HorizontalScrollView>
 

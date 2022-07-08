@@ -25,7 +25,7 @@
         android:includeFontPadding="false"
         android:text="@string/onboarding.page2.title"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,23 +53,37 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@color/white"
-                android:elevation="2dp"
+                android:background="@drawable/rounded_corner"
+                android:elevation="5dp"
                 android:paddingStart="20dp"
-                android:paddingEnd="16dp"
                 android:paddingBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/IVSiteQualifyAttendees"
-                    android:layout_width="111dp"
-                    android:layout_height="111dp"
+                <FrameLayout
+                    android:id="@+id/FLPlace"
+                    android:layout_width="132dp"
+                    android:layout_height="103dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.joooonho.SelectableRoundedImageView
+                        android:id="@+id/IVSiteQualifyAttendees"
+                        android:layout_width="132dp"
+                        android:layout_height="103dp"
+                        android:scaleType="matrix"
+                        app:sriv_right_top_corner_radius="8dp"/>
+
+                    <com.app.climby.ui.discover.CanvasView
+                        android:layout_width="132dp"
+                        android:layout_height="103dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/IVSiteQualifyAttendees"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/IVSiteQualifyAttendees"
+                        app:layout_constraintTop_toTopOf="@+id/IVSiteQualifyAttendees" />
+
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/TVTypeQualifyAttendees"
@@ -77,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/onboarding.page2.lead"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -89,7 +103,7 @@
                     android:maxWidth="200dp"
                     android:text="@string/onboarding.page2.date"
                     android:textColor="@color/black"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/IVSiteQualifyAttendees"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -113,8 +127,8 @@
 
                 <ImageView
                     android:id="@+id/IVStart1Organizer"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:layout_marginEnd="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/IVStart2Organizer"
@@ -124,8 +138,8 @@
 
                 <ImageView
                     android:id="@+id/IVStart2Organizer"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:layout_marginEnd="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/IVStart3Organizer"
@@ -135,8 +149,8 @@
 
                 <ImageView
                     android:id="@+id/IVStart3Organizer"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:layout_marginEnd="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/IVAddStartOrganizer"
@@ -159,8 +173,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/CVAttendeesOrganizer"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:layout_margin="16dp"
                     android:src="@mipmap/user"
@@ -184,8 +198,8 @@
 
                 <ImageView
                     android:id="@+id/IVRemoveStartOrganizer"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_marginEnd="10dp"
                     android:background="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/IVStart1Organizer"
@@ -217,7 +231,7 @@
                 android:text="@string/onboarding.page2.send"
                 android:textAlignment="center"
                 android:textColor="#575757"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/ETSendMenssage"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -234,7 +248,7 @@
                 android:hint="@string/onboarding.page2.body.qualify"
                 android:maxLength="250"
                 android:padding="16dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/RVQualify"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -250,10 +264,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:background="@color/primary"
+        android:backgroundTint="@color/primary"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:letterSpacing="0"
+        app:cornerRadius="50dp"
         android:stateListAnimator="@null"
         android:text="@string/onboarding.page2.button.send"
         android:textAllCaps="false"

@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -129,11 +130,30 @@ class DiscoverFragment : Fragment(){
 
             discoverViewModel.isLoading.observe(viewLifecycleOwner) {
                 binding.PBDiscover.isVisible = it
+
             }
 
-            binding.TBSeach.addOnButtonCheckedListener { _, checkedId, isChecked ->
-                getFilterAndSendQuery(isChecked, checkedId)
+            binding.BTAll.setOnClickListener {
+                getFilterAndSendQuery(binding.BTAll)
             }
+            binding.BTNextWeekend.setOnClickListener {
+                getFilterAndSendQuery(binding.BTNextWeekend)
+            }
+            binding.BTBoulder.setOnClickListener {
+                getFilterAndSendQuery(binding.BTBoulder)
+            }
+            binding.BTLead.setOnClickListener {
+                getFilterAndSendQuery(binding.BTLead)
+            }
+            binding.BTRocodromo.setOnClickListener {
+                getFilterAndSendQuery(binding.BTRocodromo)
+            }
+            binding.BTClassic.setOnClickListener {
+                getFilterAndSendQuery(binding.BTClassic)
+            }
+            /*binding.TBSeach.addOnButtonCheckedListener { _, checkedId, isChecked ->
+                getFilterAndSendQuery(isChecked, checkedId)
+            }*/
 
             binding.pullToRefresh.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.primary))
             binding.pullToRefresh.setOnRefreshListener {
@@ -267,17 +287,50 @@ class DiscoverFragment : Fragment(){
         TripUsersRouter().launch(requireActivity(), trip, From.DISCOVER)
     }
 
-    private fun getFilterAndSendQuery(isChecked: Boolean, checkedId: Int) {
-        if (isChecked) {
-            when (checkedId) {
-                R.id.BTAll -> discoverViewModel.getTrips(requireContext().applicationContext, province)
-                R.id.BTNextWeekend -> discoverViewModel.getTripsType("NextWeekend", province.split(" ")[0])
-                R.id.BTBoulder -> discoverViewModel.getTripsType("Boulder", province.split(" ")[0])
-                R.id.BTLead -> discoverViewModel.getTripsType("Deportiva", province.split(" ")[0])
-                R.id.BTRocodromo -> discoverViewModel.getTripsType("Rocódromo", province.split(" ")[0])
-                R.id.BTClassic -> discoverViewModel.getTripsType("Clásica", province.split(" ")[0])
+    private fun getFilterAndSendQuery(button: Button) {
+        when (button) {
+            binding.BTAll -> {
+                discoverViewModel.getTrips(requireContext().applicationContext, province)
+                changeButtonColor(binding.BTAll)
+            }
+            binding.BTNextWeekend -> {
+                discoverViewModel.getTripsType("NextWeekend", province.split(" ")[0])
+                changeButtonColor(binding.BTNextWeekend)
+            }
+            binding.BTBoulder -> {
+                discoverViewModel.getTripsType("Boulder", province.split(" ")[0])
+                changeButtonColor(binding.BTBoulder)
+            }
+            binding.BTLead -> {
+                discoverViewModel.getTripsType("Deportiva", province.split(" ")[0])
+                changeButtonColor(binding.BTLead)
+            }
+            binding.BTRocodromo -> {
+                discoverViewModel.getTripsType("Rocódromo", province.split(" ")[0])
+                changeButtonColor(binding.BTRocodromo)
+            }
+            binding.BTClassic -> {
+                discoverViewModel.getTripsType("Clásica", province.split(" ")[0])
+                changeButtonColor(binding.BTClassic)
             }
         }
     }
 
+    private fun changeButtonColor(button: Button) {
+        binding.BTAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        binding.BTAll.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.primary_light))
+        binding.BTNextWeekend.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        binding.BTNextWeekend.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.primary_light))
+        binding.BTBoulder.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        binding.BTBoulder.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.primary_light))
+        binding.BTLead.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        binding.BTLead.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.primary_light))
+        binding.BTRocodromo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        binding.BTRocodromo.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.primary_light))
+        binding.BTClassic.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        binding.BTClassic.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.primary_light))
+
+        button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.primary))
+    }
 }

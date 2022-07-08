@@ -25,7 +25,7 @@
         android:layout_marginTop="12dp"
         android:text="@string/text_edit_information"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
                 android:textColor="@color/primary"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:cornerRadius="0dp"
+                app:cornerRadius="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/CIPhotoUser" />
@@ -235,7 +235,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/onboarding.page1.beginner"
                             android:textColor="@color/black"
-                            android:textSize="24sp"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -243,7 +243,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="@string/onboarding.page1.beginner.body"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -295,7 +295,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/onboarding.page1.intermediate"
                             android:textColor="@color/black"
-                            android:textSize="24sp"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -303,7 +303,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/onboarding.page1.intermediate.body"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -354,7 +354,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/onboarding.page1.experienced"
                             android:textColor="@color/black"
-                            android:textSize="24sp"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -362,7 +362,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/onboarding.page1.experienced.body"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -386,7 +386,7 @@
                 android:textColor="@color/primary"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:cornerRadius="0dp"
+                app:cornerRadius="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/CVExperienced" />
 
@@ -410,7 +410,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:cornerRadius="0dp"
+        app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:elevation="2dp"
     android:layout_margin="16dp"
-    android:background="@color/white">
+    android:background="@drawable/rounded_corner"
+    >
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/CVItemResumeTrip"
@@ -24,7 +25,7 @@
         android:layout_marginStart="10dp"
         android:text="@string/onboarding.page0.name"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/CVItemResumeTrip"
         app:layout_constraintStart_toEndOf="@+id/CVItemResumeTrip"
@@ -40,7 +41,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/text_example"
         android:textColor="@color/grey_dark_2"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

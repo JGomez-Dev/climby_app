@@ -64,6 +64,8 @@ class RequestAdapter(bookingData: MutableList<BookingModel>, context: Context) :
             tVUserNameRequest.text = booking.passenger?.name?.split(" ")?.get(0) ?: ""
             if(booking.status == ReservationStatus.ACCEPTED.status ){
                 btContact.visibility = View.VISIBLE
+                bTAceptRquest.visibility = View.INVISIBLE
+                bTRefuseRquest.visibility = View.INVISIBLE
             }
             bTRefuseRquest.setOnClickListener {
                 mListener.onClickRefuse(adapterPosition)
@@ -72,6 +74,8 @@ class RequestAdapter(bookingData: MutableList<BookingModel>, context: Context) :
             bTAceptRquest.setOnClickListener {
                 mListener.onClickAcept(adapterPosition)
                 btContact.visibility = View.VISIBLE
+                bTAceptRquest.visibility = View.INVISIBLE
+                bTRefuseRquest.visibility = View.INVISIBLE
             }
             btContact.setOnClickListener {
                 mListener.onClickContact(adapterPosition)
