@@ -122,14 +122,14 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
                     }
                 }
 
-                if (accepted == trip.availablePlaces) {
+                /*if (accepted == trip.availablePlaces) {
                     BTRequest.setOnClickListener {
                         RequestsRouter().launch(fragmentActivity, trip, null)
                     }
                     BTRequest.setTextColor(ContextCompat.getColorStateList(context, R.color.white))
                     BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);
                     BTRequest.text = "Completo"
-                }
+                }*/
             }
 
             val currentDate = SimpleDateFormat("yyyy-MM-dd").format(Date())

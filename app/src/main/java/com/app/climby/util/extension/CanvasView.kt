@@ -1,4 +1,4 @@
-package com.app.climby.ui.discover
+package com.app.climby.util.extension
 
 import android.content.Context
 import android.graphics.Canvas

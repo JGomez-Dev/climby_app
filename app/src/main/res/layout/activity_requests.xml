@@ -62,7 +62,7 @@
                 android:scaleType="matrix"
                 app:sriv_right_top_corner_radius="8dp"/>
 
-            <com.app.climby.ui.discover.CanvasView
+            <com.app.climby.util.extension.CanvasView
                 android:layout_width="132dp"
                 android:layout_height="103dp"
                 app:layout_constraintBottom_toBottomOf="@+id/IVPlace"

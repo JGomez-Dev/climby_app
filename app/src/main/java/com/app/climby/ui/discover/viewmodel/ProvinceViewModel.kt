@@ -27,7 +27,7 @@ class ProvinceViewModel  @Inject constructor(private val getAllProvinces: GetAll
                 conttest = (0..30).random()
             }*/
             if (!result.isNullOrEmpty())
-                provincesModel.postValue(result)
+                provincesModel.postValue(result.drop(1))
         }
     }
 
