@@ -70,7 +70,7 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
             val acceptedBookingList: MutableList<BookingModel> = arrayListOf()
 
             TVType.text = trip.type?.name + " en"
-            TVPlaceDate.text = trip.site?.name + ", \n" + (trip.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip.departure?.let { Commons.getDate(it) }
+            TVPlaceDate.text = trip.site?.name + ", " + (trip.departure?.split("-")?.get(2)?.split(" ")?.get(0) ?: "") + " " + trip.departure?.let { Commons.getDate(it) }
             trip.type?.name?.let { UIUtil.setPhotoTrip(it, context, IVPlace)  }
             Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.mipmap.user).error(R.mipmap.user)).load(trip.driver?.photo).into(CVDriver)
             Commons.setTextButton(BTRequest, trip)

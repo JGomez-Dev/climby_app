@@ -5,20 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
-    signingConfigs {
-        debug {
-            storeFile file('C:\\Users\\Usuario\\Documents\\Proyects\\Climby\\ClimbyKeyStore.jks')
-            storePassword 'Jav20Cib22%02'
-            keyAlias 'Climby'
-            keyPassword 'Jav20Cib22%02'
-        }
-        release {
-            storeFile file('C:\\Users\\Usuario\\Documents\\Proyects\\Climby\\ClimbyKeyStore.jks')
-            storePassword 'Jav20Cib22%02'
-            keyAlias 'Climby'
-            keyPassword 'Jav20Cib22%02'
-        }
-    }
+
     compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
