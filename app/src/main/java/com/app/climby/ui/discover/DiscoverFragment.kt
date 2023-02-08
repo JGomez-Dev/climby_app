@@ -262,8 +262,8 @@ class DiscoverFragment : Fragment(){
     }
 
     private fun getProvinceByLatLong(location: Location): String {
-        val geocode = Geocoder(context, Locale.getDefault())
-        val addresses: List<Address> = geocode.getFromLocation(location.latitude, location.longitude, 1)
+        val geocode = context?.let { Geocoder(it, Locale.getDefault()) }
+        val addresses: List<Address> = geocode?.getFromLocation(location.latitude, location.longitude, 1)!!
         /*val direction = addresses[0].getAddressLine(0)
         val city = addresses[0].locality
         val province = addresses[0].subAdminArea

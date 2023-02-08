@@ -7,9 +7,9 @@ import javax.inject.Inject
 
 class BookingService @Inject constructor(private val api: BookingApiClient) {
 
-    suspend fun getNotificationByUserId(userId: Int): Int {
+    suspend fun getNotificationByUserEmail(userEmail: String): Int {
         return withContext(Dispatchers.IO) {
-            val response = api.getNotificationByUserId(userId)
+            val response = api.getNotificationByUserEmail(userEmail)
             response.body() ?: 0
         }
     }

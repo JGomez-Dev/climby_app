@@ -27,7 +27,7 @@ class OnBoardingThreeViewModel @Inject constructor(private val putUser: Update, 
                 putBooking(bookingModel)
                 putUser(trip.driver!!)
                 trip.bookings?.forEach {
-                    if(it.passenger?.id != Commons.userSession?.id){
+                    if(it.passenger?.email != Commons.userSession?.email){
                         putUser(it.passenger!!)
                     }
                 }

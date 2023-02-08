@@ -33,9 +33,8 @@ class AuthViewModel @Inject constructor(private val _getTripById: GetTripById, p
         viewModelScope.launch {
             try {
                 val result = getByEmail(email)
-                if(result.id != 0) {
+                if(result.email != "") {
                     val editor = sharedPref.edit()
-                    editor.putInt("id", result.id)
                     editor.putFloat("score", result.score.toFloat())
                     editor.putString("email", result.email)
                     editor.putInt("outputs", result.outings)

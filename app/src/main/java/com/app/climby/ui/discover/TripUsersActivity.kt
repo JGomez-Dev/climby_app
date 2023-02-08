@@ -98,7 +98,7 @@ class TripUsersActivity : AppCompatActivity() {
     private fun acceptedBooking(): MutableList<BookingModel> {
         val acceptedBookingList: MutableList<BookingModel> = arrayListOf()
         trip?.bookings?.forEach { it ->
-            if ((trip?.driver?.id ?: 0 == userSession.id) || (it.passenger?.id == userSession.id)) {
+            if (((trip?.driver?.email ?: "") == userSession.email) || (it.passenger?.email == userSession.email)) {
                 when (it.status) {
                     ReservationStatus.ACCEPTED.status -> {
                         acceptedBookingList.add(it)

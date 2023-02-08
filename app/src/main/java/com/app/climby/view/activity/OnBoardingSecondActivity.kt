@@ -130,7 +130,7 @@ class OnBoardingSecondActivity : AppCompatActivity() {
     }
 
     private fun insertUser(token: String) {
-        val newUser = UserModel(0, displayName.toString(), UIUtil.getExperience(userExperience, this), phone.toString(), email.toString(), 0.0, 0, 0, photoUrl.toString(), token)
+        val newUser = UserModel(displayName.toString(), UIUtil.getExperience(userExperience, this), phone.toString(), email.toString(), 0.0, 0, 0, photoUrl.toString(), token)
         onBoardingSecondViewModel.saveUser(newUser)
     }
 }

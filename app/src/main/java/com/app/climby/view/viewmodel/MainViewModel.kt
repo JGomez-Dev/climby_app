@@ -14,10 +14,10 @@ class MainViewModel @Inject  constructor(val getNotificacion : GetNotificationBy
 
     val exitsNotification = MutableLiveData<Int>()
 
-    fun getNotification(userId: Int) {
+    fun getNotification(userEmail: String) {
         viewModelScope.launch {
             try {
-                val result = getNotificacion(userId)
+                val result = getNotificacion(userEmail)
                 exitsNotification.postValue(result)
             } catch (e: Exception) {
                 exitsNotification.postValue(0)

@@ -31,7 +31,6 @@ class OnBoardingSecondViewModel @Inject constructor(private val insert: Insert, 
             result = insert(userModel)
             if (result != null) {
                 val editor = sharedPref.edit()
-                editor.putInt("id", result!!.id)
                 editor.putFloat("score", result!!.score.toFloat())
                 editor.putString("email", result!!.email)
                 editor.putInt("outputs", result!!.outings)

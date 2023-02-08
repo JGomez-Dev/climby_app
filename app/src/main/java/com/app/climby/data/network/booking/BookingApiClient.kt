@@ -15,6 +15,6 @@ interface BookingApiClient {
     @DELETE("reservation/{id}")
     suspend fun deleteBooking(@Path("id") id: Int)
 
-    @GET("reservation/user/{id}")
-    suspend fun getNotificationByUserId(@Path("id") id: Int): Response<Int>
+    @GET("reservation/user/{email}")
+    suspend fun getNotificationByUserEmail(@Path("email") userEmail: String): Response<Int>
 }

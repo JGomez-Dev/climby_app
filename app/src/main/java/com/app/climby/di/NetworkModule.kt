@@ -21,21 +21,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 //private const val URL_BASE = "http://192.168.1.40:8080/"
-private const val URL_BASE = "https://climby-ci-ga.herokuapp.com/"
+//private const val URL_BASE = "https://climby-ci-ga.herokuapp.com/"
+//private const val URL_BASE = "https://climby-api-desarrollo.up.railway.app/"
 //private const val URL_BASE = "https://climbyheroku.herokuapp.com/"
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Singleton
+    /*@Singleton
     @Provides
     fun provideRetrofit():Retrofit{
         return Retrofit.Builder()
             .baseUrl(URL_BASE)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
+    }*/
 
     @Singleton
     @Provides

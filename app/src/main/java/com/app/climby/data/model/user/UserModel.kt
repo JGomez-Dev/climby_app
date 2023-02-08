@@ -5,7 +5,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class UserModel(
-        @SerializedName("id") val id: Int,
+        //@SerializedName("id") val id: Int,
         @SerializedName("fullName") val name: String?,
         @SerializedName("experience") var experience: String?,
         @SerializedName("phone") var phone: String?,
@@ -17,7 +17,7 @@ data class UserModel(
         @SerializedName("token") var token: String?
         ): Parcelable {
         constructor(parcel: Parcel) : this(
-                parcel.readInt(),
+                //parcel.readInt(),
                 parcel.readString(),
                 parcel.readString(),
                 parcel.readString(),
@@ -32,7 +32,7 @@ data class UserModel(
         }
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
-                parcel.writeInt(id)
+                //parcel.writeInt(id)
                 parcel.writeString(name)
                 parcel.writeString(experience)
                 parcel.writeString(phone)

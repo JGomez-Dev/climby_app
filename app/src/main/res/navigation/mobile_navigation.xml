@@ -3,9 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_discover">
+    app:startDestination="@+id/navigation_home">
 
     <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.jgomez.discover_presentation.views.DiscoverFragment"
+        android:label="@string/title_discover"
+        tools:layout="@layout/fragment_discover_test" />
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.jgomez.discover_presentation.views.DiscoverFragment"
+        android:label="@string/title_publish"
+        tools:layout="@layout/fragment_discover_test" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.jgomez.discover_presentation.views.DiscoverFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_discover_test" />
+    <!--<fragment
         android:id="@+id/navigation_discover"
         android:name="com.app.climby.ui.discover.DiscoverFragment"
         android:label="@string/title_discover"
@@ -48,6 +65,6 @@
         <action
             android:id="@+id/action_whatPlaceFragment_to_navigation_dashboard"
             app:destination="@id/navigation_publish" />
-    </fragment>
+    </fragment>-->
 
 </navigation>

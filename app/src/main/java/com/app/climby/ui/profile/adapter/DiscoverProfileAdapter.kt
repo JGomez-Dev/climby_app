@@ -90,7 +90,7 @@ class DiscoverProfileAdapter(tripData: List<TripModel>, context: Context, fragme
                 }
 
                 trip.bookings?.forEach {
-                    if (it.passenger?.id ?: 0 == userSession.id) {
+                    if ((it.passenger?.email ?: "") == userSession.email) {
                         when (it.status) {
                             ReservationStatus.ACCEPTED.status -> {
                                 BTRequest.backgroundTintList = ContextCompat.getColorStateList(context, R.color.black);

@@ -1,0 +1,171 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp"
+    android:background="@color/white"
+    android:elevation="5dp">
+
+    <TextView
+        android:id="@+id/TVType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Deportiva en"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TVPlaceDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxWidth="200dp"
+        android:maxLines="3"
+        android:scrollHorizontally="true"
+        android:text="La Pedriza, 31 Diciembre"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/FLPlace"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/TVType"
+        app:layout_constraintTop_toBottomOf="@+id/TVType" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/hand"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/BTRequest"
+        app:layout_constraintStart_toStartOf="@+id/TVPlaceDate"
+        app:layout_constraintTop_toTopOf="@+id/BTRequest">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/CVDriver"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/CVDriver"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/hand"
+            app:civ_border_color="@color/primary"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/RVUsers"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/RVUsers" />
+
+        <TextView
+            android:id="@+id/TVUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/RVUsers"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/FLPlace"
+        android:layout_width="132dp"
+        android:layout_height="103dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/IVPlace"
+            android:layout_width="132dp"
+            android:layout_height="103dp"
+            android:scaleType="matrix"
+            app:sriv_right_top_corner_radius="8dp"/>
+
+        <com.jgomez.common_utils.ui.CanvasView
+            android:layout_width="132dp"
+            android:layout_height="103dp"
+            app:layout_constraintBottom_toBottomOf="@+id/IVPlace"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/IVPlace"
+            app:layout_constraintTop_toTopOf="@+id/IVPlace" />
+
+    </FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/BTRequest"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/primary"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:letterSpacing="0"
+        android:maxLines="2"
+        android:padding="0dp"
+        android:stateListAnimator="@null"
+        android:text="Plazas disponibles"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:cornerRadius="100dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/FLPlace"
+        app:layout_constraintStart_toStartOf="@+id/FLPlace"
+        app:layout_constraintTop_toBottomOf="@+id/FLPlace" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/CVNumberMessage"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginBottom="34dp"
+        android:src="@color/primary"
+        android:visibility="gone"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/BTRequest"
+        app:layout_constraintEnd_toEndOf="@+id/BTRequest"
+        app:layout_constraintStart_toEndOf="@+id/BTRequest"
+        app:layout_constraintStart_toStartOf="@+id/BTRequest"
+        app:layout_constraintTop_toTopOf="@+id/BTRequest" />
+
+    <TextView
+        android:id="@+id/TVNumberMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="1"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/CVNumberMessage"
+        app:layout_constraintEnd_toEndOf="@+id/CVNumberMessage"
+        app:layout_constraintStart_toStartOf="@+id/CVNumberMessage"
+        app:layout_constraintTop_toTopOf="@+id/CVNumberMessage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

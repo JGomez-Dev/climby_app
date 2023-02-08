@@ -78,7 +78,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, f
                     contRefuse++
                 }
             }
-            if (trip.driver?.id == Commons.userSession?.id) { //El viaje pertenece al usuario logueado
+            if (trip.driver?.email == Commons.userSession?.email) { //El viaje pertenece al usuario logueado
                 trip.bookings?.forEach { _it ->
                     if (_it.status == ReservationStatus.ACCEPTED.status || _it.status ==ReservationStatus.UNANSWERED.status ) {
                         acceptedBookingList.add(_it)
@@ -127,7 +127,7 @@ class DiscoverAdapter(tripData: List<TripModel>, context: Context, from: From, f
                 var userPassagerAccepted = false
 
                 trip.bookings?.forEach { _it ->
-                    if (_it.passenger?.id ?: 0 == Commons.userSession?.id) { //El usuario está como pasajero en este viaje
+                    if (_it.passenger?.email ?: 0 == Commons.userSession?.email) { //El usuario está como pasajero en este viaje
                         userPassager = true
                         when (_it.status) {
                             ReservationStatus.ACCEPTED.status -> { // Ha sido aceptado

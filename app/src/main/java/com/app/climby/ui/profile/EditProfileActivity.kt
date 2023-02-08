@@ -125,7 +125,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun updateUser() {
-        val user = UserModel(userSession.id, binding.ETName.text.toString(), UIUtil.getExperience(userExperience, this), binding.ETPhone.text.toString().replace(" ", ""), userSession.email, userSession.score, userSession.ratings, userSession.outings, if (editProfileViewModel.uriImage.value != null) editProfileViewModel.uriImage.value else userSession.photo, userSession.token)
+        val user = UserModel(binding.ETName.text.toString(), UIUtil.getExperience(userExperience, this), binding.ETPhone.text.toString().replace(" ", ""), userSession.email, userSession.score, userSession.ratings, userSession.outings, if (editProfileViewModel.uriImage.value != null) editProfileViewModel.uriImage.value else userSession.photo, userSession.token)
         editProfileViewModel.updateUser(user)
     }
 
@@ -138,7 +138,6 @@ class EditProfileActivity : AppCompatActivity() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE).edit()
         prefs.clear()
         prefs.putString("email", userSession.email)
-        prefs.putInt("id", userSession.id)
         prefs.apply()
         FirebaseAuth.getInstance().signOut()
     }

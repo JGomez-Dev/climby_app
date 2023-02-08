@@ -19,12 +19,12 @@ import com.app.climby.ui.profile.router.RequestsRouter
 import com.app.climby.ui.profile.router.ResumeTripRouter
 import com.app.climby.util.Commons
 import com.app.climby.util.From
+import com.app.climby.view.activity.ui.compose.MainActivityCompose
 import com.app.climby.view.router.MainRouter
 import com.app.climby.view.router.OnBoardingFirstRouter
 import com.app.climby.view.router.OnBoardingSecondRouter
 import com.app.climby.view.viewmodel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
@@ -75,15 +75,15 @@ class AuthActivity : AppCompatActivity() {
         authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        session()
+        goToMainActivity()
+       /* session()
         binding.BTGoogle.setOnClickListener {
             val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
             val googleClient = GoogleSignIn.getClient(this, googleConf)
             googleClient.signOut()
             val signInIntent = googleClient.signInIntent
             googleSignIn.launch(signInIntent)
-        }
+        }*/
     }
 
     override fun onStart() {
@@ -106,7 +106,7 @@ class AuthActivity : AppCompatActivity() {
 
         if (!email.isNullOrEmpty() && !photoUrl.isNullOrEmpty() && !displayName.isNullOrEmpty()) {
             if (!experience.isNullOrEmpty()) {
-                Commons.userSession = UserModel(id, displayName, experience, phone, email, score.toDouble(), ratings, outings, photoUrl, token)
+                Commons.userSession = UserModel(displayName, experience, phone, email, score.toDouble(), ratings, outings, photoUrl, token)
                 binding.CLAuthentication.visibility = View.INVISIBLE
 
                 val i = intent
@@ -180,7 +180,8 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun goToMainActivity() {
-        MainRouter().launch(this)
+        //MainRouter().launch(this)
+        startActivity(Intent(this, MainActivityCompose::class.java))
         finish()
     }
 

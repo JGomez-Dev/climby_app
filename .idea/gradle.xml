@@ -12,9 +12,26 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/authentication" />
+            <option value="$PROJECT_DIR$/authentication/authentication_domain" />
+            <option value="$PROJECT_DIR$/authentication/authentication_presentacion" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/common/common_utils" />
+            <option value="$PROJECT_DIR$/discover" />
+            <option value="$PROJECT_DIR$/discover/discover_data" />
+            <option value="$PROJECT_DIR$/discover/discover_domain" />
+            <option value="$PROJECT_DIR$/discover/discover_presentation" />
+            <option value="$PROJECT_DIR$/profile" />
+            <option value="$PROJECT_DIR$/profile/profile_data" />
+            <option value="$PROJECT_DIR$/profile/profile_domain" />
+            <option value="$PROJECT_DIR$/profile/profile_presentation" />
+            <option value="$PROJECT_DIR$/publish" />
+            <option value="$PROJECT_DIR$/publish/publish_data" />
+            <option value="$PROJECT_DIR$/publish/publish_domain" />
+            <option value="$PROJECT_DIR$/publish/publish_presentation" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

@@ -6,7 +6,7 @@ import retrofit2.http.*
 
 interface UserApiClient {
 
-    @POST("user")
+    @POST("users/register")
     suspend fun postUser(@Body userModel: UserModel?): Response<UserModel>
 
     @PUT("user")

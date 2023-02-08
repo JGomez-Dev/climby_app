@@ -4,5 +4,5 @@ import com.app.climby.data.repository.BookingRepository
 import javax.inject.Inject
 
 class GetNotificationByUserId  @Inject constructor(private val repository : BookingRepository) {
-    suspend operator fun invoke(userId: Int): Int = repository.getNotificationByUserId(userId)
+    suspend operator fun invoke(userEmail: String): Int = repository.getNotificationByUserId(userEmail)
 }
