@@ -43,7 +43,7 @@ dependencies {
     androidTestImplementation AndroidTestImplementation.espresso
     
     implementation DaggerHilt.hilt
-    kapt  DaggerHilt.hiltAndroidCompiler
-    kapt  DaggerHilt.hiltCompiler
+    annotationProcessor  DaggerHilt.hiltAndroidCompiler
+    annotationProcessor  DaggerHilt.hiltCompiler
 
 }

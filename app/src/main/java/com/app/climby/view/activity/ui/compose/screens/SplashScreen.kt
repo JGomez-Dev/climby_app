@@ -1,76 +1,166 @@
 package com.app.climby.view.activity.ui.compose.screens
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.app.climby.R
 import com.app.climby.view.activity.ui.compose.screens.graph.AuthScreen
+import com.jgomez.authentication_presentacion.R
+import com.jgomez.common_utils.ui.component.buttons.Button
+import com.jgomez.common_utils.ui.component.buttons.ButtonType
+import com.jgomez.common_utils.ui.theme.ClimbyTheme
 import kotlinx.coroutines.delay
+
 
 @Composable
 fun AnimatedSplashScreen(navController: NavHostController) {
     LaunchedEffect(key1 = true) {
-        delay(2000)
+        delay(1000)
         navController.popBackStack()
         navController.navigate(AuthScreen.Login.route)
     }
     Splash()
 }
 
+
 @Composable
-fun Splash() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        val painterSplashScreen = painterResource(id = R.drawable.splash_screen)
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop,
-            painter = painterSplashScreen,
-            contentDescription = "Splash Image Background"
-        )
-        val painterSplashScreenClimby = painterResource(id = R.drawable.splash_climby)
-        val painterSplashScreenLogo = painterResource(id = R.drawable.splash_logo)
-        Row(
-            modifier = Modifier
-                .align(BottomCenter)
-                .padding(bottom = 65.dp),
-        ) {
+fun Splash(theme: ClimbyTheme = ClimbyTheme()) {
+    Column {
+        Box {
             Image(
-                modifier = Modifier
-                    .padding(8.dp),
-                painter = painterSplashScreenClimby,
-                contentDescription = "Splash Image Text"
+                modifier = Modifier.padding(bottom = 0.dp),
+                contentScale = ContentScale.Crop,
+                painter = painterResource(id = R.drawable.splash_screen),
+                contentDescription = "Splash Image Background"
             )
-            Image(
-                painter = painterSplashScreenLogo,
-                contentDescription = "Splash Image Logo"
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .size(50.dp)
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(Color.Transparent, Color.Black)
+                        )
+                    )
             )
         }
-
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .size(144.dp)
+                .background(
+                    theme.color.black
+                )
+        ) {}
     }
+    Column {
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.align(Alignment.Center)) {
+                Image(
+                    modifier = Modifier.padding(top = 40.dp),
+                    painter = painterResource(id = R.drawable.splash_climby),
+                    contentDescription = "Splash Image Text"
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(start = 16.dp, end = 16.dp, bottom = 44.dp)
+            ) {
+                Box {
+                    Buttons(onForgotClick = {}, onSignUpClick = {})
+                }
+            }
+        }
+    }
+
 }
 
 @Composable
-@Preview
+private fun Buttons(
+    theme: ClimbyTheme = ClimbyTheme(),
+    onSignUpClick: () -> Unit,
+    onForgotClick: () -> Unit
+) {
+    var visible by remember {
+        mutableStateOf(false)
+    }
+    LaunchedEffect(key1 = true) {
+        delay(1000)
+        visible = !visible
+    }
+
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(initialAlpha = 0.4f),
+        exit = fadeOut(animationSpec = tween(durationMillis = 1)),
+        content = {
+            Column {
+                Text(
+                    text = "Únete a otros escaladores como tú y sal a escalar de forma segura",
+                    color = theme.color.white,
+                    modifier = Modifier.padding(
+                        start = 43.dp,
+                        end = 43.dp,
+                        bottom = 56.dp
+                    ),
+                    textAlign = TextAlign.Center,
+                    fontSize = 18.sp
+                )
+                Button(
+                    type = ButtonType.EnableSocial,
+                    title = "Entrar con facebook",
+                    icon = painterResource(id = R.drawable.facebook),
+                    textPadding = 20.dp
+                ) { onSignUpClick() }
+                Spacer(modifier = Modifier.padding(bottom = 16.dp))
+                Button(
+                    type = ButtonType.EnableSocial,
+                    title = "Entrar con Google",
+                    icon = painterResource(id = R.drawable.google),
+                    textPadding = 20.dp
+                ) {
+                    onForgotClick()
+                }
+            }
+        }
+    )
+}
+    @Composable
+@Preview(showSystemUi = true)
 fun SplashScreenView() {
-    Splash()
-}
-
-@Composable
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-fun SplashScreenDarkView() {
     Splash()
 }

@@ -2,7 +2,7 @@ object Versions {
     const val core = "1.9.0"
     const val appcompat = "1.5.1"
     const val androidMaterial = "1.6.1"
-    const val androidMaterialx = "1.2.1"
+    const val androidMaterialx = "1.3.0"
     const val androidMaterial3 = "1.1.0-alpha04"
     const val constraintLayout = "2.1.4"
     const val navigationFragment = "2.3.5"
@@ -26,6 +26,7 @@ object Versions {
 
     const val coroutineLifecycleScope = "2.5.1"
     const val navigationRuntime = "2.4.1"
+    const val viewmodelCompose = "2.5.1"
 
     const val glide = "4.12.0"
 
@@ -40,6 +41,7 @@ object Versions {
 
     const val dagger = "2.40.5"
     const val hiltCompiler = "1.0.0"
+    const val hiltNavigationCompose = "1.0.0-alpha02"
 
     const val roomVersion = "2.4.3"
 
@@ -53,6 +55,7 @@ object Versions {
 
     const val activityCompose = "1.3.1"
     const val compose = "1.3.1"
+    const val composePreview = "1.3.2"
     const val runtime = "1.4.0-alpha04"
     const val navigationCompose = "2.5.3"
 
@@ -80,7 +83,7 @@ object Deps {
 object Compose {
     const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
-    const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
+    const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.composePreview}"
 
     const val uiTestJunit4 = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
     const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
@@ -120,6 +123,7 @@ object CoroutinesLifecycleScope {
     const val lifeCycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.coroutineLifecycleScope}"
     const val lifeCycleLivedata = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.coroutineLifecycleScope}"
     const val navigationRuntime = "androidx.navigation:navigation-runtime-ktx:${Versions.navigationRuntime}"
+    const val viewmodelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.viewmodelCompose}"
 }
 
 object Ui {
@@ -141,6 +145,7 @@ object DaggerHilt {
     const val hilt = "com.google.dagger:hilt-android:${Versions.dagger}"
     const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.dagger}"
     const val hiltCompiler = "androidx.hilt:hilt-compiler:${Versions.hiltCompiler}"
+    const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
 }
 
 object Room {

@@ -1,13 +1,12 @@
 package com.jgomez.discover_domain.model
 
 data class User(
-    val name: String,
-    val experience: String,
-    val phone: String,
     val email: String,
+    val experience: String,
+    val full_name: String,
+    val outputs: Int,
+    val phone: String,
+    val ratings: Int,
     val score: Double,
-    val numberRatings: Int,
-    val numberOutings: Int,
-    val urlPhoto: String,
-    val token: String
+    val user_photo: String
 )

@@ -1,16 +1,12 @@
 package com.app.climby.view.activity.ui.compose.screens.home
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -18,18 +14,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.app.climby.view.activity.ui.compose.screens.graph.HomeNavGraph
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jgomez.common_utils.navigation.BottomBarScreen
 import com.jgomez.common_utils.ui.theme.ClimbyColor
-import java.nio.file.WatchEvent.Modifier
+
 
 
 @Composable
 fun HomeScreen(navController: NavHostController = rememberNavController()) {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
-    ) {
-        HomeNavGraph(navController = navController)
+    ) {innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            HomeNavGraph(navController = navController)
+        }
     }
 }
 

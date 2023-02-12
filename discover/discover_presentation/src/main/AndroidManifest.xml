@@ -3,6 +3,11 @@
 
     <application>
         <activity
+            android:name=".views.ui.DiscoverActivity"
+            android:exported="false"
+            android:label="@string/title_activity_discover"
+            android:theme="@style/Theme.Climby" />
+        <activity
             android:name=".prueba"
             android:exported="false"
             android:label="@string/title_activity_prueba"

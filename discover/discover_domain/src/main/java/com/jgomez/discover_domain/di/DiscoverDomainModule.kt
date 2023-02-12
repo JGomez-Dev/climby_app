@@ -4,7 +4,7 @@ package com.jgomez.discover_domain.di
 import com.jgomez.discover_domain.repository.ProvinceRepository
 import com.jgomez.discover_domain.repository.TripRepository
 import com.jgomez.discover_domain.usecase.GetProvincesUseCase
-import com.jgomez.discover_domain.usecase.GetTripsUseCase
+import com.jgomez.discover_domain.usecase.GetCardsInformation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,8 +15,8 @@ import dagger.hilt.components.SingletonComponent
 object DiscoverDomainModule {
 
     @Provides
-    fun provideGetTripsUseCase(tripRepository: TripRepository): GetTripsUseCase {
-        return GetTripsUseCase(tripRepository)
+    fun provideGetTripsUseCase(tripRepository: TripRepository): GetCardsInformation {
+        return GetCardsInformation(tripRepository)
     }
 
     @Provides

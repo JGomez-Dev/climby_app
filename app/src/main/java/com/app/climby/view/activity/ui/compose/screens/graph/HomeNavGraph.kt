@@ -14,23 +14,22 @@ import com.jgomez.profile_presentation.views.ui.ProfileContent
 import com.jgomez.publish_presentation.views.ui.PublishContent
 
 @Composable
-fun  HomeNavGraph(navController: NavHostController) {
-    NavHost(navController = navController, route = Graph.HOME, startDestination = BottomBarScreen.Discover.route ){
-        composable(route = BottomBarScreen.Discover.route){
-            DiscoverContent(
-                name = BottomBarScreen.Discover.route,
-                onClick = {
-                    navController.navigate(Graph.DETAILS)
-                },
-            )
+fun HomeNavGraph(navController: NavHostController) {
+    NavHost(
+        navController = navController,
+        route = Graph.HOME,
+        startDestination = BottomBarScreen.Discover.route
+    ) {
+        composable(route = BottomBarScreen.Discover.route) {
+            DiscoverContent()
         }
-        composable(route = BottomBarScreen.Publish.route){
+        composable(route = BottomBarScreen.Publish.route) {
             PublishContent(
                 name = BottomBarScreen.Publish.route,
                 onClick = {},
             )
         }
-        composable(route = BottomBarScreen.Profile.route){
+        composable(route = BottomBarScreen.Profile.route) {
             ProfileContent(
                 name = BottomBarScreen.Profile.route,
                 onClick = {},
@@ -45,19 +44,20 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
         route = Graph.DETAILS,
         startDestination = DetailsScreen.Province.route
     ) {
-        composable(route =  DetailsScreen.Province.route) {
-            ProvinceContent( name = DetailsScreen.Province.route){
+        composable(route = DetailsScreen.Province.route) {
+            ProvinceContent(name = DetailsScreen.Province.route) {
                 navController.navigate(DetailsScreen.CardDetail.route)
             }
         }
-        composable(route =  DetailsScreen.CardDetail.route) {
-            CardDetailContent( name = DetailsScreen.CardDetail.route){
+        composable(route = DetailsScreen.CardDetail.route) {
+            CardDetailContent(name = DetailsScreen.CardDetail.route) {
                 navController.popBackStack()
             }
         }
     }
 }
-sealed class DetailsScreen(val route: String){
-    object Province: DetailsScreen(route = "PROVINCE")
-    object CardDetail: DetailsScreen(route = "CARD_DETAIL")
+
+sealed class DetailsScreen(val route: String) {
+    object Province : DetailsScreen(route = "PROVINCE")
+    object CardDetail : DetailsScreen(route = "CARD_DETAIL")
 }
