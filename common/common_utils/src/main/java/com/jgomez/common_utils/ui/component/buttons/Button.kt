@@ -1,13 +1,26 @@
 package com.jgomez.common_utils.ui.component.buttons
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Modifier
@@ -43,41 +56,40 @@ fun Button(
     {
         Box()
         {
-            Row(
-                modifier = Modifier
-                    .background(type.bgColor(color), CircleShape)
+            Surface(
+                shape = CircleShape, modifier = Modifier.clickable { onClick() }
             ) {
-                Row() {
-                    Column(
-                        modifier = Modifier
-                            .padding(vertical = textPadding)
-                            .fillMaxWidth()
-                    ) {
-                        Text(
+                Row(
+                    modifier = Modifier
+                        .background(type.bgColor(color), CircleShape)
+                ) {
+                    Row {
+                        Column(
                             modifier = Modifier
-                                .align(CenterHorizontally)
-                                .clickable {
-                                    onClick()
-                                },
-                            text = title,
-                            fontSize = type.fontSize(fontSize),
-                            style = MaterialTheme.typography.button.merge(),
-                            color = type.textColor(color),
-                        )
-                        if (subTitle != null) {
+                                .padding(vertical = textPadding)
+                                .fillMaxWidth()
+                        ) {
                             Text(
                                 modifier = Modifier
-                                    .align(CenterHorizontally)
-                                    .clickable {
-                                        onClick()
-                                    },
-                                text = type.textSubtitle(subTitle)!!,
-                                style = MaterialTheme.typography.subtitle1.merge(),
-                                color = txColor(enable),
-                            )
-                        }
-                    }
+                                    .align(CenterHorizontally),
 
+                                text = title,
+                                fontSize = type.fontSize(fontSize),
+                                style = MaterialTheme.typography.button.merge(),
+                                color = type.textColor(color),
+                            )
+                            if (subTitle != null) {
+                                Text(
+                                    modifier = Modifier
+                                        .align(CenterHorizontally),
+                                    text = type.textSubtitle(subTitle)!!,
+                                    style = MaterialTheme.typography.subtitle1.merge(),
+                                    color = txColor(enable),
+                                )
+                            }
+                        }
+
+                    }
                 }
             }
         }
@@ -89,7 +101,7 @@ fun Button(
                     .size(24.dp)
                     .align(CenterStart),
                 contentDescription = null,
-                )
+            )
         }
         if (type.notification(notificationsNumber != null) && enable) {
             Box(
@@ -125,10 +137,6 @@ private fun txColor(enable: Boolean): Color {
     return if (enable) ClimbyColor().n500 else ClimbyColor().n200
 }
 
-private fun bgColor(enable: Boolean): Color {
-    return if (enable) ClimbyColor().black else ClimbyColor().n500
-}
-
 
 @Composable
 @Preview
@@ -137,9 +145,9 @@ fun ButtonPreview() {
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         Text(
             text = "BUTTONS",
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(CenterHorizontally)
         )
-        Row() {
+        Row {
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -164,7 +172,7 @@ fun ButtonPreview() {
                 )
             }
         }
-        Row() {
+        Row {
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -190,7 +198,7 @@ fun ButtonPreview() {
                 )
             }
         }
-        Row() {
+        Row {
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -215,7 +223,7 @@ fun ButtonPreview() {
         }
         Text(
             text = "EXAMPLES",
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(CenterHorizontally)
         )
         Box(
             modifier = Modifier.padding(all = Padding().padding02)
@@ -322,8 +330,8 @@ fun ButtonPreview() {
                 title = "Cerrar sessión",
                 enable = false,
                 onClick = {},
-                textPadding = 20.dp,
-                type = ButtonType.Disable
+                textPadding = 16.dp,
+                type = ButtonType.Secondary
             )
         }
     }
@@ -397,6 +405,23 @@ sealed class ButtonType(
         bgColor = { it.white },
         textColor = { it.black },
         fontSize = { 18.sp },
+        textSubtitle = { null },
+        notification = { false }
+    )
+
+    @Immutable
+    object Secondary : ButtonType(
+        bgColor = { it.n200 },
+        textColor = { it.black },
+        fontSize = { 14.sp },
+        textSubtitle = { null },
+        notification = { false }
+    )
+    @Immutable
+    object Contact : ButtonType(
+        bgColor = { it.colorButtonWhatsApp },
+        textColor = { it.white },
+        fontSize = { 14.sp },
         textSubtitle = { null },
         notification = { false }
     )

@@ -30,9 +30,9 @@ import com.jgomez.common_utils.ui.theme.Padding
 fun TravelCard(
     cardTextType: String,
     cardTextZone: String,
-    cardPainterTwoUsers: List<Painter>,
-    cardImageType: Painter,
-    cardImageMark: Painter,
+    cardPainterPassengerList: List<Painter> = listOf(painterResource(id = R.drawable.sputnik)),
+    cardImageType: Painter = painterResource(id = R.drawable.sputnik),
+    cardImageMark: Painter = painterResource(id = R.drawable.mark_01),
     cardOnClick: () -> Unit,
     buttonType: ButtonType = ButtonType.Enable,
     buttonTitle: String,
@@ -49,70 +49,67 @@ fun TravelCard(
             containerColor = ClimbyColor().white,
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        onClick = cardOnClick,
-        content = {
-            Column() {
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    Column(
-                        modifier = Modifier
-                            .align(CenterVertically)
-                            .padding(top = 20.dp, start = 20.dp)
-                            .weight(2f)
-                    ) {
-                        Text(
-                            text = cardTextType,
-                            maxLines = 1,
-                            fontStyle = FontStyle.Normal,
-                            fontSize = 14.sp,
-                            color = ClimbyColor().black.copy(0.5f)
-                        )
-                        Text(
-                            text = cardTextZone,
-                            maxLines = 2,
-                            fontStyle = FontStyle.Normal,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = ClimbyColor().black
-                        )
-                    }
-                    Spacer(Modifier.weight(0.7f))
-                    Box(modifier = Modifier.weight(1f)) {
-                        Image(
-                            cardImageType,
-                            cardImageMark
-                        )
-                    }
-                }
-            }
-            Column() {
-                Row(
+        onClick = cardOnClick
+    ) {
+        Column() {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Column(
                     modifier = Modifier
-                        .padding(all = Padding().padding03)
-                        .align(CenterHorizontally)
+                        .padding(top = 20.dp, start = 20.dp)
+                        .weight(2f)
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .align(CenterVertically)
-                            .weight(2f)
-                    ) {
-                        Pills(painters = cardPainterTwoUsers)
-                    }
-                    Box(modifier = Modifier.weight(1.3f)) {
-                        Button(
-                            title = buttonTitle,
-                            subTitle = buttonSubTitle,
-                            onClick = buttonOnClick,
-                            enable = buttonEnable,
-                            notificationsNumber = buttonNotificationsNumber,
-                            color = buttonColor,
-                            textPadding = buttonTextPadding,
-                            type = buttonType
-                        )
-                    }
+                    Text(
+                        text = cardTextType,
+                        maxLines = 1,
+                        fontStyle = FontStyle.Normal,
+                        fontSize = 14.sp,
+                        color = ClimbyColor().black.copy(0.5f)
+                    )
+                    Text(
+                        text = cardTextZone,
+                        maxLines = 2,
+                        fontStyle = FontStyle.Normal,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = ClimbyColor().black
+                    )
+                }
+                Spacer(Modifier.weight(0.7f))
+                Box(modifier = Modifier.weight(1f)) {
+                    Image(
+                        cardImageType
+                    )
                 }
             }
         }
-    )
+        Column() {
+            Row(
+                modifier = Modifier
+                    .padding(all = Padding().padding03)
+                    .align(CenterHorizontally)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .align(CenterVertically)
+                        .weight(2f)
+                ) {
+                    Pills(painters = cardPainterPassengerList)
+                }
+                Box(modifier = Modifier.weight(1.3f)) {
+                    Button(
+                        title = buttonTitle,
+                        subTitle = buttonSubTitle,
+                        onClick = buttonOnClick,
+                        enable = buttonEnable,
+                        notificationsNumber = buttonNotificationsNumber,
+                        color = buttonColor,
+                        textPadding = buttonTextPadding,
+                        type = buttonType
+                    )
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -129,23 +126,6 @@ fun TravelCarPreview() {
         modifier = Modifier
             .padding(16.dp)
     ) {
-        TravelCard(
-            "Clasica en",
-            "La pedriza, 19 de enero",
-            painterTwoUsers,
-            painterResource(id = R.drawable.chulilla),
-            painterResource(id = R.drawable.mark_01),
-            buttonColor = ClimbyColor(),
-            buttonEnable = true,
-            buttonNotificationsNumber = 1,
-            buttonOnClick = {},
-            buttonSubTitle = "2 plazas",
-            buttonTitle = "Pedir unirme",
-            buttonType = ButtonType.EnableWithSubtitle,
-            buttonTextPadding = 8.dp,
-            cardOnClick = {}
-        )
-        Spacer(modifier = Modifier.padding(bottom = 16.dp))
         TravelCard(
             "Clasica en",
             "La pedriza, 19 de enero",

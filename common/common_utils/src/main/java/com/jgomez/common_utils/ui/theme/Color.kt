@@ -23,6 +23,9 @@ data class ClimbyColor(
     val colorElevation04: Color = Color(0x29000000),
     val colorElevation05: Color = Color(0x29000000),
     val colorElevation06: Color = Color(0x33444444),
-)
+
+    val colorButtonWhatsApp: Color = Color(0xFF40C351),
+
+    )
 
 

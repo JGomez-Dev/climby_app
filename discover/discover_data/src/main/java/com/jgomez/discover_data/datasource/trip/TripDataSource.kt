@@ -1,7 +1,7 @@
 package com.jgomez.discover_data.datasource.trip
 
-import com.jgomez.discover_domain.model.Trip
+import com.jgomez.discover_domain.model.CardInformation
 
 interface TripDataSource {
-    suspend fun getTrips(): List<Trip>
+    suspend fun getTrips(): List<CardInformation>
 }

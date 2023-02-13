@@ -2,7 +2,7 @@ package com.jgomez.discover_data.datasource.trip
 
 import com.jgomez.discover_domain.model.*
 
-class LocalDataSource() : TripDataSource {
+/*class LocalDataSource() : TripDataSource {
     override suspend fun getTrips(): List<Trip> {
         return listOf(
             Trip(
@@ -101,4 +101,4 @@ class LocalDataSource() : TripDataSource {
             )
         )
     }
-}
+}*/

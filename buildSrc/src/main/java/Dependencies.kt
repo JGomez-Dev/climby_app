@@ -40,6 +40,7 @@ object Versions {
 
     const val dagger = "2.40.5"
     const val hiltCompiler = "1.0.0"
+    const val hiltNavigationCompose = "1.0.0-alpha02"
 
     const val roomVersion = "2.4.3"
 
@@ -141,6 +142,7 @@ object DaggerHilt {
     const val hilt = "com.google.dagger:hilt-android:${Versions.dagger}"
     const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.dagger}"
     const val hiltCompiler = "androidx.hilt:hilt-compiler:${Versions.hiltCompiler}"
+    const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
 }
 
 object Room {

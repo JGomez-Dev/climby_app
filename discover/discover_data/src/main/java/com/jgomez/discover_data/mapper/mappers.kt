@@ -2,69 +2,46 @@ package com.jgomez.discover_data.mapper
 
 import com.jgomez.discover_data.model.*
 import com.jgomez.discover_domain.model.*
-import java.util.ArrayList
 
-fun TripResponse.toDomainTrip(): Trip {
-    return Trip(
-        id = this.id,
-        school = this.school.toDomainSchool(),
-        climbType = this.climbType.toDomainClimbType(),
-        availablePlaces = this.availablePlaces,
-        departureDate = this.departureDate,
-        province = this.province.toDomainProvince(),
-        owner = this.owner.toDomainUser(),
-        bookings = this.bookings.map { it.toDomainBooking() } as ArrayList<Booking>
-    )
-}
-
-fun SchoolDTO.toDomainSchool(): School {
-    return School(
-        name = this.name
-    )
-}
-
-fun ClimbTypeDTO.toDomainClimbType(): ClimbType {
-    return ClimbType(
-        name = this.name
-    )
-}
-
-fun ProvinceDTO.toDomainProvince(): Province {
-    return Province(
-        name = this.name,
-        numberTravels = this.numberTravels
+fun TripResponseItemDTO.toDomainCardInformation(): CardInformation {
+    return CardInformation(
+        available_places = available_places.toString() + if(available_places > 1) " plazas" else " plaza",
+        climbing_type = "$climbing_type en",
+        owner = owner.toDomainUser(),
+        users_photo = reservations.map { it.toDomainBooking().user.user_photo },
+        school_and_departure_date = "$school ,$departure_date",
     )
 }
 
 fun UserDTO.toDomainUser(): User {
     return User(
-        name = this.name,
-        experience = this.experience,
-        phone = this.phone,
         email = this.email,
+        experience = this.experience,
+        full_name = this.full_name,
+        outputs = this.outputs,
+        phone = this.phone,
+        ratings = this.ratings,
         score = this.score,
-        numberRatings = this.numberRatings,
-        numberOutings = this.numberOutings,
-        urlPhoto = this.urlPhoto,
-        token = this.token,
+        user_photo = this.user_photo
     )
 }
 
-fun BookingDTO.toDomainBooking(): Booking {
+fun ReservationDTO.toDomainBooking(): Booking {
     return Booking(
-        id = this.id,
-        tripId = this.tripId,
-        passenger = this.passenger.toDomainUser(),
-        status = this.status,
-        valuationStatus = this.valuationStatus,
-        date = this.date,
+        date_reservation = this.date_reservation,
+        id_reservation = this.id_reservation,
+        id_travel = this.id_travel,
         message = this.message.toDomainMessage(),
+        reservation_status = this.reservation_status,
+        user = this.user.toDomainUser(),
+        valuation_status = this.valuation_status
     )
 }
 
 fun MessageDTO.toDomainMessage(): Message {
     return Message(
+        id_message = this.id_message,
         read = this.read,
-        text = this.text,
+        text_message = this.text_message
     )
 }
