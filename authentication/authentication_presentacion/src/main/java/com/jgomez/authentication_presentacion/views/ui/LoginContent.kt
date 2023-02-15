@@ -1,6 +1,5 @@
 package com.jgomez.authentication_presentacion.views.ui
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -23,17 +22,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.jgomez.authentication_presentacion.R
-import com.jgomez.common_utils.ui.component.buttons.Button
-import com.jgomez.common_utils.ui.component.buttons.ButtonType
+import com.jgomez.authentication_presentacion.viewmodel.LoginViewModel
+import com.jgomez.common_utils.ui.component.buttons.MenuButton
+import com.jgomez.common_utils.ui.component.buttons.MenuButtonState
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
 
 @Composable
 fun LoginContent(
-    onClick: () -> Unit,
+    onBoardingClick: () -> Unit,
     onSignUpClick: () -> Unit,
     onForgotClick: () -> Unit,
-    theme: ClimbyTheme = ClimbyTheme()
+    theme: ClimbyTheme = ClimbyTheme(),
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     Column {
         Box {
@@ -70,49 +72,17 @@ fun LoginContent(
                 .fillMaxHeight()
                 .fillMaxWidth()
         ) {
-            Column(modifier = Modifier.align(Alignment.Center)) {
-                Image(
-                    modifier = Modifier.padding(top = 40.dp),
-                    painter = painterResource(id = R.drawable.splash_screen),
-                    contentDescription = "Splash Image Text"
-                )
-            }
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(start = 16.dp, end = 16.dp, bottom = 44.dp)
             ) {
                 Box {
-                    Buttons(onSignUpClick = onClick, onForgotClick = onForgotClick)
+                    Buttons(onSignUpClick = onBoardingClick, onForgotClick = onForgotClick)
                 }
             }
         }
     }
-
-    /*Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            modifier = Modifier.clickable { onClick() },
-            text = "LOGIN",
-            fontSize = MaterialTheme.typography.h3.fontSize,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            modifier = Modifier.clickable { onSignUpClick() },
-            text = "On Boarding",
-            fontSize = MaterialTheme.typography.body1.fontSize,
-            fontWeight = FontWeight.Medium
-        )
-        Text(
-            modifier = Modifier.clickable { onForgotClick() },
-            text = "Forgot Password",
-            fontSize = MaterialTheme.typography.body1.fontSize,
-            fontWeight = FontWeight.Medium
-        )
-    }*/
 }
 
 @Composable
@@ -133,21 +103,19 @@ private fun Buttons(
             textAlign = TextAlign.Center,
             fontSize = 18.sp
         )
-        Button(
-            type = ButtonType.EnableSocial,
-            title = "Entrar con facebook",
+        MenuButton(
+            state = MenuButtonState.Login,
+            text = "Entrar con facebook",
             icon = painterResource(id = R.drawable.facebook),
-            textPadding = 20.dp
-        ) { onSignUpClick() }
+            onClick = { onSignUpClick() }
+        )
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
-        Button(
-            type = ButtonType.EnableSocial,
-            title = "Entrar con Google",
+        MenuButton(
+            state = MenuButtonState.Login,
+            text = "Entrar con Google",
             icon = painterResource(id = R.drawable.google),
-            textPadding = 20.dp
-        ) {
-            onForgotClick()
-        }
+            onClick = { onForgotClick() }
+        )
     }
 }
 

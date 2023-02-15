@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jgomez.common_utils.R
 import com.jgomez.common_utils.ui.component.buttons.Button
-import com.jgomez.common_utils.ui.component.buttons.ButtonType
+import com.jgomez.common_utils.ui.component.buttons.ButtonState
 import com.jgomez.common_utils.ui.component.forms.Starts
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
 import com.jgomez.common_utils.ui.wrapper.ClimbyImage
@@ -109,11 +109,11 @@ fun CardPetition(
                 }
                 Row(modifier = Modifier.padding(top = theme.padding.padding04)) {
                     Box(modifier = Modifier.weight(1f)){
-                        Button(type = ButtonType.Secondary, title = "Rechazar", onClick = {})
+                        Button( title = "Rechazar", onClick = {}, state = ButtonState.Inactive)
                     }
                     Spacer(modifier = Modifier.padding(start = 16.dp))
                     Box(modifier = Modifier.weight(1f)) {
-                        Button(type = ButtonType.Enable, title = "Aceptar", onClick = {})
+                        Button(title = "Aceptar", onClick = {})
                     }
                 }
             }

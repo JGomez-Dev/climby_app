@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jgomez.common_utils.R
 import com.jgomez.common_utils.ui.component.buttons.Button
-import com.jgomez.common_utils.ui.component.buttons.ButtonType
 import com.jgomez.common_utils.ui.component.imagery.Image
 import com.jgomez.common_utils.ui.component.pills.Pills
 import com.jgomez.common_utils.ui.theme.ClimbyColor
@@ -34,7 +33,6 @@ fun TravelCard(
     cardImageType: Painter = painterResource(id = R.drawable.sputnik),
     cardImageMark: Painter = painterResource(id = R.drawable.mark_01),
     cardOnClick: () -> Unit,
-    buttonType: ButtonType = ButtonType.Enable,
     buttonTitle: String,
     buttonSubTitle: String? = null,
     buttonTextPadding: Dp = 16.dp,
@@ -100,11 +98,8 @@ fun TravelCard(
                         title = buttonTitle,
                         subTitle = buttonSubTitle,
                         onClick = buttonOnClick,
-                        enable = buttonEnable,
                         notificationsNumber = buttonNotificationsNumber,
-                        color = buttonColor,
-                        textPadding = buttonTextPadding,
-                        type = buttonType
+                        color = buttonColor
                     )
                 }
             }
@@ -138,7 +133,6 @@ fun TravelCarPreview() {
             buttonOnClick = {},
             buttonSubTitle = "2 plazas",
             buttonTitle = "Pedir unirme",
-            buttonType = ButtonType.EnableWithSubtitle,
             buttonTextPadding = 8.dp,
             cardOnClick = {}
         )

@@ -18,9 +18,10 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
         }
         composable(route = AuthScreen.Login.route) {
             LoginContent(
-                onClick = {
-                    navController.popBackStack()
-                    navController.navigate(Graph.HOME)
+                onBoardingClick = {
+                    //navController.popBackStack()
+                    //navController.navigate(Graph.HOME)
+                    navController.navigate(AuthScreen.OnBoarding1.route)
                 },
                 onSignUpClick = {
                     navController.navigate(AuthScreen.OnBoarding1.route)
@@ -31,10 +32,10 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
             )
         }
         composable(route = AuthScreen.OnBoarding1.route) {
-            OnBoardingContent(name = AuthScreen.OnBoarding1.route) {}
+            OnBoardingContent(onClick = {navController.popBackStack()})
         }
         composable(route = AuthScreen.OnBoarding2.route) {
-            OnBoardingContent(name = AuthScreen.OnBoarding2.route) {}
+            OnBoardingContent(onClick = {navController.popBackStack()})
         }
     }
 }

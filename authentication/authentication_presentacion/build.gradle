@@ -67,6 +67,7 @@ dependencies {
     implementation DaggerHilt.hilt
     kapt DaggerHilt.hiltAndroidCompiler
     kapt DaggerHilt.hiltCompiler
+    implementation DaggerHilt.hiltNavigationCompose
 
     implementation Compose.activityCompose
     implementation Compose.composeUi
@@ -74,4 +75,6 @@ dependencies {
     implementation Compose.uiTooling
     implementation Compose.uiTestJunit4
     implementation Compose.uiTestManifest
+
+    implementation "com.google.android.gms:play-services-auth:20.4.1"
 }

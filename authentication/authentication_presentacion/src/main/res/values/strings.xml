@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_button_continue">Continuar</string>
+    <string name="text_join_phone">Solo compartiremos tu teléfono de forma privada cuando te unas a una salida. Así podrá contactar contigo el creador de cada salida.</string>
+    <string name="text_phone">Teléfono</string>
+</resources>

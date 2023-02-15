@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,7 +21,6 @@ import com.jgomez.common_utils.R
 import com.jgomez.common_utils.ui.component.forms.Starts
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
 import com.jgomez.common_utils.ui.utils.SafeClickManager.defaultButtonDebounceTimeMs
-import com.jgomez.common_utils.ui.utils.debounce
 import com.jgomez.common_utils.ui.wrapper.ClimbyImage
 import com.jgomez.common_utils.ui.wrapper.painter
 

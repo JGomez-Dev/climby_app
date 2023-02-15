@@ -2,7 +2,6 @@ package com.jgomez.common_utils.ui.component.forms
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -43,7 +42,7 @@ fun TextField(
             focusedIndicatorColor = Color.Transparent, //hide the indicator
             unfocusedIndicatorColor = Color.Transparent
         ),
-        placeholder = { Text(text = placeholder, fontSize = 16.sp, color = theme.color.n300) },
+        placeholder = { Text(text = placeholder, fontSize = 16.sp, lineHeight = 24.sp, color = theme.color.n300) },
         trailingIcon = {
             if (icon != null)
                 Image(painter = icon.painter, contentDescription = "")

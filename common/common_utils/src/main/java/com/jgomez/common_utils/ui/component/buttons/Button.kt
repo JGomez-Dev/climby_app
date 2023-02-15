@@ -1,7 +1,6 @@
 package com.jgomez.common_utils.ui.component.buttons
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -22,33 +21,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jgomez.common_utils.R
 import com.jgomez.common_utils.ui.theme.ClimbyColor
+import com.jgomez.common_utils.ui.theme.ClimbyTheme
 import com.jgomez.common_utils.ui.theme.Padding
-import com.jgomez.common_utils.ui.wrapper.ClimbyImage
-import com.jgomez.common_utils.ui.wrapper.painter
 
 
 @Composable
 fun Button(
-    type: ButtonType,
+    state: ButtonState = ButtonState.Active,
     title: String,
     subTitle: String? = null,
-    textPadding: Dp = 16.dp,
-    enable: Boolean = true,
+    theme: ClimbyTheme = ClimbyTheme(),
     notificationsNumber: Int? = null,
-    icon: Painter? = null,
-    fontSize: TextUnit = 14.sp,
     color: ClimbyColor = ClimbyColor(),
     onClick: () -> Unit,
 ) {
@@ -61,30 +54,30 @@ fun Button(
             ) {
                 Row(
                     modifier = Modifier
-                        .background(type.bgColor(color), CircleShape)
+                        .background(setBackgroundColor(state), CircleShape)
                 ) {
                     Row {
                         Column(
                             modifier = Modifier
-                                .padding(vertical = textPadding)
+                                .padding(vertical = if (subTitle != null) theme.padding.padding01 else theme.padding.padding03)
                                 .fillMaxWidth()
                         ) {
                             Text(
                                 modifier = Modifier
                                     .align(CenterHorizontally),
-
                                 text = title,
-                                fontSize = type.fontSize(fontSize),
-                                style = MaterialTheme.typography.button.merge(),
-                                color = type.textColor(color),
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 14.sp,
+                                color = getTitleColor(state),
                             )
                             if (subTitle != null) {
                                 Text(
                                     modifier = Modifier
                                         .align(CenterHorizontally),
-                                    text = type.textSubtitle(subTitle)!!,
-                                    style = MaterialTheme.typography.subtitle1.merge(),
-                                    color = txColor(enable),
+                                    text = subTitle,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 13.sp,
+                                    color = getSubtitleColor(state),
                                 )
                             }
                         }
@@ -93,17 +86,7 @@ fun Button(
                 }
             }
         }
-        if (icon != null) {
-            Image(
-                painter = icon,
-                modifier = Modifier
-                    .padding(start = 16.dp)
-                    .size(24.dp)
-                    .align(CenterStart),
-                contentDescription = null,
-            )
-        }
-        if (type.notification(notificationsNumber != null) && enable) {
+        if (notificationsNumber != null) {
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -121,10 +104,9 @@ private fun BubbleNotification(
 ) {
     Text(
         modifier = Modifier
-            .size(24.dp)
-            .offset((6).dp, (-6).dp)
-            .background(shape = CircleShape, color = color.accent)
-            .border(BorderStroke(2.dp, color = color.n100), CircleShape),
+            .size(20.dp)
+            .offset((0).dp, (-3).dp)
+            .background(shape = CircleShape, color = color.accent),
         textAlign = TextAlign.Center,
         text = notificationsNumber.toString(),
         fontSize = 14.sp,
@@ -133,10 +115,53 @@ private fun BubbleNotification(
     )
 }
 
+private fun getSubtitleColor(state: ButtonState, theme: ClimbyTheme = ClimbyTheme()): Color {
+    return when (state) {
+        is ButtonState.Active -> {
+            theme.color.n500
+        }
+
+        is ButtonState.Inactive -> {
+            theme.color.n600
+        }
+
+        is ButtonState.Disable -> {
+            theme.color.n200
+        }
+    }
+}
+
+private fun getTitleColor(state: ButtonState, theme: ClimbyTheme = ClimbyTheme()): Color {
+    return when (state) {
+        is ButtonState.Inactive -> {
+            theme.color.black
+        }
+
+        else -> {
+            theme.color.white
+        }
+    }
+}
+
+private fun setBackgroundColor(state: ButtonState, theme: ClimbyTheme = ClimbyTheme()): Color {
+    return when (state) {
+        is ButtonState.Active -> {
+            theme.color.black
+        }
+
+        is ButtonState.Inactive -> {
+            theme.color.n200
+        }
+
+        is ButtonState.Disable -> {
+            theme.color.n500
+        }
+    }
+}
+
 private fun txColor(enable: Boolean): Color {
     return if (enable) ClimbyColor().n500 else ClimbyColor().n200
 }
-
 
 @Composable
 @Preview
@@ -154,7 +179,7 @@ fun ButtonPreview() {
                     .padding(all = Padding().padding02)
             ) {
                 Button(
-                    type = ButtonType.Enable,
+                    state = ButtonState.Inactive,
                     title = "Title",
                     onClick = {})
             }
@@ -164,11 +189,10 @@ fun ButtonPreview() {
                     .padding(all = Padding().padding02)
             ) {
                 Button(
-                    type = ButtonType.EnableWithSubtitle,
+                    state = ButtonState.Inactive,
                     title = "Title",
                     subTitle = "Subtitle",
                     onClick = {},
-                    textPadding = 8.dp
                 )
             }
         }
@@ -179,9 +203,53 @@ fun ButtonPreview() {
                     .padding(all = Padding().padding02)
             ) {
                 Button(
-                    title = "Title", notificationsNumber = notificationsNumber, onClick = {},
-                    type = ButtonType.EnableWithNotification
+                    title = "Title",
+                    state = ButtonState.Inactive,
+                    notificationsNumber = notificationsNumber,
+                    onClick = {},
                 )
+            }
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(all = Padding().padding02)
+            ) {
+                Button(
+                    title = "Title",
+                    subTitle = "Subtitle",
+                    state = ButtonState.Inactive,
+                    notificationsNumber = notificationsNumber,
+                    onClick = {},
+                )
+            }
+        }
+        Row {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(all = Padding().padding02)
+            ) {
+                Button(title = "Title", onClick = {})
+            }
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(all = Padding().padding02)
+            ) {
+                Button(
+                    title = "Title",
+                    subTitle = "Subtitle",
+                    onClick = {},
+                )
+            }
+        }
+        Row {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(all = Padding().padding02)
+            ) {
+                Button(title = "Title", onClick = {}, notificationsNumber = notificationsNumber)
             }
             Box(
                 modifier = Modifier
@@ -192,9 +260,7 @@ fun ButtonPreview() {
                     title = "Title",
                     subTitle = "Subtitle",
                     notificationsNumber = notificationsNumber,
-                    textPadding = 8.dp,
                     onClick = {},
-                    type = ButtonType.EnableWithSubtitleWithNotification
                 )
             }
         }
@@ -204,7 +270,11 @@ fun ButtonPreview() {
                     .weight(1f)
                     .padding(all = Padding().padding02)
             ) {
-                Button(title = "Title", enable = false, onClick = {}, type = ButtonType.Disable)
+                Button(
+                    title = "Title",
+                    onClick = {},
+                    state = ButtonState.Disable,
+                )
             }
             Box(
                 modifier = Modifier
@@ -214,215 +284,22 @@ fun ButtonPreview() {
                 Button(
                     title = "Title",
                     subTitle = "Subtitle",
-                    textPadding = 8.dp,
-                    enable = false,
                     onClick = {},
-                    type = ButtonType.DisableWithSubtitle
+                    state = ButtonState.Disable
                 )
             }
-        }
-        Text(
-            text = "EXAMPLES",
-            modifier = Modifier.align(CenterHorizontally)
-        )
-        Box(
-            modifier = Modifier.padding(all = Padding().padding02)
-        ) {
-            Button(
-                icon = ClimbyImage.Resource(R.drawable.google).painter,
-                type = ButtonType.EnableSocial,
-                title = "Entrar con Google",
-                textPadding = 20.dp,
-                onClick = {})
-        }
-        Box(
-            modifier = Modifier.padding(all = Padding().padding02)
-        ) {
-            Button(
-                icon = ClimbyImage.Resource(R.drawable.facebook).painter,
-                type = ButtonType.EnableSocial,
-                title = "Entrar con Facebook",
-                textPadding = 20.dp,
-                onClick = {})
-        }
-        Box(
-            modifier = Modifier.padding(all = Padding().padding02)
-        ) {
-            Button(
-                title = "Ver peticiones",
-                onClick = {},
-                textPadding = 8.dp,
-                type = ButtonType.Enable
-            )
-        }
-        Box(
-            modifier = Modifier.padding(all = Padding().padding02)
-        ) {
-            Button(
-                title = "Ver peticiones",
-                textPadding = 8.dp,
-                subTitle = "2 plazas",
-                onClick = {}, type = ButtonType.EnableWithSubtitle
-            )
-        }
-        Box(
-            modifier = Modifier.padding(all = Padding().padding02)
-        ) {
-            Button(title = "Solicitado", textPadding = 8.dp, onClick = {}, type = ButtonType.Enable)
-        }
-        Box(
-            modifier = Modifier.padding(all = Padding().padding02)
-        ) {
-            Button(
-                title = "Te has unido",
-                textPadding = 8.dp,
-                subTitle = "Liberar plaza",
-                onClick = {}, type = ButtonType.EnableWithSubtitle
-            )
-        }
-        Box(
-            modifier = Modifier.padding(all = Padding().padding02)
-        ) {
-            Button(
-                title = "No disponible",
-                enable = false,
-                textPadding = 8.dp,
-                subTitle = "Ya no existe",
-                onClick = {}, type = ButtonType.DisableWithSubtitle
-            )
-        }
-        Box(
-            modifier = Modifier.padding(all = Padding().padding02)
-        ) {
-            Button(
-                title = "Rechazado",
-                subTitle = "Ver mensaje",
-                textPadding = 8.dp,
-                notificationsNumber = 1,
-                onClick = {}, type = ButtonType.EnableWithSubtitleWithNotification
-            )
-        }
-        Box(
-            modifier = Modifier.padding(all = Padding().padding02)
-        ) {
-            Button(
-                title = "Terminado",
-                subTitle = "Ver resumen",
-                textPadding = 8.dp,
-                notificationsNumber = 1,
-                onClick = {}, type = ButtonType.EnableWithSubtitleWithNotification
-            )
-        }
-        Box(
-            modifier = Modifier.padding(all = Padding().padding02)
-        ) {
-            Button(
-                title = "Continuar",
-                onClick = {},
-                textPadding = 20.dp,
-                type = ButtonType.Disable
-            )
-        }
-        Box(
-            modifier = Modifier.padding(all = Padding().padding02)
-        ) {
-            Button(
-                title = "Cerrar sessión",
-                enable = false,
-                onClick = {},
-                textPadding = 16.dp,
-                type = ButtonType.Secondary
-            )
         }
     }
 }
 
-
 @Immutable
-sealed class ButtonType(
-    open val bgColor: (color: ClimbyColor) -> Color,
-    open val textColor: (color: ClimbyColor) -> Color,
-    open val textSubtitle: (text: String?) -> String?,
-    open val fontSize: (fontSize: TextUnit) -> TextUnit,
-    open val notification: (notification: Boolean) -> Boolean
-) {
+sealed interface ButtonState {
     @Immutable
-    object Enable : ButtonType(
-        bgColor = { it.black },
-        textColor = { it.white },
-        fontSize = { 14.sp },
-        textSubtitle = { null },
-        notification = { false }
-    )
+    object Active : ButtonState
 
     @Immutable
-    object EnableWithSubtitle : ButtonType(
-        bgColor = { it.black },
-        textColor = { it.white },
-        fontSize = { 14.sp },
-        textSubtitle = { it },
-        notification = { false }
-    )
+    object Inactive : ButtonState
 
     @Immutable
-    object EnableWithNotification : ButtonType(
-        bgColor = { it.black },
-        textColor = { it.white },
-        fontSize = { 14.sp },
-        textSubtitle = { null },
-        notification = { true }
-    )
-
-    @Immutable
-    object EnableWithSubtitleWithNotification : ButtonType(
-        bgColor = { it.black },
-        textColor = { it.white },
-        fontSize = { 14.sp },
-        textSubtitle = { it },
-        notification = { true }
-    )
-
-    @Immutable
-    object Disable : ButtonType(
-        bgColor = { it.n500 },
-        textColor = { it.white },
-        fontSize = { 14.sp },
-        textSubtitle = { null },
-        notification = { false }
-    )
-
-    @Immutable
-    object DisableWithSubtitle : ButtonType(
-        bgColor = { it.n500 },
-        textColor = { it.white },
-        fontSize = { 14.sp },
-        textSubtitle = { it },
-        notification = { false }
-    )
-
-    @Immutable
-    object EnableSocial : ButtonType(
-        bgColor = { it.white },
-        textColor = { it.black },
-        fontSize = { 18.sp },
-        textSubtitle = { null },
-        notification = { false }
-    )
-
-    @Immutable
-    object Secondary : ButtonType(
-        bgColor = { it.n200 },
-        textColor = { it.black },
-        fontSize = { 14.sp },
-        textSubtitle = { null },
-        notification = { false }
-    )
-    @Immutable
-    object Contact : ButtonType(
-        bgColor = { it.colorButtonWhatsApp },
-        textColor = { it.white },
-        fontSize = { 14.sp },
-        textSubtitle = { null },
-        notification = { false }
-    )
+    object Disable : ButtonState
 }
