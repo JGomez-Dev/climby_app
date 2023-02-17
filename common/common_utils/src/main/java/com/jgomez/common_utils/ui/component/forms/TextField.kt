@@ -43,10 +43,9 @@ fun TextField(
             unfocusedIndicatorColor = Color.Transparent
         ),
         placeholder = { Text(text = placeholder, fontSize = 16.sp, lineHeight = 24.sp, color = theme.color.n300) },
-        trailingIcon = {
-            if (icon != null)
-                Image(painter = icon.painter, contentDescription = "")
-        }
+        trailingIcon = if (icon != null) {
+            {  Image(painter = icon.painter, contentDescription = "") }
+        } else null,
     )
 }
 

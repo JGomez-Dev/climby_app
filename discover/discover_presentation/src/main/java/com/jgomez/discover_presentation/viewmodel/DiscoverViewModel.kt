@@ -3,7 +3,7 @@ package com.jgomez.discover_presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jgomez.common_utils.Resource
-import com.jgomez.discover_presentation.views.TripState
+import com.jgomez.discover_domain.model.CardInformation
 import com.jgomez.discover_domain.usecase.GetCardsInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,3 +37,9 @@ init {
         }.launchIn(viewModelScope)
     }
 }
+
+data class TripState(
+    val isLoading: Boolean = false,
+    val error: String = "",
+    val data: List<CardInformation>? = null
+)

@@ -1,19 +1,24 @@
-package com.app.climby.view.activity.ui.compose.screens.graph
+package com.app.climby.view.activity.ui.graph
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.app.climby.view.activity.ui.compose.screens.home.HomeScreen
+import com.app.climby.view.activity.ui.HomeScreen
+import com.google.firebase.auth.FirebaseUser
 
 @Composable
-fun RootNavigationGraph(navController: NavHostController) {
+fun RootNavigationGraph(
+    navController: NavHostController,
+    user: FirebaseUser?,
+    signIn: () -> Unit
+) {
     NavHost(
         navController = navController,
         route = Graph.ROOT,
-        startDestination = Graph.AUTHENTICATION
+        startDestination = if (user == null) Graph.AUTHENTICATION else Graph.HOME
     ) {
-        authNavGraph(navController = navController)
+        authNavGraph(navController = navController, signIn)
         composable(route = Graph.HOME) {
             HomeScreen()
         }

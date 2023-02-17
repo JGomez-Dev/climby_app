@@ -1,4 +1,4 @@
-package com.app.climby.view.activity.ui.compose.screens
+package com.app.climby.view.activity.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -32,10 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.app.climby.view.activity.ui.compose.screens.graph.AuthScreen
 import com.jgomez.authentication_presentacion.R
+import com.app.climby.view.activity.ui.graph.AuthScreen
 import com.jgomez.common_utils.ui.component.buttons.Button
-import com.jgomez.common_utils.ui.component.buttons.ButtonType
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
 import kotlinx.coroutines.delay
 
@@ -88,13 +87,6 @@ fun Splash(theme: ClimbyTheme = ClimbyTheme()) {
                 .fillMaxHeight()
                 .fillMaxWidth()
         ) {
-            Column(modifier = Modifier.align(Alignment.Center)) {
-                Image(
-                    modifier = Modifier.padding(top = 40.dp),
-                    painter = painterResource(id = R.drawable.splash_screen),
-                    contentDescription = "Splash Image Text"
-                )
-            }
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -141,17 +133,11 @@ private fun Buttons(
                     fontSize = 18.sp
                 )
                 Button(
-                    type = ButtonType.EnableSocial,
-                    title = "Entrar con facebook",
-                    icon = painterResource(id = R.drawable.facebook),
-                    textPadding = 20.dp
+                    title = "Entrar con facebook"
                 ) { onSignUpClick() }
                 Spacer(modifier = Modifier.padding(bottom = 16.dp))
                 Button(
-                    type = ButtonType.EnableSocial,
-                    title = "Entrar con Google",
-                    icon = painterResource(id = R.drawable.google),
-                    textPadding = 20.dp
+                    title = "Entrar con Google"
                 ) {
                     onForgotClick()
                 }

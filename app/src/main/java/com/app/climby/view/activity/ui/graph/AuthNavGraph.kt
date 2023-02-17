@@ -1,14 +1,14 @@
-package com.app.climby.view.activity.ui.compose.screens.graph
+package com.app.climby.view.activity.ui.graph
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.app.climby.view.activity.ui.compose.screens.AnimatedSplashScreen
+import com.app.climby.view.activity.ui.AnimatedSplashScreen
 import com.jgomez.authentication_presentacion.views.ui.LoginContent
 import com.jgomez.authentication_presentacion.views.ui.OnBoardingContent
 
-fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.authNavGraph(navController: NavHostController, signIn: () -> Unit) {
     navigation(
         route = Graph.AUTHENTICATION,
         startDestination = AuthScreen.Splash.route
@@ -26,8 +26,8 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
                 onSignUpClick = {
                     navController.navigate(AuthScreen.OnBoarding1.route)
                 },
-                onForgotClick = {
-                    navController.navigate(AuthScreen.OnBoarding2.route)
+                onGoogleClick = {
+                    signIn()
                 }
             )
         }

@@ -19,7 +19,7 @@ import com.app.climby.ui.profile.router.RequestsRouter
 import com.app.climby.ui.profile.router.ResumeTripRouter
 import com.app.climby.util.Commons
 import com.app.climby.util.From
-import com.app.climby.view.activity.ui.compose.MainActivityCompose
+import com.app.climby.view.activity.ui.MainActivityCompose
 import com.app.climby.view.router.MainRouter
 import com.app.climby.view.router.OnBoardingFirstRouter
 import com.app.climby.view.router.OnBoardingSecondRouter

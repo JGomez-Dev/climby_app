@@ -1,4 +1,4 @@
-package com.app.climby.view.activity.ui.compose.screens.home
+package com.app.climby.view.activity.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
@@ -13,7 +13,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.app.climby.view.activity.ui.compose.screens.graph.HomeNavGraph
+import com.app.climby.view.activity.ui.graph.HomeNavGraph
 import com.jgomez.common_utils.navigation.BottomBarScreen
 import com.jgomez.common_utils.ui.theme.ClimbyColor
 
@@ -29,7 +29,6 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
         }
     }
 }
-
 
 @Composable
 fun BottomBar(navController: NavHostController) {

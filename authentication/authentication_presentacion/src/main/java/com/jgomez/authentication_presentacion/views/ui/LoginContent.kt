@@ -22,9 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.jgomez.authentication_presentacion.R
-import com.jgomez.authentication_presentacion.viewmodel.LoginViewModel
 import com.jgomez.common_utils.ui.component.buttons.MenuButton
 import com.jgomez.common_utils.ui.component.buttons.MenuButtonState
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
@@ -33,9 +31,8 @@ import com.jgomez.common_utils.ui.theme.ClimbyTheme
 fun LoginContent(
     onBoardingClick: () -> Unit,
     onSignUpClick: () -> Unit,
-    onForgotClick: () -> Unit,
-    theme: ClimbyTheme = ClimbyTheme(),
-    viewModel: LoginViewModel = hiltViewModel()
+    onGoogleClick: () -> Unit,
+    theme: ClimbyTheme = ClimbyTheme()
 ) {
     Column {
         Box {
@@ -72,17 +69,49 @@ fun LoginContent(
                 .fillMaxHeight()
                 .fillMaxWidth()
         ) {
+            Column(modifier = Modifier.align(Alignment.Center)) {
+                Image(
+                    modifier = Modifier.padding(top = 40.dp),
+                    painter = painterResource(id = R.drawable.splash_screen),
+                    contentDescription = "Splash Image Text"
+                )
+            }
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(start = 16.dp, end = 16.dp, bottom = 44.dp)
             ) {
                 Box {
-                    Buttons(onSignUpClick = onBoardingClick, onForgotClick = onForgotClick)
+                    Buttons(onSignUpClick = onBoardingClick, onForgotClick = onGoogleClick)
                 }
             }
         }
     }
+
+    /*Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            modifier = Modifier.clickable { onClick() },
+            text = "LOGIN",
+            fontSize = MaterialTheme.typography.h3.fontSize,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            modifier = Modifier.clickable { onSignUpClick() },
+            text = "On Boarding",
+            fontSize = MaterialTheme.typography.body1.fontSize,
+            fontWeight = FontWeight.Medium
+        )
+        Text(
+            modifier = Modifier.clickable { onForgotClick() },
+            text = "Forgot Password",
+            fontSize = MaterialTheme.typography.body1.fontSize,
+            fontWeight = FontWeight.Medium
+        )
+    }*/
 }
 
 @Composable
