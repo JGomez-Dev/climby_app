@@ -24,13 +24,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jgomez.authentication_presentacion.R
 import com.jgomez.common_utils.ui.component.buttons.MenuButton
-import com.jgomez.common_utils.ui.component.buttons.MenuButtonState
+import com.jgomez.common_utils.ui.component.buttons.MenuButtonType
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
 
 @Composable
 fun LoginContent(
-    onBoardingClick: () -> Unit,
-    onSignUpClick: () -> Unit,
+    onFacebookClick: () -> Unit,
     onGoogleClick: () -> Unit,
     theme: ClimbyTheme = ClimbyTheme()
 ) {
@@ -82,43 +81,18 @@ fun LoginContent(
                     .padding(start = 16.dp, end = 16.dp, bottom = 44.dp)
             ) {
                 Box {
-                    Buttons(onSignUpClick = onBoardingClick, onForgotClick = onGoogleClick)
+                    Buttons(onFacebookClick = onFacebookClick, onGoogleClick = onGoogleClick)
                 }
             }
         }
     }
-
-    /*Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            modifier = Modifier.clickable { onClick() },
-            text = "LOGIN",
-            fontSize = MaterialTheme.typography.h3.fontSize,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            modifier = Modifier.clickable { onSignUpClick() },
-            text = "On Boarding",
-            fontSize = MaterialTheme.typography.body1.fontSize,
-            fontWeight = FontWeight.Medium
-        )
-        Text(
-            modifier = Modifier.clickable { onForgotClick() },
-            text = "Forgot Password",
-            fontSize = MaterialTheme.typography.body1.fontSize,
-            fontWeight = FontWeight.Medium
-        )
-    }*/
 }
 
 @Composable
 private fun Buttons(
     theme: ClimbyTheme = ClimbyTheme(),
-    onSignUpClick: () -> Unit,
-    onForgotClick: () -> Unit
+    onFacebookClick: () -> Unit,
+    onGoogleClick: () -> Unit
 ) {
     Column {
         Text(
@@ -133,17 +107,17 @@ private fun Buttons(
             fontSize = 18.sp
         )
         MenuButton(
-            state = MenuButtonState.Login,
+            state = MenuButtonType.Login,
             text = "Entrar con facebook",
             icon = painterResource(id = R.drawable.facebook),
-            onClick = { onSignUpClick() }
+            onClick = { onFacebookClick() }
         )
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
         MenuButton(
-            state = MenuButtonState.Login,
+            state = MenuButtonType.Login,
             text = "Entrar con Google",
             icon = painterResource(id = R.drawable.google),
-            onClick = { onForgotClick() }
+            onClick = { onGoogleClick() }
         )
     }
 }
@@ -152,5 +126,5 @@ private fun Buttons(
 @Preview
 fun LoginContentPreview(
 ) {
-    LoginContent({}, {}, {})
+    LoginContent({}, {})
 }

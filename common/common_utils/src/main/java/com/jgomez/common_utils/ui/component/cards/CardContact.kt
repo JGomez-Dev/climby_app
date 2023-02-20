@@ -23,9 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jgomez.common_utils.R
-import com.jgomez.common_utils.ui.component.buttons.Button
 import com.jgomez.common_utils.ui.component.buttons.MenuButton
-import com.jgomez.common_utils.ui.component.buttons.MenuButtonState
+import com.jgomez.common_utils.ui.component.buttons.MenuButtonType
 import com.jgomez.common_utils.ui.component.forms.Starts
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
 import com.jgomez.common_utils.ui.wrapper.ClimbyImage
@@ -112,7 +111,7 @@ fun CardContact(
                     .padding(top = theme.padding.padding04)
                     .fillMaxWidth()) {
                       MenuButton(text = "Contactar por Whatsapp", onClick = { /*TODO*/ }, icon = ClimbyImage.Resource(
-                          R.drawable.whatsapp).painter, state = MenuButtonState.Whatsapp)
+                          R.drawable.whatsapp).painter, state = MenuButtonType.Whatsapp)
                 }
             }
         }

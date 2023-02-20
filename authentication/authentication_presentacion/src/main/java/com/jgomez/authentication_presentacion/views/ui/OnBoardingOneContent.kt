@@ -4,28 +4,10 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.LocalMinimumTouchTargetEnforcement
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.BottomStart
 import androidx.compose.ui.Alignment.Companion.Center
@@ -34,17 +16,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.jgomez.common_utils.R
 import com.jgomez.common_utils.ui.component.buttons.MenuButton
-import com.jgomez.common_utils.ui.component.buttons.MenuButtonState
+import com.jgomez.common_utils.ui.component.buttons.MenuButtonType
 import com.jgomez.common_utils.ui.component.forms.TextField
+import com.jgomez.common_utils.ui.component.forms.TextInputType
 import com.jgomez.common_utils.ui.component.toolbar.TopBar
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
 import com.jgomez.common_utils.ui.theme.Shapes
@@ -53,7 +36,12 @@ import com.jgomez.authentication_presentacion.R.string as RC
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun OnBoardingContent(onClick: () -> Unit, theme: ClimbyTheme = ClimbyTheme()) {
+fun OnBoardingOneContent(
+    onClickBack: () -> Unit,
+    theme: ClimbyTheme = ClimbyTheme(),
+    photoUrl: String,
+    name: String
+) {
 
     var acceptedShare by remember { mutableStateOf(false) }
 
@@ -66,22 +54,21 @@ fun OnBoardingContent(onClick: () -> Unit, theme: ClimbyTheme = ClimbyTheme()) {
         TopBar(
             ClimbyImage.Resource(id = R.drawable.arrow_back),
             "¿Tu información es correcta?",
-            onClick = onClick
+            onClick = onClickBack
         )
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
         Box(
             modifier = Modifier
-                .align(CenterHorizontally), contentAlignment = Alignment.Center
+                .align(CenterHorizontally), contentAlignment = Center
         ) {
             Image(
+                painter = rememberAsyncImagePainter(photoUrl),
+                contentDescription = "_image",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(120.dp)
                     .clip(CircleShape),
-                contentScale = ContentScale.Crop,
-                painter = painterResource(id = com.jgomez.authentication_presentacion.R.drawable.splash_screen),
-                contentDescription = "Splash Image Background",
-
-                )
+            )
         }
         Spacer(modifier = Modifier.padding(bottom = 32.dp))
         Box(
@@ -106,7 +93,7 @@ fun OnBoardingContent(onClick: () -> Unit, theme: ClimbyTheme = ClimbyTheme()) {
                 color = theme.color.n600
             )
             Spacer(modifier = Modifier.padding(bottom = 8.dp))
-            TextField(title = "", placeholder = "Nombre")
+            TextField(title = name, placeholder = "Nombre", type = TextInputType.Phone)
         }
         Spacer(modifier = Modifier.padding(bottom = 32.dp))
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -117,9 +104,7 @@ fun OnBoardingContent(onClick: () -> Unit, theme: ClimbyTheme = ClimbyTheme()) {
                 color = theme.color.n600
             )
             Spacer(modifier = Modifier.padding(bottom = 8.dp))
-            Row(
-
-            ) {
+            Row {
                 Box(modifier = Modifier.weight(1f)) {
                     TextField(
                         title = "+34",
@@ -127,12 +112,12 @@ fun OnBoardingContent(onClick: () -> Unit, theme: ClimbyTheme = ClimbyTheme()) {
                         icon = ClimbyImage.Resource(id = R.drawable.arrow_down)
                     )
                 }
-
                 Spacer(modifier = Modifier.padding(start = 16.dp))
                 Box(modifier = Modifier.weight(2f)) {
                     TextField(
                         title = "",
-                        placeholder = stringResource(RC.text_phone)
+                        placeholder = stringResource(RC.text_phone),
+                        type = TextInputType.Phone
                     )
                 }
             }
@@ -179,7 +164,7 @@ fun OnBoardingContent(onClick: () -> Unit, theme: ClimbyTheme = ClimbyTheme()) {
                 .padding(all = 16.dp), contentAlignment = BottomCenter
         ) {
             MenuButton(
-                state = MenuButtonState.Active,
+                state = MenuButtonType.Inactive,
                 text = "Continuar",
                 onClick = {}
             )
@@ -192,5 +177,4 @@ fun OnBoardingContent(onClick: () -> Unit, theme: ClimbyTheme = ClimbyTheme()) {
 @Preview
 fun OnBoardingContentPreview(
 ) {
-    OnBoardingContent({})
 }

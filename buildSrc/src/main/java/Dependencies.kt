@@ -33,6 +33,7 @@ object Versions {
 
     const val circleImageview = "3.1.0"
     const val drawablePainter = "0.27.0"
+    const val coil = "2.2.2"
 
     const val swipeRefreshLayout = "1.1.0"
 
@@ -132,6 +133,7 @@ object Ui {
     const val selecTableRoundedImageview = "com.joooonho:selectableroundedimageview:${Versions.selecTableRoundedImageview}"
     const val circleImageview = "de.hdodenhof:circleimageview:${Versions.circleImageview}"
     const val drawablePainter = "com.google.accompanist:accompanist-drawablepainter:${Versions.drawablePainter}"
+    const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
 }
 
 object ViewModelDelegate {

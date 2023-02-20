@@ -59,6 +59,7 @@ dependencies {
     implementation Deps.constraintLayout
     implementation Deps.navigationFragment
     implementation Deps.navigationUi
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
 
     testImplementation TestImplementation.junit
     androidTestImplementation AndroidTestImplementation.junit
@@ -75,6 +76,7 @@ dependencies {
     implementation Compose.uiTooling
     implementation Compose.uiTestJunit4
     implementation Compose.uiTestManifest
+    implementation Compose.navigationCompose
 
-    implementation "com.google.android.gms:play-services-auth:20.4.1"
+    implementation Ui.coil
 }

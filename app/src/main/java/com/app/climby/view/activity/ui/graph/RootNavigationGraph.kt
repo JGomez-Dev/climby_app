@@ -6,6 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.app.climby.view.activity.ui.HomeScreen
 import com.google.firebase.auth.FirebaseUser
+import com.jgomez.authentication_presentacion.navigation.authNavGraph
+import com.jgomez.authentication_presentacion.navigation.onBoardingNavGraph
+import com.jgomez.common_utils.navigation.Graph
 
 @Composable
 fun RootNavigationGraph(
@@ -16,18 +19,12 @@ fun RootNavigationGraph(
     NavHost(
         navController = navController,
         route = Graph.ROOT,
-        startDestination = if (user == null) Graph.AUTHENTICATION else Graph.HOME
+        startDestination = if(user != null) Graph.ONBOARDING else Graph.AUTHENTICATION
     ) {
-        authNavGraph(navController = navController, signIn)
+        authNavGraph(navController = navController, signIn, user)
+        onBoardingNavGraph(navController = navController, user)
         composable(route = Graph.HOME) {
             HomeScreen()
         }
     }
-}
-
-object Graph {
-    const val ROOT = "root_graph"
-    const val AUTHENTICATION = "auth_graph"
-    const val HOME = "home_graph"
-    const val DETAILS = "details_graph"
 }

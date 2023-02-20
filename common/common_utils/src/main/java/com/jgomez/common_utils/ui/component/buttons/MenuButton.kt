@@ -31,7 +31,7 @@ import com.jgomez.common_utils.ui.wrapper.painter
 
 @Composable
 fun MenuButton(
-    state: MenuButtonState = MenuButtonState.Active,
+    state: MenuButtonType = MenuButtonType.Active,
     text: String,
     onClick: () -> Unit,
     icon: Painter? = null,
@@ -76,32 +76,31 @@ fun MenuButton(
     }
 }
 
-private fun setBackgroundColor(state: MenuButtonState, theme: ClimbyTheme = ClimbyTheme()): Color {
+private fun setBackgroundColor(state: MenuButtonType, theme: ClimbyTheme = ClimbyTheme()): Color {
     return when (state) {
-        is MenuButtonState.Active -> {
+        is MenuButtonType.Active -> {
             theme.color.black
         }
 
-        is MenuButtonState.Inactive -> {
+        is MenuButtonType.Inactive -> {
             theme.color.n200
         }
 
-        is MenuButtonState.Login -> {
+        is MenuButtonType.Login -> {
             theme.color.white
         }
 
-        is MenuButtonState.Whatsapp -> {
+        is MenuButtonType.Whatsapp -> {
             theme.color.buttonWhatsApp
         }
     }
 }
 
-private fun getTitleColor(state: MenuButtonState, theme: ClimbyTheme = ClimbyTheme()): Color {
+private fun getTitleColor(state: MenuButtonType, theme: ClimbyTheme = ClimbyTheme()): Color {
     return when (state) {
-        is MenuButtonState.Active, MenuButtonState.Whatsapp -> {
+        is MenuButtonType.Active, MenuButtonType.Whatsapp -> {
             theme.color.white
         }
-
 
         else -> {
             theme.color.black
@@ -113,16 +112,16 @@ private fun getTitleColor(state: MenuButtonState, theme: ClimbyTheme = ClimbyThe
 @Preview
 fun MenuButtonPreview() {
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        MenuButton(onClick = {}, state = MenuButtonState.Active, text = "Continuar")
-        MenuButton(onClick = {}, state = MenuButtonState.Inactive, text = "Cerrar sesión")
+        MenuButton(onClick = {}, state = MenuButtonType.Active, text = "Continuar")
+        MenuButton(onClick = {}, state = MenuButtonType.Inactive, text = "Cerrar sesión")
         MenuButton(
-            onClick = {}, state = MenuButtonState.Login, text = "Entrar con Facebook",
+            onClick = {}, state = MenuButtonType.Login, text = "Entrar con Facebook",
             icon = ClimbyImage.Resource(
                 R.drawable.facebook
             ).painter,
         )
         MenuButton(
-            onClick = {}, state = MenuButtonState.Login, text = "Entrar con Google",
+            onClick = {}, state = MenuButtonType.Login, text = "Entrar con Google",
             icon = ClimbyImage.Resource(
                 R.drawable.google
             ).painter,
@@ -132,16 +131,16 @@ fun MenuButtonPreview() {
 }
 
 @Immutable
-sealed interface MenuButtonState {
+sealed interface MenuButtonType {
     @Immutable
-    object Active : MenuButtonState
+    object Active : MenuButtonType
 
     @Immutable
-    object Inactive : MenuButtonState
+    object Inactive : MenuButtonType
 
     @Immutable
-    object Login : MenuButtonState
+    object Login : MenuButtonType
 
     @Immutable
-    object Whatsapp : MenuButtonState
+    object Whatsapp : MenuButtonType
 }

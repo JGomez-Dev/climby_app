@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.jgomez.common_utils.navigation.BottomBarScreen
+import com.jgomez.common_utils.navigation.Graph
 import com.jgomez.discover_presentation.views.ui.CardDetailContent
 import com.jgomez.discover_presentation.views.ui.DiscoverContent
 import com.jgomez.discover_presentation.views.ui.ProvinceContent
