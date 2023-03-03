@@ -25,7 +25,7 @@ import com.jgomez.common_utils.ui.theme.ClimbyColor
 const val NUMBER_BUBBLES = 4
 
 @Composable
-fun Pills(painters: List<Painter>) {
+fun Pills(photoUsers: List<String?>) {
     Row(
         modifier = Modifier
             .background(color = ClimbyColor().n200, shape = CircleShape)
@@ -34,18 +34,18 @@ fun Pills(painters: List<Painter>) {
         OverlappingRow(
             overlapFactor = 0.7f,
         ) {
-            painters.take(NUMBER_BUBBLES).forEach {
+            photoUsers.take(NUMBER_BUBBLES).forEach {
                 Pill(it)
             }
         }
-        if (painters.size > NUMBER_BUBBLES) {
+        if (photoUsers.size > NUMBER_BUBBLES) {
             Box(
                 modifier = Modifier.align(CenterVertically),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    text = "+" + (painters.size - NUMBER_BUBBLES).toString(),
+                    text = "+" + (photoUsers.size - NUMBER_BUBBLES).toString(),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color.Black,
@@ -60,33 +60,33 @@ fun Pills(painters: List<Painter>) {
 @Preview
 fun PillsPreview() {
     val painterOneUser = listOf(
-        painterResource(id = R.drawable.sputnik),
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg",
     )
     val painterTwoUsers = listOf(
-        painterResource(id = R.drawable.sputnik),
-        painterResource(id = R.drawable.sputnik)
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg",
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg"
     )
     val painterThreeUsers = listOf(
-        painterResource(id = R.drawable.sputnik),
-        painterResource(id = R.drawable.sputnik),
-        painterResource(id = R.drawable.sputnik)
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg",
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg",
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg"
     )
     val painterFourUsers = listOf(
-        painterResource(id = R.drawable.sputnik),
-        painterResource(id = R.drawable.sputnik),
-        painterResource(id = R.drawable.sputnik),
-        painterResource(id = R.drawable.sputnik)
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg",
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg",
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg",
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg"
     )
     val painterFiveUsers = listOf(
-        painterResource(id = R.drawable.sputnik),
-        painterResource(id = R.drawable.sputnik),
-        painterResource(id = R.drawable.sputnik),
-        painterResource(id = R.drawable.sputnik),
-        painterResource(id = R.drawable.sputnik)
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg",
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg",
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg",
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg",
+        "https://imborrable.com/wp-content/uploads/2022/10/fotos-gratis-de-stock-1.jpg"
     )
     Column {
         Box(modifier = Modifier.padding(16.dp)) {
-            Pills(painterOneUser)
+             Pills(painterOneUser)
         }
         Box(modifier = Modifier.padding(16.dp)) {
             Pills(painterTwoUsers)

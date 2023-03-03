@@ -9,6 +9,7 @@ data class ClimbyColor(
 
     var n600: Color = Color(0xFF655F7B),
     var n500: Color = Color(0xFF9995A9),
+    var n400: Color = Color(0xFFB4AFC5),
     var n300: Color = Color(0xFFB4AFC5),
     var n200: Color = Color(0xFFE7E5EF),
     var n100: Color = Color(0xFFF5F4F9),

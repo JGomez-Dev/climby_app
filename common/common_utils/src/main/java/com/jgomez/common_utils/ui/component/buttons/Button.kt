@@ -22,6 +22,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.jgomez.common_utils.ui.theme.ClimbyColor
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
 import com.jgomez.common_utils.ui.theme.Padding
+import com.jgomez.common_utils.ui.theme.text.ClimbyTextStyle
 
 
 @Composable
@@ -50,7 +52,9 @@ fun Button(
         Box()
         {
             Surface(
-                shape = CircleShape, modifier = Modifier.clickable { onClick() }
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .clickable { onClick() }
             ) {
                 Row(
                     modifier = Modifier
@@ -66,8 +70,7 @@ fun Button(
                                 modifier = Modifier
                                     .align(CenterHorizontally),
                                 text = title,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
+                                style = ClimbyTextStyle.Heading6(),
                                 color = getTitleColor(state),
                             )
                             if (subTitle != null) {
@@ -75,8 +78,7 @@ fun Button(
                                     modifier = Modifier
                                         .align(CenterHorizontally),
                                     text = subTitle,
-                                    fontWeight = FontWeight.Medium,
-                                    fontSize = 13.sp,
+                                    style = ClimbyTextStyle.Caption(),
                                     color = getSubtitleColor(state),
                                 )
                             }

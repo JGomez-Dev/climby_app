@@ -34,6 +34,7 @@ android {
 
 dependencies {
     implementation project(":common:common_utils")
+    implementation project(":publish:publish_domain")
 
     implementation Deps.core
     implementation Deps.appCompat

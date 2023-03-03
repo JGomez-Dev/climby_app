@@ -12,7 +12,7 @@ import javax.annotation.Nullable
 import javax.inject.Inject
 
 @HiltViewModel
-class MyOutingsViewModel @Inject constructor(private val getTripsUser: GetTripsUser, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
+class MyOutingsViewModel @Inject constructor(private val getTripsUser: GetTripsUser/*, @Nullable private val sharedPref: SharedPreferences*/) : ViewModel() {
 
     var tripsModel = MutableLiveData<List<TripModel>>()
     val isLoading = MutableLiveData<Boolean>()
@@ -21,11 +21,11 @@ class MyOutingsViewModel @Inject constructor(private val getTripsUser: GetTripsU
     fun getMyTrips() {
         viewModelScope.launch {
             isLoading.postValue(true)
-            result = getTripsUser(sharedPref.getInt("id", 0))
+            /*result = getTripsUser(sharedPref.getInt("id", 0))
             if (!result.isNullOrEmpty())
                 tripsModel.postValue(result.toList())
             else
-                tripsModel.postValue(result)
+                tripsModel.postValue(result)*/
             isLoading.postValue(false)
         }
     }

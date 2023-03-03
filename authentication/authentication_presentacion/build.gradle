@@ -47,6 +47,8 @@ android {
 
 dependencies {
     implementation project(":common:common_utils")
+    implementation project(":authentication:authentication_domain")
+    implementation project(":publish:publish_domain")
 
     implementation Deps.core
     implementation Deps.appCompat
@@ -79,4 +81,5 @@ dependencies {
     implementation Compose.navigationCompose
 
     implementation Ui.coil
+
 }

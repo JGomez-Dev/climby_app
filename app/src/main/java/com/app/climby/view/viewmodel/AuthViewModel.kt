@@ -14,7 +14,7 @@ import javax.annotation.Nullable
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(private val _getTripById: GetTripById, private val getByEmail: GetByEmail, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
+class AuthViewModel @Inject constructor(private val _getTripById: GetTripById, private val getByEmail: GetByEmail/*, @Nullable private val sharedPref: SharedPreferences*/) : ViewModel() {
 
     val finish = MutableLiveData<Boolean>()
     var result: List<TripModel> = emptyList()
@@ -34,7 +34,7 @@ class AuthViewModel @Inject constructor(private val _getTripById: GetTripById, p
             try {
                 val result = getByEmail(email)
                 if(result.email != "") {
-                    val editor = sharedPref.edit()
+                    /*val editor = sharedPref.edit()
                     editor.putFloat("score", result.score.toFloat())
                     editor.putString("email", result.email)
                     editor.putInt("outputs", result.outings)
@@ -46,7 +46,7 @@ class AuthViewModel @Inject constructor(private val _getTripById: GetTripById, p
                     editor.putString("token", result.token)
                     editor.apply()
                     Commons.userSession = result
-                    exists.postValue(true)
+                    exists.postValue(true)*/
                 }
             } catch (e: Exception) {
                 exists.postValue(false)

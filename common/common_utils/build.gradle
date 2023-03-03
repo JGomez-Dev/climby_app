@@ -28,7 +28,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '11'
+        freeCompilerArgs += [
+                "-Xjvm-default=all",
+        ]
+        jvmTarget = '1.8'
     }
     buildFeatures {
         compose true
@@ -69,7 +72,10 @@ dependencies {
     implementation Compose.uiTooling
     implementation Compose.uiTestJunit4
     implementation Compose.uiTestManifest
+    implementation Compose.runtime
 
     implementation Ui.drawablePainter
+
+    implementation Ui.coil
 
 }

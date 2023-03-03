@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/app/app_data" />
             <option value="$PROJECT_DIR$/app/app_domain" />
             <option value="$PROJECT_DIR$/authentication" />
+            <option value="$PROJECT_DIR$/authentication/authentication_data" />
             <option value="$PROJECT_DIR$/authentication/authentication_domain" />
             <option value="$PROJECT_DIR$/authentication/authentication_presentacion" />
             <option value="$PROJECT_DIR$/buildSrc" />

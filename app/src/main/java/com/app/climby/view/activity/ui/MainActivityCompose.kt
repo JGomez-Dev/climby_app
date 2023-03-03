@@ -29,13 +29,12 @@ class MainActivityCompose : ComponentActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
 
     companion object {
-        private const val TAG = "GoogleActivity"
+        private const val TAG = "MainActivity"
         private const val RC_SIGN_IN = 9001
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -97,9 +96,8 @@ class MainActivityCompose : ComponentActivity() {
     private fun updateUI(user: FirebaseUser?) {
         setContent {
             ClimbyTheme {
-                val navController = rememberNavController()
                 RootNavigationGraph(
-                    navController = navController,
+                    navController = rememberNavController(),
                     user = user,
                     signIn = { signIn() })
 

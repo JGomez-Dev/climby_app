@@ -36,7 +36,7 @@ fun CardContact(
     level: String,
     outputs: Int,
     photoUser: ClimbyImage,
-    score: Int = 0,
+    score: Double = 0.0,
     theme: ClimbyTheme = ClimbyTheme()
 
 ) {

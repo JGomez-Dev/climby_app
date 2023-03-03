@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="text_button_continue">Continuar</string>
-    <string name="text_join_phone">Solo compartiremos tu teléfono de forma privada cuando te unas a una salida. Así podrá contactar contigo el creador de cada salida.</string>
+
+    <!-- Button -->
+    <string name="text_button_continue">Continuar</string>ç
+
+    <!-- OnBoarding -->
+    <string name="onboarding_level_title_beginner">Principiante</string>
+    <string name="onboarding_level_body_beginner">Estoy iniciándome en este deporte. Tengo todo por aprender</string>
+    <string name="onboarding_level_title_medium">Intermedio</string>
+    <string name="onboarding_level_body_medium">Escalo con frecuencia y me encuentro cómodo escalando en la naturaleza</string>
+    <string name="onboarding_level_title_avanzaced">Avanzado</string>
+    <string name="onboarding_level_body_avanzaced">Llevo años escalando de manera continuada. Conozco a fondo las técnicas de las modalidades que practico</string>
+    <string name="onboarding_label_join_phone">Solo compartiremos tu teléfono de forma privada cuando te unas a una salida. Así podrá contactar contigo el creador de cada salida.</string>
     <string name="text_phone">Teléfono</string>
+
+    <!-- TopBar -->
+    <string name="topbar_onboarding">¿Qué experiencia tienes?</string>
+
+
 </resources>

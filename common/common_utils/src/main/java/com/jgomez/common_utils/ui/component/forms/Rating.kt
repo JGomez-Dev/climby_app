@@ -10,21 +10,21 @@ import com.jgomez.common_utils.R
 
 
 @Composable
-fun Starts(score: Int = 0) {
+fun Starts(score: Double = 0.0) {
     when (score) {
-        in 0..1 -> {
+        in 0.0..1.0 -> {
             Image(
                 painter = rememberVectorPainter(image = ImageVector.vectorResource(id = R.drawable.one_star)),
                 contentDescription = null
             )
         }
-        in 1..2 -> {
+        in 1.0..2.0 -> {
             Image(
                 painter = rememberVectorPainter(image = ImageVector.vectorResource(id = R.drawable.two_star)),
                 contentDescription = null
             )
         }
-        in 2..3 -> {
+        in 2.0..3.0 -> {
             Image(
                 painter = rememberVectorPainter(image = ImageVector.vectorResource(id = R.drawable.three_star)),
                 contentDescription = null
@@ -36,5 +36,5 @@ fun Starts(score: Int = 0) {
 @Composable
 @Preview
 fun StartPreview() {
-    Starts(1)
+    Starts(1.0)
 }

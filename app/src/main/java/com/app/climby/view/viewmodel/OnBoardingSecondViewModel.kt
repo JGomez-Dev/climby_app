@@ -17,7 +17,8 @@ import javax.annotation.Nullable
 import javax.inject.Inject
 
 @HiltViewModel
-class OnBoardingSecondViewModel @Inject constructor(private val insert: Insert, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
+class OnBoardingSecondViewModel @Inject constructor(private val insert: Insert/*, @Nullable private val sharedPref: SharedPreferences*/) :
+    ViewModel() {
 
     var result: UserModel? = null
     var okSaveUser = MutableLiveData<Boolean>()
@@ -30,7 +31,7 @@ class OnBoardingSecondViewModel @Inject constructor(private val insert: Insert, 
         viewModelScope.launch {
             result = insert(userModel)
             if (result != null) {
-                val editor = sharedPref.edit()
+                /*val editor = sharedPref.edit()
                 editor.putFloat("score", result!!.score.toFloat())
                 editor.putString("email", result!!.email)
                 editor.putInt("outputs", result!!.outings)
@@ -43,7 +44,7 @@ class OnBoardingSecondViewModel @Inject constructor(private val insert: Insert, 
 
                 editor.apply()
                 Commons.userSession = result
-                okSaveUser.postValue(true)
+                okSaveUser.postValue(true)*/
             } else {
                 okSaveUser.postValue(false)
             }

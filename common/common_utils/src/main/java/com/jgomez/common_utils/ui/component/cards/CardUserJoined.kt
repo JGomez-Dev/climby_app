@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.jgomez.common_utils.R
 import com.jgomez.common_utils.ui.component.forms.Starts
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
@@ -36,8 +37,8 @@ fun CardUserJoined(
     name: String,
     level: String,
     outputs: Int,
-    photoUser: ClimbyImage,
-    score: Int = 0,
+    photoUser: String,
+    score: Double = 0.0,
     theme: ClimbyTheme = ClimbyTheme(),
 ) {
     Card(
@@ -55,8 +56,8 @@ fun CardUserJoined(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row {
-                    Image(
-                        painter = photoUser.painter,
+                    AsyncImage(
+                        model = photoUser,
                         contentDescription = null,
                         modifier = Modifier
                             .size(48.dp)
@@ -111,12 +112,12 @@ fun CardUserJoined(
 @Composable
 @Preview
 fun CardUserJoinedPreview() {
-    val score: Int by remember { mutableStateOf(1) }
+    val score: Double by remember { mutableStateOf(1.1) }
     CardUserJoined(
         "Javier",
         "Intermedio",
         12,
-        ClimbyImage.Resource(id = R.drawable.albarracin),
+        "ClimbyImage.Resource(id = R.drawable.albarracin)",
         score
     )
 }

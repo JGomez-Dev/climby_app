@@ -1,15 +1,21 @@
 package com.jgomez.discover_data.mapper
 
+import com.google.gson.annotations.SerializedName
+import com.jgomez.common_utils.DateUtils
+import com.jgomez.discover_data.R
 import com.jgomez.discover_data.model.*
 import com.jgomez.discover_domain.model.*
 
 fun TripResponseItemDTO.toDomainCardInformation(): CardInformation {
     return CardInformation(
-        available_places = available_places.toString() + if(available_places > 1) " plazas" else " plaza",
-        climbing_type = "$climbing_type en",
+        id = id,
+        availablePlaces = availablePlaces.toString() + if (availablePlaces > 1) " plazas" else " plaza",
+        climbingType = "$climbingType en",
         owner = owner.toDomainUser(),
-        users_photo = reservations.map { it.toDomainBooking().user.user_photo },
-        school_and_departure_date = "$school ,$departure_date",
+        schoolPhoto = R.drawable.albarracin,
+        usersPhoto = reservations.map { it.toDomainBooking().user.userPhoto }.plus(owner.userPhoto),
+        school = "$school, ",
+        departureDate = DateUtils().dateToStringFormat(departureDate)
     )
 }
 
@@ -17,12 +23,12 @@ fun UserDTO.toDomainUser(): User {
     return User(
         email = this.email,
         experience = this.experience,
-        full_name = this.full_name,
+        fullName = this.fullName,
         outputs = this.outputs,
         phone = this.phone,
         ratings = this.ratings,
         score = this.score,
-        user_photo = this.user_photo
+        userPhoto = this.userPhoto
     )
 }
 
@@ -44,4 +50,15 @@ fun MessageDTO.toDomainMessage(): Message {
         read = this.read,
         text_message = this.text_message
     )
+}
+
+
+fun TripResponseItemDTO.toDomainTripDetail(): TripDetail {
+    return TripDetail(
+        id = id,
+        title = "$school," + departureDate.take(3),
+        owner = owner.toDomainUser(),
+        reservations = reservations.map { it.toDomainBooking() }
+    )
+
 }

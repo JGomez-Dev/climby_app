@@ -11,43 +11,49 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.jgomez.common_utils.R
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
+import com.jgomez.common_utils.ui.theme.text.ClimbyTextStyle
 import com.jgomez.common_utils.ui.wrapper.ClimbyImage
 import com.jgomez.common_utils.ui.wrapper.painter
 
 const val PHONE_LENGTH = 9
+const val mask = "xx xxx xx xx"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextField(
     type: TextInputType? = TextInputType.Phone,
     theme: ClimbyTheme = ClimbyTheme(),
-    title: String,
+    title: String = "",
     placeholder: String = "",
     icon: ClimbyImage? = null,
-    singleLine: Boolean = true
+    singleLine: Boolean = true,
+    onTextChanged: ((String) -> String)? = null
 ) {
-    var name by remember {
-        mutableStateOf(title)
-    }
+    var mutableText by remember { mutableStateOf(title) }
+
     TextField(
         modifier = Modifier
             .fillMaxWidth(),
         shape = RectangleShape,
-        value = name,
+        value = mutableText,
         onValueChange = {
-            if (type == TextInputType.Phone) {
-                if (name.length > PHONE_LENGTH)
-                    name = it
-            } else
-                name = it
-
+            val finalString = onTextChanged?.invoke(it) ?: it
+            if (type != TextInputType.Phone) {
+                mutableText = finalString
+            } else if (finalString.length <= PHONE_LENGTH)
+                mutableText = finalString
         },
+        textStyle = ClimbyTextStyle.Heading5Value(),
         singleLine = singleLine,
         colors = TextFieldDefaults.textFieldColors(
             containerColor = theme.color.white,
@@ -57,9 +63,8 @@ fun TextField(
         placeholder = {
             Text(
                 text = placeholder,
-                fontSize = 16.sp,
-                lineHeight = 24.sp,
-                color = theme.color.n300
+                style = ClimbyTextStyle.Heading5Value(),
+                color = theme.color.n400
             )
         },
         keyboardOptions = if (type == TextInputType.Phone) KeyboardOptions(keyboardType = KeyboardType.Number) else KeyboardOptions.Default,

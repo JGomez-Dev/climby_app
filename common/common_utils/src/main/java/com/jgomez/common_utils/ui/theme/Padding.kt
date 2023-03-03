@@ -15,6 +15,7 @@ data class Padding(
     val padding09: Dp = 64.dp,
     val padding10: Dp = 72.dp,
     val padding11: Dp = 80.dp,
-    val padding12: Dp = 88.dp
+    val padding12: Dp = 88.dp,
+    val padding13: Dp = 14.dp
 )
 

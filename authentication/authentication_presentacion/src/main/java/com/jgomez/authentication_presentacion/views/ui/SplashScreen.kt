@@ -23,7 +23,6 @@ import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseUser
 import com.jgomez.authentication_presentacion.R
 import com.jgomez.authentication_presentacion.navigation.AuthScreen
-import com.jgomez.authentication_presentacion.navigation.OnBoardingScreen
 import com.jgomez.common_utils.ui.component.buttons.Button
 import com.jgomez.common_utils.ui.theme.ClimbyTheme
 import com.jgomez.common_utils.ui.utils.encodeUrl
@@ -39,7 +38,7 @@ fun AnimatedSplashScreen(navController: NavHostController, user: FirebaseUser?) 
             if (user == null)
                 AuthScreen.Login.route
             else{
-                "${OnBoardingScreen.OnBoardingOne.route}/${user.photoUrl.toString().encodeUrl()}/${user.displayName.toString()}"
+                "${AuthScreen.OnBoardingOne.route}/${user.photoUrl.toString().encodeUrl()}/${user.displayName}/${user.email}"
             }
         )
     }

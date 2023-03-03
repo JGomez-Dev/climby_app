@@ -3,9 +3,10 @@ package com.jgomez.discover_data.model
 import com.google.gson.annotations.SerializedName
 
 data class TripResponseItemDTO(
-    @SerializedName("available_places") val available_places: Int,
-    @SerializedName("climbing_type") val climbing_type: String,
-    @SerializedName("departure_date") val departure_date: String,
+    @SerializedName("id_travel") val id: Int,
+    @SerializedName("available_places") val availablePlaces: Int,
+    @SerializedName("climbing_type") val climbingType: String,
+    @SerializedName("departure_date") val departureDate: String,
     @SerializedName("organizer") val owner: UserDTO,
     @SerializedName("province") val province: String,
     @SerializedName("reservations") val reservations: List<ReservationDTO>,

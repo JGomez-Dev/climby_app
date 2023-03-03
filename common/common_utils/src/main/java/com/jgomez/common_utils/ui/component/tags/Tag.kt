@@ -1,46 +1,63 @@
 package com.jgomez.common_utils.ui.component.tags
 
+import android.view.RoundedCorner
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.jgomez.common_utils.ui.theme.ClimbyColor
 import com.jgomez.common_utils.ui.theme.Padding
+import com.jgomez.common_utils.ui.theme.text.ClimbyTextStyle
+
 
 @Composable
 fun Tag(
     text: String,
-    selected: Boolean = false,
     color: ClimbyColor = ClimbyColor(),
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    selectedValue: MutableState<String>
 ) {
-    var selectedItem by remember { mutableStateOf(selected) }
     Surface(
-        shape = CircleShape,
-        color = (if (selectedItem) color.black else color.n200)){
-        Text(
-            text = text,
-            style = MaterialTheme.typography.body1.merge(),
-            color = (if (selectedItem) color.white else color.black),
+        modifier = Modifier
+            .clip(CircleShape)
+            .clickable {
+                selectedValue.value = text
+                onClick()
+            }
+    ) {
+        Box(
             modifier = Modifier
-                .clickable {
-                    selectedItem = !selectedItem
-                    onClick()
-                }
-                .padding(all = Padding().padding02),
-        )
+                .background(
+                    if (selectedValue.value == text) color.black else color.n200,
+                    CircleShape
+                ),
+        ) {
+            Text(
+                modifier = Modifier
+                    .padding(vertical = 10.dp, horizontal = 12.dp),
+                text = text,
+                style = ClimbyTextStyle.Heading6(),
+                color = (if (selectedValue.value == text) color.white else color.black),
+            )
+        }
     }
+
 
 }
 
@@ -48,18 +65,19 @@ fun Tag(
 @Preview
 fun TagPreview() {
 
-    Column() {
-        var firstItemSelected by remember { mutableStateOf(false) }
+    Column {
+        val button = remember { mutableStateOf("Todas") }
         Tag(
-            selected = firstItemSelected,
             text = "Todas",
-            onClick = { firstItemSelected = !firstItemSelected },
+            onClick = { button.value = "Ninguna" },
+            selectedValue = button
         )
         Spacer(modifier = Modifier.padding(Padding().padding01))
-        var secondItemSelected by remember { mutableStateOf(true) }
+        val button1 = remember { mutableStateOf("Ninguna") }
         Tag(
-            selected = secondItemSelected,
             text = "Todas",
-            onClick = { secondItemSelected = !secondItemSelected })
+            onClick = { button1.value = "Ninguna" },
+            selectedValue = button1
+        )
     }
 }

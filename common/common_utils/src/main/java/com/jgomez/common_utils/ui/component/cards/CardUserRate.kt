@@ -29,13 +29,13 @@ import com.jgomez.common_utils.ui.wrapper.painter
 fun RateUserCard(
     name: String,
     photoUser: ClimbyImage,
-    score: Int = 1,
+    score: Double = 1.0,
     theme: ClimbyTheme = ClimbyTheme(),
     onClickMinus: ((Double) -> Unit)? = null,
     onClickPlus: ((Double) -> Unit)? = null,
     customDebounceTimeMS: Long = defaultButtonDebounceTimeMs
 ) {
-    var scoreUser: Int by remember { mutableStateOf(score) }
+    var scoreUser: Double by remember { mutableStateOf(score) }
 
     Card(
         modifier = Modifier
@@ -132,7 +132,7 @@ fun RateUserCardPreview() {
     RateUserCard(
         "Javier",
         ClimbyImage.Resource(id = R.drawable.albarracin),
-        1
+        1.0
     )
 }
 

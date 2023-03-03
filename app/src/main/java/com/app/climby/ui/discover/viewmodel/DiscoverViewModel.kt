@@ -27,7 +27,7 @@ import javax.annotation.Nullable
 import javax.inject.Inject
 
 @HiltViewModel
-class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips, private val insert: Insert, private val delete: Delete, @Nullable private val sharedPref: SharedPreferences) : ViewModel() {
+class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips, private val insert: Insert, private val delete: Delete/*, @Nullable private val sharedPref: SharedPreferences*/) : ViewModel() {
 
     var tripsModel = MutableLiveData<List<TripModel>>()
     var isLoading = MutableLiveData<Boolean>()
@@ -85,15 +85,15 @@ class DiscoverViewModel @Inject constructor(private val getAllTrips: GetAllTrips
     private fun getTripWithoutQualify(context: Context) {
         result?.forEach { it ->
             it.bookings?.forEach { _it ->
-                val email = sharedPref.getString("email", "")
-                if (_it.valuationStatus == false && email == _it.passenger?.email && _it.status == true && checkDate(it.departure!!)) {
+                //val email = sharedPref.getString("email", "")
+                /*if (_it.valuationStatus == false && email == _it.passenger?.email && _it.status == true && checkDate(it.departure!!)) {
                     val intent = Intent(context, OnBoardingThreeActivity::class.java).apply {
                         putExtra("trip", it)
                         putExtra("booking", _it)
                     }
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(intent)
-                }
+                }*/
             }
         }
     }

@@ -38,53 +38,53 @@ object NetworkModule {
             .build()
     }*/
 
-    @Singleton
-    @Provides
-    fun provideSharedPreferences(@ApplicationContext appContext: Context): SharedPreferences? {
-        return appContext.getSharedPreferences(appContext.getString(R.string.prefs_file), AppCompatActivity.MODE_PRIVATE)
-    }
+/*@Singleton
+@Provides
+fun provideSharedPreferences(@ApplicationContext appContext: Context): SharedPreferences? {
+    return appContext.getSharedPreferences(appContext.getString(R.string.prefs_file), AppCompatActivity.MODE_PRIVATE)
+}*/
 
-    @Singleton
-    @Provides
-    fun provideTripApiClient(retrofit: Retrofit): TripApiClient {
-        return retrofit.create(TripApiClient::class.java)
-    }
+@Singleton
+@Provides
+fun provideTripApiClient(retrofit: Retrofit): TripApiClient {
+    return retrofit.create(TripApiClient::class.java)
+}
 
-    @Singleton
-    @Provides
-    fun provideUserApiClient(retrofit: Retrofit): UserApiClient {
-        return retrofit.create(UserApiClient::class.java)
-    }
+@Singleton
+@Provides
+fun provideUserApiClient(retrofit: Retrofit): UserApiClient {
+    return retrofit.create(UserApiClient::class.java)
+}
 
-    @Singleton
-    @Provides
-    fun provideProvincesApiClient(retrofit: Retrofit): ProvincesApiClient {
-        return retrofit.create(ProvincesApiClient::class.java)
-    }
+@Singleton
+@Provides
+fun provideProvincesApiClient(retrofit: Retrofit): ProvincesApiClient {
+    return retrofit.create(ProvincesApiClient::class.java)
+}
 
-    @Singleton
-    @Provides
-    fun provideSchoolApiClient(retrofit: Retrofit): SchoolApiClient {
-        return retrofit.create(SchoolApiClient::class.java)
-    }
+@Singleton
+@Provides
+fun provideSchoolApiClient(retrofit: Retrofit): SchoolApiClient {
+    return retrofit.create(SchoolApiClient::class.java)
+}
 
-    @Singleton
-    @Provides
-    fun provideTypesApiClient(retrofit: Retrofit): TypeApiClient {
-        return retrofit.create(TypeApiClient::class.java)
-    }
+@Singleton
+@Provides
+fun provideTypesApiClient(retrofit: Retrofit): TypeApiClient {
+    return retrofit.create(TypeApiClient::class.java)
+}
 
-    @Singleton
-    @Provides
-    fun provideBookingApiClient(retrofit: Retrofit): BookingApiClient {
-        return retrofit.create(BookingApiClient::class.java)
-    }
+@Singleton
+@Provides
+fun provideBookingApiClient(retrofit: Retrofit): BookingApiClient {
+    return retrofit.create(BookingApiClient::class.java)
+}
 
-    @Singleton
-    @Provides
-    fun provideMessageApiClient(retrofit: Retrofit): MessageApiClient {
-        return retrofit.create(MessageApiClient::class.java)
-    }
+@Singleton
+@Provides
+fun provideMessageApiClient(retrofit: Retrofit): MessageApiClient {
+    return retrofit.create(MessageApiClient::class.java)
+}
 }
 
 

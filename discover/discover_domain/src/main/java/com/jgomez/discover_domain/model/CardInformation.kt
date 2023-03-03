@@ -1,10 +1,13 @@
 package com.jgomez.discover_domain.model
 
 data class CardInformation(
-    val available_places: String,
-    val climbing_type: String,
+    val id: Int,
+    val availablePlaces: String,
+    val climbingType: String,
     val owner: User,
-    val users_photo: List<String>,
-    val school_and_departure_date: String
+    val schoolPhoto: Int,
+    val usersPhoto: List<String>,
+    val school: String,
+    val departureDate: String
 )
 

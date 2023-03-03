@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -16,16 +17,30 @@ import androidx.navigation.compose.rememberNavController
 import com.app.climby.view.activity.ui.graph.HomeNavGraph
 import com.jgomez.common_utils.navigation.BottomBarScreen
 import com.jgomez.common_utils.ui.theme.ClimbyColor
-
+import com.jgomez.common_utils.ui.theme.text.ClimbyTextStyle
 
 
 @Composable
-fun HomeScreen(navController: NavHostController = rememberNavController()) {
+fun HomeScreen(
+    navController: NavHostController = rememberNavController(),
+    photoUrl: String,
+    name: String,
+    phone: String,
+    email: String,
+    experience: String
+) {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
-    ) {innerPadding ->
+    ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            HomeNavGraph(navController = navController)
+            HomeNavGraph(
+                navController = navController,
+                photoUrl = photoUrl,
+                name = name,
+                phone = phone,
+                email = email,
+                experience = experience
+            )
         }
     }
 }
@@ -54,7 +69,6 @@ fun BottomBar(navController: NavHostController) {
     }
 }
 
-
 @Composable
 fun RowScope.AddItem(
     screen: BottomBarScreen,
@@ -65,7 +79,7 @@ fun RowScope.AddItem(
         selectedContentColor = ClimbyColor().accent,
         unselectedContentColor = ClimbyColor().black,
         label = {
-            Text(text = screen.title)
+            Text(text = screen.title, style = ClimbyTextStyle.Caption())
         },
         icon = {
             Icon(
